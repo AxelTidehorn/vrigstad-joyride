@@ -21,6 +21,8 @@ Taking an occupied car always earns a wanted star; a parked one sometimes does. 
 
 ## How it is built
 
+Contributors (human or agent): read [AGENTS.md](AGENTS.md) for conventions and [ARCHITECTURE.md](ARCHITECTURE.md) for the structure and where it's heading.
+
 ```
 src/game.html      game source (HTML, CSS, JS) with a /*DATA*/ placeholder
 src/map.html       3D map source, same placeholder
