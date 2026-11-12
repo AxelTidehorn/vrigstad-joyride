@@ -52,7 +52,8 @@ Every commit message **and every PR title** follows [Conventional Commits](https
 
 Label every PR when you open it, the same way issues are labelled:
 
-- **A type:** `enhancement` / `feature request` (new behaviour), `bug`, `documentation`.
+- **A type:** `feature request` (new gameplay or content), `enhancement` (tech, tooling, performance, or improving an existing feature), `bug`, `documentation`.
+- **A priority** on issues: `prio:high`, `prio:mid` or `prio:low`. Use `status:future` for options to decide on later.
 - **A scope**, if one fits: `scope:architecture`, `scope:npc`, `scope:minigames`, ...
 - If no existing scope fits and the area will clearly see more work, **create a new `scope:<area>` label** with a one-line description (`gh label create "scope:audio" --description "Sound, music and radio"`). Don't create one-off labels for a single PR.
 - Check existing labels first (`gh label list`), reuse their spelling, and say in the PR description if you created a new one.
