@@ -16,8 +16,13 @@ Open `index.html` in a browser. It needs WebGL and an internet connection the fi
 | Sprint / brake | Shift / Space | Stick sprints on foot / Brake button |
 | Look around | Drag the view | Drag the view |
 | Back to Torget | R | |
+| Go inside a safehouse / scratch a trisslott | E | Use button |
 
 Taking an occupied car always earns a wanted star; a parked one sometimes does. Each star (up to three) sends a police car. Stay about 170 m clear of them for 18 seconds and they give up. Get boxed in at low speed and you are *gripen* and sent back to Torget.
+
+Three houses are safehouses, shown as green houses on the minimap and marked with a green door. Go inside on foot and stay for a minute and the police give up; it only works if no police car is within 60 m when you go in, and leaving early keeps your stars.
+
+The kiosk on Torget sells trisslotter. One in a thousand wins, and the more losing tickets you scratch in a row, the worse your language gets.
 
 ## How it is built
 
