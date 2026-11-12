@@ -192,125 +192,190 @@ function saab(G,paint){const col=paint,topY=z=>z<-.94?.842+(z+2.31)*.158/1.37:z<
 // 2002–2005 9-5 five-door estate: measured dimensions in metres from Saab WIS.
 // X is lateral, Y is up, -Z is forward. Independent from the classic 900.
 function saab95Estate(G, paint) {
- const C={trim:'#252a2d',seal:'#1c272c',glass:'#2f4856',rearGlass:'#354c57',
-   chrome:'#aeb8b9',light:'#dce3df',indicator:'#dbac63',tail:'#a9282e',
-   tailDark:'#751f29',plate:'#ddd8c4',wheel:'#afb7b8',rimDark:'#59636a',tire:'#222528'};
- const front=-2.25,rear=2.27,axles=[-1.398,1.305],arch=.415,cy=.353;
- const w=z=>z<-2.08?.795+(z+2.25)*.09/.17:z>2.13?.875-(z-2.13)*.080/.14:.885;
- const sh=z=>z<-.88?.890+(z+2.25)*.128/1.37:z>2.08?1.018-(z-2.08)*.08/.19:1.018;
- const bot=z=>{let y=.315;for(const c of axles){let dz=Math.abs(z-c);if(dz<arch)y=Math.max(y,cy+Math.sqrt(arch*arch-dz*dz))}return y};
- const samples=[front,-2.21,-2.14,-2.07,-1.89,-1.81,-1.72,-1.63,-1.52,-1.40,-1.28,-1.18,-1.03,
-   -.87,-.65,-.32,0,.32,.64,.89,1.05,1.18,1.31,1.43,1.57,1.70,1.84,2.02,2.16,2.23,rear];
- for(const c of axles)for(let j=0;j<=24;j++)samples.push(c-arch+(2*arch*j/24));
- const zs=[...new Set(samples.map(z=>z.toFixed(5)))].map(Number).sort((a,b)=>a-b);
- // Continuous metal skins with real wheel arch cutouts and gently curved shoulders.
- for(const side of [-1,1])for(let i=1;i<zs.length;i++){
-   const a=zs[i-1],b=zs[i],da=bot(a),db=bot(b),wa=w(a),wb=w(b),ta=sh(a),tb=sh(b);
-   if(b-a<.001)continue;
-   G.quad([side*(wa-.056),da,a],[side*(wb-.056),db,b],
-          [side*wb,Math.max(db+.001,.71),b],[side*wa,Math.max(da+.001,.71),a],paint);
-   G.quad([side*wa,Math.max(da+.001,.71),a],[side*wb,Math.max(db+.001,.71),b],
-          [side*(wb-.038),tb,b],[side*(wa-.038),ta,a],paint);
+ const C = {rubber:'#20272b',seal:'#171f22',glass:'#304651',rearGlass:'#263b48',
+  chrome:'#a9b4b5',light:'#dbe3df',amber:'#dca257',red:'#a72a35',
+  deepRed:'#681e27',bumper:'#33383a',plate:'#d9d9cc',rim:'#b8bfc0',shadow:'#505c60'};
+ const front=-2.414, rear=2.414, axles=[-1.398,1.305],wheelR=.349,archR=.416,cy=.362;
+ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+ const width=z=>.849+.046*Math.max(0,1-Math.pow(Math.abs(z)/2.48,2));
+ const belt=z=>1.006+(z>1.96?-.042*(z-1.96)/.454:0);
+ const bx=(z,y)=>width(z)-.045*Math.max(0,y-.82)/.25-.075*Math.pow(Math.max(0,.82-y)/.54,2);
+ const archY=z=>{
+  let y=.296;
+  for(const a of axles){const d=Math.abs(z-a);if(d<archR)y=Math.max(y,cy+Math.sqrt(archR*archR-d*d));}
+  return y;
+ };
+ const side=(s,z,y,offset=0)=>[s*(bx(z,y)+offset),y,z];
+ // Panels are a continuous strip mesh, tessellated along length, with real holes over the tyres.
+ const stops=[front,-2.37,-2.28,-2.14,-1.95,-1.81,-1.67,-1.45,-1.23,-1.00,-.92,-.70,-.45,-.14,.18,.46,.77,1.07,1.33,1.62,1.89,2.10,2.26,2.37,rear];
+ for(const z of axles)for(let k=0;k<=30;k++)stops.push(z-archR+2*archR*k/30);
+ const zz=[...new Set(stops.map(v=>v.toFixed(5)))].map(Number).sort((a,b)=>a-b);
+ for(const s of [-1,1])for(let i=1;i<zz.length;i++){
+  const a=zz[i-1], b=zz[i],ya=archY(a),yb=archY(b);
+  if(b-a<.00005)continue;
+  G.quad(side(s,a,ya),side(s,b,yb),side(s,b,.793),side(s,a,.793),paint);
+  G.quad(side(s,a,.793),side(s,b,.793),side(s,b,.917),side(s,a,.917),paint);
+  G.quad(side(s,a,.917),side(s,b,.917),side(s,b,belt(b)),side(s,a,belt(a)),paint);
  }
- G.hull(-2.215,2.245,.714,.27,.690,.86,.88,C.trim);
- G.box(0,.325,0,1.48,.13,4.70,C.trim);
- const hood=[front,-2.16,-2.05,-1.67,-1.24,-.94];
- const hoodY=z=>.89+(z+2.25)*.128/1.31;
- for(let i=1;i<hood.length;i++)for(let k=0;k<4;k++){
-   const a=hood[i-1],b=hood[i],u=-1+k*.5,v=u+.5;
-   const p=(t,z)=>[t*(w(z)-.043),hoodY(z)+.025*(1-t*t),z];
-   G.quad(p(u,a),p(v,a),p(v,b),p(u,b),paint);
+ // Recessed, dark wheelhouse backing and floor, kept inboard from visible bodywork.
+ G.box(0,.334,0,1.32,.11,4.70,C.rubber);
+ for(const z of axles)for(const s of [-1,1]){
+  const N=24;
+  for(let j=0;j<N;j++){
+   const a=-Math.PI/2+Math.PI*j/N,b=-Math.PI/2+Math.PI*(j+1)/N;
+   const at=t=>[s*.736,cy+archR*Math.cos(t),z+archR*Math.sin(t)];
+   const bt=t=>[s*.752,cy+archR*Math.cos(t),z+archR*Math.sin(t)];
+   G.quad(at(a),at(b),bt(b),bt(a),C.rubber);
+  }
  }
- // Long, nearly horizontal SportCombi roof and steep glass hatch.
- const roof=[[-.58,1.474],[.20,1.486],[1.14,1.477],[1.79,1.462],[1.98,1.430]];
- const halfRoof=z=>.666+(z+.58)*.019/2.56;
- for(let i=1;i<roof.length;i++)for(let j=0;j<4;j++){
-   let [za,ya]=roof[i-1],[zb,yb]=roof[i],u=-1+j*.5,v=u+.5;
-   const p=(r,z,y)=>[r*halfRoof(z),y+.010*(1-r*r),z];
-   G.quad(p(u,za,ya),p(v,za,ya),p(v,zb,yb),p(u,zb,yb),paint);
- }
- const windowPoint=(side,z,y)=>[side*(.81-(y-1.0)*.305),y,z];
- const pane=(s,coords,color)=>G.poly(coords.map(([z,y])=>windowPoint(s,z,y)),color);
+ // Wide yet subtly crowned hood; front corner retreat gives the 9-5 its rounded nose.
+ const hoodZ=[front,-2.36,-2.20,-2.04,-1.81,-1.54,-1.24,-.98];
+ const hoodY=z=>.936+(.994-.936)*clamp((z-front)/(-.98-front),0,1);
+ const uv=[-1,-.86,-.69,-.48,-.25,0,.25,.48,.69,.86,1];
+ const hoodPoint=(u,z)=>[u*(bx(z,.98)-.030),hoodY(z)+.031*(1-u*u),z+.022*u*u];
+ for(let i=1;i<hoodZ.length;i++)for(let j=1;j<uv.length;j++)
+  G.quad(hoodPoint(uv[j-1],hoodZ[i-1]),hoodPoint(uv[j],hoodZ[i-1]),
+         hoodPoint(uv[j],hoodZ[i]),hoodPoint(uv[j-1],hoodZ[i]),paint);
+ // Lower lip closes the front body volume at multiple cross sections.
+ const nose=(u,y,dz=0)=>{
+  const x=u*(.807+.033*(y-.42));
+  return [x,y,front + .190*u*u + .077*(y-.48) + dz];
+ };
+ const ys=[.31,.39,.49,.57,.69,.79,.88,.935];
+ for(let i=1;i<ys.length;i++)for(let j=1;j<uv.length;j++)
+  G.quad(nose(uv[j-1],ys[i-1]),nose(uv[j],ys[i-1]),nose(uv[j],ys[i]),nose(uv[j-1],ys[i]),paint);
+ // Rounded boot/tailgate and rear bumper, gently recessed towards the corners.
+ const back=(u,y,dz=0)=>[u*(.813+.014*y),y,rear-.160*u*u-.057*(y-.49)+dz];
+ for(let i=1;i<ys.length;i++)for(let j=1;j<uv.length;j++)
+  G.quad(back(uv[j-1],ys[i-1]),back(uv[j],ys[i-1]),back(uv[j],ys[i]),back(uv[j-1],ys[i]),paint);
+ for(let j=1;j<uv.length;j++)
+  G.quad(back(uv[j-1],.88),back(uv[j],.88),back(uv[j],.989),back(uv[j-1],.989),paint);
+ // Windscreen and rear hatch are *inlaid*: seal ring and glass occupy disjoint regions.
+ // Geometry is not drawn on top of glass, avoiding co-planar surfaces entirely.
+ const framed=(outer,inner,glass)=>{
+  for(let i=0;i<4;i++)G.quad(outer[i],outer[(i+1)%4],inner[(i+1)%4],inner[i],C.seal);
+  G.quad(inner[0],inner[1],inner[2],inner[3],glass);
+ };
+ const roofX=z=>.694-.042*clamp((z-1.5)/.55,0,1);
+ const roofY=z=>1.474-.015*clamp((z-.20)/1.73,0,1)-.020*Math.pow(clamp((z-1.70)/.30,0,1),2);
+ // Sloping front glass, no separate black sheet underneath the glass.
+ framed([[-.806,1.012,-.981],[.806,1.012,-.981],[.680,1.472,-.492],[-.680,1.472,-.492]],
+        [[-.774,1.034,-.951],[.774,1.034,-.951],[.649,1.447,-.501],[-.649,1.447,-.501]],C.glass);
+ // Long continuous curved roof (not the flat shoebox top from v0.1).
+ const roofZ=[-.492,-.30,.02,.35,.72,1.10,1.42,1.69,1.90];
+ const rp=(u,z)=>[u*roofX(z),roofY(z)+.018*(1-u*u),z];
+ for(let i=1;i<roofZ.length;i++)for(let j=1;j<uv.length;j++)
+  G.quad(rp(uv[j-1],roofZ[i-1]),rp(uv[j],roofZ[i-1]),rp(uv[j],roofZ[i]),rp(uv[j-1],roofZ[i]),paint);
+ // SportCombi hatch: slopes aft below the trailing roof edge, with a broad glazed area.
+ framed([[-.661,1.441,1.92],[.661,1.441,1.92],[.793,.992,2.361],[-.793,.992,2.361]],
+        [[-.626,1.411,1.954],[.626,1.411,1.954],[.755,1.029,2.344],[-.755,1.029,2.344]],C.rearGlass);
+ // Side glazing as a set of truly separated window openings. Side panels stop at the belt;
+ // painted A/B/C/D posts use strips between frames rather than coplanar overprints.
+ const windowX=(s,z,y)=>[s*(bx(z,1.01)-.145*clamp((y-1.01)/.47,0,1)),y,z];
+ const putPanel=(s,q,color)=>G.poly(q.map(([z,y])=>windowX(s,z,y)),color);
+ const sideWindow=(s,q,glass)=>{
+  // Four corners: lower front, lower rear, upper rear, upper front.
+  const inner=q.map(([z,y],i)=>{
+   const next=q[(i+1)%4], prev=q[(i+3)%4];
+   return [z*.895+(next[0]+prev[0])*.0525,y*.895+(next[1]+prev[1])*.0525];
+  });
+  const a=q.map(([z,y])=>windowX(s,z,y));
+  const b=inner.map(([z,y])=>windowX(s,z,y));
+  framed(a,b,glass);
+ };
  for(const s of [-1,1]){
-   // Painted A/B/C/D posts, three separate side-window bays.
-   pane(s,[[-1.04,1.016],[-.575,1.473],[-.505,1.475],[-.977,1.017]],paint);
-   pane(s,[[-.106,1.016],[-.101,1.483],[-.018,1.482],[-.025,1.016]],paint);
-   pane(s,[[1.045,1.016],[1.037,1.481],[1.136,1.478],[1.157,1.016]],paint);
-   pane(s,[[2.216,.986],[1.946,1.439],[1.997,1.432],[2.294,.996]],paint);
-   pane(s,[[-.987,1.026],[-.548,1.451],[-.119,1.459],[-.125,1.026]],C.seal);
-   pane(s,[[-.928,1.051],[-.521,1.426],[-.153,1.433],[-.156,1.053]],C.glass);
-   pane(s,[[-.002,1.026],[-.002,1.456],[1.055,1.450],[1.070,1.026]],C.seal);
-   pane(s,[[.038,1.053],[.042,1.429],[1.012,1.423],[1.019,1.053]],C.glass);
-   pane(s,[[1.174,1.027],[1.156,1.447],[1.922,1.414],[2.191,1.027]],C.seal);
-   pane(s,[[1.205,1.052],[1.194,1.419],[1.891,1.389],[2.133,1.052]],C.glass);
-   G.quad([s*.809,1.017,-1.037],[s*.819,1.017,2.235],
-          [s*.816,1.038,2.235],[s*.805,1.038,-1.037],C.trim);
-   for(const z of [-.027,1.13])G.lineOnSide(s*.888,.42,z,.982,z-.06,C.trim,.006);
-   G.quad([s*.890,.706,-2.02],[s*.890,.706,2.18],[s*.893,.741,2.18],[s*.893,.741,-2.02],C.trim);
-   for(const z of [-.64,.42])G.box(s*.892,.93,z,.02,.046,.16,C.chrome);
-   G.box(s*.883,1.066,-.91,.13,.126,.185,paint);
-   G.box(s*.955,1.069,-.936,.075,.075,.140,C.trim);
-   G.box(s*.873,.866,-1.88,.027,.045,.115,C.indicator);
-   pane(s,[[2.10,1.03],[2.252,.95],[2.265,.46],[2.18,.45]],paint);
-   G.box(s*.610,1.484,.64,.045,.027,2.48,C.trim);
-   G.box(s*.610,1.470,-.50,.050,.052,.13,C.trim);
-   G.box(s*.610,1.470,1.77,.050,.052,.13,C.trim);
+  // A- and B-pillars, an appreciable C-pillar and a swept rear D-pillar.
+  putPanel(s,[[-.997,1.014],[-.545,1.473],[-.448,1.474],[-.875,1.014]],paint);
+  putPanel(s,[[.120,1.014],[.100,1.472],[.213,1.473],[.233,1.014]],paint);
+  putPanel(s,[[1.176,1.014],[1.177,1.467],[1.301,1.466],[1.315,1.014]],paint);
+  putPanel(s,[[1.912,1.427],[2.363,.980],[2.225,.979],[1.817,1.456]],paint);
+  sideWindow(s,[[-.857,1.022],[.120,1.022],[.100,1.444],[-.541,1.443]],C.glass);
+  sideWindow(s,[[.232,1.022],[1.175,1.022],[1.175,1.438],[.215,1.445]],C.glass);
+  sideWindow(s,[[1.314,1.022],[2.165,1.022],[1.801,1.425],[1.308,1.435]],C.glass);
+  // Continuous upper belt; door gaps are narrow, recessed, never same-plane overlays.
+  for(let i=1;i<zz.length;i++){
+   const a=zz[i-1],b=zz[i];
+   G.quad(side(s,a,.756,.008),side(s,b,.756,.008),side(s,b,.786,.008),side(s,a,.786,.008),C.rubber);
+  }
+  for(const z of [.225,1.311]){
+   G.quad(side(s,z-.008,.403,.009),side(s,z+.008,.403,.009),
+          side(s,z+.008,1.005,.009),side(s,z-.008,1.005,.009),C.rubber);
+  }
+  // Painted and black trim mirrors, low roof rails, narrow handle recesses.
+  G.box(s*.852,1.036,-.81,.138,.110,.175,paint);
+  G.box(s*.930,1.024,-.812,.048,.046,.135,C.rubber);
+  for(const z of [-.24,.71])G.box(s*.883,.945,z,.022,.040,.140,C.rubber);
+  G.box(s*.617,1.501,.75,.038,.031,2.25,C.rubber);
+  G.box(s*.615,1.492,-.27,.045,.032,.110,C.rubber);
+  G.box(s*.616,1.494,1.78,.045,.032,.110,C.rubber);
  }
- G.quad([-.791,1.016,-1.045],[.791,1.016,-1.045],[.668,1.473,-.574],[-.668,1.473,-.574],C.seal);
- G.quad([-.755,1.04,-1.018],[.755,1.04,-1.018],[.637,1.445,-.573],[-.637,1.445,-.573],C.glass);
- G.quad([-.682,1.426,1.965],[.682,1.426,1.965],[.806,.992,2.293],[-.806,.992,2.293],C.seal);
- G.quad([-.643,1.404,1.989],[.643,1.404,1.989],[.767,1.030,2.288],[-.767,1.030,2.288],C.rearGlass);
- G.quad([-.788,.957,rear],[.788,.957,rear],[.788,.440,rear],[-.788,.440,rear],paint);
- G.quad([-.788,.320,rear],[.788,.320,rear],[.788,.440,rear],[-.788,.440,rear],C.trim);
- G.quad([-.776,.34,front],[.776,.34,front],[.776,.89,front],[-.776,.89,front],paint);
- // Three separate chromed grille openings and tapered wraparound front lamps.
- G.quad([-.236,.765,front-.036],[.236,.765,front-.036],[.208,.940,front-.029],[-.208,.940,front-.029],C.chrome);
- G.quad([-.218,.789,front-.049],[.218,.789,front-.049],[.190,.926,front-.044],[-.190,.926,front-.044],C.seal);
+ // 2002 facelift: organic wrap-around lamps and the three swept Saab grille ports.
+ // Grille is formed from trapezoidal rings rather than broad black rectangles.
+ const decal=(u1,u2,y1,y2,color,advance=.012)=>
+  G.quad(nose(u1,y1,-advance),nose(u2,y1,-advance),nose(u2,y2,-advance),nose(u1,y2,-advance),color);
+ const grill=(outline)=>{
+  const cx=outline.reduce((a,p)=>a+p[0],0)/outline.length;
+  const cy0=outline.reduce((a,p)=>a+p[1],0)/outline.length;
+  const inner=outline.map(([u,y])=>[cx+(u-cx)*.78,cy0+(y-cy0)*.77]);
+  for(let i=0;i<outline.length;i++){
+   const a=outline[i],b=outline[(i+1)%outline.length];
+   const c=inner[(i+1)%inner.length],d=inner[i];
+   G.quad(nose(...a,-.018),nose(...b,-.018),nose(...c,-.018),nose(...d,-.018),C.chrome);
+  }
+  G.poly(inner.map(p=>nose(...p,-.032)),C.seal);
+ };
+ grill([[-.263,.709],[.263,.709],[.225,.880],[-.225,.880]]);
  for(const s of [-1,1]){
-   G.quad([s*.270,.791,front-.038],[s*.438,.797,front-.035],
-          [s*.446,.920,front-.030],[s*.252,.920,front-.034],C.chrome);
-   G.quad([s*.290,.813,front-.050],[s*.413,.818,front-.048],
-          [s*.422,.903,front-.045],[s*.276,.900,front-.047],C.seal);
-   G.quad([s*.480,.776,front-.055],[s*.764,.787,front-.027],
-          [s*.761,.952,front-.025],[s*.477,.925,front-.052],C.chrome);
-   G.quad([s*.502,.795,front-.069],[s*.744,.803,front-.045],
-          [s*.740,.936,front-.045],[s*.493,.907,front-.066],C.light);
-   G.quad([s*.744,.803,front+.013],[s*.840,.800,front+.125],
-          [s*.824,.936,front+.111],[s*.739,.936,front+.012],C.light);
-   G.box(s*.826,.747,front+.12,.016,.052,.092,C.indicator);
-   G.box(s*.666,.794,rear+.024,.255,.307,.037,C.tail);
-   G.box(s*.670,.895,rear+.045,.236,.073,.020,C.light);
-   G.box(s*.666,.662,rear+.045,.247,.087,.022,C.tailDark);
-   G.box(s*.841,.807,2.226,.057,.275,.130,C.tail);
+  grill([[s*.310,.733],[s*.498,.734],[s*.458,.868],[s*.288,.865]]);
+  // Curved outer corner and gently swept top edge are distinctive to pre-2006 9-5.
+  const rim=[[.500,.728],[.657,.716],[.944,.750],[.955,.822],[.910,.929],[.702,.943],[.512,.904]]
+    .map(([u,y])=>nose(s*u,y,-.018));
+  const glazing=[[.521,.747],[.661,.738],[.919,.772],[.930,.822],[.892,.911],[.702,.923],[.532,.883]]
+    .map(([u,y])=>nose(s*u,y,-.035));
+  for(let i=0;i<rim.length;i++)G.quad(rim[i],rim[(i+1)%rim.length],glazing[(i+1)%rim.length],glazing[i],C.chrome);
+  G.poly(glazing,C.light);
+  decal(s*.829,s*.943,.769,.819,C.amber,.047);
  }
- G.box(0,.466,front-.087,1.58,.096,.112,C.trim);
- G.box(0,.546,front-.080,1.50,.025,.040,C.chrome);
- G.box(0,.558,rear+.077,1.62,.100,.139,C.trim);
- G.box(0,.671,rear+.039,.465,.115,.021,C.plate);
- G.box(0,.447,front-.119,.450,.071,.022,C.seal);
- for(const s of [-1,1])G.box(s*.589,.451,front-.135,.185,.063,.020,C.light);
- G.box(0,1.449,1.982,1.23,.045,.092,paint);
- G.box(0,1.067,rear+.025,.495,.018,.025,C.trim);
- // 16-inch 5-spoke wheels at manufacturer-specified 1.522 m track.
- for(const side of [-1,1])for(const z of axles){
-   const x=side*.768,r=.343,depth=.215,at=x+side*(depth/2),N=28;
-   const ring=(xx,rr)=>Array.from({length:N},(_,k)=>[xx,cy+rr*Math.cos(k*Math.PI*2/N),z+rr*Math.sin(k*Math.PI*2/N)]);
-   const inner=ring(x-side*depth/2,r),outer=ring(at,r);
-   for(let i=0;i<N;i++)G.quad(inner[i],inner[(i+1)%N],outer[(i+1)%N],outer[i],C.tire);
-   const shoulder=ring(at+side*.004,.255),face=ring(at+side*.010,.210);
-   for(let i=0;i<N;i++){
-     G.quad(outer[i],outer[(i+1)%N],shoulder[(i+1)%N],shoulder[i],C.tire);
-     G.quad(shoulder[i],shoulder[(i+1)%N],face[(i+1)%N],face[i],C.rimDark);
-   }
-   const cx=at+side*.019;
-   for(let k=0;k<5;k++){
-     const a=k*2*Math.PI/5+.13,p=(rad,t)=>[cx,cy+rad*Math.cos(t),z+rad*Math.sin(t)];
-     G.quad(p(.067,a-.12),p(.205,a-.19),p(.205,a+.19),p(.067,a+.12),C.wheel);
-   }
-   G.poly(Array.from({length:12},(_,i)=>[cx+side*.002,cy+.068*Math.cos(i*Math.PI/6),z+.068*Math.sin(i*Math.PI/6)]),C.chrome);
+ // Recessed upper bumper strip, front air intake and plate.
+ decal(-.955,.955,.540,.574,C.rubber,.027);
+ decal(-.470,.470,.375,.426,C.rubber,.031);
+ for(const s of [-1,1])decal(s*.715,s*.888,.381,.444,C.shadow,.028);
+ // Head-on convex rear lamps. Side wrap portions sit on adjacent body planes.
+ for(const s of [-1,1]){
+  const x=s*.704;
+  G.quad(back(s*.68,.681,.022),back(s*.92,.681,.022),
+         back(s*.92,1.078,.022),back(s*.68,1.078,.022),C.red);
+  G.quad(back(s*.708,.857,.033),back(s*.902,.857,.033),
+         back(s*.902,.934,.033),back(s*.708,.934,.033),C.light);
+  G.quad([s*.856,.734,2.266],[s*.873,.734,2.180],
+         [s*.860,1.052,2.180],[s*.847,1.052,2.281],C.red);
+ }
+ G.quad(back(-.290,.604,-.024),back(.290,.604,-.024),back(.290,.718,-.024),back(-.290,.718,-.024),C.plate);
+ G.quad(back(-.986,.500,.016),back(.986,.500,.016),back(.986,.584,.016),back(-.986,.584,.016),C.rubber);
+ G.box(0,1.045,2.364,.510,.015,.026,C.rubber);
+ G.box(0,1.444,1.905,1.27,.032,.090,paint);
+ // Proper five-spoke wheels: tyre sidewall, recessed dark wheel well, silver spokes.
+ for(const s of [-1,1])for(const z of axles){
+  const N=32,x=s*.755,outer=s*.869,inner=s*.716;
+  const circle=(u,r,k)=>[u,cy+r*Math.cos(k*2*Math.PI/N),z+r*Math.sin(k*2*Math.PI/N)];
+  for(let k=0;k<N;k++){
+   G.quad(circle(inner,wheelR,k),circle(inner,wheelR,k+1),
+          circle(outer,wheelR,k+1),circle(outer,wheelR,k),C.rubber);
+   G.quad(circle(outer,wheelR,k),circle(outer,wheelR,k+1),
+          circle(outer+s*.009,.255,k+1),circle(outer+s*.009,.255,k),C.rubber);
+   G.quad(circle(outer+s*.009,.255,k),circle(outer+s*.009,.255,k+1),
+          circle(outer+s*.014,.206,k+1),circle(outer+s*.014,.206,k),C.shadow);
+  }
+  // Hub and spokes are outside the recessed wheel face, no duplicate/coplanar circles.
+  const face=outer+s*.023;
+  const p=(r,a)=>[face,cy+r*Math.cos(a),z+r*Math.sin(a)];
+  for(let k=0;k<5;k++){
+   const a=(k+.16)*2*Math.PI/5;
+   G.quad(p(.064,a-.22),p(.210,a-.155),p(.210,a+.155),p(.064,a+.22),C.rim);
+  }
+  G.poly(Array.from({length:16},(_,k)=>p(.066,k*2*Math.PI/16)),C.chrome);
  }
 }
-
 function tractor(G,id){
  const jd=id==="johnDeere6M",body=jd?"#3e8831":"#2375b5";
  const roof=jd?"#408633":"#236eac",rim=jd?"#e5bc23":"#c2c5bd";
