@@ -87,6 +87,8 @@ Short records so settled questions stay settled. Add one when you make a choice 
 - **Stay on three.js; no game engine.** Phaser is 2D. Babylon.js, PlayCanvas and Godot were considered; see #58 for the trade-offs and when to revisit.
 - **Svelte for DOM UI, not for the scene.** Declarative scene graphs (Threlte) don't suit a hot game loop. They might suit the map viewer.
 - **Supersedes #23's npm-free approach.** The module split in #23 still applies; the concatenating Python build doesn't. The project chose to grow, and types, tests and a UI layer need a bundler.
+- **Still ships as one `index.html`, for now.** `vite-plugin-singlefile` inlines everything per page, so the game stays a single self-contained file. Switch to normal multi-file output when models and audio make caching worth it (see #44).
+- **Modes are state machines.** Player, wanted level, police AI and app flow become explicit typed state machines in `sim/`, hand-rolled first, with XState only if quests need more (#63).
 - **HUD stays DOM; in-world UI uses canvas textures.** HTML-in-canvas (#56) replaces the canvas textures once browsers support it.
 - **No physics engine yet.** Collisions are hand-rolled. Rapier is the candidate when crashes (#40) need more (#54).
 - **No ECS yet.** Plain arrays per system; revisit with miniplex when entity kinds multiply (#55).
