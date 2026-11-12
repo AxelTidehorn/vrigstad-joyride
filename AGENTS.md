@@ -45,6 +45,7 @@ Every commit message **and every PR title** follows [Conventional Commits](https
 - Scopes are optional and name the area: `police`, `traffic`, `npc`, `hud`, `map`, `world`, `input`, `audio`, `safehouse`, `minigames`, `pipeline`.
 - Examples: `feat(police): add roadblocks at three stars`, `fix(hud): keep street sign inside safe area on iPhone`, `refactor(world): share terrain code between game and map`, `data: refresh OSM extract`.
 - Summary under ~70 characters. Add a body for the *why* when it isn't obvious.
+- Release notes are generated from PR titles (see "Releases" in the README), and the type sets the version bump: `feat` → minor, `fix` / `perf` → patch.
 - Merge PRs with **squash**. The PR title should become the commit subject, so it must follow the same format. (This needs the repo's squash setting to use the PR title; until the owner changes that, check the squash commit title when merging.)
 
 ### Labels on PRs
