@@ -359,7 +359,7 @@ const lamps = z => [[0.34, 0.16, 0.06, -0.6, 0.72, -z, '#fff6c8'], [0.34, 0.16, 
 const TYPES = {
   volvo: { name: 'Volvo 240', max: 38, acc: 7, off: 0.5, cols: ['#27406b', '#7a2530', '#c9bd9c', '#e6e4dc', '#2f5a41', '#8a8f93'],
     parts: c => [...wheels(0.8, -1.5, 1.45), [1.74, 0.62, 4.8, 0, 0.66, 0, c], [1.56, 0.52, 3.0, 0, 1.22, 0.6, GLASS], [1.6, 0.07, 3.04, 0, 1.5, 0.6, c], ...lamps(2.41)] },
-  saab: { name: 'Saab 900', max: 42, acc: 8.5, off: 0.5, cols: ['#1d1d1f', '#8c1c1c', '#3d5a80', '#d8d4c8', '#55606a'],
+  saab: { name: 'Saab 900 (experimental body)', max: 42, acc: 8.5, off: 0.5, cols: ['#1d1d1f', '#8c1c1c', '#3d5a80', '#d8d4c8', '#55606a'],
     parts: c => [...wheels(0.8, -1.45, 1.35), [1.7, 0.58, 4.6, 0, 0.62, 0, c], [1.5, 0.5, 2.1, 0, 1.14, 0.25, GLASS], [1.54, 0.07, 1.9, 0, 1.41, 0.2, c], [1.6, 0.22, 0.7, 0, 0.98, 1.75, c], ...lamps(2.31)] },
   epa: { name: 'EPA-traktor', max: 8.33, acc: 4, off: 0.7, cols: ['#c8372d', '#2a2a2c', '#e8a020', '#3f6b8a'],
     parts: c => [...wheels(0.8, -1.5, 1.4), [1.74, 0.6, 4.7, 0, 0.66, 0, c], [1.56, 0.55, 1.5, 0, 1.22, -0.35, GLASS], [1.6, 0.07, 1.54, 0, 1.52, -0.35, c],
@@ -397,7 +397,7 @@ function placeCar(c) {
 }
 function addCar(type, x, z, h, mode) {
   const T = TYPES[type];
-  const modelId = type === 'volvo' ? 'volvo240' : type === 'newHolland' ? 'newHollandT6' : type === 'johnDeere' ? 'johnDeere6M' : null;
+  const modelId = type === 'volvo' ? 'volvo240' : type === 'saab' ? 'saab900' : type === 'newHolland' ? 'newHollandT6' : type === 'johnDeere' ? 'johnDeere6M' : null;
   const mesh = modelId
     ? new THREE.Mesh(VEHICLE_MODELS.createVehicleGeometry(THREE, modelId, { paint: pick(T.cols) }), shapedPaintMat)
     : new THREE.Mesh(carGeo(type, pick(T.cols)), paintMat);
@@ -407,7 +407,7 @@ function addCar(type, x, z, h, mode) {
   scene.add(mesh); cars.push(c); placeCar(c); return c;
 }
 function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
-const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : rnd() < 0.5 ? 'newHolland' : 'johnDeere'; };
+const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : r < 0.95 ? 'newHolland' : 'johnDeere'; };
 // parked cars along streets and driveways
 (function () {
   let count = 0;
@@ -440,7 +440,28 @@ function spawnTraffic(farFrom) {
     c.ri = ri; c.a = a; c.dir = 1; c.t = 0; c.first = true; return c;
   }
 }
-for (let i = 0; i < 18; i++) spawnTraffic(null);
+// Place part of the initial traffic near Torget instead of scattering all 18 cars
+// over the entire 2.2 km map. Keep the total unchanged for performance.
+function spawnLocalTraffic(n) {
+  const home = { x: -8.9, z: 30.1 };
+  const options = [];
+  for (const ri of driveable) {
+    const p = R[ri].p;
+    for (let a = 0; a < p.length - 1; a++) {
+      const d = Math.hypot(p[a][0] - home.x, p[a][1] - home.z);
+      if (d > 45 && d < 210) options.push({ ri, a });
+    }
+  }
+  for (let i = 0, tries = 0; i < n && tries < 160 && options.length; tries++) {
+    const { ri, a } = pick(options), p = R[ri].p[a];
+    if (cars.some(c => Math.hypot(c.x - p[0], c.z - p[1]) < 18)) continue;
+    const type = pick(['volvo', 'saab', 'epa']);
+    const c = addCar(type, p[0], p[1], 0, 'ai');
+    c.ri = ri; c.a = a; c.dir = 1; c.t = 0; c.first = true; i++;
+  }
+}
+for (let i = 0; i < 12; i++) spawnTraffic(null);
+spawnLocalTraffic(6);
 function updateTraffic(c, dt, T) {
   const r = R[c.ri]; let A = r.p[c.a], B = r.p[c.a + c.dir], L = Math.max(0.01, Math.hypot(B[0] - A[0], B[1] - A[1]));
   const fx = Math.sin(c.h), fz = -Math.cos(c.h); let blocked = false;
