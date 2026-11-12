@@ -30,7 +30,29 @@ npm run build               # production build into dist/
 - Work on a branch and open a PR; don't push to `main`.
 - Keep a PR to one concern. Don't mix a refactor with a feature, and don't reformat code you aren't otherwise changing.
 - Reference the issue in the PR (`Closes #12`, or `Part of #12` if it doesn't fully close it). Say in the PR what is *not* done.
-- Commit messages: imperative subject under ~70 characters ("Add moose near Slättsjön"), then a body saying what and why if it isn't obvious.
+
+### Commits and PR titles: Conventional Commits
+
+Every commit message **and every PR title** follows [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<type>(<optional scope>): <imperative summary, lower case, no period>
+```
+
+- Types: `feat` (new gameplay or feature), `fix`, `perf`, `refactor` (no behaviour change), `docs`, `test`, `build` (Vite, npm, `tools/build.py`), `ci`, `style` (formatting only), `chore`, and `data` for changes to `data/` or the map pipeline.
+- Scopes are optional and name the area: `police`, `traffic`, `npc`, `hud`, `map`, `world`, `input`, `audio`, `safehouse`, `minigames`, `pipeline`.
+- Examples: `feat(police): add roadblocks at three stars`, `fix(hud): keep street sign inside safe area on iPhone`, `refactor(world): share terrain code between game and map`, `data: refresh OSM extract`.
+- Summary under ~70 characters. Add a body for the *why* when it isn't obvious.
+- The PR title is what ends up in history when squash-merging, so it must follow the same format.
+
+### Labels on PRs
+
+Label every PR when you open it, the same way issues are labelled:
+
+- **A type:** `enhancement` / `feature request` (new behaviour), `bug`, `documentation`.
+- **A scope**, if one fits: `scope:architecture`, `scope:npc`, `scope:minigames`, ...
+- If no existing scope fits and the area will clearly see more work, **create a new `scope:<area>` label** with a one-line description (`gh label create "scope:audio" --description "Sound, music and radio"`). Don't create one-off labels for a single PR.
+- Check existing labels first (`gh label list`), reuse their spelling, and say in the PR description if you created a new one.
 - Until [#45](https://github.com/OliverRomhagen/vrigstad-joyride/issues/45) lands, the built `index.html` and `map.html` are committed. Rebuild them in the same commit as the `src/` change, and never edit them by hand.
 - Big structural moves conflict with every open feature branch. Check open PRs first, and coordinate rather than rebasing someone else's work.
 - Say how you tested in the PR, and be honest about what wasn't tested ("not played by hand on a phone").
