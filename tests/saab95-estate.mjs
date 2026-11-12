@@ -18,4 +18,14 @@ const height = extrema(1,Math.max);
 assert.ok(Math.abs(length - 4.828) < .08, 'length not near Saab factory dimension');
 assert.ok(width > 1.792 && width < 2.042, 'mirror-to-mirror width out of range');
 assert.ok(height > 1.44 && height < 1.56, 'roof height out of range');
+// Catch accidentally duplicated faces in a rebuild: they can flicker in WebGL.
+const faceKeys = new Set();
+for (let i=0;i<mesh.positions.length;i+=9) {
+  const vertices = [0,3,6].map(k => mesh.positions.slice(i+k,i+k+3)
+    .map(n => Math.round(n*100000)/100000).join(',')).sort();
+  const key=vertices.join('|');
+  assert.ok(!faceKeys.has(key), 'duplicate triangle surface at index '+i/9);
+  faceKeys.add(key);
+}
+assert.ok(faceKeys.size > 3000, 'model unexpectedly reverted to a crude silhouette');
 console.log(`Saab 9-5 SportCombi: ${mesh.positions.length/9} triangles, length ${length.toFixed(3)}m, width incl. mirrors ${width.toFixed(3)}m, height ${height.toFixed(3)}m`);
