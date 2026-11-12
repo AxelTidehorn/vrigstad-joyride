@@ -37,8 +37,8 @@ class Builder{
   const ring=(at,rad)=>Array.from({length:N},(_,i)=>[at,y+rad*Math.sin(i*2*Math.PI/N),z+rad*Math.cos(i*2*Math.PI/N)]);
   const A=ring(inner,r),B=ring(outer,r);
   for(let i=0;i<N;i++)this.quad(A[i],A[(i+1)%N],B[(i+1)%N],B[i],COLORS.tyre);
-  this.poly(B,COLORS.tyre);this.poly(ring(outer+s*.01,r*.64),rim);
-  this.poly(ring(outer+s*.018,r*.28),COLORS.silver);
+  this.poly(B,COLORS.tyre);this.poly(ring(outer+s*.01,r*.51),rim);
+  this.poly(ring(outer+s*.018,r*.22),COLORS.silver);
  }
 }
 function volvo(G,paint){
@@ -68,8 +68,8 @@ function volvo(G,paint){
   G.lineOnSide(s*.855,.86,-2.17,.86,2.17,COLORS.black,.014);
   for(const z of [-.20,.88])G.box(s*.86,.96,z,.022,.022,.18,COLORS.black);
   for(const z of [-.75,.27,1.43])G.lineOnSide(s*.853,.46,z,.85,z,COLORS.black,.006);
-  G.wheel(s*.84,fy,fr,.357,.29,COLORS.silver);
-  G.wheel(s*.84,fy,rr,.357,.29,COLORS.silver);
+  G.wheel(s*.84,fy+.055,fr,.357,.29,COLORS.silver);
+  G.wheel(s*.84,fy+.055,rr,.357,.29,COLORS.silver);
  }
  // Front and rear windscreens follow the roof planes.
  G.quad([-.756,1.055,-.98],[.756,1.055,-.98],[.67,1.41,-.60],[-.67,1.41,-.60],COLORS.black);
@@ -107,8 +107,8 @@ function tractor(G,id){
   G.quad([s*.779,1.53,.47],[s*.779,1.53,bb-.08],[s*.707,2.46,tb-.07],[s*.707,2.46,.47],COLORS.glass);
   G.quad([s*.79,1.44,.422],[s*.79,1.44,.50],[s*.71,2.55,.50],[s*.71,2.55,.422],roof);
   G.quad([s*.79,1.55,.79],[s*1.14,1.56,.84],[s*1.17,1.46,1.79],[s*.79,1.47,1.80],body);
-  G.wheel(s*.89,.56,-1.28,.555,.35,rim);
-  G.wheel(s*.96,.82,1.18,.835,.43,rim);
+  G.wheel(s*.89,.60,-1.28,.555,.35,rim);
+  G.wheel(s*.96,.87,1.18,.835,.43,rim);
   G.box(s*.92,2.18,-.34,.19,.16,.23,COLORS.black);
  }
  G.quad([-.76,1.44,-.48],[.76,1.44,-.48],[.70,2.54,-.18],[-.70,2.54,-.18],COLORS.glass);
