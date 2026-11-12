@@ -388,8 +388,8 @@ class Builder{
   const ring=(at,rad)=>Array.from({length:N},(_,i)=>[at,y+rad*Math.sin(i*2*Math.PI/N),z+rad*Math.cos(i*2*Math.PI/N)]);
   const A=ring(inner,r),B=ring(outer,r);
   for(let i=0;i<N;i++)this.quad(A[i],A[(i+1)%N],B[(i+1)%N],B[i],COLORS.tyre);
-  this.poly(B,COLORS.tyre);this.poly(ring(outer+s*.01,r*.64),rim);
-  this.poly(ring(outer+s*.018,r*.28),COLORS.silver);
+  this.poly(B,COLORS.tyre);this.poly(ring(outer+s*.01,r*.51),rim);
+  this.poly(ring(outer+s*.018,r*.22),COLORS.silver);
  }
 }
 function volvo(G,paint){
@@ -419,8 +419,8 @@ function volvo(G,paint){
   G.lineOnSide(s*.855,.86,-2.17,.86,2.17,COLORS.black,.014);
   for(const z of [-.20,.88])G.box(s*.86,.96,z,.022,.022,.18,COLORS.black);
   for(const z of [-.75,.27,1.43])G.lineOnSide(s*.853,.46,z,.85,z,COLORS.black,.006);
-  G.wheel(s*.84,fy,fr,.357,.29,COLORS.silver);
-  G.wheel(s*.84,fy,rr,.357,.29,COLORS.silver);
+  G.wheel(s*.84,fy+.055,fr,.357,.29,COLORS.silver);
+  G.wheel(s*.84,fy+.055,rr,.357,.29,COLORS.silver);
  }
  // Front and rear windscreens follow the roof planes.
  G.quad([-.756,1.055,-.98],[.756,1.055,-.98],[.67,1.41,-.60],[-.67,1.41,-.60],COLORS.black);
@@ -458,8 +458,8 @@ function tractor(G,id){
   G.quad([s*.779,1.53,.47],[s*.779,1.53,bb-.08],[s*.707,2.46,tb-.07],[s*.707,2.46,.47],COLORS.glass);
   G.quad([s*.79,1.44,.422],[s*.79,1.44,.50],[s*.71,2.55,.50],[s*.71,2.55,.422],roof);
   G.quad([s*.79,1.55,.79],[s*1.14,1.56,.84],[s*1.17,1.46,1.79],[s*.79,1.47,1.80],body);
-  G.wheel(s*.89,.56,-1.28,.555,.35,rim);
-  G.wheel(s*.96,.82,1.18,.835,.43,rim);
+  G.wheel(s*.89,.60,-1.28,.555,.35,rim);
+  G.wheel(s*.96,.87,1.18,.835,.43,rim);
   G.box(s*.92,2.18,-.34,.19,.16,.23,COLORS.black);
  }
  G.quad([-.76,1.44,-.48],[.76,1.44,-.48],[.70,2.54,-.18],[-.70,2.54,-.18],COLORS.glass);
@@ -561,7 +561,7 @@ function addCar(type, x, z, h, mode) {
   scene.add(mesh); cars.push(c); placeCar(c); return c;
 }
 function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
-const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : rnd() < 0.5 ? 'newHolland' : 'johnDeere'; };
+const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : r < 0.95 ? 'newHolland' : 'johnDeere'; };
 // parked cars along streets and driveways
 (function () {
   let count = 0;
@@ -594,7 +594,28 @@ function spawnTraffic(farFrom) {
     c.ri = ri; c.a = a; c.dir = 1; c.t = 0; c.first = true; return c;
   }
 }
-for (let i = 0; i < 18; i++) spawnTraffic(null);
+// Place part of the initial traffic near Torget instead of scattering all 18 cars
+// over the entire 2.2 km map. Keep the total unchanged for performance.
+function spawnLocalTraffic(n) {
+  const home = { x: -8.9, z: 30.1 };
+  const options = [];
+  for (const ri of driveable) {
+    const p = R[ri].p;
+    for (let a = 0; a < p.length - 1; a++) {
+      const d = Math.hypot(p[a][0] - home.x, p[a][1] - home.z);
+      if (d > 45 && d < 210) options.push({ ri, a });
+    }
+  }
+  for (let i = 0, tries = 0; i < n && tries < 160 && options.length; tries++) {
+    const { ri, a } = pick(options), p = R[ri].p[a];
+    if (cars.some(c => Math.hypot(c.x - p[0], c.z - p[1]) < 18)) continue;
+    const type = pick(['volvo', 'saab', 'epa']);
+    const c = addCar(type, p[0], p[1], 0, 'ai');
+    c.ri = ri; c.a = a; c.dir = 1; c.t = 0; c.first = true; i++;
+  }
+}
+for (let i = 0; i < 12; i++) spawnTraffic(null);
+spawnLocalTraffic(6);
 function updateTraffic(c, dt, T) {
   const r = R[c.ri]; let A = r.p[c.a], B = r.p[c.a + c.dir], L = Math.max(0.01, Math.hypot(B[0] - A[0], B[1] - A[1]));
   const fx = Math.sin(c.h), fz = -Math.cos(c.h); let blocked = false;
