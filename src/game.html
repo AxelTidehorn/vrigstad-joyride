@@ -4,7 +4,7 @@
 <style>
 /* Layout: the game view fills the screen; HUD pieces sit in the corners (minimap + street sign, wanted level, speed, touch controls). Single daylight look by choice. */
 :root {
-  --sky: #bcd7e6;
+  --sky: #a9c8d8;
   --hud: rgba(16, 22, 20, .74);
   --ink: #f4f1e6;
   --dim: rgba(244, 241, 230, .55);
@@ -156,13 +156,13 @@ const coarse = matchMedia('(pointer: coarse)').matches;
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-const SKY = 0xbcd7e6;
+const SKY = 0xa9c8d8;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(SKY);
 scene.fog = new THREE.Fog(SKY, 260, 1900);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
-scene.add(new THREE.HemisphereLight(0xffffff, 0x9aa58a, 0.72));
-const sun = new THREE.DirectionalLight(0xfff4dd, 0.6);
+scene.add(new THREE.HemisphereLight(0xf1f5ff, 0x718365, 0.62));
+const sun = new THREE.DirectionalLight(0xfff1d6, 0.85);
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
@@ -178,9 +178,9 @@ const P = v => (v + HALF) * K;
 function trace(p, close) { ctx.moveTo(P(p[0]), P(p[1])); for (let i = 2; i < p.length; i += 2) ctx.lineTo(P(p[i]), P(p[i + 1])); if (close) ctx.closePath(); }
 const ROAD_W = [9, 7.5, 5.5, 3.5, 2.6, 1.5];
 (function paint() {
-  const land = ['#a6c083', '#d9cf8b', '#b9b4a8', '#8fc072', '#93b77d', '#6f9a5e', '#7cc163'];
+  const land = ['#85a45f', '#c4b57a', '#aaa398', '#709951', '#749759', '#547a46', '#679e4a'];
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  ctx.fillStyle = '#9db87a'; ctx.fillRect(0, 0, CW, CW);
+  ctx.fillStyle = '#829d5f'; ctx.fillRect(0, 0, CW, CW);
   for (let k = 0; k < 7; k++) { ctx.fillStyle = land[k]; ctx.beginPath(); for (const l of D.l) if (l.k === k) trace(l.p, true); ctx.fill(); }
   ctx.strokeStyle = '#4f8fb8';
   for (const w of D.ww) { ctx.lineWidth = (w.k === 0 ? 6 : 2) * K; ctx.beginPath(); trace(w.p); ctx.stroke(); }
@@ -222,6 +222,26 @@ texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 })();
 
 // ---------- roads: crisp ribbons on the terrain + lookup grid + junction graph ----------
+
+// Generated, tileable aggregate detail: no painted image assets or network requests.
+// UVs are world-space so patches remain stable across ribbon segments.
+function makeAsphaltTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const g = c.getContext('2d'), img = g.createImageData(128, 128);
+  let state = 1987;
+  function noise() { state = (Math.imul(state, 1664525) + 1013904223) | 0; return (state >>> 0) / 4294967296; }
+  for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) {
+    const n = Math.round(194 + (noise() - 0.5) * 32 + (noise() < 0.035 ? 32 : 0));
+    const i = (y * 128 + x) * 4;
+    img.data[i] = n; img.data[i + 1] = n + 1; img.data[i + 2] = n + 2; img.data[i + 3] = 255;
+  }
+  g.putImageData(img, 0, 0);
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+  return t;
+}
+const asphaltTexture = makeAsphaltTexture();
 const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p.push([r.p[i], r.p[i + 1]]); return { p, c: r.c, n: r.n }; });
 (function () {
   const bufs = [[], [], [], [], [], [], []];
@@ -243,10 +263,42 @@ const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p
   for (const r of R) { ribbon(bufs[r.c], r.p, ROAD_W[r.c], 0.25 - r.c * 0.03); if (r.c < 2) ribbon(bufs[6], r.p, 0.2, 0.3); }
   const cols = [0x4c4f52, 0x55585b, 0x606365, 0x74746d, 0xa08c6c, 0xbcae92, 0xe9e7da];
   bufs.forEach((b, i) => { if (!b.length) return;
-    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(b, 3)); g.computeVertexNormals();
-    const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: cols[i], side: THREE.DoubleSide, polygonOffset: true,
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(b, 3));
+    if (i <= 3) {
+      const uv = []; for (let k = 0; k < b.length; k += 3) uv.push(b[k] / 3.2, b[k + 2] / 3.2);
+      g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    }
+    g.computeVertexNormals();
+    const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: cols[i], map: i <= 3 ? asphaltTexture : null, side: THREE.DoubleSide, polygonOffset: true,
       polygonOffsetFactor: -2, polygonOffsetUnits: -4 * (i === 6 ? 8 : 6 - i) }));
     m.receiveShadow = true; m.renderOrder = i === 6 ? 8 : 6 - i; scene.add(m); });
+})();
+
+// A small number of repaired asphalt rectangles follows real road segments.
+// Each corner samples the same terrain as the road mesh; no independent demo scene.
+(function roadRepairs() {
+  const pos = [];
+  let seen = 0;
+  for (const r of R) {
+    if (r.c > 2) continue;
+    for (let i = 1; i < r.p.length; i++) {
+      const a = r.p[i - 1], b = r.p[i], dx = b[0] - a[0], dz = b[1] - a[1], len = Math.hypot(dx, dz);
+      if (len < 12 || ++seen % 19 !== 0 || pos.length > 1200) continue;
+      const ux = dx / len, uz = dz / len, nx = -uz, nz = ux, cx = (a[0] + b[0]) / 2, cz = (a[1] + b[1]) / 2;
+      const halfL = Math.min(3, len * 0.22), halfW = Math.min(1.25, ROAD_W[r.c] * 0.25);
+      const p = [[-halfL,-halfW],[halfL,-halfW],[halfL,halfW],[-halfL,halfW]].map(([t,w]) => {
+        const x = cx + ux * t + nx * w, z = cz + uz * t + nz * w;
+        return [x, hAt(x,z) + 0.275, z];
+      });
+      for (const j of [0,1,2,0,2,3]) pos.push(...p[j]);
+    }
+  }
+  if (!pos.length) return;
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.computeVertexNormals();
+  const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({color: 0x515457, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3}));
+  m.receiveShadow = true; m.renderOrder = 7; scene.add(m);
 })();
 const RC = 50, roadGrid = new Map();
 R.forEach((r, ri) => { for (let i = 1; i < r.p.length; i++) { const a = r.p[i - 1], b = r.p[i];
@@ -285,7 +337,7 @@ function inWater(x, z) {
 const BC = 40, bGrid = new Map(), bPolys = [];
 (function () {
   const pos = [], col = [], c = new THREE.Color(), c2 = new THREE.Color();
-  const house = ['#9c3a2c', '#9c3a2c', '#a8452f', '#e8e2d2', '#e8e2d2', '#d9b65a', '#cfc8b8', '#8d9a8f'], big = ['#c9c5bb', '#b8b3a6', '#d6d0c0', '#a7aeb0'];
+  const house = ['#a34230', '#a34230', '#b34e32', '#efede4', '#ddd6c6', '#d6af42', '#cbbeb0', '#78918b'], big = ['#c9c3b6', '#b4ada1', '#ded6c5', '#9faeae'];
   D.b.forEach((b, bi) => {
     const n = b.p.length / 2, contour = []; let lo = 1e9, hi = -1e9, x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9, area = 0;
     for (let i = 0; i < n; i++) { const x = b.p[i * 2], z = b.p[i * 2 + 1], h = hAt(x, z), j = (i + 1) % n;
@@ -305,6 +357,36 @@ const BC = 40, bGrid = new Map(), bPolys = [];
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3)); g.computeVertexNormals();
   const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })); m.castShadow = true; m.receiveShadow = true; scene.add(m);
+})();
+
+// Reusable roadside objects drawn directly in the playable map, not a test scene.
+(function roadsideFurniture() {
+  const positions = [];
+  for (const r of R) {
+    if (r.c > 2) continue;
+    for (let i = 1; i < r.p.length; i++) {
+      const a = r.p[i-1], b = r.p[i], dx = b[0]-a[0], dz = b[1]-a[1], len = Math.hypot(dx,dz);
+      if (len < 28 || positions.length >= 40) continue;
+      const nx = -dz/len, nz = dx/len;
+      const x = (a[0]+b[0])/2 + nx*(ROAD_W[r.c]/2 + 1.8);
+      const z = (a[1]+b[1])/2 + nz*(ROAD_W[r.c]/2 + 1.8);
+      if (positions.some(p => Math.hypot(p[0]-x,p[1]-z)<65)) continue;
+      if (bPolys.some(p => x>p.x0-1.2 && x<p.x1+1.2 && z>p.z0-1.2 && z<p.z1+1.2)) continue;
+      positions.push([x,z]);
+    }
+  }
+  const poleGeo = new THREE.CylinderGeometry(0.06,0.09,5.3,8);
+  const lampGeo = new THREE.BoxGeometry(0.85,0.12,0.32);
+  const pole = new THREE.InstancedMesh(poleGeo, new THREE.MeshLambertMaterial({color:0x6d7778}), positions.length);
+  const lamps = new THREE.InstancedMesh(lampGeo, new THREE.MeshLambertMaterial({color:0xd7d0bb}), positions.length);
+  const matrix = new THREE.Matrix4();
+  positions.forEach(([x,z],i) => {
+    const y = hAt(x,z);
+    matrix.makeTranslation(x,y+2.65,z); pole.setMatrixAt(i,matrix);
+    matrix.makeTranslation(x+0.35,y+5.25,z); lamps.setMatrixAt(i,matrix);
+  });
+  pole.instanceMatrix.needsUpdate = lamps.instanceMatrix.needsUpdate = true;
+  scene.add(pole,lamps);
 })();
 // push a circle out of any building it overlaps; returns true on contact
 function collide(o, r) {
