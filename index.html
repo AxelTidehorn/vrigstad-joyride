@@ -12,7 +12,7 @@
 <style>
 /* Layout: the game view fills the screen; HUD pieces sit in the corners (minimap + street sign, wanted level, speed, touch controls). Single daylight look by choice. */
 :root {
-  --sky: #a9c8d8;
+  --sky: #a8b9c1;
   --hud: rgba(16, 22, 20, .74);
   --ink: #f4f1e6;
   --dim: rgba(244, 241, 230, .55);
@@ -164,13 +164,13 @@ const coarse = matchMedia('(pointer: coarse)').matches;
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-const SKY = 0xa9c8d8;
+const SKY = 0xa8b9c1;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(SKY);
 scene.fog = new THREE.Fog(SKY, 260, 1900);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
-scene.add(new THREE.HemisphereLight(0xf1f5ff, 0x718365, 0.62));
-const sun = new THREE.DirectionalLight(0xfff1d6, 0.85);
+scene.add(new THREE.HemisphereLight(0xeaf1f3, 0x68745c, 0.64));
+const sun = new THREE.DirectionalLight(0xfff1dc, 0.9);
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
@@ -186,18 +186,19 @@ const P = v => (v + HALF) * K;
 function trace(p, close) { ctx.moveTo(P(p[0]), P(p[1])); for (let i = 2; i < p.length; i += 2) ctx.lineTo(P(p[i]), P(p[i + 1])); if (close) ctx.closePath(); }
 const ROAD_W = [9, 7.5, 5.5, 3.5, 2.6, 1.5];
 (function paint() {
-  const land = ['#85a45f', '#c4b57a', '#aaa398', '#709951', '#749759', '#547a46', '#679e4a'];
+  // v0.5.1 style-study palette: grounded Swedish greens instead of pale lime.
+  const land = ['#577448', '#807d70', '#8c8e88', '#4d6942', '#5a754b', '#486b43', '#4b6a40'];
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  ctx.fillStyle = '#829d5f'; ctx.fillRect(0, 0, CW, CW);
+  ctx.fillStyle = '#577448'; ctx.fillRect(0, 0, CW, CW);
   for (let k = 0; k < 7; k++) { ctx.fillStyle = land[k]; ctx.beginPath(); for (const l of D.l) if (l.k === k) trace(l.p, true); ctx.fill(); }
   ctx.strokeStyle = '#4f8fb8';
   for (const w of D.ww) { ctx.lineWidth = (w.k === 0 ? 6 : 2) * K; ctx.beginPath(); trace(w.p); ctx.stroke(); }
   ctx.fillStyle = '#4f8fb8';
   for (const w of D.w) { ctx.beginPath(); for (const ring of w) trace(ring, true); ctx.fill('evenodd'); }
-  const fill = ['#55585a', '#5d6062', '#66696a', '#77776f', '#a08c6c', '#b8ab90'];
+  const fill = ['#505656', '#626568', '#626568', '#807d70', '#807d70', '#828075'];
   for (const pass of [1, 0]) for (const c of [5, 4, 3, 2, 1, 0]) {
     if (pass && c > 3) continue;
-    ctx.strokeStyle = pass ? '#b3a78c' : fill[c]; ctx.lineWidth = (ROAD_W[c] + (pass ? 2.4 : 0)) * K;
+    ctx.strokeStyle = pass ? '#a8a69e' : fill[c]; ctx.lineWidth = (ROAD_W[c] + (pass ? 2.4 : 0)) * K;
     ctx.beginPath(); for (const r of D.r) if (r.c === c) trace(r.p); ctx.stroke();
   }
   ctx.fillStyle = '#8a8378'; ctx.beginPath(); for (const b of D.b) trace(b.p, true); ctx.fill();
@@ -269,7 +270,8 @@ const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p
     }
   }
   for (const r of R) { ribbon(bufs[r.c], r.p, ROAD_W[r.c], 0.25 - r.c * 0.03); if (r.c < 2) ribbon(bufs[6], r.p, 0.2, 0.3); }
-  const cols = [0x4c4f52, 0x55585b, 0x606365, 0x74746d, 0xa08c6c, 0xbcae92, 0xe9e7da];
+  // Asphalt mesh colors compensate for the ~0.76 greyscale albedo of the procedural texture.
+  const cols = [0x697171, 0x818588, 0x818588, 0x808079, 0x807d70, 0x828075, 0xdbd9cf];
   bufs.forEach((b, i) => { if (!b.length) return;
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(b, 3));
     if (i <= 3) {
@@ -305,7 +307,7 @@ const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
   g.computeVertexNormals();
-  const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({color: 0x515457, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3}));
+  const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({color: 0x484f52, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3}));
   m.receiveShadow = true; m.renderOrder = 7; scene.add(m);
 })();
 const RC = 50, roadGrid = new Map();
@@ -345,7 +347,8 @@ function inWater(x, z) {
 const BC = 40, bGrid = new Map(), bPolys = [];
 (function () {
   const pos = [], col = [], c = new THREE.Color(), c2 = new THREE.Color();
-  const house = ['#a34230', '#a34230', '#b34e32', '#efede4', '#ddd6c6', '#d6af42', '#cbbeb0', '#78918b'], big = ['#c9c3b6', '#b4ada1', '#ded6c5', '#9faeae'];
+  // Color values adapted from the verified v0.5.1 study. Preserve Swedish house variety.
+  const house = ['#925847', '#925847', '#9a5945', '#dbd9cb', '#c6c5b8', '#c2a66a', '#c7c0ad', '#778c80'], big = ['#c7c0ad', '#b2b0a5', '#d3cfc3', '#a5aeac'];
   D.b.forEach((b, bi) => {
     const n = b.p.length / 2, contour = []; let lo = 1e9, hi = -1e9, x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9, area = 0;
     for (let i = 0; i < n; i++) { const x = b.p[i * 2], z = b.p[i * 2 + 1], h = hAt(x, z), j = (i + 1) % n;
@@ -385,8 +388,8 @@ const BC = 40, bGrid = new Map(), bPolys = [];
   }
   const poleGeo = new THREE.CylinderGeometry(0.06,0.09,5.3,8);
   const lampGeo = new THREE.BoxGeometry(0.85,0.12,0.32);
-  const pole = new THREE.InstancedMesh(poleGeo, new THREE.MeshLambertMaterial({color:0x6d7778}), positions.length);
-  const lamps = new THREE.InstancedMesh(lampGeo, new THREE.MeshLambertMaterial({color:0xd7d0bb}), positions.length);
+  const pole = new THREE.InstancedMesh(poleGeo, new THREE.MeshLambertMaterial({color:0x646e70}), positions.length);
+  const lamps = new THREE.InstancedMesh(lampGeo, new THREE.MeshLambertMaterial({color:0xdbd5b8}), positions.length);
   const matrix = new THREE.Matrix4();
   positions.forEach(([x,z],i) => {
     const y = hAt(x,z);
@@ -402,10 +405,10 @@ const BC = 40, bGrid = new Map(), bPolys = [];
 (function landmarkStudies() {
   const boxMat = color => new THREE.MeshLambertMaterial({color});
   const materials = {
-    white: boxMat(0xddd7c8), cream: boxMat(0xefe5cf), brick: boxMat(0x8f4734),
-    grey: boxMat(0x727778), roof: boxMat(0x554c46), dark: boxMat(0x303a3b),
-    glass: boxMat(0x466371), yellow: boxMat(0xc4a354), red: boxMat(0xa9272d),
-    blue: boxMat(0x29668c), timber: boxMat(0xb89a6c)
+    white: boxMat(0xc6c5b8), cream: boxMat(0xc7c0ad), brick: boxMat(0x8f5947),
+    grey: boxMat(0x646e70), roof: boxMat(0x57534d), dark: boxMat(0x3c4547),
+    glass: boxMat(0x3c5159), yellow: boxMat(0xc2a66a), red: boxMat(0xa9272d),
+    blue: boxMat(0x285b7a), timber: boxMat(0xb89a6c)
   };
   const shape = (parent, w,h,d,x,y,z,mat) => {
     const mesh = new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
