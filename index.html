@@ -806,7 +806,7 @@ function saab95Estate(G, paint) {
  };
  for(const s of [-1,1]){
   // A- and B-pillars, an appreciable C-pillar and a swept rear D-pillar.
-  putPanel(s,[[-.997,1.014],[-.545,1.473],[-.448,1.474],[-.875,1.014]],paint);
+  putPanel(s,[[-1.000,1.014],[-.550,1.474],[-.545,1.444],[-.862,1.022],[-.875,1.014]],paint);
   putPanel(s,[[.120,1.014],[.100,1.472],[.213,1.473],[.233,1.014]],paint);
   putPanel(s,[[1.176,1.014],[1.177,1.467],[1.301,1.466],[1.315,1.014]],paint);
   putPanel(s,[[1.912,1.427],[2.363,.980],[2.225,.979],[1.817,1.456]],paint);
@@ -823,8 +823,8 @@ function saab95Estate(G, paint) {
           side(s,z+.008,1.005,.009),side(s,z-.008,1.005,.009),C.rubber);
   }
   // Painted and black trim mirrors, low roof rails, narrow handle recesses.
-  G.box(s*.852,1.036,-.81,.138,.110,.175,paint);
-  G.box(s*.930,1.024,-.812,.048,.046,.135,C.rubber);
+  G.box(s*.911,1.036,-.957,.110,.104,.16,paint);
+  G.box(s*.976,1.036,-.953,.034,.050,.13,C.rubber);
   for(const z of [-.24,.71])G.box(s*.883,.945,z,.022,.040,.140,C.rubber);
   G.box(s*.617,1.501,.75,.038,.031,2.25,C.rubber);
   G.box(s*.615,1.492,-.27,.045,.032,.110,C.rubber);
