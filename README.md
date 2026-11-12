@@ -5,6 +5,17 @@ A small open-world driving game set in the real village of Vrigstad, Sweden (57.
 - **`index.html`** is the game. Walk around, steal a Volvo 240, a Saab 900, an EPA-traktor or a tractor, and outrun the police.
 - **`map.html`** is an interactive 3D terrain model of the same 2.2 × 2.2 km area.
 
+<p align="center">
+  <a href="https://oliverromhagen.github.io/vrigstad-joyride/media/teaser.mp4"><img src="media/teaser.gif" width="640" alt="Teaser trailer: the village from the air, a red Volvo 240 chased by three police cars, an EPA-traktor at 30 km/h, and the title card"></a><br>
+  <sub><a href="https://oliverromhagen.github.io/vrigstad-joyride/media/teaser.mp4">Watch the full teaser with sound (50 s)</a> · <a href="https://oliverromhagen.github.io/vrigstad-joyride/">Play the game</a></sub>
+</p>
+
+<p align="center">
+  <img src="media/poster.png" width="360" alt="Poster: a red Volvo 240 ahead of the police under the line “Nothing ever happens here”, with the title Vrigstad Joyride">
+</p>
+
+The teaser and poster are rendered from the game itself by the scripts in `tools/trailer/` (`npm install`, then `npm run trailer` and `npm run poster`; needs Node and Chrome).
+
 ## Play
 
 Open `index.html` in a browser. It needs WebGL and an internet connection the first time (three.js and the fonts load from a CDN).
@@ -45,6 +56,20 @@ python3 tools/build.py
 ```
 
 Refresh the map data first with `tools/fetch.sh` if you want the latest OpenStreetMap edits. Only the Python standard library is needed.
+
+## Releases
+
+Versions use semver tags (`vMAJOR.MINOR.PATCH`) on `main`. Bump the minor version for new features and the patch version for fixes.
+
+To cut a release, from an up-to-date `main`:
+
+```sh
+git tag -a v0.1.0 -m "v0.1.0"
+git push origin v0.1.0
+gh release create v0.1.0 --generate-notes
+```
+
+`--generate-notes` builds the changelog from merged PR titles, so keep those titles descriptive.
 
 ## Known simplifications
 
