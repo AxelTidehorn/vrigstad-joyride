@@ -339,6 +339,8 @@ function collide(o, r) {
   mesh.castShadow = true; scene.add(mesh);
 })();
 
+// ---------- standalone low-poly vehicle models ----------
+/*VEHICLE_MODELS*/
 // ---------- low-poly models built from boxes ----------
 function boxGeo(parts) {
   const pos = [], nor = [], col = [], c = new THREE.Color();
@@ -350,6 +352,7 @@ function boxGeo(parts) {
   g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3)); return g;
 }
 const paintMat = new THREE.MeshLambertMaterial({ vertexColors: true });
+const shapedPaintMat = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide, flatShading: true });
 const GLASS = '#26323a', TYRE = '#1c1c1c';
 const wheels = (x, z1, z2) => [[0.26, 0.64, 0.64, -x, 0.32, z1, TYRE], [0.26, 0.64, 0.64, x, 0.32, z1, TYRE], [0.26, 0.64, 0.64, -x, 0.32, z2, TYRE], [0.26, 0.64, 0.64, x, 0.32, z2, TYRE]];
 const lamps = z => [[0.34, 0.16, 0.06, -0.6, 0.72, -z, '#fff6c8'], [0.34, 0.16, 0.06, 0.6, 0.72, -z, '#fff6c8'], [0.34, 0.16, 0.06, -0.6, 0.72, z, '#c8261c'], [0.34, 0.16, 0.06, 0.6, 0.72, z, '#c8261c']];
@@ -364,6 +367,8 @@ const TYPES = {
   traktor: { name: 'Traktor', max: 11, acc: 3.5, off: 1, cols: ['#2f7a3a', '#b5302a', '#2a5fa0'],
     parts: c => [[0.5, 1.6, 1.6, -0.95, 0.8, 0.9, TYRE], [0.5, 1.6, 1.6, 0.95, 0.8, 0.9, TYRE], [0.32, 0.9, 0.9, -0.75, 0.45, -1.5, TYRE], [0.32, 0.9, 0.9, 0.75, 0.45, -1.5, TYRE],
       [0.95, 0.75, 2.5, 0, 1.15, -0.9, c], [1.35, 1.25, 1.4, 0, 2.0, 0.75, GLASS], [1.45, 0.1, 1.5, 0, 2.67, 0.75, c], [0.12, 0.7, 0.12, 0.3, 1.85, -1.6, '#333']] },
+  newHolland: { name: 'New Holland T6', max: 11, acc: 3.5, off: 1, cols: ['#2375b5'] },
+  johnDeere: { name: 'John Deere 6M', max: 11, acc: 3.5, off: 1, cols: ['#3e8831'] },
   polis: { name: 'Polisbil', max: 35, acc: 9, off: 0.6, cols: ['#f1f1ee'],
     parts: c => [...wheels(0.8, -1.5, 1.45), [1.74, 0.62, 4.8, 0, 0.66, 0, c], [1.56, 0.52, 3.0, 0, 1.22, 0.6, GLASS], [1.6, 0.07, 3.04, 0, 1.5, 0.6, c],
       [1.78, 0.2, 3.2, 0, 0.7, 0.2, '#1f4fa3'], [1.79, 0.08, 3.2, 0, 0.56, 0.2, '#f2d21f'], ...lamps(2.41)] }
@@ -391,13 +396,18 @@ function placeCar(c) {
   c.mesh.position.set(c.x, hAt(c.x, c.z) - (c.wet ? 0.55 : 0), c.z);
 }
 function addCar(type, x, z, h, mode) {
-  const T = TYPES[type], mesh = new THREE.Mesh(carGeo(type, pick(T.cols)), paintMat); mesh.castShadow = true;
+  const T = TYPES[type];
+  const modelId = type === 'volvo' ? 'volvo240' : type === 'newHolland' ? 'newHollandT6' : type === 'johnDeere' ? 'johnDeere6M' : null;
+  const mesh = modelId
+    ? new THREE.Mesh(VEHICLE_MODELS.createVehicleGeometry(THREE, modelId, { paint: pick(T.cols) }), shapedPaintMat)
+    : new THREE.Mesh(carGeo(type, pick(T.cols)), paintMat);
+  mesh.castShadow = true;
   if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); mesh.add(bar); }
   const c = { type, T, mesh, x, z, h, v: 0, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
   scene.add(mesh); cars.push(c); placeCar(c); return c;
 }
 function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
-const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : 'traktor'; };
+const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : rnd() < 0.5 ? 'newHolland' : 'johnDeere'; };
 // parked cars along streets and driveways
 (function () {
   let count = 0;
