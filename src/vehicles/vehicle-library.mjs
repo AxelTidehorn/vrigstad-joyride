@@ -5,6 +5,7 @@
  */
 export const VEHICLES = Object.freeze({
   volvo240: {name:"Volvo 240",paint:"#c7bda4"},
+  saab900: {name:"Saab 900 Classic (experimental)",paint:"#a4acb2"},
   newHollandT6: {name:"New Holland T6",paint:"#2375b5"},
   johnDeere6M: {name:"John Deere 6M",paint:"#3e8831"}
 });
@@ -77,6 +78,9 @@ function volvo(G,paint){
  G.quad([.67,1.41,1.13],[-.67,1.41,1.13],[-.756,1.055,1.55],[.756,1.055,1.55],COLORS.black);
  G.quad([.635,1.39,1.14],[-.635,1.39,1.14],[-.72,1.075,1.51],[.72,1.075,1.51],COLORS.glass);
  G.box(0,1.415,.265,1.33,.04,1.73,paint);
+ // Close the actual rear body panel; previously only lamps, plate and bumper existed here.
+ // The panel sits beneath the trim so the license plate cannot reveal open space.
+ G.quad([-.785,.565,2.359],[.785,.565,2.359],[.785,.984,2.359],[-.785,.984,2.359],paint);
  // 1986-90 front treatment and rear lighting.
  G.box(0,.78,-2.361,1.51,.32,.045,COLORS.black);
  G.box(0,.78,-2.393,.62,.25,.02,COLORS.black);
@@ -90,6 +94,63 @@ function volvo(G,paint){
  G.box(0,.55,2.46,1.83,.15,.25,COLORS.tyre);
  G.box(0,.75,2.397,.45,.11,.03,COLORS.silver);
 }
+const SAAB_COLORS={glass:'#263d4a',glass2:'#334b57',black:'#172126',rubber:'#222729',gray:'#929c9e',silver:'#b8c0be',lamp:'#d9dfd8',amber:'#d79955',rear:'#ab3532'};
+// Experimental 900 silhouette, retained for evaluation rather than approved production shape.
+function saab(G,paint){const col=paint,topY=z=>z<-.94?.842+(z+2.31)*.158/1.37:z<2?.999:.999-(z-2)*.08/.31;
+ const fa=-1.265,ra=1.252,r=.404;const zs=[-2.31,-2.22,-1.88,-.94,-.60,0,.6,1.22,1.86,2.1,2.31];for(let c of [fa,ra])for(let i=0;i<=18;i++)zs.push(c-r+2*r*i/18);zs.sort((a,b)=>a-b);const pts=zs.filter((x,i)=>!i||x-zs[i-1]>.002);
+ const low=z=>{let y=.328;for(let c of [fa,ra]){const d=Math.abs(z-c);if(d<r)y=Math.max(y,.365+Math.sqrt(r*r-d*d))}return y};
+ for(let sd of [-1,1]){let x=sd*.8;for(let i=0;i<pts.length-1;i++){let z=pts[i],zz=pts[i+1];G.quad([x,low(z),z],[x,low(zz),zz],[x,topY(zz),zz],[x,topY(z),z],col,sd>0?.95:1)}
+ // sill only under door area
+ G.quad([sd*.807,.338,-.8],[sd*.807,.338,.83],[sd*.809,.390,.83],[sd*.809,.390,-.8],'#343d40');
+ // shoulder belt and door seam on the proper side
+ G.quad([sd*.809,.724,-2.10],[sd*.809,.724,2.18],[sd*.811,.739,2.18],[sd*.811,.739,-2.10],'#30383b');
+ G.quad([sd*.812,.436,-.80],[sd*.812,.436,.82],[sd*.812,.449,.82],[sd*.812,.449,-.80],SAAB_COLORS.rubber);
+ G.lineOnSide(sd*.817,.966,.46,.445,.46,'#384247',.008);
+ G.quad([sd*.816,.948,.18],[sd*.816,.948,.33],[sd*.816,.968,.33],[sd*.816,.968,.18],SAAB_COLORS.black);
+ // glass wrapped dark seal + inset colored glass; front A-post rising to roof
+ G.quad([sd*.805,.992,-.915],[sd*.805,.992,.435],[sd*.649,1.420,.395],[sd*.648,1.420,-.465],SAAB_COLORS.black);
+ G.quad([sd*.814,1.016,-.875],[sd*.814,1.016,.375],[sd*.653,1.387,.36],[sd*.655,1.387,-.433],SAAB_COLORS.glass);
+ // rear quarter glass: lower edge stretches far back, upper follows roof, rear edge steep diagonal
+ G.poly([[sd*.806,.990,.445],[sd*.806,.990,1.730],[sd*.718,1.096,1.780],[sd*.641,1.419,.840],[sd*.642,1.419,.425]],SAAB_COLORS.black);
+ G.poly([[sd*.814,1.012,.488],[sd*.814,1.012,1.662],[sd*.729,1.109,1.694],[sd*.653,1.390,.808],[sd*.653,1.390,.481]],SAAB_COLORS.glass);
+ // C-pillar follows hatch roof line and sits *behind* quarter window; broad enough to register silhouette
+ G.poly([[sd*.644,1.429,.800],[sd*.645,1.429,.919],[sd*.743,1.072,1.97],[sd*.739,1.071,1.77]],col);
+ // framing and door division
+ G.quad([sd*.811,.985,.398],[sd*.811,.985,.443],[sd*.659,1.418,.437],[sd*.659,1.418,.395],col);
+ // tiny mirror
+ G.box(sd*.84,1.065,-.78,.1,.13,.14,'#30383a');
+ }
+ // hood inclined gently from deep windscreen base toward slant nose
+ G.quad([-.75,.845,-2.31],[.75,.845,-2.31],[.75,.999,-.94],[-.75,.999,-.94],col,1.07);
+ // bumper-to-front face wedge (increasing front projection toward lower y)
+ const nz=y=>-2.21-(.94-y)*.33;
+ G.quad([-.75,.615,nz(.615)],[.75,.615,nz(.615)],[.75,.928,nz(.928)],[-.75,.928,nz(.928)],col,.93);
+ function nosePatch(x1,x2,y1,y2,c){let e=-.020;G.quad([x1,y1,nz(y1)+e],[x2,y1,nz(y1)+e],[x2,y2,nz(y2)+e],[x1,y2,nz(y2)+e],c)}
+ nosePatch(-.33,.33,.720,.894,SAAB_COLORS.black);for(let sd of [-1,1]){nosePatch(sd*.535-.19,sd*.535+.19,.721,.904,SAAB_COLORS.lamp);nosePatch(sd*.76-.048,sd*.76+.048,.721,.904,SAAB_COLORS.amber)}
+ for(let k=-2;k<=2;k++)nosePatch(k*.12-.007,k*.12+.007,.735,.883,'#66767b');
+ G.box(0,.508,-2.39,1.69,.14,.16,SAAB_COLORS.rubber);
+ // windscreen lower and upper points
+ G.quad([-.738,1.000,-.94],[.738,1.000,-.94],[.631,1.429,-.49],[-.631,1.429,-.49],SAAB_COLORS.black);
+ G.quad([-.710,1.022,-.912],[.710,1.022,-.912],[.607,1.394,-.468],[-.607,1.394,-.468],SAAB_COLORS.glass2);
+ // roof + continuous long sloping hatch; more sweep than v2
+ G.quad([-.636,1.440,-.49],[.636,1.440,-.49],[.643,1.440,.862],[-.643,1.440,.862],col,1.13);
+ G.quad([-.644,1.437,.862],[.644,1.437,.862],[.752,.985,2.125],[-.752,.985,2.125],col,.96);
+ // Outer sail panels close the space between hatch slope and beltline.
+ // They also keep the long hatch visible in exact side profile (top face is edge-on).
+ for(const sd of [-1,1]) { const zA=.86,zB=2.126,rail=z=>1.44-(z-zA)*(.454/(zB-zA)); const outerX=z=>sd*(.611+(z-zA)*(.135/(zB-zA)));
+   for(let j=0;j<10;j++){const a=zA+(zB-zA)*j/10,b=zA+(zB-zA)*(j+1)/10;
+     G.quad([sd*.774,.992,a],[sd*.774,.992,b],[outerX(b),rail(b),b],[outerX(a),rail(a),a],col,.96);
+   }
+ }
+ G.quad([-.635,1.431,.915],[.635,1.431,.915],[.729,1.008,2.028],[-.729,1.008,2.028],SAAB_COLORS.black);
+ G.quad([-.610,1.413,.947],[.610,1.413,.947],[.702,1.031,1.989],[-.702,1.031,1.989],SAAB_COLORS.glass2);
+ G.quad([-.754,.989,2.12],[.754,.989,2.12],[.76,.931,2.31],[-.76,.931,2.31],col);
+ G.quad([-.754,.93,2.33],[.754,.93,2.33],[.754,.612,2.34],[-.754,.612,2.34],col,.94);
+ for(let sd of [-1,1]){let xx=sd*.63;G.box(xx,.797,2.352,.27,.21,.035,SAAB_COLORS.rear);G.box(xx,.853,2.379,.27,.045,.014,SAAB_COLORS.amber)}
+ G.box(0,.770,2.36,.45,.11,.015,'#919b9d');G.box(0,.51,2.43,1.67,.13,.15,SAAB_COLORS.rubber);
+ for(let sd of [-1,1]){G.wheel(sd*.779,.40,fa,.354,.265,'#aab4b8');G.wheel(sd*.779,.40,ra,.354,.265,'#aab4b8')}
+}
+
 function tractor(G,id){
  const jd=id==="johnDeere6M",body=jd?"#3e8831":"#2375b5";
  const roof=jd?"#408633":"#236eac",rim=jd?"#e5bc23":"#c2c5bd";
@@ -123,7 +184,9 @@ function tractor(G,id){
 const cache=new WeakMap();
 export function buildVehicleGeometryData(id,options={}){
  if(!(id in VEHICLES))throw new RangeError("Unknown model: "+id);
- const G=new Builder();if(id==="volvo240")volvo(G,options.paint||VEHICLES[id].paint);else tractor(G,id);
+ const G=new Builder();if(id==="volvo240")volvo(G,options.paint||VEHICLES[id].paint);
+ else if(id==="saab900")saab(G,options.paint||VEHICLES[id].paint);
+ else tractor(G,id);
  return {positions:G.position,normals:G.normal,colors:G.color};
 }
 export function createVehicleGeometry(THREE,id,options={}){
