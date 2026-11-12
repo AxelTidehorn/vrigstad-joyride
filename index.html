@@ -443,17 +443,42 @@ const BC = 40, bGrid = new Map(), bPolys = [];
     loader.load('media/' + entry.file, gltf => {
       const model = gltf.scene;
       model.name = 'landmark-study-' + entry.id;
-      model.rotation.x = -Math.PI / 2;
-      model.updateMatrixWorld(true);
-      const bounds = new THREE.Box3().setFromObject(model);
+      // Z-up GLB -> Y-up world. Keep the model at its local origin;
+      // offsets must be applied on a separate, non-rotated parent.
+      const oriented = new THREE.Group();
+      oriented.rotation.x = -Math.PI / 2;
+      oriented.add(model);
+      oriented.updateMatrixWorld(true);
+      const bounds = new THREE.Box3().setFromObject(oriented);
       const center = bounds.getCenter(new THREE.Vector3());
-      // Use a pivot to center every study's actual geometry at its temporary map location.
-      model.position.set(-center.x, -bounds.min.y, -center.z);
+      const span = bounds.getSize(new THREE.Vector3());
       const holder = new THREE.Group();
       holder.name = 'temporary-landmark-' + entry.id;
-      holder.position.set(entry.x, hAt(entry.x, entry.z) + 0.2, entry.z);
+      oriented.position.set(-center.x, -bounds.min.y, -center.z);
+      // Large GLB studies may cover sloping ground; sample their footprint.
+      const x = entry.x, z = entry.z;
+      const xs = [x - span.x/2, x, x + span.x/2];
+      const zs = [z - span.z/2, z, z + span.z/2];
+      let highest = -Infinity;
+      for (const xx of xs) for (const zz of zs) highest = Math.max(highest, hAt(xx,zz));
+      holder.position.set(x, highest + 0.15, z);
       model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-      holder.add(model);
+      holder.add(oriented);
+      // Temporary overhead identifiers, visible from normal driving distance.
+      const tag = document.createElement('canvas'); tag.width = 512; tag.height = 128;
+      const paint = tag.getContext('2d');
+      paint.fillStyle = '#172b34'; paint.fillRect(0,0,512,128);
+      paint.fillStyle = '#ffda63'; paint.fillRect(0,0,512,12);
+      paint.font = 'bold 43px sans-serif'; paint.textAlign = 'center';
+      paint.fillStyle = '#ffffff'; paint.fillText(entry.name,256,79,480);
+      paint.font = '23px sans-serif'; paint.fillStyle = '#ffda63';
+      paint.fillText('TILLFÄLLIG PLACERING',256,112,480);
+      const texture = new THREE.CanvasTexture(tag);
+      const marker = new THREE.Sprite(new THREE.SpriteMaterial({map:texture,depthTest:false,transparent:true}));
+      marker.position.set(0,span.y+6,0);
+      marker.scale.set(15,3.75,1);
+      marker.renderOrder = 20;
+      holder.add(marker);
       root.add(holder);
     }, undefined, err => console.warn('Could not load GLB landmark:', entry.file, err));
   }
