@@ -37,6 +37,8 @@ The kiosk on Torget sells trisslotter. One in a thousand wins, and the more losi
 
 ## How it is built
 
+Contributors (human or agent): read [AGENTS.md](AGENTS.md) for conventions and [ARCHITECTURE.md](ARCHITECTURE.md) for the structure and where it's heading.
+
 ```
 src/game.html      game source (HTML, CSS, JS) with a /*DATA*/ placeholder
 src/map.html       3D map source, same placeholder

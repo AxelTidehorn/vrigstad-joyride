@@ -1,0 +1,123 @@
+# AGENTS.md
+
+Instructions for AI coding agents (and a quick start for humans) working on Vrigstad Joyride. Read [ARCHITECTURE.md](ARCHITECTURE.md) before changing structure; read [README.md](README.md) for what the game is.
+
+## The project in one paragraph
+
+A browser open-world driving game set in the real village of Vrigstad, Sweden, built from OpenStreetMap data and elevation tiles, plus a 3D map of the same area. Rendering is three.js. The codebase is in transition from a single-file prototype to a modular Vite + TypeScript app; the plan is tracked in [#61](https://github.com/OliverRomhagen/vrigstad-joyride/issues/61). **Check which side of the transition you're on** (is there a `package.json`?) and follow the matching instructions below.
+
+## Commands
+
+Today (no `package.json` yet):
+
+```sh
+python3 tools/build.py      # rebuild index.html and map.html from src/ and data/
+tools/fetch.sh              # re-download OSM + elevation (rarely needed; hits public APIs)
+python3 -m http.server      # then open http://localhost:8000 (opening index.html from disk also works)
+```
+
+Live site: https://oliverromhagen.github.io/vrigstad-joyride/ (GitHub Pages, from `main`).
+
+After the move to Vite ([#44](https://github.com/OliverRomhagen/vrigstad-joyride/issues/44)), use the npm scripts instead and update this section in the same PR:
+
+```sh
+npm run dev                 # dev server with hot reload
+npm run check               # typecheck + lint + unit tests; run before every commit
+npm run test:e2e            # Playwright smoke tests
+npm run build               # production build into dist/
+```
+
+## Workflow
+
+- Work on a branch and open a PR; don't push to `main`.
+- Keep a PR to one concern. Don't mix a refactor with a feature, and don't reformat code you aren't otherwise changing.
+- Reference the issue in the PR (`Closes #12`, or `Part of #12` if it doesn't fully close it). Say in the PR what is *not* done.
+
+### Commits and PR titles: Conventional Commits
+
+Every commit message **and every PR title** follows [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<type>(<optional scope>): <imperative summary, lower case, no period>
+```
+
+- Types: `feat` (new gameplay or feature), `fix`, `perf`, `refactor` (no behaviour change), `docs`, `test`, `build` (Vite, npm, `tools/build.py`), `ci`, `style` (formatting only), `chore`, and `data` for changes to `data/` or the map pipeline.
+- Scopes are optional and name the area: `police`, `traffic`, `npc`, `hud`, `map`, `world`, `input`, `audio`, `safehouse`, `minigames`, `pipeline`.
+- Examples: `feat(police): add roadblocks at three stars`, `fix(hud): keep street sign inside safe area on iPhone`, `refactor(world): share terrain code between game and map`, `data: refresh OSM extract`.
+- Summary under ~70 characters. Add a body for the *why* when it isn't obvious.
+- Release notes are generated from PR titles (see "Releases" in the README), and the type sets the version bump: `feat` → minor, `fix` / `perf` → patch.
+- Merge PRs with **squash**. The PR title should become the commit subject, so it must follow the same format. (This needs the repo's squash setting to use the PR title; until the owner changes that, check the squash commit title when merging.)
+
+### Labels on PRs
+
+Label every PR when you open it, the same way issues are labelled:
+
+- **A type:** `feature request` (new gameplay or content), `enhancement` (tech, tooling, performance, or improving an existing feature), `bug`, `documentation`.
+- **A priority** on issues: `prio:high`, `prio:mid` or `prio:low`. Use `status:future` for options to decide on later.
+- **A scope**, if one fits: `scope:architecture`, `scope:npc`, `scope:minigames`, ...
+- If no existing scope fits and the area will clearly see more work, **create a new `scope:<area>` label** with a one-line description (`gh label create "scope:audio" --description "Sound, music and radio"`). Don't create one-off labels for a single PR.
+- Check existing labels first (`gh label list`), reuse their spelling, and say in the PR description if you created a new one.
+- Until [#45](https://github.com/OliverRomhagen/vrigstad-joyride/issues/45) lands, the built `index.html` and `map.html` are committed. Rebuild them in the same commit as the `src/` change, and never edit them by hand.
+- Big structural moves conflict with every open feature branch. Check open PRs first, and coordinate rather than rebasing someone else's work.
+
+### Several agents at once
+
+- One branch (and worktree) per agent and task. Bring your branch up to date with `main` before opening a PR and again before merging.
+- Until #44 splits the code, every feature edits `src/game.html`, so expect conflicts. Keep changes in their own section of the file where you can.
+- On a conflict in `index.html` or `map.html`, never merge the built files by hand: resolve `src/` only, then rerun `python3 tools/build.py`.
+- Say how you tested in the PR, and be honest about what wasn't tested ("not played by hand on a phone").
+
+## Code style
+
+- **Match the surrounding code.** Same naming, comment density and idiom as the file you're in.
+- Current single-file code is dense: 2-space indent, single quotes, semicolons, short local names for hot math (`x`, `z`, `h`, `v`, `dt`), sections marked `// ---------- name ----------`. Keep that style inside `src/*.html` until it is migrated.
+- New TypeScript code (after #44): formatted by Biome, so don't hand-format. Prefer clear names over the dense style, small modules with one responsibility, named exports, no default exports, `strict` types, no `any` without a comment saying why.
+- Comments explain *why* and non-obvious units or conventions, not what the next line does.
+- No new runtime dependency without saying why in the PR. Dev dependencies (tooling, tests) are fine.
+- Gameplay numbers (speeds, radii, timers) go in named constants near the top of their module, with units in the name or a comment (`EVADE_DIST_M = 170`).
+- Avoid per-frame allocations in the game loop: reuse vectors (`const _v = new THREE.Vector3()` at module level) as the existing code does.
+
+## Architecture rules (summary; details in ARCHITECTURE.md)
+
+1. **World code is shared.** Terrain, roads, buildings, water and spatial queries live in one place and are used by both the game and the map. Don't copy them into either page.
+2. **Simulation doesn't know about rendering.** Gameplay state and rules are plain data and functions: no three.js, no DOM. Rendering reads sim state; it never changes it.
+3. **Input becomes intents.** Gameplay reads `throttle / steer / brake / action`, never key codes or touch events.
+4. **UI is DOM over the canvas.** The HUD and menus are HTML/CSS (Svelte after [#51](https://github.com/OliverRomhagen/vrigstad-joyride/issues/51)). They read from a store and send intents; they never reach into game objects.
+5. **Deterministic where it matters.** Use the seeded `rnd()`, not `Math.random()`, in anything gameplay-related, so tests and future replays and multiplayer work. Adding `rnd()` calls changes every later random value, so world generation will shift; that's expected. (Known exception: the trisslott odds still use `Math.random()`.)
+
+Until the migration reaches a given rule, don't make the existing code worse in that direction (for example, don't add more three.js calls inside gameplay rules).
+
+## Tests
+
+- **Smoke tests** (Playwright, [#43](https://github.com/OliverRomhagen/vrigstad-joyride/issues/43)): the pages load without console errors, Start works, the player can move and get into a car. Every PR keeps them green. When you add a major feature, add one smoke step for it.
+- **Unit tests** (Vitest, [#52](https://github.com/OliverRomhagen/vrigstad-joyride/issues/52)): game rules and pure helpers such as height lookup, driving model, wanted level, police AI and spatial queries. Write them for new gameplay rules; use the seeded RNG for deterministic scenarios.
+- **No pixel-diff tests.** Headless WebGL output varies. Assert on state exposed through the test hook instead, and attach screenshots to the PR when visuals change.
+- Until the test tooling exists, test in a browser and describe what you did in the PR.
+
+## Data and coordinates
+
+- World units are **metres**. Origin is at 57.3555° N, 14.4756° E (near Torget). **x points east, z points south**, y is up. The playable square is 2200 m × 2200 m, from −1100 to 1100.
+- `data/vrigstad.json` is generated by `tools/process.py`. Don't edit it by hand; change the script and rebuild.
+- `data/raw/` is the downloaded source data. Only refresh it on purpose (it changes the map).
+- Map data is © OpenStreetMap contributors (ODbL). Keep the attribution visible in both pages. Any new third-party asset, model, font or sound needs its licence added to `LICENSE`.
+
+## Language and tone
+
+- UI text, code, comments, commits and issues: **English**.
+- What people in the game *say* (NPC lines, police, shouts) is **Swedish**, informal and local. Real place and street names keep their Swedish spelling (Torget, Slättsjön, Gästgivaregatan).
+- The humour is affectionate toward Vrigstad. Real *places* are fine. Real, identifiable people (see #9) only with the maintainers' explicit go-ahead, and never in a mean or embarrassing way.
+
+## Glossary
+
+| Term | Meaning |
+|---|---|
+| Torget | The village square; spawn and respawn point |
+| *Gripen!* | "Caught!": the busted screen |
+| Stars | Wanted level, 0–3; each star sends a police car |
+| Evade | Staying ~170 m from all police for 18 s to clear the stars |
+| EPA-traktor | A car converted to a 30 km/h vehicle, a Swedish rural classic |
+| Polis | Police car |
+| Trisslott | Swedish scratch lottery ticket (kiosk minigame) |
+| Safehouse | A house where you can lie low to clear stars |
+
+Update this file when a convention changes. If you notice the instructions are wrong or out of date, fix them in your PR.
