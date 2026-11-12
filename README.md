@@ -46,6 +46,10 @@ Refresh the map data first with `tools/fetch.sh` if you want the latest OpenStre
 - Traffic ignores one-way streets and roundabout direction.
 - Only six woodland areas are mapped in the source, so the surroundings look more open than they are.
 
+## License
+
+All rights reserved. The game and map code are not open source; see [LICENSE](LICENSE) for what you may do. Third-party data and libraries keep their own licenses, listed there.
+
 ## Data credits
 
 - Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, available under the Open Database License.

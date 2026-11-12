@@ -1,0 +1,19 @@
+All rights reserved.
+
+Copyright (c) 2026 OliverRomhagen
+
+The source code, game design, art, and other original content in this
+repository belong to the copyright holder. You may view the code and play
+the game in your own browser. You may not copy, modify, redistribute,
+host, sell, or use any part of it, commercially or otherwise, without
+prior written permission from the copyright holder.
+
+Third-party components keep their own licenses:
+
+- three.js (MIT License), loaded from cdnjs at runtime.
+- Map data © OpenStreetMap contributors, licensed under the Open Database
+  License (ODbL) 1.0: https://opendatacommons.org/licenses/odbl/
+  Any redistribution of the extracted OpenStreetMap data must follow the
+  ODbL, including its attribution and share-alike terms.
+- Elevation tiles: Mapzen terrarium terrain tiles on AWS Open Data.
+  See the dataset's terms before reusing them.
