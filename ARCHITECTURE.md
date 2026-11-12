@@ -23,7 +23,7 @@ This was the right shape for a prototype. It stops scaling once several people a
 ## Target
 
 ```
-pipeline (Python, unchanged) ──► public/vrigstad.json
+pipeline (Python, unchanged) ──► data/vrigstad.json (imported, so it's inlined in single-file builds)
                                         │
 src/
   world/      shared: heightfield, terrain, roads, buildings, water, trees,

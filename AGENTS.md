@@ -13,8 +13,10 @@ Today (no `package.json` yet):
 ```sh
 python3 tools/build.py      # rebuild index.html and map.html from src/ and data/
 tools/fetch.sh              # re-download OSM + elevation (rarely needed; hits public APIs)
-python3 -m http.server      # then open http://localhost:8000
+python3 -m http.server      # then open http://localhost:8000 (opening index.html from disk also works)
 ```
+
+Live site: https://oliverromhagen.github.io/vrigstad-joyride/ (GitHub Pages, from `main`).
 
 After the move to Vite ([#44](https://github.com/OliverRomhagen/vrigstad-joyride/issues/44)), use the npm scripts instead and update this section in the same PR:
 
@@ -43,7 +45,7 @@ Every commit message **and every PR title** follows [Conventional Commits](https
 - Scopes are optional and name the area: `police`, `traffic`, `npc`, `hud`, `map`, `world`, `input`, `audio`, `safehouse`, `minigames`, `pipeline`.
 - Examples: `feat(police): add roadblocks at three stars`, `fix(hud): keep street sign inside safe area on iPhone`, `refactor(world): share terrain code between game and map`, `data: refresh OSM extract`.
 - Summary under ~70 characters. Add a body for the *why* when it isn't obvious.
-- The PR title is what ends up in history when squash-merging, so it must follow the same format.
+- Merge PRs with **squash**. The PR title should become the commit subject, so it must follow the same format. (This needs the repo's squash setting to use the PR title; until the owner changes that, check the squash commit title when merging.)
 
 ### Labels on PRs
 
@@ -55,6 +57,12 @@ Label every PR when you open it, the same way issues are labelled:
 - Check existing labels first (`gh label list`), reuse their spelling, and say in the PR description if you created a new one.
 - Until [#45](https://github.com/OliverRomhagen/vrigstad-joyride/issues/45) lands, the built `index.html` and `map.html` are committed. Rebuild them in the same commit as the `src/` change, and never edit them by hand.
 - Big structural moves conflict with every open feature branch. Check open PRs first, and coordinate rather than rebasing someone else's work.
+
+### Several agents at once
+
+- One branch (and worktree) per agent and task. Bring your branch up to date with `main` before opening a PR and again before merging.
+- Until #44 splits the code, every feature edits `src/game.html`, so expect conflicts. Keep changes in their own section of the file where you can.
+- On a conflict in `index.html` or `map.html`, never merge the built files by hand: resolve `src/` only, then rerun `python3 tools/build.py`.
 - Say how you tested in the PR, and be honest about what wasn't tested ("not played by hand on a phone").
 
 ## Code style
@@ -73,7 +81,7 @@ Label every PR when you open it, the same way issues are labelled:
 2. **Simulation doesn't know about rendering.** Gameplay state and rules are plain data and functions: no three.js, no DOM. Rendering reads sim state; it never changes it.
 3. **Input becomes intents.** Gameplay reads `throttle / steer / brake / action`, never key codes or touch events.
 4. **UI is DOM over the canvas.** The HUD and menus are HTML/CSS (Svelte after [#51](https://github.com/OliverRomhagen/vrigstad-joyride/issues/51)). They read from a store and send intents; they never reach into game objects.
-5. **Deterministic where it matters.** Use the seeded `rnd()`, not `Math.random()`, in anything gameplay-related, so tests and future replays and multiplayer work.
+5. **Deterministic where it matters.** Use the seeded `rnd()`, not `Math.random()`, in anything gameplay-related, so tests and future replays and multiplayer work. Adding `rnd()` calls changes every later random value, so world generation will shift; that's expected. (Known exception: the trisslott odds still use `Math.random()`.)
 
 Until the migration reaches a given rule, don't make the existing code worse in that direction (for example, don't add more three.js calls inside gameplay rules).
 
