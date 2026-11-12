@@ -527,6 +527,7 @@ const VEHICLE_MODELS = (() => {
 const VEHICLES = Object.freeze({
   volvo240: {name:"Volvo 240",paint:"#c7bda4"},
   saab900: {name:"Saab 900 Classic (experimental)",paint:"#a4acb2"},
+  saab95Estate: {name:"Saab 9-5 SportCombi (2002–2005)",paint:"#a4afb8"},
   newHollandT6: {name:"New Holland T6",paint:"#2375b5"},
   johnDeere6M: {name:"John Deere 6M",paint:"#3e8831"}
 });
@@ -709,6 +710,128 @@ function saab(G,paint){const col=paint,topY=z=>z<-.94?.842+(z+2.31)*.158/1.37:z<
  for(let sd of [-1,1]){G.wheel(sd*.779,.40,fa,.354,.265,'#aab4b8');G.wheel(sd*.779,.40,ra,.354,.265,'#aab4b8')}
 }
 
+// 2002–2005 9-5 five-door estate: measured dimensions in metres from Saab WIS.
+// X is lateral, Y is up, -Z is forward. Independent from the classic 900.
+function saab95Estate(G, paint) {
+ const C={trim:'#252a2d',seal:'#1c272c',glass:'#2f4856',rearGlass:'#354c57',
+   chrome:'#aeb8b9',light:'#dce3df',indicator:'#dbac63',tail:'#a9282e',
+   tailDark:'#751f29',plate:'#ddd8c4',wheel:'#afb7b8',rimDark:'#59636a',tire:'#222528'};
+ const front=-2.25,rear=2.27,axles=[-1.398,1.305],arch=.415,cy=.353;
+ const w=z=>z<-2.08?.795+(z+2.25)*.09/.17:z>2.13?.875-(z-2.13)*.080/.14:.885;
+ const sh=z=>z<-.88?.890+(z+2.25)*.128/1.37:z>2.08?1.018-(z-2.08)*.08/.19:1.018;
+ const bot=z=>{let y=.315;for(const c of axles){let dz=Math.abs(z-c);if(dz<arch)y=Math.max(y,cy+Math.sqrt(arch*arch-dz*dz))}return y};
+ const samples=[front,-2.21,-2.14,-2.07,-1.89,-1.81,-1.72,-1.63,-1.52,-1.40,-1.28,-1.18,-1.03,
+   -.87,-.65,-.32,0,.32,.64,.89,1.05,1.18,1.31,1.43,1.57,1.70,1.84,2.02,2.16,2.23,rear];
+ for(const c of axles)for(let j=0;j<=24;j++)samples.push(c-arch+(2*arch*j/24));
+ const zs=[...new Set(samples.map(z=>z.toFixed(5)))].map(Number).sort((a,b)=>a-b);
+ // Continuous metal skins with real wheel arch cutouts and gently curved shoulders.
+ for(const side of [-1,1])for(let i=1;i<zs.length;i++){
+   const a=zs[i-1],b=zs[i],da=bot(a),db=bot(b),wa=w(a),wb=w(b),ta=sh(a),tb=sh(b);
+   if(b-a<.001)continue;
+   G.quad([side*(wa-.056),da,a],[side*(wb-.056),db,b],
+          [side*wb,Math.max(db+.001,.71),b],[side*wa,Math.max(da+.001,.71),a],paint);
+   G.quad([side*wa,Math.max(da+.001,.71),a],[side*wb,Math.max(db+.001,.71),b],
+          [side*(wb-.038),tb,b],[side*(wa-.038),ta,a],paint);
+ }
+ G.hull(-2.215,2.245,.714,.27,.690,.86,.88,C.trim);
+ G.box(0,.325,0,1.48,.13,4.70,C.trim);
+ const hood=[front,-2.16,-2.05,-1.67,-1.24,-.94];
+ const hoodY=z=>.89+(z+2.25)*.128/1.31;
+ for(let i=1;i<hood.length;i++)for(let k=0;k<4;k++){
+   const a=hood[i-1],b=hood[i],u=-1+k*.5,v=u+.5;
+   const p=(t,z)=>[t*(w(z)-.043),hoodY(z)+.025*(1-t*t),z];
+   G.quad(p(u,a),p(v,a),p(v,b),p(u,b),paint);
+ }
+ // Long, nearly horizontal SportCombi roof and steep glass hatch.
+ const roof=[[-.58,1.474],[.20,1.486],[1.14,1.477],[1.79,1.462],[1.98,1.430]];
+ const halfRoof=z=>.666+(z+.58)*.019/2.56;
+ for(let i=1;i<roof.length;i++)for(let j=0;j<4;j++){
+   let [za,ya]=roof[i-1],[zb,yb]=roof[i],u=-1+j*.5,v=u+.5;
+   const p=(r,z,y)=>[r*halfRoof(z),y+.010*(1-r*r),z];
+   G.quad(p(u,za,ya),p(v,za,ya),p(v,zb,yb),p(u,zb,yb),paint);
+ }
+ const windowPoint=(side,z,y)=>[side*(.81-(y-1.0)*.305),y,z];
+ const pane=(s,coords,color)=>G.poly(coords.map(([z,y])=>windowPoint(s,z,y)),color);
+ for(const s of [-1,1]){
+   // Painted A/B/C/D posts, three separate side-window bays.
+   pane(s,[[-1.04,1.016],[-.575,1.473],[-.505,1.475],[-.977,1.017]],paint);
+   pane(s,[[-.106,1.016],[-.101,1.483],[-.018,1.482],[-.025,1.016]],paint);
+   pane(s,[[1.045,1.016],[1.037,1.481],[1.136,1.478],[1.157,1.016]],paint);
+   pane(s,[[2.216,.986],[1.946,1.439],[1.997,1.432],[2.294,.996]],paint);
+   pane(s,[[-.987,1.026],[-.548,1.451],[-.119,1.459],[-.125,1.026]],C.seal);
+   pane(s,[[-.928,1.051],[-.521,1.426],[-.153,1.433],[-.156,1.053]],C.glass);
+   pane(s,[[-.002,1.026],[-.002,1.456],[1.055,1.450],[1.070,1.026]],C.seal);
+   pane(s,[[.038,1.053],[.042,1.429],[1.012,1.423],[1.019,1.053]],C.glass);
+   pane(s,[[1.174,1.027],[1.156,1.447],[1.922,1.414],[2.191,1.027]],C.seal);
+   pane(s,[[1.205,1.052],[1.194,1.419],[1.891,1.389],[2.133,1.052]],C.glass);
+   G.quad([s*.809,1.017,-1.037],[s*.819,1.017,2.235],
+          [s*.816,1.038,2.235],[s*.805,1.038,-1.037],C.trim);
+   for(const z of [-.027,1.13])G.lineOnSide(s*.888,.42,z,.982,z-.06,C.trim,.006);
+   G.quad([s*.890,.706,-2.02],[s*.890,.706,2.18],[s*.893,.741,2.18],[s*.893,.741,-2.02],C.trim);
+   for(const z of [-.64,.42])G.box(s*.892,.93,z,.02,.046,.16,C.chrome);
+   G.box(s*.883,1.066,-.91,.13,.126,.185,paint);
+   G.box(s*.955,1.069,-.936,.075,.075,.140,C.trim);
+   G.box(s*.873,.866,-1.88,.027,.045,.115,C.indicator);
+   pane(s,[[2.10,1.03],[2.252,.95],[2.265,.46],[2.18,.45]],paint);
+   G.box(s*.610,1.484,.64,.045,.027,2.48,C.trim);
+   G.box(s*.610,1.470,-.50,.050,.052,.13,C.trim);
+   G.box(s*.610,1.470,1.77,.050,.052,.13,C.trim);
+ }
+ G.quad([-.791,1.016,-1.045],[.791,1.016,-1.045],[.668,1.473,-.574],[-.668,1.473,-.574],C.seal);
+ G.quad([-.755,1.04,-1.018],[.755,1.04,-1.018],[.637,1.445,-.573],[-.637,1.445,-.573],C.glass);
+ G.quad([-.682,1.426,1.965],[.682,1.426,1.965],[.806,.992,2.293],[-.806,.992,2.293],C.seal);
+ G.quad([-.643,1.404,1.989],[.643,1.404,1.989],[.767,1.030,2.288],[-.767,1.030,2.288],C.rearGlass);
+ G.quad([-.788,.957,rear],[.788,.957,rear],[.788,.440,rear],[-.788,.440,rear],paint);
+ G.quad([-.788,.320,rear],[.788,.320,rear],[.788,.440,rear],[-.788,.440,rear],C.trim);
+ G.quad([-.776,.34,front],[.776,.34,front],[.776,.89,front],[-.776,.89,front],paint);
+ // Three separate chromed grille openings and tapered wraparound front lamps.
+ G.quad([-.236,.765,front-.036],[.236,.765,front-.036],[.208,.940,front-.029],[-.208,.940,front-.029],C.chrome);
+ G.quad([-.218,.789,front-.049],[.218,.789,front-.049],[.190,.926,front-.044],[-.190,.926,front-.044],C.seal);
+ for(const s of [-1,1]){
+   G.quad([s*.270,.791,front-.038],[s*.438,.797,front-.035],
+          [s*.446,.920,front-.030],[s*.252,.920,front-.034],C.chrome);
+   G.quad([s*.290,.813,front-.050],[s*.413,.818,front-.048],
+          [s*.422,.903,front-.045],[s*.276,.900,front-.047],C.seal);
+   G.quad([s*.480,.776,front-.055],[s*.764,.787,front-.027],
+          [s*.761,.952,front-.025],[s*.477,.925,front-.052],C.chrome);
+   G.quad([s*.502,.795,front-.069],[s*.744,.803,front-.045],
+          [s*.740,.936,front-.045],[s*.493,.907,front-.066],C.light);
+   G.quad([s*.744,.803,front+.013],[s*.840,.800,front+.125],
+          [s*.824,.936,front+.111],[s*.739,.936,front+.012],C.light);
+   G.box(s*.826,.747,front+.12,.016,.052,.092,C.indicator);
+   G.box(s*.666,.794,rear+.024,.255,.307,.037,C.tail);
+   G.box(s*.670,.895,rear+.045,.236,.073,.020,C.light);
+   G.box(s*.666,.662,rear+.045,.247,.087,.022,C.tailDark);
+   G.box(s*.841,.807,2.226,.057,.275,.130,C.tail);
+ }
+ G.box(0,.466,front-.087,1.58,.096,.112,C.trim);
+ G.box(0,.546,front-.080,1.50,.025,.040,C.chrome);
+ G.box(0,.558,rear+.077,1.62,.100,.139,C.trim);
+ G.box(0,.671,rear+.039,.465,.115,.021,C.plate);
+ G.box(0,.447,front-.119,.450,.071,.022,C.seal);
+ for(const s of [-1,1])G.box(s*.589,.451,front-.135,.185,.063,.020,C.light);
+ G.box(0,1.449,1.982,1.23,.045,.092,paint);
+ G.box(0,1.067,rear+.025,.495,.018,.025,C.trim);
+ // 16-inch 5-spoke wheels at manufacturer-specified 1.522 m track.
+ for(const side of [-1,1])for(const z of axles){
+   const x=side*.768,r=.343,depth=.215,at=x+side*(depth/2),N=28;
+   const ring=(xx,rr)=>Array.from({length:N},(_,k)=>[xx,cy+rr*Math.cos(k*Math.PI*2/N),z+rr*Math.sin(k*Math.PI*2/N)]);
+   const inner=ring(x-side*depth/2,r),outer=ring(at,r);
+   for(let i=0;i<N;i++)G.quad(inner[i],inner[(i+1)%N],outer[(i+1)%N],outer[i],C.tire);
+   const shoulder=ring(at+side*.004,.255),face=ring(at+side*.010,.210);
+   for(let i=0;i<N;i++){
+     G.quad(outer[i],outer[(i+1)%N],shoulder[(i+1)%N],shoulder[i],C.tire);
+     G.quad(shoulder[i],shoulder[(i+1)%N],face[(i+1)%N],face[i],C.rimDark);
+   }
+   const cx=at+side*.019;
+   for(let k=0;k<5;k++){
+     const a=k*2*Math.PI/5+.13,p=(rad,t)=>[cx,cy+rad*Math.cos(t),z+rad*Math.sin(t)];
+     G.quad(p(.067,a-.12),p(.205,a-.19),p(.205,a+.19),p(.067,a+.12),C.wheel);
+   }
+   G.poly(Array.from({length:12},(_,i)=>[cx+side*.002,cy+.068*Math.cos(i*Math.PI/6),z+.068*Math.sin(i*Math.PI/6)]),C.chrome);
+ }
+}
+
 function tractor(G,id){
  const jd=id==="johnDeere6M",body=jd?"#3e8831":"#2375b5";
  const roof=jd?"#408633":"#236eac",rim=jd?"#e5bc23":"#c2c5bd";
@@ -755,6 +878,7 @@ function buildVehicleGeometryData(id,options={}){
  if(!(id in VEHICLES))throw new RangeError("Unknown model: "+id);
  const G=new Builder();if(id==="volvo240")volvo(G,options.paint||VEHICLES[id].paint);
  else if(id==="saab900")saab(G,options.paint||VEHICLES[id].paint);
+ else if(id==="saab95Estate")saab95Estate(G,options.paint||VEHICLES[id].paint);
  else tractor(G,id);
  return {positions:G.position,normals:G.normal,colors:G.color};
 }
@@ -794,6 +918,9 @@ const lamps = z => [[0.34, 0.16, 0.06, -0.6, 0.72, -z, '#fff6c8'], [0.34, 0.16, 
 const TYPES = {
   volvo: { name: 'Volvo 240', max: 38, acc: 7, off: 0.5, cols: ['#27406b', '#7a2530', '#c9bd9c', '#e6e4dc', '#2f5a41', '#8a8f93'],
     parts: c => [...wheels(0.8, -1.5, 1.45), [1.74, 0.62, 4.8, 0, 0.66, 0, c], [1.56, 0.52, 3.0, 0, 1.22, 0.6, GLASS], [1.6, 0.07, 3.04, 0, 1.5, 0.6, c], ...lamps(2.41)] },
+  saab95Estate: { name: 'Saab 9-5 SportCombi', max: 42, acc: 8.5, off: 0.5,
+    cols: ['#9ea7aa', '#3d566b', '#647569', '#222831', '#8c403d', '#c3beb4'],
+    parts: c => [...wheels(0.76, -1.398, 1.305), [1.75, .62, 4.72, 0, .67, 0, c]] },
   saab: { name: 'Saab 900 (experimental body)', max: 42, acc: 8.5, off: 0.5, cols: ['#1d1d1f', '#8c1c1c', '#3d5a80', '#d8d4c8', '#55606a'],
     parts: c => [...wheels(0.8, -1.45, 1.35), [1.7, 0.58, 4.6, 0, 0.62, 0, c], [1.5, 0.5, 2.1, 0, 1.14, 0.25, GLASS], [1.54, 0.07, 1.9, 0, 1.41, 0.2, c], [1.6, 0.22, 0.7, 0, 0.98, 1.75, c], ...lamps(2.31)] },
   epa: { name: 'EPA-traktor', max: 8.33, acc: 4, off: 0.7, cols: ['#c8372d', '#2a2a2c', '#e8a020', '#3f6b8a'],
@@ -832,7 +959,7 @@ function placeCar(c) {
 }
 function addCar(type, x, z, h, mode) {
   const T = TYPES[type];
-  const modelId = type === 'volvo' ? 'volvo240' : type === 'saab' ? 'saab900' : type === 'newHolland' ? 'newHollandT6' : type === 'johnDeere' ? 'johnDeere6M' : null;
+  const modelId = type === 'volvo' ? 'volvo240' : type === 'saab' ? 'saab900' : type === 'saab95Estate' ? 'saab95Estate' : type === 'newHolland' ? 'newHollandT6' : type === 'johnDeere' ? 'johnDeere6M' : null;
   const mesh = modelId
     ? new THREE.Mesh(VEHICLE_MODELS.createVehicleGeometry(THREE, modelId, { paint: pick(T.cols) }), shapedPaintMat)
     : new THREE.Mesh(carGeo(type, pick(T.cols)), paintMat);
@@ -842,7 +969,7 @@ function addCar(type, x, z, h, mode) {
   scene.add(mesh); cars.push(c); placeCar(c); return c;
 }
 function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
-const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : r < 0.95 ? 'newHolland' : 'johnDeere'; };
+const civType = () => { const r = rnd(); return r < 0.38 ? 'volvo' : r < 0.63 ? 'saab' : r < 0.80 ? 'saab95Estate' : r < 0.90 ? 'epa' : r < 0.95 ? 'newHolland' : 'johnDeere'; };
 // parked cars along streets and driveways
 (function () {
   let count = 0;
@@ -871,7 +998,7 @@ function spawnTraffic(farFrom) {
   for (let t = 0; t < 40; t++) {
     const ri = pick(driveable), r = R[ri], a = Math.floor(rnd() * (r.p.length - 1)), p = r.p[a];
     if (farFrom && Math.hypot(p[0] - farFrom.x, p[1] - farFrom.z) < 260) continue;
-    const type = rnd() < 0.5 ? 'volvo' : rnd() < 0.7 ? 'saab' : 'epa', c = addCar(type, p[0], p[1], 0, 'ai');
+    const type = rnd() < 0.46 ? 'volvo' : rnd() < 0.58 ? 'saab' : rnd() < 0.50 ? 'saab95Estate' : 'epa', c = addCar(type, p[0], p[1], 0, 'ai');
     c.ri = ri; c.a = a; c.dir = 1; c.t = 0; c.first = true; return c;
   }
 }
@@ -890,7 +1017,7 @@ function spawnLocalTraffic(n) {
   for (let i = 0, tries = 0; i < n && tries < 160 && options.length; tries++) {
     const { ri, a } = pick(options), p = R[ri].p[a];
     if (cars.some(c => Math.hypot(c.x - p[0], c.z - p[1]) < 18)) continue;
-    const type = pick(['volvo', 'saab', 'epa']);
+    const type = i === 0 ? 'saab95Estate' : pick(['volvo', 'saab', 'saab95Estate', 'epa']);
     const c = addCar(type, p[0], p[1], 0, 'ai');
     c.ri = ri; c.a = a; c.dir = 1; c.t = 0; c.first = true; i++;
   }

@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import { VEHICLES, buildVehicleGeometryData } from '../src/vehicles/vehicle-library.mjs';
+
+const id = 'saab95Estate';
+assert.ok(VEHICLES[id], 'Saab 9-5 SportCombi must be registered');
+const mesh = buildVehicleGeometryData(id);
+assert.ok(mesh.positions.length > 5000, 'expected modelled body, not box stand-in');
+assert.equal(mesh.positions.length % 9, 0);
+assert.equal(mesh.positions.length, mesh.normals.length);
+assert.equal(mesh.positions.length, mesh.colors.length);
+assert.ok(mesh.positions.every(Number.isFinite), 'invalid geometry coordinate');
+assert.ok(mesh.normals.every(Number.isFinite), 'invalid normal');
+assert.ok(mesh.colors.every(v => Number.isFinite(v) && v >= 0 && v <= 1), 'invalid vertex color');
+const extrema = (i,fn) => fn(...mesh.positions.filter((_,k)=>k%3===i));
+const length = extrema(2,Math.max)-extrema(2,Math.min);
+const width = extrema(0,Math.max)-extrema(0,Math.min);
+const height = extrema(1,Math.max);
+assert.ok(Math.abs(length - 4.828) < .08, 'length not near Saab factory dimension');
+assert.ok(width > 1.792 && width < 2.042, 'mirror-to-mirror width out of range');
+assert.ok(height > 1.44 && height < 1.56, 'roof height out of range');
+console.log(`Saab 9-5 SportCombi: ${mesh.positions.length/9} triangles, length ${length.toFixed(3)}m, width incl. mirrors ${width.toFixed(3)}m, height ${height.toFixed(3)}m`);
