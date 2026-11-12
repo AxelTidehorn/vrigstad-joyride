@@ -747,6 +747,34 @@ const HOME = { x: -8.9, z: 30.1 };
 const player = { x: HOME.x, z: HOME.z, h: 0, speed: 0, phase: 0, mesh: personParts('#f2c230', '#2b3a55') };
 collide(player, 0.6); scene.add(player.mesh);
 (function () { const o = { x: player.x + 7, z: player.z + 3 }; collide(o, 2.6); addCar('volvo', o.x, o.z, 0.6, 'parked'); })();
+
+// Keep one Saab 9-5 parked close to the start for visual model review.
+// The regular Volvo starter remains in place; no new gameplay rules are needed.
+(function parkSaab95Preview() {
+  const spots = [
+    [-8.9,44.1], [-8.9,47.1], [-15.9,42.2], [-12.52,43.62],
+    [-13.3,13.68], [-8.9,13.1], [1,20.2], [3.12,18.08],
+    [5.82,21.6], [5.82,38.6], [1.6,48.29], [-4.5,13.68]
+  ];
+  for (const [x,z] of spots) {
+    const o = {x,z};
+    if (collide(o,2.6) || inWater(x,z) || nearestRoad(x,z).d > 7 ||
+        cars.some(c => Math.hypot(c.x-x,c.z-z) < 7)) continue;
+    let dist = Infinity, heading = 0;
+    for (const r of R) {
+      if (r.c > 3) continue;
+      for (let i = 1; i < r.p.length; i++) {
+        const a = r.p[i-1], b = r.p[i];
+        const d = segDist(x,z,a[0],a[1],b[0],b[1]);
+        if (d < dist) { dist = d; heading = Math.atan2(b[0]-a[0], a[1]-b[1]); }
+      }
+    }
+    addCar('saab95Estate',x,z,heading,'parked');
+    return;
+  }
+  console.warn('Could not find a clear Saab 9-5 preview spot near Torget');
+})();
+
 let inCar = false, pcar = null, stars = 0, evade = 0, bustT = 0, stolen = 0, ramCool = 0, started = false, bigT = 0;
 let inside = null, hideT = 0, trissT = 0, trissN = 0, trissWon = 0, trissLast = '';
 const peds = [], trissLog = [];
