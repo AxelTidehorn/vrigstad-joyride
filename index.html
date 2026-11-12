@@ -381,6 +381,15 @@ class Builder{
   this.quad([a,d,e],[b,d,e],[b,d,f],[a,d,f],color);
   this.quad([a,c,f],[b,c,f],[b,c,e],[a,c,e],color);
  }
+ // Closed quadrilateral hull (faces are directed; geometry is rendered double-sided).
+ hull(zFront,zRear,halfW,yFloor,yShoulder,topFront,topRear,paint) {
+  this.quad([-halfW,yFloor,zFront],[halfW,yFloor,zFront],[halfW,yShoulder,zFront],[-halfW,yShoulder,zFront],paint);
+  this.quad([halfW,yFloor,zRear],[-halfW,yFloor,zRear],[-halfW,yShoulder,zRear],[halfW,yShoulder,zRear],paint);
+  this.quad([-halfW,yFloor,zFront],[-halfW,yFloor,zRear],[halfW,yFloor,zRear],[halfW,yFloor,zFront],COLORS.black);
+  this.quad([-halfW,yShoulder,zFront],[halfW,yShoulder,zFront],[halfW,yShoulder,zRear],[-halfW,yShoulder,zRear],COLORS.black);
+  this.quad([-halfW,yShoulder,zFront],[-halfW,yShoulder,zRear],[-halfW,topRear,zRear],[-halfW,topFront,zFront],paint);
+  this.quad([halfW,yShoulder,zRear],[halfW,yShoulder,zFront],[halfW,topFront,zFront],[halfW,topRear,zRear],paint);
+ }
  lineOnSide(x,y1,z1,y2,z2,color,width=.016){
   this.quad([x,y1,z1-width],[x,y1,z1+width],[x,y2,z2+width],[x,y2,z2-width],color)
  }
@@ -408,7 +417,16 @@ function volvo(G,paint){
  }
  const deck=(z1,z2)=>{G.quad([-.785,top(z1),z1],[.785,top(z1),z1],[.785,top(z2),z2],[-.785,top(z2),z2],paint)};
  deck(front,-.98);deck(1.55,rear);
+ // Interior skin closes the see-through sill and wheelhouse voids without
+ // covering the exterior wheel-arch cut-outs or window glass.
+ G.hull(-2.345,2.345,.745,.325,.885,.933,.986,paint);
  G.box(0,.47,0,1.59,.18,4.55,paint);
+ // Close each exposed hood-to-grille and trunk-to-tail interface.
+ G.quad([-.785,.900,-2.355],[.785,.900,-2.355],[.785,.955,-2.345],[-.785,.955,-2.345],paint);
+ G.quad([-.785,.985,2.345],[.785,.985,2.345],[.785,1.001,2.295],[-.785,1.001,2.295],paint);
+ // Seal the bottom of both end skirts above bumpers.
+ G.quad([-.80,.355,-2.35],[.80,.355,-2.35],[.80,.65,-2.35],[-.80,.65,-2.35],paint);
+ G.quad([.80,.355,2.35],[-.80,.355,2.35],[-.80,.65,2.35],[.80,.65,2.35],paint);
  for(const s of [-1,1]){
   const a=s*.756,b=s*.67;
   // Two tall rectangular door windows with a narrow central pillar.
@@ -428,6 +446,13 @@ function volvo(G,paint){
  G.quad([-.72,1.075,-.94],[.72,1.075,-.94],[.635,1.39,-.61],[-.635,1.39,-.61],COLORS.glass);
  G.quad([.67,1.41,1.13],[-.67,1.41,1.13],[-.756,1.055,1.55],[.756,1.055,1.55],COLORS.black);
  G.quad([.635,1.39,1.14],[-.635,1.39,1.14],[-.72,1.075,1.51],[.72,1.075,1.51],COLORS.glass);
+ // Roof-to-window rebates and C-pillar close the apparent holes at the ends.
+ for(const s of [-1,1]){
+  G.quad([s*.756,1.055,-.98],[s*.67,1.41,-.60],[s*.635,1.39,-.61],[s*.72,1.075,-.94],paint);
+  G.quad([s*.67,1.41,1.13],[s*.756,1.055,1.55],[s*.72,1.075,1.51],[s*.635,1.39,1.14],paint);
+  // Inner body backstop under glazing, instead of seeing through to the ground.
+  G.quad([s*.705,1.005,-.96],[s*.705,1.005,1.54],[s*.68,1.36,1.10],[s*.68,1.36,-.58],COLORS.black);
+ }
  G.box(0,1.415,.265,1.33,.04,1.73,paint);
  // Close the actual rear body panel; previously only lamps, plate and bumper existed here.
  // The panel sits beneath the trim so the license plate cannot reveal open space.
@@ -471,6 +496,12 @@ function saab(G,paint){const col=paint,topY=z=>z<-.94?.842+(z+2.31)*.158/1.37:z<
  // tiny mirror
  G.box(sd*.84,1.065,-.78,.1,.13,.14,'#30383a');
  }
+ // Inner shell behind wheel openings and side panels. Inset prevents Z-fighting.
+ G.hull(-2.295,2.295,.726,.31,.80,.835,.92,col);
+ // Opaque sail backing keeps the rear glass/hatch from showing through the car.
+ for(const sd of [-1,1]){
+  G.quad([sd*.73,.986,.82],[sd*.73,.986,2.14],[sd*.62,1.425,.862],[sd*.62,1.425,.82],col);
+ }
  // hood inclined gently from deep windscreen base toward slant nose
  G.quad([-.75,.845,-2.31],[.75,.845,-2.31],[.75,.999,-.94],[-.75,.999,-.94],col,1.07);
  // bumper-to-front face wedge (increasing front projection toward lower y)
@@ -479,6 +510,8 @@ function saab(G,paint){const col=paint,topY=z=>z<-.94?.842+(z+2.31)*.158/1.37:z<
  function nosePatch(x1,x2,y1,y2,c){let e=-.020;G.quad([x1,y1,nz(y1)+e],[x2,y1,nz(y1)+e],[x2,y2,nz(y2)+e],[x1,y2,nz(y2)+e],c)}
  nosePatch(-.33,.33,.720,.894,SAAB_COLORS.black);for(let sd of [-1,1]){nosePatch(sd*.535-.19,sd*.535+.19,.721,.904,SAAB_COLORS.lamp);nosePatch(sd*.76-.048,sd*.76+.048,.721,.904,SAAB_COLORS.amber)}
  for(let k=-2;k<=2;k++)nosePatch(k*.12-.007,k*.12+.007,.735,.883,'#66767b');
+ // Nose closure reaches below headlight panel, which formerly had no lower face.
+ G.quad([-.75,.34,-2.34],[.75,.34,-2.34],[.75,.615,nz(.615)],[-.75,.615,nz(.615)],col);
  G.box(0,.508,-2.39,1.69,.14,.16,SAAB_COLORS.rubber);
  // windscreen lower and upper points
  G.quad([-.738,1.000,-.94],[.738,1.000,-.94],[.631,1.429,-.49],[-.631,1.429,-.49],SAAB_COLORS.black);
@@ -497,6 +530,10 @@ function saab(G,paint){const col=paint,topY=z=>z<-.94?.842+(z+2.31)*.158/1.37:z<
  G.quad([-.610,1.413,.947],[.610,1.413,.947],[.702,1.031,1.989],[-.702,1.031,1.989],SAAB_COLORS.glass2);
  G.quad([-.754,.989,2.12],[.754,.989,2.12],[.76,.931,2.31],[-.76,.931,2.31],col);
  G.quad([-.754,.93,2.33],[.754,.93,2.33],[.754,.612,2.34],[-.754,.612,2.34],col,.94);
+ // Full-width tail closure and the lower section behind the number plate.
+ G.quad([-.754,.34,2.345],[.754,.34,2.345],[.754,.615,2.345],[-.754,.615,2.345],col);
+ // The short side returns tie the sloping tail panel to the side skins.
+ for(const sd of [-1,1])G.quad([sd*.80,.61,2.30],[sd*.754,.612,2.34],[sd*.754,.93,2.33],[sd*.80,.92,2.30],col);
  for(let sd of [-1,1]){let xx=sd*.63;G.box(xx,.797,2.352,.27,.21,.035,SAAB_COLORS.rear);G.box(xx,.853,2.379,.27,.045,.014,SAAB_COLORS.amber)}
  G.box(0,.770,2.36,.45,.11,.015,'#919b9d');G.box(0,.51,2.43,1.67,.13,.15,SAAB_COLORS.rubber);
  for(let sd of [-1,1]){G.wheel(sd*.779,.40,fa,.354,.265,'#aab4b8');G.wheel(sd*.779,.40,ra,.354,.265,'#aab4b8')}
@@ -506,12 +543,20 @@ function tractor(G,id){
  const jd=id==="johnDeere6M",body=jd?"#3e8831":"#2375b5";
  const roof=jd?"#408633":"#236eac",rim=jd?"#e5bc23":"#c2c5bd";
  const nose=jd?-2.15:-2.24, frontY=jd?1.36:1.30, topY=jd?1.80:1.74;
+ // Continuous inner frame and engine block close the open underside.
  G.box(0,.98,.22,1.35,.4,3.24,"#343c3b");
+ G.box(0,1.16,-1.34,1.18,.48,1.70,body);
+ G.quad([-.62,.90,nose],[.62,.90,nose],[.62,frontY,nose],[-.62,frontY,nose],body);
+ // Cab floor and rear bulkhead provide the depth missing from window-only surfaces.
+ G.box(0,1.44,.49,1.40,.11,1.78,"#303b3b");
+ G.quad([-.69,1.43,1.36],[.69,1.43,1.36],[.69,2.53,1.17],[-.69,2.53,1.17],COLORS.black);
  G.box(0,1.14,1.30,1.32,.34,.78,"#3b4140");
  G.quad([-.62,frontY,nose],[.62,frontY,nose],[.72,topY,-.46],[-.72,topY,-.46],body);
  for(const s of [-1,1]){
   G.quad([s*.62,1.05,nose],[s*.72,1.12,-.46],[s*.72,topY,-.46],[s*.62,frontY,nose],body);
   G.quad([s*.69,1.46,-1.89],[s*.70,1.46,-.72],[s*.70,1.58,-.72],[s*.69,1.58,-1.89],COLORS.black);
+  // Cab sheet metal at window bottom (only the glass remains transparent-looking).
+  G.quad([s*.755,1.40,-.50],[s*.755,1.40,1.38],[s*.70,1.57,1.34],[s*.70,1.57,-.43],body);
   G.box(s*.78,1.13,.46,.14,.50,.22,COLORS.black);
   const ba=jd?-.44:-.5,ta=jd?-.16:-.18,tb=jd?1.13:1.17,bb=jd?1.33:1.37;
   G.quad([s*.77,1.44,ba],[s*.77,1.44,bb],[s*.70,2.53,tb],[s*.70,2.53,ta],COLORS.black);
@@ -525,7 +570,10 @@ function tractor(G,id){
  }
  G.quad([-.76,1.44,-.48],[.76,1.44,-.48],[.70,2.54,-.18],[-.70,2.54,-.18],COLORS.glass);
  G.quad([.70,2.54,1.17],[-.70,2.54,1.17],[-.76,1.44,1.36],[.76,1.44,1.36],COLORS.glass);
+ // Upper roof seals and front cab header.
  G.box(0,2.65,.49,1.64,.20,1.60,roof);
+ G.quad([-.70,2.53,-.18],[.70,2.53,-.18],[.70,2.55,-.31],[-.70,2.55,-.31],roof);
+ G.quad([.70,2.53,1.17],[-.70,2.53,1.17],[-.70,2.55,1.28],[.70,2.55,1.28],roof);
  G.box(0,1.22,nose-.025,1.12,.22,.05,COLORS.black);
  for(const s of [-1,1])G.box(s*.42,1.46,nose-.03,.2,.09,.06,COLORS.lamp);
  G.box(0,1.15,1.89,1.15,.38,.24,COLORS.black);
