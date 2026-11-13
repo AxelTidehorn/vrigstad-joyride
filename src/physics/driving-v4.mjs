@@ -54,8 +54,10 @@ function automaticForce(c,rawPedal,dt,spec){
   c.rpm+= (targetRpm-c.rpm)*(1-Math.exp(-dt/.105));
   if(wantsForward && c.shiftLock<=0 && !switchingAgainstMotion){
     // High throttle holds a gear longer. Low throttle cruises early.
-    const shiftUp=2500+request*2550;
-    const shiftDown=1150+request*1050;
+    // Choose reachable road-speed shift points, with generous hysteresis.
+    // The former 5050 RPM WOT target kept the Volvo in 2/3 and Saab in 3.
+    const shiftUp=1750+650*request;
+    const shiftDown=900+400*request;
     let next=c.gear;
     if(c.gear<p.ratios.length && coupled>shiftUp)next=c.gear+1;
     else if(c.gear>1 && coupled<shiftDown)next=c.gear-1;
@@ -67,8 +69,8 @@ function automaticForce(c,rawPedal,dt,spec){
   const driveInput=clamp(request,0,1);
   // RPM is calculated from actual vehicle speed after a converter slip allowance.
   const wheelTorque=p.torque*torqueFraction(c.rpm,p)*p.ratios[Math.max(0,c.gear-1)]*p.final*p.efficiency;
-  const converterBoost=mix(1.35,1,clamp(travel/7,0,1));
-  let wheelForce=wheelTorque/p.radius*converterBoost*driveInput;
+  const converterBoost=mix(1.20,1,clamp(travel/8,0,1));
+  let wheelForce=wheelTorque/p.radius*converterBoost*driveInput*clamp(1-.16*travel/25,.74,1);
   // Brief, visible but not violent power interruption during an automatic shift.
   if(c.shiftTime>0)wheelForce*=.33;
   // A gentle soft limiter, not an instantaneous velocity jump.
@@ -160,7 +162,9 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   const Fx=fxR+fxF*Math.cos(steer)-fyF*Math.sin(steer);
   const Fy=fyR+fxF*Math.sin(steer)+fyF*Math.cos(steer);
   const rolling=surface.rolling*g;
-  const resistance=rolling*Math.tanh(forwardV*3)+.0036*forwardV*Math.abs(forwardV);
+  // Drag is gentle at city speed and grows with speed. Keep the V3 A/B baseline untouched.
+  const aero=settings.powertrain==='v3'?.0036:.0006;
+  const resistance=rolling*Math.tanh(forwardV*3)+aero*forwardV*Math.abs(forwardV);
   let udot=Fx/m+c.v*c.r-resistance;
   let vdot=Fy/m-c.u*c.r;
   let rdot=(lf*(fxF*Math.sin(steer)+fyF*Math.cos(steer))-lr*fyR)/inertia;
