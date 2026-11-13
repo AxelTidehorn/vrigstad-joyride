@@ -1,5 +1,10 @@
 // Pure placement and schedule; never consumes the gameplay RNG.
-export function streetlightLevel(hour) {
+export function streetlightLevel(hour,solarElevation=null) {
+  if(Number.isFinite(solarElevation)){
+    // Astronomical dusk/dawn: fully on below -6 degrees, off above 0.
+    const t=Math.max(0,Math.min(1,-solarElevation/6));
+    return t*t*(3-2*t);
+  }
   const h=((hour%24)+24)%24;
   const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t)};
   return h>=19?1:h<5?1:h<5.25?1-smooth((h-5)*4):0;
@@ -52,8 +57,8 @@ export function createStreetLighting(THREE,{scene,camera,roads,widths,height,blo
   // Fixed pool: no shader light-count changes while driving, no shadow maps.
   const pool=Array.from({length:coarse?2:4},()=>{const light=new THREE.PointLight(0xff9b32,0,26,2);scene.add(light);return light});
   const selected=new Int32Array(pool.length);let mode='auto',level=0,active=0;
-  function update(dt,hour){
-    const target=mode==='on'?1:mode==='off'?0:streetlightLevel(hour);
+  function update(dt,hour,solarElevation=null){
+    const target=mode==='on'?1:mode==='off'?0:streetlightLevel(hour,solarElevation);
     level+=(target-level)*(dt===0?1:1-Math.exp(-dt*4));
     bulbMat.emissiveIntensity=level*1.8;haloMat.opacity=level;
     for(let k=0;k<pool.length;k++){
