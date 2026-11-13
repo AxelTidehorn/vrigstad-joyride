@@ -67,8 +67,8 @@ function automaticForce(c,rawPedal,dt,spec){
   const driveInput=clamp(request,0,1);
   // RPM is calculated from actual vehicle speed after a converter slip allowance.
   const wheelTorque=p.torque*torqueFraction(c.rpm,p)*p.ratios[Math.max(0,c.gear-1)]*p.final*p.efficiency;
-  const converterBoost=mix(1.35,1,clamp(travel/7,0,1));
-  let wheelForce=wheelTorque/p.radius*converterBoost*driveInput;
+  const converterBoost=mix(1.20,1,clamp(travel/8,0,1));
+  let wheelForce=wheelTorque/p.radius*converterBoost*driveInput*clamp(1-.16*travel/25,.74,1);
   // Brief, visible but not violent power interruption during an automatic shift.
   if(c.shiftTime>0)wheelForce*=.33;
   // A gentle soft limiter, not an instantaneous velocity jump.
@@ -160,7 +160,9 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   const Fx=fxR+fxF*Math.cos(steer)-fyF*Math.sin(steer);
   const Fy=fyR+fxF*Math.sin(steer)+fyF*Math.cos(steer);
   const rolling=surface.rolling*g;
-  const resistance=rolling*Math.tanh(forwardV*3)+.0036*forwardV*Math.abs(forwardV);
+  // Drag is gentle at city speed and grows with speed. Keep the V3 A/B baseline untouched.
+  const aero=settings.powertrain==='v3'?.0036:.0011;
+  const resistance=rolling*Math.tanh(forwardV*3)+aero*forwardV*Math.abs(forwardV);
   let udot=Fx/m+c.v*c.r-resistance;
   let vdot=Fy/m-c.u*c.r;
   let rdot=(lf*(fxF*Math.sin(steer)+fyF*Math.cos(steer))-lr*fyR)/inertia;
