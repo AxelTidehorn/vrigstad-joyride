@@ -1,5 +1,7 @@
 # Standalone photographic grain — r187 dependency preview
 
+> **Review tuning (2026-11-13):** The `?grain=strong` setting is now **1.5** following visual review. Default/subtle remains 0.62 and off remains a true bypass. The earlier `strong.png` screenshot and performance figures below were captured at the previous strength **1.35**; they are historical evidence and must be regenerated before final visual signoff. No claim is made that they show the new 1.5 setting.
+
 **Blocked by upstream [#143](https://github.com/OliverRomhagen/vrigstad-joyride/pull/143), then [#147](https://github.com/OliverRomhagen/vrigstad-joyride/pull/147). Both were reviewed and remain open/unmerged.** This is deliberately not a patch against current r128 main.
 
 - Exact reviewed #143 head: `167fac9da8a73f368c9488c5d4c3cead481e6f80`.
