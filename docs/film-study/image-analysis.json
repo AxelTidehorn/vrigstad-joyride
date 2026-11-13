@@ -1,0 +1,150 @@
+{
+  "torget": {
+    "off": {
+      "scene_mean_absolute_RGB_difference_from_negative": 9.122,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 77.15,
+      "scene_luma_p99": 215.12
+    },
+    "chrome": {
+      "scene_mean_absolute_RGB_difference_from_negative": 4.115,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 59.63,
+      "scene_luma_p99": 205.69
+    },
+    "negative": {
+      "scene_mean_absolute_RGB_difference_from_negative": 0.0,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 63.36,
+      "scene_luma_p99": 202.48
+    },
+    "gold": {
+      "scene_mean_absolute_RGB_difference_from_negative": 5.506,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 71.98,
+      "scene_luma_p99": 205.05
+    },
+    "portra": {
+      "scene_mean_absolute_RGB_difference_from_negative": 7.069,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 72.15,
+      "scene_luma_p99": 199.12
+    }
+  },
+  "residential": {
+    "off": {
+      "scene_mean_absolute_RGB_difference_from_negative": 8.9,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 33.44,
+      "scene_luma_p99": 214.99
+    },
+    "chrome": {
+      "scene_mean_absolute_RGB_difference_from_negative": 3.402,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 19.3,
+      "scene_luma_p99": 205.78
+    },
+    "negative": {
+      "scene_mean_absolute_RGB_difference_from_negative": 0.0,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 23.67,
+      "scene_luma_p99": 202.98
+    },
+    "gold": {
+      "scene_mean_absolute_RGB_difference_from_negative": 6.135,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 29.44,
+      "scene_luma_p99": 203.12
+    },
+    "portra": {
+      "scene_mean_absolute_RGB_difference_from_negative": 6.195,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 29.08,
+      "scene_luma_p99": 198.13
+    }
+  },
+  "rural": {
+    "off": {
+      "scene_mean_absolute_RGB_difference_from_negative": 10.127,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 16.67,
+      "scene_luma_p99": 197.31
+    },
+    "chrome": {
+      "scene_mean_absolute_RGB_difference_from_negative": 3.191,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 8.59,
+      "scene_luma_p99": 192.38
+    },
+    "negative": {
+      "scene_mean_absolute_RGB_difference_from_negative": 0.0,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 11.88,
+      "scene_luma_p99": 190.09
+    },
+    "gold": {
+      "scene_mean_absolute_RGB_difference_from_negative": 7.391,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 14.38,
+      "scene_luma_p99": 192.35
+    },
+    "portra": {
+      "scene_mean_absolute_RGB_difference_from_negative": 7.368,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 13.95,
+      "scene_luma_p99": 187.65
+    }
+  },
+  "industrial": {
+    "off": {
+      "scene_mean_absolute_RGB_difference_from_negative": 11.235,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0019,
+      "scene_luma_p01": 16.67,
+      "scene_luma_p99": 209.27
+    },
+    "chrome": {
+      "scene_mean_absolute_RGB_difference_from_negative": 3.142,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 8.59,
+      "scene_luma_p99": 202.13
+    },
+    "negative": {
+      "scene_mean_absolute_RGB_difference_from_negative": 0.0,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 11.88,
+      "scene_luma_p99": 199.08
+    },
+    "gold": {
+      "scene_mean_absolute_RGB_difference_from_negative": 7.359,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0,
+      "scene_luma_p01": 14.38,
+      "scene_luma_p99": 200.15
+    },
+    "portra": {
+      "scene_mean_absolute_RGB_difference_from_negative": 7.672,
+      "scene_any_channel_255_percent": 0.0,
+      "scene_black_RGB_percent": 0.0019,
+      "scene_luma_p01": 13.95,
+      "scene_luma_p99": 195.23
+    }
+  }
+}

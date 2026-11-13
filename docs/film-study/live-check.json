@@ -1,0 +1,16 @@
+{
+  "errors": [],
+  "note": "Actual built game with no game source, camera or RAF instrumentation (favicon requests receive an empty 204). Default Negative, grain and mist, dynamic daylight fixed at 13:00.",
+  "started": true,
+  "canvas": {
+    "width": 1280,
+    "height": 720
+  },
+  "gallery": {
+    "images": 24,
+    "broken": [],
+    "missingAlt": 0,
+    "language": "en",
+    "httpErrors": []
+  }
+}
