@@ -306,31 +306,78 @@ const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p
     m.receiveShadow = true; m.renderOrder = i === 6 ? 8 : 6 - i; scene.add(m); });
 })();
 
-// A small number of repaired asphalt rectangles follows real road segments.
-// Each corner samples the same terrain as the road mesh; no independent demo scene.
-(function roadRepairs() {
-  const pos = [];
-  let seen = 0;
-  for (const r of R) {
-    if (r.c > 2) continue;
-    for (let i = 1; i < r.p.length; i++) {
-      const a = r.p[i - 1], b = r.p[i], dx = b[0] - a[0], dz = b[1] - a[1], len = Math.hypot(dx, dz);
-      if (len < 12 || ++seen % 19 !== 0 || pos.length > 1200) continue;
-      const ux = dx / len, uz = dz / len, nx = -uz, nz = ux, cx = (a[0] + b[0]) / 2, cz = (a[1] + b[1]) / 2;
-      const halfL = Math.min(3, len * 0.22), halfW = Math.min(1.25, ROAD_W[r.c] * 0.25);
-      const p = [[-halfL,-halfW],[halfL,-halfW],[halfL,halfW],[-halfL,halfW]].map(([t,w]) => {
-        const x = cx + ux * t + nx * w, z = cz + uz * t + nz * w;
-        return [x, hAt(x,z) + 0.275, z];
-      });
-      for (const j of [0,1,2,0,2,3]) pos.push(...p[j]);
+// Asphalt maintenance: deterministic from road geometry, not game RNG.
+// Larger patches are subdued material areas following the actual terrain,
+// never a repeated painted pattern on the texture.
+(function roadRepairsAndCracks() {
+  const patches=[[],[]], cracks=[];
+  const shade=(x,z,t=0)=>{
+    const v=Math.sin(x*12.9898+z*78.233+t*41.17)*43758.5453;
+    return v-Math.floor(v);
+  };
+  let repaired=0, cracked=0;
+  for(const r of R){
+    if(r.c>2)continue;
+    for(let i=1;i<r.p.length;i++){
+      const a=r.p[i-1],b=r.p[i],dx=b[0]-a[0],dz=b[1]-a[1],length=Math.hypot(dx,dz);
+      if(length<9)continue;
+      const ux=dx/length,uz=dz/length,nx=-uz,nz=ux;
+      const cx=(a[0]+b[0])/2,cz=(a[1]+b[1])/2;
+      const random=shade(cx,cz,2);
+      if(random>.76 && repaired<220){
+        const along=Math.min(length*.39,2.3+shade(cx,cz,3)*2.7);
+        const halfW=(shade(cx,cz,4)>.55?.62:1.18);
+        const across=(shade(cx,cz,5)-.5)*Math.max(0.1,ROAD_W[r.c]-2*halfW-1.1);
+        // Lift precisely with the source road class; polygon offset handles
+        // sub-millimeter differences at corners without levitating slabs.
+        const yAtPatch=(x,z)=>hAt(x,z)+roadLift(r.c)+.012;
+        const corners=[[-along,-halfW],[along,-halfW],[along,halfW],[-along,halfW]].map(([t,w])=>{
+          const x=cx+ux*t+nx*(w+across),z=cz+uz*t+nz*(w+across);
+          return [x,yAtPatch(x,z),z];
+        });
+        const dst=patches[shade(cx,cz,6)>.48?0:1];
+        for(const j of [0,1,2,0,2,3])dst.push(...corners[j]);
+        repaired++;
+      }
+      // Isolated short, irregular cracks in older road surfaces. A crack is
+      // several connected dark hairline segments, not a repeating texture.
+      if(shade(cx,cz,7)>.70 && cracked<350){
+        const t0=.16+shade(cx,cz,8)*.43;
+        const span=Math.min(4.8,length*(.27+shade(cx,cz,9)*.16));
+        const offset=(shade(cx,cz,10)-.5)*ROAD_W[r.c]*.45;
+        let prev=null;
+        for(let j=0;j<5;j++){
+          const t=(t0*length)+span*j/4;
+          const drift=offset+Math.sin(j*2.6+random*8)*.15+(.5-shade(cx,cz,j+11))*.14;
+          const x=a[0]+ux*t+nx*drift,z=a[1]+uz*t+nz*drift;
+          const q=[x,hAt(x,z)+roadLift(r.c)+.030,z];
+          if(prev)cracks.push(...prev,...q);
+          prev=q;
+        }
+        cracked++;
+      }
     }
   }
-  if (!pos.length) return;
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  g.computeVertexNormals();
-  const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({color: 0x484f52, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3}));
-  m.receiveShadow = true; m.renderOrder = 7; scene.add(m);
+  const patchColors=[0x424b50,0x60676a]; // utility cuts vs older faded patching
+  for(let i=0;i<patches.length;i++){
+    if(!patches[i].length)continue;
+    const g=new THREE.BufferGeometry();
+    g.setAttribute('position',new THREE.Float32BufferAttribute(patches[i],3));
+    g.computeVertexNormals();
+    const m=new THREE.Mesh(g,new THREE.MeshLambertMaterial({
+      color:patchColors[i],side:THREE.DoubleSide,
+      polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-5
+    }));
+    m.receiveShadow=true;m.renderOrder=7;scene.add(m);
+  }
+  if(cracks.length){
+    const g=new THREE.BufferGeometry();
+    g.setAttribute('position',new THREE.Float32BufferAttribute(cracks,3));
+    const m=new THREE.LineSegments(g,new THREE.LineBasicMaterial({
+      color:0x293238,transparent:true,opacity:.45,depthWrite:false
+    }));
+    m.frustumCulled=false;m.renderOrder=9;scene.add(m);
+  }
 })();
 const RC = 50, roadGrid = new Map();
 R.forEach((r, ri) => { for (let i = 1; i < r.p.length; i++) { const a = r.p[i - 1], b = r.p[i];
