@@ -96,6 +96,16 @@ export function createVehicleLighting(THREE,{scene,coarse}){
     lamp.castShadow=false;scene.add(lamp,lamp.target);return lamp;
   });
   function update(cars,playerCar,camera,level){
+    // Attach lazily: compatible with both the original Mesh and the
+    // suspension BodyRig introduced in the separate driving PR.
+    for(const c of cars)if(!lamps.has(c)){
+      const parent=c.bodyRig?c.bodyRig.children[0]:c.mesh;
+      if(parent)attach(parent,c.type,c);
+    }
+    for(const [c,m] of lamps)if(!cars.includes(c)){
+      if(m.parent)m.parent.remove(m);
+      lamps.delete(c);
+    }
     bulbMat.opacity=level*.98;
     for(const [c,m] of lamps)m.visible=level>.03&&['ai','player','police'].includes(c.mode);
     const active=cars.filter(c=>['player','police','ai'].includes(c.mode)
