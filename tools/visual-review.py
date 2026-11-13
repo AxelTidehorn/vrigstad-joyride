@@ -58,7 +58,9 @@ def capture(browser, name, query=""):
     page.wait_for_function("window.__visualPaused === true", polling=100, timeout=180000)
     fail = page.locator("#fail").is_visible()
     # Freeze only after the frame finishes: capture byte-identical camera states.
-    stem = name + ("-mist-off" if query else "")
+    # Keep each mode's screenshots distinct; no game-specific test UI.
+    stem = name + ("-heights-original" if "heights=original" in query
+                   else "-mist-off" if "mist=off" in query else "")
     page.screenshot(path=str(OUT / f"{stem}-torget.png"), animations="disabled")
     page.mouse.move(800, 375)
     page.mouse.down()
@@ -88,6 +90,7 @@ def main():
             try:
                 results = [capture(browser, "before"),
                            capture(browser, "after"),
+                           capture(browser, "after", "?heights=original"),
                            capture(browser, "after", "?mist=off&grain=strong")]
             finally:
                 browser.close()
