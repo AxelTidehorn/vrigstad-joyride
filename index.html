@@ -109,7 +109,7 @@ body { background: var(--sky); color: var(--ink); font-family: var(--body); font
     <div id="bl"><div id="joy" hidden><div id="knob"></div></div></div>
     <div id="br">
       <div id="speed" class="plate" hidden><em id="carname"></em><b id="kmh">0</b><span>km/h</span></div>
-      <div id="pad" hidden><button type="button" id="p-brake">Brake</button><button type="button" id="p-act">Use</button></div>
+      <div id="pad" hidden><button type="button" id="p-brake">Brake</button><button type="button" id="p-handbrake">Handbrake</button><button type="button" id="p-act">Use</button></div>
     </div>
   </div>
   <div id="prompt" class="plate" hidden></div>
@@ -124,7 +124,7 @@ body { background: var(--sky); color: var(--ink); font-family: var(--body); font
       <dl>
         <dt>Move / drive</dt><dd>W A S D or arrow keys. On a phone, the left stick.</dd>
         <dt>Steal / get out</dt><dd>E (or the Use button)</dd>
-        <dt>Sprint / brake</dt><dd>Shift on foot, Space in a car</dd>
+        <dt>Sprint / brake</dt><dd>Shift to sprint on foot, Space to brake in a car, Shift for handbrake</dd>
         <dt>Look around</dt><dd>Drag the view</dd>
         <dt>Lie low</dt><dd>Go inside a safehouse (green house on the minimap) for a minute</dd>
         <dt>Back to Torget</dt><dd>R</dd>
@@ -2651,6 +2651,208 @@ function personParts(shirt, pants, hair) {
   g.add(b, l, r); g.legs = [l, r]; attachContactShadow(g,0.9,0.9); return g;
 }
 
+const DRIVING_PHYSICS = (() => {
+/**
+ * Driving Physics Lab V4 integrated source. Pure vehicle dynamics; no THREE or DOM.
+ * Heading 0 faces -Z. All gearbox selections are automatic.
+ * FWD/RWD/AWD are gameplay archetypes, not calibrated vehicle specifications.
+ */
+// Vrigstad Joyride — drive feel A/B experiment. Baseline is exact V2 when feel='v2'.
+// Local body axes: +u forward, +v to driver's right; yaw positive turns right.
+// Heading 0 faces world -Z. No rendering / THREE / asset dependencies.
+const VEHICLE_PRESETS = Object.freeze({
+  fwd: { name: 'FWD · Saab', drive: 'fwd', mass: 1350, wheelbase: 2.60, width: 1.72, maxSpeed: 40, acceleration: 4.5, grip: 1.0, yawInertia: 1.04 },
+  rwd: { name: 'RWD · Volvo', drive: 'rwd', mass: 1430, wheelbase: 2.65, width: 1.73, maxSpeed: 38, acceleration: 4.7, grip: 1.0, yawInertia: 1.02 },
+  awd: { name: 'AWD · Polis', drive: 'awd', mass: 1570, wheelbase: 2.68, width: 1.78, maxSpeed: 42, acceleration: 5.1, grip: 1.10, yawInertia: 1.10 },
+});
+const SURFACES = Object.freeze({
+  asphalt: { name: 'Asfalt', mu: 1.05, rolling: .020 },
+  gravel:  { name: 'Grus', mu: .70, rolling: .035 },
+  grass:   { name: 'Gräs', mu: .46, rolling: .060 },
+});
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+// V4: lightweight automatic powertrains. All vehicles use an automatic box; no manual gears.
+// Engine curves, torque converter and gear selection are game-feel approximations,
+// not measured dynamometer data for particular production years/engines.
+const AUTO_SPECS = Object.freeze({
+  rwd: { label:'Volvo · lågvarvig', idle:780, redline:5400, torque:232, peak:2600,
+         ratios:[2.45,1.45,1.00,.70], final:3.73, radius:.320, efficiency:.85, response:.19, brake:.70, shift:.33 },
+  fwd: { label:'Saab · varvvillig', idle:850, redline:6200, torque:225, peak:3850,
+         ratios:[2.85,1.72,1.12,.78], final:3.75, radius:.315, efficiency:.86, response:.13, brake:.55, shift:.27 },
+  awd: { label:'Polis · snabb automat', idle:860, redline:6400, torque:290, peak:4000,
+         ratios:[3.30,1.96,1.39,.98,.74], final:3.52, radius:.325, efficiency:.84, response:.12, brake:.63, shift:.25 },
+});
+const mix=(a,b,t)=>a+(b-a)*t;
+function torqueFraction(rpm,p){
+  // Flat, broad torque plateau below peak, gentle fade at higher revs.
+  const n=clamp(rpm/p.peak,0,2.3);
+  return n<=1 ? mix(.70,1,Math.pow(n,.75)) : clamp(1-.30*Math.pow(n-1,1.28),.53,1);
+}
+function automaticForce(c,rawPedal,dt,spec){
+  const p=AUTO_SPECS[c.type], speed=c.u;
+  // The backward key acts as progressive braking until nearly stopped,
+  // then selects R automatically. W does the equivalent from reverse.
+  if(rawPedal<-.06 && speed<.43)c.range='R';
+  else if(rawPedal>.06 && speed>-.43)c.range='D';
+  const wantsForward=c.range==='D',switchingAgainstMotion=(wantsForward&&((rawPedal<-.06&&speed>.43)||(speed<-.5&&rawPedal>.06)))||(!wantsForward&&((rawPedal>.06&&speed<-.43)||(speed>.5&&rawPedal<-.06)));
+  c.shiftLock=Math.max(0,c.shiftLock-dt);
+  c.shiftTime=Math.max(0,c.shiftTime-dt);
+  const travel=Math.abs(speed),gearIndex=wantsForward?Math.max(0,c.gear-1):0;
+  const ratio=p.ratios[gearIndex];
+  const wheelRpm=travel/(2*Math.PI*p.radius)*60;
+  const coupled=wheelRpm*ratio*p.final;
+  const request=(wantsForward?Math.max(0,rawPedal):Math.max(0,-rawPedal));
+  const converterSlip=(1-clamp(travel/9,0,1))*(220+530*request);
+  const targetRpm=clamp(Math.max(p.idle,coupled+converterSlip),p.idle,p.redline);
+  c.rpm+= (targetRpm-c.rpm)*(1-Math.exp(-dt/.105));
+  if(wantsForward && c.shiftLock<=0 && !switchingAgainstMotion){
+    // High throttle holds a gear longer. Low throttle cruises early.
+    const shiftUp=2500+request*2550;
+    const shiftDown=1150+request*1050;
+    let next=c.gear;
+    if(c.gear<p.ratios.length && coupled>shiftUp)next=c.gear+1;
+    else if(c.gear>1 && coupled<shiftDown)next=c.gear-1;
+    // Kickdown: allow one lower gear when demand is high, if safe.
+    else if(request>.84 && c.gear>1 && coupled<p.peak*.65 && wheelRpm*p.ratios[c.gear-2]*p.final<shiftUp*.85)
+      next=c.gear-1;
+    if(next!==c.gear){c.gear=next;c.shiftTime=p.shift;c.shiftLock=.72;c.shiftCount++;}
+  }
+  const driveInput=clamp(request,0,1);
+  // RPM is calculated from actual vehicle speed after a converter slip allowance.
+  const wheelTorque=p.torque*torqueFraction(c.rpm,p)*p.ratios[Math.max(0,c.gear-1)]*p.final*p.efficiency;
+  const converterBoost=mix(1.35,1,clamp(travel/7,0,1));
+  let wheelForce=wheelTorque/p.radius*converterBoost*driveInput;
+  // Brief, visible but not violent power interruption during an automatic shift.
+  if(c.shiftTime>0)wheelForce*=.33;
+  // A gentle soft limiter, not an instantaneous velocity jump.
+  if(travel>spec.maxSpeed*.88)wheelForce*=clamp((spec.maxSpeed*1.09-travel)/(spec.maxSpeed*.21),0,1);
+  let engineForce=0;
+  if(switchingAgainstMotion){
+    // W/S first slows the car, then automatically picks D/R at low speed.
+    engineForce=-Math.sign(speed)*spec.mass*5.6*Math.abs(rawPedal);
+  }else if(driveInput>.01){
+    engineForce=(wantsForward?1:-1)*wheelForce*(wantsForward?1:.66);
+  }else if(Math.abs(speed)>.4){
+    // Engine braking decelerates the car, varies by engine/ratio/RPM.
+    const fraction=clamp((c.rpm-p.idle)/(p.redline-p.idle),0,1);
+    engineForce=-Math.sign(speed)*spec.mass*p.brake*(.45+.95*fraction);
+  }
+  c.engineLoad=clamp(driveInput,0,1);
+  c.gearLabel=c.range==='R'?'R':String(c.gear);
+  return engineForce;
+}
+
+function newCar(type='rwd',x=0,z=0,h=0){
+  if(!VEHICLE_PRESETS[type]) throw Error('Unknown vehicle '+type);
+  return { type, x,z,h, u:0,v:0,r:0, steer:0, slip:0, speed:0, slipFront:0, slipRear:0, gripFront:0, gripRear:0, surface:'asphalt', distance:0, smoothedThrottle:0, slideResponse:0, range:'D', gear:1, gearLabel:'1', rpm:AUTO_SPECS[type].idle, engineLoad:0, shiftTime:0, shiftLock:0, shiftCount:0 };
+}
+function stepCar(c,input={},dt=1/120,settings={}){
+  if(!(dt>0&&dt<=.05)) throw Error('stepCar expects dt in (0, .05]');
+  const preset=VEHICLE_PRESETS[c.type],spec=settings.speedLimit?{...preset,maxSpeed:Math.min(preset.maxSpeed,settings.speedLimit)}:preset,
+        surface=SURFACES[settings.surface||c.surface]||SURFACES.asphalt;
+  const balanced=settings.feel==='balanced';
+  const m=spec.mass,g=9.81,L=spec.wheelbase,lf=L*.47,lr=L*.53;
+  const inertia=(m*L*L*.34)*spec.yawInertia;
+  const steerIn=clamp(input.steer||0,-1,1),pedal=clamp(input.throttle||0,-1,1);
+  c.smoothedThrottle=balanced ? c.smoothedThrottle+(pedal-c.smoothedThrottle)*(1-Math.exp(-dt/(Math.abs(pedal)>Math.abs(c.smoothedThrottle)?.20:.12))) : pedal;
+  const throttle=c.smoothedThrottle;
+  const brake=clamp(input.brake||0,0,1),handbrake=clamp(input.handbrake||0,0,1);
+  const steerMax=.49/(1+Math.abs(c.u)/12);
+  const targetSteer=steerIn*steerMax;
+  c.steer+=clamp(targetSteer-c.steer,-(balanced?1.55:3.0)*dt,(balanced?1.55:3.0)*dt);
+  const steer=c.steer;
+  const mu=surface.mu*spec.grip;
+  const normalFront=m*g*(lr/L),normalRear=m*g*(lf/L);
+  const forwardV=c.u;
+  let engine;
+  if(settings.powertrain==='v3'){
+    // Exact V3 traction input for an honest A/B comparison.
+    engine=m*spec.acceleration*throttle;
+    if(throttle>0) engine*=clamp(1-Math.max(0,forwardV)/spec.maxSpeed*.68,.19,1);
+    if(throttle<0&&forwardV>1.0) engine*=1.15;
+    if(throttle>0&&forwardV<-.5) engine*=1.15;
+    c.gearLabel='–';c.rpm=0;c.shiftCount=0;
+  }else{
+    // The same already-smoothed throttle as V3: chassis behavior is unchanged.
+    engine=automaticForce(c,throttle,dt,spec);
+  }
+  engine *= clamp(settings.powerScale??1,0.25,1.7);
+  let frontDrive=spec.drive==='fwd'?.96:spec.drive==='awd'?.48:0;
+  let rearDrive=1-frontDrive;
+  let fxF=engine*frontDrive,fxR=engine*rearDrive;
+  if(brake){
+    let sign=Math.sign(forwardV);if(Math.abs(forwardV)<.25)sign=Math.sign(throttle)||0;
+    fxF-=sign*m*12.0*.63*brake;
+    fxR-=sign*m*12.0*.37*brake;
+  }
+  if(handbrake){
+    const sign=Math.sign(forwardV)||1;
+    fxR-=sign*m*7.0*handbrake;
+  }
+  // Lateral tire forces from slip angles. Smooth near zero to avoid division blow-up.
+  const denom=Math.max(Math.abs(forwardV),2.5);
+  const alphaF=Math.atan2(c.v+lf*c.r,denom)-steer;
+  const alphaR=Math.atan2(c.v-lr*c.r,denom);
+  const moving=clamp(Math.abs(c.u)/1.8,0,1);
+  let fyF=-normalFront*9.0*alphaF*moving,fyR=-normalRear*10.5*alphaR*moving;
+  // Mild arcade power-oversteer: driven rear tires give up lateral grip sooner.
+  const powerSlide=clamp((Math.abs(c.u)-4)/8,0,1)*clamp((Math.abs(steer)-.055)/.18,0,1)*clamp(throttle,0,1);
+  c.slideResponse=balanced ? c.slideResponse+(powerSlide-c.slideResponse)*(1-Math.exp(-dt/(powerSlide>c.slideResponse?.22:.18))) : powerSlide;
+  const rearSlide=spec.drive==='rwd'?((balanced?.31:.43)*c.slideResponse):spec.drive==='awd'?(.12*c.slideResponse):0;
+  // Friction-circle limit: accelerating through the driven tires takes away cornering grip.
+  function axle(x,y,normal,hand=0){
+    const mx=normal*mu;
+    const clampedX=clamp(x,-mx*.78,mx*.78);
+    const available=Math.sqrt(Math.max(0,mx*mx-clampedX*clampedX));
+    const lateralLimit=available*(1-.72*hand)*(1-(normal===normalRear?rearSlide:0));
+    return [clampedX,clamp(y,-lateralLimit,lateralLimit),lateralLimit];
+  }
+  let f=axle(fxF,fyF,normalFront),r=axle(fxR,fyR,normalRear,handbrake);
+  fxF=f[0];fyF=f[1];fxR=r[0];fyR=r[1];
+  // Resolved front-wheel force in the car's body coordinates.
+  const Fx=fxR+fxF*Math.cos(steer)-fyF*Math.sin(steer);
+  const Fy=fyR+fxF*Math.sin(steer)+fyF*Math.cos(steer);
+  const rolling=surface.rolling*g;
+  const resistance=rolling*Math.tanh(forwardV*3)+.0036*forwardV*Math.abs(forwardV);
+  let udot=Fx/m+c.v*c.r-resistance;
+  let vdot=Fy/m-c.u*c.r;
+  let rdot=(lf*(fxF*Math.sin(steer)+fyF*Math.cos(steer))-lr*fyR)/inertia;
+  // Arcade yaw stabiliser: limit unrecoverable spins while preserving slip.
+  const steerYaw=(Math.abs(c.u)>0.25?c.u/L*Math.tan(steer):0);
+  const yawAssist=spec.drive==='rwd'?(balanced?(Math.abs(steerIn)<.08?2.9:Math.sign(steerIn)!==Math.sign(c.r)&&Math.abs(c.r)>.1?2.5:1.45):1.5):spec.drive==='fwd'?1.8:2.3;
+  // The yaw target is also bounded by the tire/road lateral grip budget.
+  const allowedYaw=mu*g/Math.max(4,Math.abs(c.u));
+  const targetYaw=clamp(steerYaw,-allowedYaw,allowedYaw);
+  rdot+=(targetYaw-c.r)*yawAssist;
+  if(Math.abs(c.u)<1&&Math.abs(c.v)<.5){vdot-=c.v*4;rdot-=c.r*5}
+  const prevU=c.u;
+  c.u=clamp(c.u+udot*dt,-8,settings.hardCap??spec.maxSpeed*1.17);
+  if(!throttle&&!brake&&!handbrake&&prevU*c.u<0)c.u=0;
+  c.v+=vdot*dt;
+  c.r=clamp(c.r+rdot*dt,-1.65,1.65);
+  // Suppress unrealistically endless pirouettes; lower factor at speed.
+  c.r*=Math.exp(-dt*(.32+.15*Math.abs(c.u)/20));
+  c.v*=Math.exp(-dt*(balanced?.55:.40));
+  c.h+=c.r*dt;
+  if(c.h>Math.PI)c.h-=2*Math.PI;if(c.h< -Math.PI)c.h+=2*Math.PI;
+  const wx=Math.sin(c.h)*c.u+Math.cos(c.h)*c.v;
+  const wz=-Math.cos(c.h)*c.u+Math.sin(c.h)*c.v;
+  c.x+=wx*dt;c.z+=wz*dt;
+  c.distance+=Math.hypot(wx,wz)*dt;
+  c.speed=Math.hypot(c.u,c.v);
+  c.slip=Math.abs(c.u)<.5?0:Math.atan2(c.v,Math.abs(c.u));
+  c.slipFront=alphaF;c.slipRear=alphaR;
+  c.gripFront=f[2];c.gripRear=r[2];
+  c.surface=settings.surface||c.surface;
+  if(![c.u,c.v,c.r,c.h,c.x,c.z,c.rpm].every(Number.isFinite))throw Error('Non-finite car state');
+  return c;
+}
+
+
+return {newCar,stepCar,VEHICLE_PRESETS};
+})();
+
 // ---------- cars ----------
 const cars = [], police = [];
 const _f = new THREE.Vector3(), _r = new THREE.Vector3(), _m = new THREE.Matrix4();
@@ -2671,7 +2873,7 @@ function addCar(type, x, z, h, mode) {
   mesh.castShadow = true;
   attachContactShadow(mesh,2.8,5.8);
   if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); mesh.add(bar); }
-  const c = { type, T, mesh, x, z, h, v: 0, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
+  const c = { type, T, mesh, x, z, h, v: 0, driveState: null, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
   scene.add(mesh); cars.push(c); placeCar(c); return c;
 }
 function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
@@ -2748,25 +2950,58 @@ function updateTraffic(c, dt, T) {
   c.h = c.first ? Math.atan2(dx, -dz) : c.h + wrap(Math.atan2(dx, -dz) - c.h) * Math.min(1, dt * 5); c.first = false;
   placeCar(c);
 }
-// shared driving model for the player and the police
-function drive(c, thr, steer, brake, dt) {
-  const road = nearestRoad(c.x, c.z).d < 0.6; c.wet = inWater(c.x, c.z);
-  if (brake) c.v -= Math.sign(c.v) * Math.min(Math.abs(c.v), 26 * dt);
-  else if (thr > 0) c.v += (c.v < 0 ? 20 : c.T.acc * (1 - 0.6 * Math.max(0, c.v) / c.T.max)) * thr * dt;
-  else if (thr < 0) c.v += (c.v > 0.5 ? 20 : c.T.acc * 0.6) * thr * dt;
-  else c.v -= Math.sign(c.v) * Math.min(Math.abs(c.v), (road ? 2 : 5) * dt);
-  const max = c.wet ? 2.5 : c.T.max * (road ? 1 : c.T.off);
-  if (c.v > max) c.v = Math.max(max, c.v - 14 * dt);
-  if (c.v < -7) c.v = -7;
-  c.h = wrap(c.h + c.v / 2.7 * Math.tan(steer * 0.6 / (1 + Math.abs(c.v) / 11)) * dt);
-  c.x += Math.sin(c.h) * c.v * dt; c.z -= Math.cos(c.h) * c.v * dt;
-  c.x = clamp(c.x, -HALF + 4, HALF - 4); c.z = clamp(c.z, -HALF + 4, HALF - 4);
-  if (collide(c, 1.5)) c.v *= Math.pow(0.02, dt);
-  for (const o of cars) { if (o === c) continue; const dx = c.x - o.x, dz = c.z - o.z, d = Math.hypot(dx, dz);
-    if (d < 2.7 && d > 0.01) { const push = 2.7 - d; c.x += dx / d * push; c.z += dz / d * push;
-      if (Math.abs(c.v) > 6 && c === pcar && o.mode === 'police' && ramCool <= 0) { ramCool = 6; addStar('Ramming a police car. That will not help.'); }
-      if (o.mode === 'parked' || o.mode === 'idle') { o.x -= dx / d * push * 0.4; o.z -= dz / d * push * 0.4; placeCar(o); }
-      c.v *= Math.pow(0.05, dt); } }
+// V4 — shared arcade tire dynamics and automatic powertrains for player/police.
+// Civilian path-following traffic intentionally keeps its existing movement model.
+const DRIVE_CLASS = {volvo:'rwd',epa:'rwd',saab:'fwd',saab95Estate:'fwd',polis:'awd',
+                     traktor:'awd',newHolland:'awd',johnDeere:'awd'};
+const DRIVE_MODE = new URLSearchParams(location.search).get('drivetrain')==='v3'?'v3':'v4';
+function drive(c, thr, steer, brake, dt, handbrake=false) {
+  if(dt<=0)return;
+  const kind=DRIVE_CLASS[c.type]||'rwd';
+  if(!c.driveState){
+    c.driveState=DRIVING_PHYSICS.newCar(kind,c.x,c.z,c.h);
+    c.driveState.u=c.v;
+  }
+  const dyn=c.driveState;
+  const near=nearestRoad(c.x,c.z);
+  const onRoad=near.ri>=0&&near.d<.6;
+  const surface=onRoad?(R[near.ri].c>=3?'gravel':'asphalt'):'grass';
+  c.wet=inWater(c.x,c.z);
+  const limit=c.wet?2.5:c.T.max*(onRoad?1:c.T.off);
+  const reference=DRIVING_PHYSICS.VEHICLE_PRESETS[kind];
+  // Retain each existing vehicle's gameplay acceleration and speed categories.
+  const powerScale=clamp(c.T.acc/reference.acceleration,.35,1.5);
+  const count=Math.max(1,Math.ceil(dt/(1/120))),h=dt/count;
+  for(let i=0;i<count;i++){
+    DRIVING_PHYSICS.stepCar(dyn,{throttle:thr,steer,brake:brake?1:0,handbrake:handbrake?1:0},
+      h,{feel:'balanced',powertrain:DRIVE_MODE,surface,speedLimit:limit,hardCap:limit,powerScale});
+  }
+  c.x=clamp(dyn.x,-HALF+4,HALF-4);
+  c.z=clamp(dyn.z,-HALF+4,HALF-4);
+  c.h=wrap(dyn.h);c.v=dyn.u;
+  if(collide(c,1.5)){
+    // Resolve position back into the dynamics state, damping both lateral and yaw
+    // momentum rather than letting the next step drive through the wall again.
+    dyn.u*=Math.pow(.08,Math.max(dt,1/120));dyn.v*=.35;dyn.r*=.35;
+    c.v=dyn.u;
+  }
+  for(const o of cars){
+    if(o===c)continue;
+    const dx=c.x-o.x,dz=c.z-o.z,d=Math.hypot(dx,dz);
+    if(d<2.7&&d>.01){
+      const push=2.7-d;c.x+=dx/d*push;c.z+=dz/d*push;
+      if(Math.abs(c.v)>6&&c===pcar&&o.mode==='police'&&ramCool<=0){
+        ramCool=6;addStar('Ramming a police car. That will not help.');
+      }
+      if(o.mode==='parked'||o.mode==='idle'){
+        o.x-=dx/d*push*.4;o.z-=dz/d*push*.4;
+        if(o.driveState){o.driveState.x=o.x;o.driveState.z=o.z;o.driveState.u=0;o.driveState.v=0;}
+        placeCar(o);
+      }
+      dyn.u*=Math.pow(.05,Math.max(dt,1/120));dyn.v*=.6;dyn.r*=.5;c.v=dyn.u;
+    }
+  }
+  dyn.x=c.x;dyn.z=c.z;dyn.h=c.h;dyn.speed=Math.hypot(dyn.u,dyn.v);
   placeCar(c);
 }
 
@@ -3056,6 +3291,7 @@ joyEl.addEventListener('pointerup', joyEnd); joyEl.addEventListener('pointercanc
 const hold = (el, k) => { el.addEventListener('pointerdown', e => { keys[k] = true; e.preventDefault(); });
   for (const t of ['pointerup', 'pointercancel', 'pointerleave']) el.addEventListener(t, () => { keys[k] = false; }); };
 hold($('p-brake'), 'brake');
+hold($('p-handbrake'), 'run');
 $('p-act').addEventListener('click', () => action());
 function showTouch() { $('joy').hidden = false; $('pad').hidden = false; }
 if (coarse) showTouch(); else addEventListener('touchstart', showTouch, { once: true, passive: true });
@@ -3103,9 +3339,9 @@ function action() {
   if (catFirst(kt, pl)) { petCat(kt); return; }
   if (pl) { if (pl.kind === 'safe') enterHouse(pl); else kmenu.hidden = !kmenu.hidden; return; }
   if (inCar) {
-    if (Math.abs(pcar.v) > 3) { toast('Slow down before you get out.', 2); return; }
+    if ((pcar.driveState?pcar.driveState.speed:Math.abs(pcar.v)) > 3) { toast('Slow down before you get out.', 2); return; }
     player.x = pcar.x - Math.cos(pcar.h) * 2; player.z = pcar.z - Math.sin(pcar.h) * 2; player.h = pcar.h; collide(player, 0.5);
-    pcar.mode = 'idle'; pcar.v = 0; pcar = null; inCar = false; player.mesh.visible = true; camYaw = wrap(camYaw + lookOff); lookOff = 0; return;
+    pcar.mode = 'idle'; pcar.v = 0; pcar.driveState = null; pcar = null; inCar = false; player.mesh.visible = true; camYaw = wrap(camYaw + lookOff); lookOff = 0; return;
   }
   const c = nearestCar(); if (!c) return;
   if (c.mode === 'ai') {
@@ -3128,13 +3364,15 @@ function spawnPolice() {
   const c = addCar('polis', spot[0], spot[1], Math.atan2(T.x - spot[0], -(T.z - spot[1])), 'police'); police.push(c);
 }
 function clearWanted() { stars = 0; evade = 0; bustT = 0; for (const p of police) removeCar(p); police.length = 0; drawStars(); $('stars').classList.remove('evading'); }
-function respawn() { leaveHouse(); if (inCar) { pcar.mode = 'idle'; pcar.v = 0; pcar = null; inCar = false; player.mesh.visible = true; }
+function respawn() { leaveHouse(); if (inCar) { pcar.mode = 'idle'; pcar.v = 0; pcar.driveState = null; pcar = null; inCar = false; player.mesh.visible = true; }
   player.x = HOME.x; player.z = HOME.z; collide(player, 0.6); }
 function busted() { clearWanted(); respawn(); bigT = 3; $('big').hidden = false; }
 function updatePolice(c, dt, T, tv) {
   const dx = T.x - c.x, dz = T.z - c.z, d = Math.hypot(dx, dz), diff = wrap(Math.atan2(dx, -dz) - c.h);
   let thr = Math.abs(diff) < 1.1 ? 1 : 0.45, steer = clamp(diff * 2.2, -1, 1), brake = false;
   if (d < 9) { thr = 0; brake = c.v > Math.max(1, tv); }
+  // Police approach tight corners conservatively while retaining pursuit behavior.
+  if(Math.abs(diff)>.5 && c.v>Math.max(7,19-8*Math.abs(diff))) {thr=0;brake=true;}
   if (c.rev > 0) { c.rev -= dt; thr = -1; steer = c.revSteer; brake = false; }
   else if (Math.abs(c.v) < 0.8 && d > 9) { c.stuck += dt; if (c.stuck > 1.1) { c.stuck = 0; c.rev = 1.3; c.revSteer = rnd() < 0.5 ? 1 : -1; } } else c.stuck = 0;
   drive(c, thr, steer, brake, dt);
@@ -3155,7 +3393,7 @@ function frame(now) {
   if (trissT > 0) { trissT -= dt; if (trissT <= 0) trissResult(); }
   for (const p of places) p.gem.rotation.y += dt * 1.6;
 
-  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = Math.abs(pcar.v); }
+  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt, !!keys.run); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = pcar.driveState?pcar.driveState.speed:Math.abs(pcar.v); }
   else {
     const mag = Math.min(1, Math.hypot(mx, my)), wet = inWater(player.x, player.z);
     if (mag > 0.08 && bigT <= 0 && !inside) {
@@ -3213,14 +3451,14 @@ function frame(now) {
     else if (inCar && !coarse) { pr.hidden = Math.abs(pcar.v) > 3; pr.innerHTML = '<kbd>E</kbd>Get out'; }
     else if (c) { pr.hidden = false; pr.innerHTML = '<kbd>E</kbd>' + (c.owned ? 'Get in the ' : 'Steal the ') + c.T.name; }
     else pr.hidden = true;
-    $('speed').hidden = !inCar; if (inCar) { $('kmh').textContent = Math.round(Math.abs(pcar.v) * 3.6); $('carname').textContent = pcar.T.name; } }
+    $('speed').hidden = !inCar; if (inCar) { $('kmh').textContent = Math.round((pcar.driveState?pcar.driveState.speed:Math.abs(pcar.v))*3.6); $('carname').textContent = pcar.T.name + (pcar.driveState?' · '+pcar.driveState.gearLabel:''); } }
   drawMini(T);
   renderFilmFrame();
 }
 $('go').addEventListener('click', () => { started = true; $('intro').hidden = true; camYaw = 0.6; camPitch = 0.34; canvas.focus();
   toast('Find a car and press E to take it. Occupied cars always get you a wanted star.', 5); });
 // Read-only integration-test hook: never mutates gameplay.
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, gear: pcar?.driveState?.gearLabel ?? null, drivetrain: DRIVE_MODE, near: n ? n.mode : null, stars, cats: cats.length, treats }; } };
 // Optional DOM tooling; no renderer/UI dependencies in the solar calculations.
 if(new URLSearchParams(location.search).get('dev')==='lighting') {
   const panel=document.createElement('details');panel.id='visual-lab';panel.open=true;
