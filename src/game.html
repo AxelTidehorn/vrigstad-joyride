@@ -376,16 +376,18 @@ function facadeDetail(kind) {
   tex.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
   return tex;
 }
-// A color family allows plausible finishes; no house changes identity on reload.
+// Reserve large or explicitly marked buildings for individual art direction.
+// Their existing wall color is retained, but no residential facade texture is assigned.
+// A future per-building override can use b.facade === 'bespoke'.
+const BESPOKE_FACADE_AREA = 450;
+// A color family allows plausible finishes; no ordinary house changes identity on reload.
 function facadeKind(hex, b, area) {
-  if(b.k===2)return 'stucco';  // the church remains a bespoke red landmark
-  if(b.k===1)return 'stucco';
+  if(b.k !== 0 || b.facade === 'bespoke' || area > BESPOKE_FACADE_AREA) return 'bespoke';
   const n=((Math.round(b.p[0]*10)*73856093)^(Math.round(b.p[1]*10)*19349663))>>>0;
   const choice=n%100;
   if(hex==='#925847'||hex==='#9a5945')return choice<86?'wood':'brick';
   if(hex==='#c2a66a')return choice<88?'wood':'stucco';
   if(hex==='#778c80')return choice<70?'wood':'stucco';
-  if(area>450)return choice<35?'mexi':choice<76?'stucco':'brick';
   return choice<34?'mexi':choice<67?'stucco':'wood';
 }
 function roofParts(contour, g, top) {
@@ -399,7 +401,7 @@ function roofParts(contour, g, top) {
 
 const BC = 40, bGrid = new Map(), bPolys = [];
 (function () {
-  const kinds=['wood','mexi','brick','stucco'];
+  const kinds=['wood','mexi','brick','stucco','bespoke'];
   const walls=Object.fromEntries(kinds.map(k=>[k,{pos:[],col:[],uv:[]}]));
   const roofPos=[],roofCol=[];
   const c=new THREE.Color(), c2=new THREE.Color();
@@ -452,7 +454,7 @@ const BC = 40, bGrid = new Map(), bPolys = [];
     geo.setAttribute('color',new THREE.Float32BufferAttribute(W.col,3));
     geo.setAttribute('uv',new THREE.Float32BufferAttribute(W.uv,2));
     geo.computeVertexNormals();
-    const mat=new THREE.MeshLambertMaterial({vertexColors:true,map:facadeDetail(kind),side:THREE.DoubleSide});
+    const mat=new THREE.MeshLambertMaterial({vertexColors:true,map:kind==='bespoke'?null:facadeDetail(kind),side:THREE.DoubleSide});
     const mesh=new THREE.Mesh(geo,mat);mesh.castShadow=true;mesh.receiveShadow=true;scene.add(mesh);
   }
   const roofGeo=new THREE.BufferGeometry();
