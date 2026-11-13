@@ -1,0 +1,32 @@
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/model.blend"
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/clay_front.png'
+Time: 00:00.84 (Saving: 00:00.21)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/clay_side.png'
+Time: 00:00.30 (Saving: 00:00.04)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/clay_rear.png'
+Time: 00:00.38 (Saving: 00:00.04)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/clay_top.png'
+Time: 00:00.28 (Saving: 00:00.05)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/clay_three_quarter.png'
+Time: 00:00.26 (Saving: 00:00.06)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/clay_three_quarter_left.png'
+Time: 00:00.30 (Saving: 00:00.06)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/clay_three_quarter_rear.png'
+Time: 00:00.27 (Saving: 00:00.07)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/clay_low_front.png'
+Time: 00:00.29 (Saving: 00:00.04)
+
+RENDER: 8 views -> /workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/clay_sheet.png
+SUPPLEMENTAL {"body_vertices": 680, "body_triangles": 1354, "boundary_or_nonmanifold_edges": 6, "inconsistent_winding_edges": 6, "degenerate_triangles": 0, "signed_volume_m3": 6.375658069741629, "nonadjacent_bvh_overlap_pairs": 7, "overlap_pairs": [[5, 425], [406, 435], [407, 435], [414, 1106], [415, 1106], [435, 1078], [1087, 1106]], "max_mirror_vertex_distance_m": 0.00014704465866088867, "caveat": "BVH screening is not an exhaustive solid/solid self-intersection proof."}
+
+Blender quit
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).

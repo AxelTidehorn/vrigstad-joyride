@@ -1,0 +1,32 @@
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/model.blend"
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/clay_front.png'
+Time: 00:03.04 (Saving: 00:00.25)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/clay_side.png'
+Time: 00:00.67 (Saving: 00:00.12)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/clay_rear.png'
+Time: 00:00.88 (Saving: 00:00.10)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/clay_top.png'
+Time: 00:00.53 (Saving: 00:00.06)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/clay_three_quarter.png'
+Time: 00:00.27 (Saving: 00:00.07)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/clay_three_quarter_left.png'
+Time: 00:00.29 (Saving: 00:00.03)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/clay_three_quarter_rear.png'
+Time: 00:00.29 (Saving: 00:00.03)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/clay_low_front.png'
+Time: 00:00.28 (Saving: 00:00.04)
+
+RENDER: 8 views -> /workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/clay_sheet.png
+SUPPLEMENTAL {"body_vertices": 638, "body_triangles": 1272, "boundary_or_nonmanifold_edges": 0, "inconsistent_winding_edges": 0, "degenerate_triangles": 0, "signed_volume_m3": 6.355252638561309, "nonadjacent_bvh_overlap_pairs": 0, "overlap_pairs": [], "max_mirror_vertex_distance_m": 0.00014704465866088867, "caveat": "BVH screening is not an exhaustive solid/solid self-intersection proof."}
+
+Blender quit
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).

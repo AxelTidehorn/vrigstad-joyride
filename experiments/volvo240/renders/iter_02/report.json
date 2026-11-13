@@ -1,0 +1,174 @@
+{
+  "objects": {
+    "body": {
+      "verts": 724,
+      "faces": 1444,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 6.375658069,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.71,
+        4.82,
+        1.16
+      ],
+      "islands": 1
+    },
+    "wheel_fl": {
+      "verts": 290,
+      "faces": 576,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.058414256,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.2625,
+        0.63,
+        0.63
+      ],
+      "islands": 1
+    },
+    "wheel_fr": {
+      "verts": 290,
+      "faces": 576,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.058414256,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.2625,
+        0.63,
+        0.63
+      ],
+      "islands": 1
+    },
+    "wheel_rl": {
+      "verts": 290,
+      "faces": 576,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.057526156,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.2275,
+        0.63,
+        0.63
+      ],
+      "islands": 1
+    },
+    "wheel_rr": {
+      "verts": 290,
+      "faces": 576,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.057526156,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.2275,
+        0.63,
+        0.63
+      ],
+      "islands": 1
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "info": [
+    "4 expected embedded contacts (expect_embedded)."
+  ],
+  "units": "m",
+  "overall": {
+    "min": [
+      -0.8550000190734863,
+      -2.4100000858306885,
+      -2.9802322387695312e-08
+    ],
+    "max": [
+      0.8550000190734863,
+      2.4100000858306885,
+      1.4299999475479126
+    ],
+    "size": [
+      1.7100000381469727,
+      4.820000171661377,
+      1.4299999475479126
+    ],
+    "contact_tolerance": 0.004,
+    "parts": 5
+  },
+  "contacts": [
+    {
+      "a": "body",
+      "b": "wheel_fl",
+      "depth": 0.025000035762786865,
+      "expected": true
+    },
+    {
+      "a": "body",
+      "b": "wheel_fr",
+      "depth": 0.025000035762786865,
+      "expected": true
+    },
+    {
+      "a": "body",
+      "b": "wheel_rl",
+      "depth": 0.025000035762786865,
+      "expected": true
+    },
+    {
+      "a": "body",
+      "b": "wheel_rr",
+      "depth": 0.025000035762786865,
+      "expected": true
+    }
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 0
+  }
+}

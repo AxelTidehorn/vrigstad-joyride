@@ -1,0 +1,22 @@
+{
+  "revision": "iter_00",
+  "length": 4.82,
+  "width": 1.71,
+  "height": 1.43,
+  "wheelbase": 2.65,
+  "front_axle_y": 1.42,
+  "front_track": 1.43,
+  "rear_track": 1.36,
+  "tire_radius": 0.315,
+  "tire_width": 0.185,
+  "arch_radius": 0.365,
+  "well_inner_x": 0.57,
+  "cowl_y": 0.90,
+  "roof_front_y": 0.40,
+  "roof_rear_y": -0.94,
+  "backlight_base_y": -1.40,
+  "roof_half_width": 0.65,
+  "belt_z": 0.80,
+  "window_base_z": 0.94,
+  "sill_z": 0.27
+}

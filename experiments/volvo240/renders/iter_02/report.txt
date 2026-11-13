@@ -1,0 +1,9 @@
+GEOMETRY CHECK: 0 errors, 0 warnings
+  overall size (m): (1.710, 4.820, 1.430)  parts: 5  contact tol: 0.0040
+  [INFO] 4 expected embedded contacts (expect_embedded).
+  objects:
+    body: dims (1.710, 4.820, 1.160) verts 724 faces 1444 islands 1
+    wheel_fl: dims (0.263, 0.630, 0.630) verts 290 faces 576 islands 1
+    wheel_fr: dims (0.263, 0.630, 0.630) verts 290 faces 576 islands 1
+    wheel_rl: dims (0.228, 0.630, 0.630) verts 290 faces 576 islands 1
+    wheel_rr: dims (0.228, 0.630, 0.630) verts 290 faces 576 islands 1

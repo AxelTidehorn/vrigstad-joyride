@@ -1,0 +1,14 @@
+GEOMETRY CHECK: 0 errors, 0 warnings
+  overall size (m): (1.710, 4.820, 1.430)  parts: 5  contact tol: 0.0040
+  [INFO] body: open mesh (6 boundary edges); fine for planes/cloth, bad for solids and 3D printing.
+  [INFO] 4 expected embedded contacts (expect_embedded).
+  objects:
+    body: dims (1.710, 4.820, 1.160) verts 680 faces 1354 islands 1
+    wheel_fl: dims (0.263, 0.630, 0.630) verts 290 faces 576 islands 1
+    wheel_fr: dims (0.263, 0.630, 0.630) verts 290 faces 576 islands 1
+    wheel_rl: dims (0.228, 0.630, 0.630) verts 290 faces 576 islands 1
+    wheel_rr: dims (0.228, 0.630, 0.630) verts 290 faces 576 islands 1
+Info: Saved "model.blend"
+Blender 4.3.2
+
+Blender quit

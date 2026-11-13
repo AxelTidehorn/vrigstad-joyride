@@ -1,0 +1,8 @@
+{
+  "ok": false,
+  "stage": "blender_body_quality_gate",
+  "errors": [
+    "body: 6 boundary/non-manifold edges"
+  ],
+  "glb_created": false
+}

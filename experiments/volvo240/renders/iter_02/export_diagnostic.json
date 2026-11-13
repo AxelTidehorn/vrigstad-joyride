@@ -1,0 +1,10 @@
+{
+  "raw_vertices": 2589,
+  "raw_triangles": 1444,
+  "raw_watertight": false,
+  "raw_shells": 603,
+  "diagnostic_weld_vertices": 724,
+  "diagnostic_weld_watertight": true,
+  "diagnostic_weld_shells": 1,
+  "note": "Read-only diagnostic copy; exported GLB was not repaired, and the repository validator still rejects it."
+}

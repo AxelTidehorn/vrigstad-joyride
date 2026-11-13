@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/workspace/work/vrigstad-joyride/tools/vehicle_pipeline/blender_import.py", line 156, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/work/vrigstad-joyride/tools/vehicle_pipeline/blender_import.py", line 137, in main
+    body_quality_gate(objects)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/workspace/work/vrigstad-joyride/tools/vehicle_pipeline/blender_import.py", line 58, in body_quality_gate
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: body: 6 boundary/non-manifold edges. Repair the shell; do not overlay panels.
+
+Error: script failed, file: 'tools/vehicle_pipeline/blender_import.py', exiting.
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_01/model.blend"
+
+Blender quit

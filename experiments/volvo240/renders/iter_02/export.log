@@ -1,0 +1,37 @@
+ERROR Draco mesh compression is not available because library could not be found at /usr/bin/4.3/python/lib/python3.13/site-packages/libextern_draco.so
+22:57:53 | INFO: Starting glTF 2.0 export
+22:57:53 | INFO: Extracting primitive: body
+22:57:53 | INFO: Primitives created: 1
+22:57:53 | INFO: Extracting primitive: wheel_fl
+22:57:53 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+22:57:53 | INFO: Primitives created: 1
+22:57:53 | INFO: Extracting primitive: wheel_fr
+22:57:53 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+22:57:53 | INFO: Primitives created: 1
+22:57:53 | INFO: Extracting primitive: wheel_rl
+22:57:53 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+22:57:53 | INFO: Primitives created: 1
+22:57:53 | INFO: Extracting primitive: wheel_rr
+22:57:53 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+22:57:53 | INFO: Primitives created: 1
+22:57:53 | INFO: Finished glTF 2.0 export in 0.01567983627319336 s
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_02/model.blend"
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_02/repository_previews/front.png'
+Time: 00:00.49 (Saving: 00:00.16)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_02/repository_previews/side.png'
+Time: 00:00.25 (Saving: 00:00.05)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_02/repository_previews/rear.png'
+Time: 00:00.22 (Saving: 00:00.05)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_02/repository_previews/three_quarter.png'
+Time: 00:00.26 (Saving: 00:00.07)
+
+
+EXPORTED experiments/volvo240/renders/iter_02/volvo240.glb PREVIEWS experiments/volvo240/renders/iter_02/repository_previews
+
+Blender quit

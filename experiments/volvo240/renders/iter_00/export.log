@@ -1,0 +1,33 @@
+ERROR Draco mesh compression is not available because library could not be found at /usr/bin/4.3/python/lib/python3.13/site-packages/libextern_draco.so
+22:54:42 | INFO: Starting glTF 2.0 export
+22:54:42 | INFO: Extracting primitive: body
+22:54:42 | INFO: Primitives created: 2
+22:54:42 | INFO: Extracting primitive: wheel_fl
+22:54:42 | INFO: Primitives created: 1
+22:54:42 | INFO: Extracting primitive: wheel_fr
+22:54:42 | INFO: Primitives created: 1
+22:54:42 | INFO: Extracting primitive: wheel_rl
+22:54:42 | INFO: Primitives created: 1
+22:54:42 | INFO: Extracting primitive: wheel_rr
+22:54:42 | INFO: Primitives created: 1
+22:54:42 | INFO: Finished glTF 2.0 export in 0.016470670700073242 s
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/model.blend"
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/repository_previews/front.png'
+Time: 00:01.45 (Saving: 00:00.23)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/repository_previews/side.png'
+Time: 00:00.64 (Saving: 00:00.15)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/repository_previews/rear.png'
+Time: 00:00.66 (Saving: 00:00.15)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/renders/iter_00/repository_previews/three_quarter.png'
+Time: 00:00.66 (Saving: 00:00.11)
+
+
+EXPORTED experiments/volvo240/renders/iter_00/volvo240.glb PREVIEWS experiments/volvo240/renders/iter_00/repository_previews
+
+Blender quit

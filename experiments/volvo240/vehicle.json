@@ -1,0 +1,11 @@
+{
+  "id": "volvo240SedanExperiment1990",
+  "reference": "1990 Volvo 240 civilian sedan, North America manual envelope; late European/Australian photo shape",
+  "dimensions_m": {"length": 4.82, "width": 1.71, "height": 1.43},
+  "tolerance_m": {"length": 0.015, "width": 0.015, "height": 0.015},
+  "wheelbase_m": 2.65,
+  "wheelbase_tolerance_m": 0.01,
+  "triangle_budget": 20000,
+  "detail_clearance_m": 0.4,
+  "reference_links": ["https://volvotips.com/brochures/240-260/instruction-books/Volvo-240-owners-manual-USA-Canada-1990.pdf"]
+}

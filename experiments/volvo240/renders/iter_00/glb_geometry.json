@@ -1,0 +1,16 @@
+{
+  "ok": false,
+  "model": "volvo240SedanExperiment1990",
+  "errors": [
+    "Expected exactly one mesh node named 'body', found 0"
+  ],
+  "warnings": [],
+  "meshes": 6,
+  "triangles": 3576,
+  "dimensions_m": {
+    "width": 1.71,
+    "height": 1.43,
+    "length": 4.82
+  },
+  "wheelbase_m": 2.65
+}
