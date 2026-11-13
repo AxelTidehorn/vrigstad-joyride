@@ -17,5 +17,8 @@ HEAD = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
 for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
     page = open(os.path.join(root, 'src', src), encoding='utf-8').read()
     assert page.count('/*DATA*/') == 1
+    if src == 'game.html':
+        assert page.count('/*SCENE_FINISH*/') == 1
+        page = page.replace('/*SCENE_FINISH*/',open(os.path.join(root,'src','visual','scene-finish.js'),encoding='utf-8').read())
     open(os.path.join(root, out), 'w', encoding='utf-8').write(HEAD + page.replace('/*DATA*/', blob) + '</body>\n</html>\n')
     print('built', out)
