@@ -105,7 +105,8 @@ export function createVehicleLighting(THREE,{scene,coarse}){
       -(b.x-camera.position.x)**2-(b.z-camera.position.z)**2));
     for(let i=0;i<pool.length;i++){
       const light=pool[i],c=active[i];
-      light.intensity=c?level*5.2:0;
+      light.visible=!!c&&level>.04;
+      light.intensity=light.visible?level*5.2:0;
       if(!c)continue;
       const fx=Math.sin(c.h),fz=-Math.cos(c.h);
       const tractor=c.type==='newHolland'||c.type==='johnDeere'||c.type==='traktor';
