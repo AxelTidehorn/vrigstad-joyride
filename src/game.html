@@ -172,6 +172,12 @@ sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, { left: -110, right: 110, top: 110, bottom: -110, near: 50, far: 800 });
 sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.040;
 scene.add(sun, sun.target);
+// Oliver #116 contact shadows (no extra sky or tonemapping).
+const blobTex = (function () { const cv = document.createElement('canvas'); cv.width = cv.height = 64; const x = cv.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, 'rgba(0,0,0,.9)'); g.addColorStop(0.5, 'rgba(0,0,0,.45)'); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(0, 0, 64, 64); return cv; })();
+const blobMat = new THREE.MeshBasicMaterial({ color: 0x000000, map: new THREE.CanvasTexture(blobTex), transparent: true, opacity: 0.5, depthWrite: false,
+  polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -6 }), blobGeo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2);
+function attachContactShadow(parent, w, l) { const m = new THREE.Mesh(blobGeo, blobMat); m.scale.set(w, 1, l); m.position.y = 0.06; m.renderOrder = 3; parent.add(m); }
 
 // Single display-referred film pass, embedded by tools/build.py.
 /*FILM_PIPELINE*/
@@ -183,23 +189,39 @@ const ctx = tex2d.getContext('2d');
 const P = v => (v + HALF) * K;
 function trace(p, close) { ctx.moveTo(P(p[0]), P(p[1])); for (let i = 2; i < p.length; i += 2) ctx.lineTo(P(p[i]), P(p[i + 1])); if (close) ctx.closePath(); }
 const ROAD_W = [9, 7.5, 5.5, 3.5, 2.6, 1.5];
+const roadLift = klass => 0.25 - klass * 0.03;
 (function paint() {
   // v0.5.1 style-study palette: grounded Swedish greens instead of pale lime.
   const land = ['#3f6549', '#767b70', '#848781', '#365740', '#486747', '#34543c', '#3d5e42'];
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
   ctx.fillStyle = '#3f6549'; ctx.fillRect(0, 0, CW, CW);
   for (let k = 0; k < 7; k++) { ctx.fillStyle = land[k]; ctx.beginPath(); for (const l of D.l) if (l.k === k) trace(l.p, true); ctx.fill(); }
+  // Oliver #116: independent visual RNG to preserve gameplay seeding.
+  let grassSeed=7;const grassRand=()=>(grassSeed=grassSeed*48271%2147483647)/2147483647;
+  for(let i=0;i<1350;i++){
+    const x=grassRand()*CW,y=grassRand()*CW,r=(6+grassRand()*24)*K;
+    const g=ctx.createRadialGradient(x,y,0,x,y,r);
+    const tint=['60,99,69','75,108,72','48,82,57','91,121,74'][i%4];
+    g.addColorStop(0,'rgba('+tint+',0.27)');g.addColorStop(1,'rgba('+tint+',0)');
+    ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r);
+  }
+  ctx.globalAlpha=.22;
+  for(const c of ['#63835e','#5c7d54','#435f47']){ctx.fillStyle=c;
+    for(let i=0;i<10000;i++)ctx.fillRect(grassRand()*CW,grassRand()*CW,1+grassRand()*1.5,1+grassRand()*1.5);
+  }
+  ctx.globalAlpha=1;ctx.strokeStyle='rgba(112,139,93,.45)';
+  ctx.lineWidth=8*K;ctx.beginPath();for(const b of D.b)if(b.k!==1)trace(b.p,true);ctx.stroke();
   ctx.strokeStyle = '#457f9a';
   for (const w of D.ww) { ctx.lineWidth = (w.k === 0 ? 6 : 2) * K; ctx.beginPath(); trace(w.p); ctx.stroke(); }
   ctx.fillStyle = '#457f9a';
   for (const w of D.w) { ctx.beginPath(); for (const ring of w) trace(ring, true); ctx.fill('evenodd'); }
   const fill = ['#4b5458', '#62686a', '#666968', '#777670', '#817d70', '#80796d'];
-  for (const pass of [1, 0]) for (const c of [5, 4, 3, 2, 1, 0]) {
+  for (const pass of [2, 1, 0]) for (const c of [5, 4, 3, 2, 1, 0]) {
     if (pass && c > 3) continue;
-    ctx.strokeStyle = pass ? '#b4aea1' : fill[c]; ctx.lineWidth = (ROAD_W[c] + (pass ? 2.4 : 0)) * K;
+    ctx.strokeStyle=pass===2?'rgba(157,148,123,.35)':pass===1?'#ada38b':fill[c];ctx.lineWidth=(ROAD_W[c]+(pass===2?4.4:pass===1?2.4:0))*K;
     ctx.beginPath(); for (const r of D.r) if (r.c === c) trace(r.p); ctx.stroke();
   }
-  ctx.fillStyle = '#827969'; ctx.beginPath(); for (const b of D.b) trace(b.p, true); ctx.fill();
+  ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=3*K;ctx.fillStyle='#827969';ctx.beginPath();for(const b of D.b)trace(b.p,true);ctx.fill();ctx.shadowBlur=0;ctx.shadowColor='transparent';
 })();
 const texture = new THREE.CanvasTexture(tex2d);
 texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
@@ -269,7 +291,7 @@ const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p
       pl = l; pr = r;
     }
   }
-  for (const r of R) { ribbon(bufs[r.c], r.p, ROAD_W[r.c], 0.25 - r.c * 0.03); if (r.c < 2) ribbon(bufs[6], r.p, 0.2, 0.3); }
+  for (const r of R) { ribbon(bufs[r.c], r.p, ROAD_W[r.c], roadLift(r.c)); if (r.c < 2) ribbon(bufs[6], r.p, 0.2, 0.3); }
   // Asphalt mesh colors compensate for the ~0.76 greyscale albedo of the procedural texture.
   const cols = [0x737b7b, 0x858688, 0x848587, 0x74746d, 0x777269, 0x7e786e, 0xbab4a8];
   bufs.forEach((b, i) => { if (!b.length) return;
@@ -710,7 +732,18 @@ function collide(o, r) {
   return hit;
 }
 
-// ---------- trees ----------
+// Geometry composition for instanced trees from Oliver #116.
+function mergeGeo(parts){
+  const pos=[],normal=[];
+  for(const [g0] of parts){const g=g0.index?g0.toNonIndexed():g0;
+    const p=g.getAttribute('position').array,n=g.getAttribute('normal').array;
+    for(let i=0;i<p.length;i++)pos.push(p[i]);
+    for(let i=0;i<n.length;i++)normal.push(n[i]);}
+  const out=new THREE.BufferGeometry();
+  out.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  out.setAttribute('normal',new THREE.Float32BufferAttribute(normal,3));return out;
+}
+// ---------- trees: spruces and birches, each with its own shade, size and lean ----------
 (function () {
   const spots = [];
   for (const l of D.l) { if (l.k !== 5) continue;
@@ -718,11 +751,33 @@ function collide(o, r) {
     for (let i = 0; i < l.p.length; i += 2) { x0 = Math.min(x0, l.p[i]); x1 = Math.max(x1, l.p[i]); z0 = Math.min(z0, l.p[i + 1]); z1 = Math.max(z1, l.p[i + 1]); }
     for (let t = Math.round((x1 - x0) * (z1 - z0) / 110); t > 0; t--) { const x = x0 + rnd() * (x1 - x0), z = z0 + rnd() * (z1 - z0);
       if (inPoly(l.p, x, z) && nearestRoad(x, z).d > 2.5) spots.push(x, z, 0.7 + rnd() * 0.8); } }
-  const geo = new THREE.ConeGeometry(3.2, 13, 6); geo.translate(0, 7.5, 0);
-  const mesh = new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial({ color: 0x315b3d }), spots.length / 3), m4 = new THREE.Matrix4();
-  for (let i = 0; i < spots.length / 3; i++) { const s = spots[i * 3 + 2]; m4.makeScale(s, s, s);
-    m4.setPosition(spots[i * 3], hAt(spots[i * 3], spots[i * 3 + 1]) - 1, spots[i * 3 + 1]); mesh.setMatrixAt(i, m4); }
-  mesh.castShadow = true; scene.add(mesh);
+  // variety comes from a hash of the position, so the trees don't consume rnd() and shift the rest of the world
+  const hash = (x, z, k) => { const v = Math.sin(x * 12.9898 + z * 78.233 + k * 37.719) * 43758.5453; return v - Math.floor(v); };
+  const cone = (r, h, y) => new THREE.ConeGeometry(r, h, 7, 1, true).translate(0, y + h / 2, 0);
+  const KINDS = [
+    { crown: mergeGeo([[cone(3.2, 6.5, 1.4)], [cone(2.5, 5.6, 4.6)], [cone(1.7, 4.6, 7.9)]]), trunk: new THREE.CylinderGeometry(0.22, 0.3, 2.2, 7, 1, true).translate(0, 1.1, 0),
+      bark: '#5a4632', leaf: ['#2f5a36', '#4d7d48'] },                                                           // spruce
+    { crown: mergeGeo([[new THREE.SphereGeometry(2.7, 7, 5).scale(1, 1.25, 1).translate(0, 6.6, 0)], [new THREE.SphereGeometry(1.9, 6, 4).translate(0.9, 8.6, 0.4)],
+      [new THREE.SphereGeometry(1.6, 6, 4).translate(-1, 7.8, -0.6)]]), trunk: new THREE.CylinderGeometry(0.14, 0.2, 6, 6, 1, true).translate(0, 3, 0),
+      bark: '#e9e6dc', leaf: ['#5f8f3e', '#93b55a'] }                                                            // birch
+  ];
+  const BIRCH_SHARE = 0.3, m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(), v = new THREE.Vector3(), s = new THREE.Vector3(), c = new THREE.Color();
+  const N = spots.length / 3, kind = i => hash(spots[i * 3], spots[i * 3 + 1], 1) < BIRCH_SHARE ? 1 : 0;
+  KINDS.forEach((kd, ki) => {
+    const idx = []; for (let i = 0; i < N; i++) if (kind(i) === ki) idx.push(i);
+    const crown = new THREE.InstancedMesh(kd.crown, new THREE.MeshLambertMaterial({ color: 0xffffff }), idx.length);
+    const trunk = new THREE.InstancedMesh(kd.trunk, new THREE.MeshLambertMaterial({ color: new THREE.Color(kd.bark), side: THREE.DoubleSide }), idx.length);
+    const lo = new THREE.Color(kd.leaf[0]), hiC = new THREE.Color(kd.leaf[1]);
+    idx.forEach((i, j) => { const x = spots[i * 3], z = spots[i * 3 + 1], sc = spots[i * 3 + 2];
+      e.set((hash(x, z, 2) - 0.5) * 0.1, hash(x, z, 3) * 6.283, (hash(x, z, 4) - 0.5) * 0.1); q.setFromEuler(e);
+      m4.compose(v.set(x, hAt(x, z) - 0.3, z), q, s.set(sc, sc * (0.85 + hash(x, z, 5) * 0.3), sc));
+      crown.setMatrixAt(j, m4); trunk.setMatrixAt(j, m4); crown.setColorAt(j, c.copy(lo).lerp(hiC, hash(x, z, 6))); });
+    for (const m of [crown, trunk]) { m.castShadow = true; m.frustumCulled = false; scene.add(m); }   // instances span the map; the base geometry's bounds would cull them all
+  });
+  // bake a soft shadow under every tree into the ground texture (the minimap shows them too)
+  ctx.globalAlpha = 0.4;
+  for (let i = 0; i < N; i++) { const r = 3.4 * spots[i * 3 + 2] * K; ctx.drawImage(blobTex, P(spots[i * 3]) - r, P(spots[i * 3 + 1]) - r, r * 2, r * 2); }
+  ctx.globalAlpha = 1; texture.needsUpdate = true;
 })();
 
 // ---------- standalone low-poly vehicle models ----------
@@ -772,7 +827,7 @@ function personParts(shirt, pants, hair) {
   const leg = geoCache[pants] || (geoCache[pants] = boxGeo([[0.19, 0.8, 0.21, 0, -0.4, 0, pants]]));
   const g = new THREE.Group(), b = new THREE.Mesh(body, paintMat), l = new THREE.Mesh(leg, paintMat), r = new THREE.Mesh(leg, paintMat);
   l.position.set(-0.13, 0.8, 0); r.position.set(0.13, 0.8, 0); b.castShadow = l.castShadow = r.castShadow = true;
-  g.add(b, l, r); g.legs = [l, r]; return g;
+  g.add(b, l, r); g.legs = [l, r]; attachContactShadow(g,0.9,0.9); return g;
 }
 
 // ---------- cars ----------
@@ -782,7 +837,9 @@ function placeCar(c) {
   const n = normalAt(c.x, c.z);
   _f.set(Math.sin(c.h), 0, -Math.cos(c.h)); _f.addScaledVector(n, -_f.dot(n)).normalize(); _r.crossVectors(_f, n);
   _m.makeBasis(_r, n, _f.negate()); c.mesh.quaternion.setFromRotationMatrix(_m);
-  c.mesh.position.set(c.x, hAt(c.x, c.z) - (c.wet ? 0.55 : 0), c.z);
+  const road = nearestRoad(c.x,c.z);
+  const lift = road.ri >= 0 && road.d < 0 ? roadLift(R[road.ri].c) : 0;
+  c.mesh.position.set(c.x,hAt(c.x,c.z)+lift-(c.wet?0.55:0),c.z);
 }
 function addCar(type, x, z, h, mode) {
   const T = TYPES[type];
@@ -791,6 +848,7 @@ function addCar(type, x, z, h, mode) {
     ? new THREE.Mesh(VEHICLE_MODELS.createVehicleGeometry(THREE, modelId, { paint: pick(T.cols) }), shapedPaintMat)
     : new THREE.Mesh(carGeo(type, pick(T.cols)), paintMat);
   mesh.castShadow = true;
+  attachContactShadow(mesh,2.8,5.8);
   if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); mesh.add(bar); }
   const c = { type, T, mesh, x, z, h, v: 0, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
   scene.add(mesh); cars.push(c); placeCar(c); return c;
