@@ -54,8 +54,10 @@ function automaticForce(c,rawPedal,dt,spec){
   c.rpm+= (targetRpm-c.rpm)*(1-Math.exp(-dt/.105));
   if(wantsForward && c.shiftLock<=0 && !switchingAgainstMotion){
     // High throttle holds a gear longer. Low throttle cruises early.
-    const shiftUp=2500+request*2550;
-    const shiftDown=1150+request*1050;
+    // Choose reachable road-speed shift points, with generous hysteresis.
+    // The former 5050 RPM WOT target kept the Volvo in 2/3 and Saab in 3.
+    const shiftUp=2250+850*request;
+    const shiftDown=1020+520*request;
     let next=c.gear;
     if(c.gear<p.ratios.length && coupled>shiftUp)next=c.gear+1;
     else if(c.gear>1 && coupled<shiftDown)next=c.gear-1;
