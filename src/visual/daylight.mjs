@@ -76,8 +76,8 @@ export function daylightState(hour, cloudTime=0, coverage=null, date=DEFAULT_SOL
     hour:h,date:solar.date,altitude,azimuth:solar.azimuth,daytime,warm,cover,shade,
     dx:solar.dx,dy:solar.dy,dz:solar.dz,
     strength:daytime*(1.44-.48*warm)*shade,
-    exposure:.69+.30*daytime-.11*warm+.03*(1-shade),
-    skyBrightness:Math.max(.15,(.25+.75*daytime)*(1-.27*warm)),
+    exposure:.78+.21*daytime-.11*warm*daytime+.03*(1-shade),
+    skyBrightness:Math.max(.19,(.28+.72*daytime)*(1-.27*warm)), 
     twilight
   };
 }
@@ -119,7 +119,7 @@ export function createDaylightController(THREE, config) {
     occlusion+=(1-cloud*.70-occlusion)*(1-Math.exp(-dt*2));
     sun.intensity=state.strength*occlusion;
     sun.color.copy(sunCold).lerp(sunWarm,state.warm*.98);
-    hemi.intensity=.09+.35*state.daytime-.065*state.warm*state.daytime
+    hemi.intensity=.17+.27*state.daytime-.065*state.warm*state.daytime
       +.13*state.twilight;
     hemi.color.copy(ambientCold).lerp(ambientWarm,state.warm*.78);
     sky.material.uniforms.uZenith.value.copy(skyCool).lerp(skyWarm,state.warm*.86)

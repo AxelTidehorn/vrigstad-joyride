@@ -865,6 +865,9 @@ if(RESIDENTIAL_YARD_ENABLED){
 const streetLighting=STREET_LIGHTING.createStreetLighting(THREE,{scene,camera,roads:R,widths:ROAD_W,height:hAt,coarse,
   blocked:(x,z)=>inWater(x,z)||bPolys.some(p=>x>p.x0-3&&x<p.x1+3&&z>p.z0-3&&z<p.z1+3)
 });
+/*NIGHT_LIGHTING*/
+const windowLighting=NIGHT_LIGHTING.createWindowLighting(THREE,{scene,camera,buildings:D.b,hAt,nearestRoad,coarse});
+const vehicleLighting=NIGHT_LIGHTING.createVehicleLighting(THREE,{scene,coarse});
 
 // Temporary landmark GLB lineup intentionally disabled for artstyle review.
 // Existing mapped building footprints, landmark geometry and media/*.glb
@@ -1668,6 +1671,9 @@ function frame(now) {
   else sun.position.copy(sun.target.position).addScaledVector(SUN_DIR,400);
 
   streetLighting.update(dt,daylight.getHour(),daylight.getSolarElevation());
+  const nightLevel=streetLighting.stats().level;
+  windowLighting.update(nightLevel);
+  vehicleLighting.update(cars,pcar,camera,nightLevel);
 
   // HUD
   if (toastT > 0) { toastT -= dt; if (toastT <= 0.3) $('toast').style.opacity = 0; if (toastT <= 0) $('toast').hidden = true; }

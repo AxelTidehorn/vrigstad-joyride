@@ -1,0 +1,27 @@
+name: Night lighting validation
+on:
+  pull_request:
+    paths:
+      - 'src/visual/daylight.mjs'
+      - 'src/visual/street-lighting.mjs'
+      - 'src/visual/night-lighting.mjs'
+      - 'src/game.html'
+      - 'tools/build.py'
+      - 'tests/night-lighting.mjs'
+      - '.github/workflows/night-lighting.yml'
+permissions:
+  contents: read
+jobs:
+  night:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify night lighting module and build syntax
+        run: |
+          node --check src/visual/night-lighting.mjs
+          node tests/night-lighting.mjs
+          python3 -m py_compile tools/build.py

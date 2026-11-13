@@ -51,6 +51,11 @@ for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
         daylight = re.sub(r'(?m)^export\s+', '', daylight)
         daylight = 'const DAYLIGHT = (() => {\n' + daylight + '\nreturn {daylightState, createDaylightController};\n})();\n'
         page = page.replace('/*DAYLIGHT_CONTROLLER*/', daylight)
+        assert page.count('/*NIGHT_LIGHTING*/') == 1
+        night = open(os.path.join(root,'src','visual','night-lighting.mjs'),encoding='utf-8').read()
+        night = re.sub(r'(?m)^export\s+', '', night)
+        night = 'const NIGHT_LIGHTING = (() => {\n' + night + '\nreturn {windowSites,createWindowLighting,createVehicleLighting};\n})();\n'
+        page = page.replace('/*NIGHT_LIGHTING*/', night)
         for marker,filename,exports in [('STREET_LIGHTING','street-lighting.mjs','streetlightLevel, placeStreetlights, createStreetLighting'),('VISUAL_LAB','visual-lab.js',None)]:
             assert page.count('/*'+marker+'*/') == 1
             code = open(os.path.join(root,'src','visual',filename),encoding='utf-8').read()

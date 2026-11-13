@@ -51,16 +51,16 @@ export function createStreetLighting(THREE,{scene,camera,roads,widths,height,blo
   positions.forEach(([x,z],i)=>{
     const y=height(x,z);matrix.makeTranslation(x,y+2.65,z);pole.setMatrixAt(i,matrix);
     matrix.makeTranslation(x+.35,y+5.25,z);bulbs.setMatrixAt(i,matrix);
-    const sprite=new THREE.Sprite(haloMat);sprite.position.set(x+.35,y+5.25,z);sprite.scale.set(3.4,3.4,1);scene.add(sprite);halos.push(sprite);
+    const sprite=new THREE.Sprite(haloMat);sprite.position.set(x+.35,y+5.25,z);sprite.scale.set(3.8,3.8,1);scene.add(sprite);halos.push(sprite);
   });
   scene.add(pole,bulbs);
   // Fixed pool: no shader light-count changes while driving, no shadow maps.
-  const pool=Array.from({length:coarse?2:4},()=>{const light=new THREE.PointLight(0xff9b32,0,26,2);scene.add(light);return light});
+  const pool=Array.from({length:coarse?3:5},()=>{const light=new THREE.PointLight(0xffae4f,0,32,2);scene.add(light);return light});
   const selected=new Int32Array(pool.length);let mode='auto',level=0,active=0;
   function update(dt,hour,solarElevation=null){
     const target=mode==='on'?1:mode==='off'?0:streetlightLevel(hour,solarElevation);
     level+=(target-level)*(dt===0?1:1-Math.exp(-dt*4));
-    bulbMat.emissiveIntensity=level*1.8;haloMat.opacity=level;
+    bulbMat.emissiveIntensity=level*2.3;haloMat.opacity=level;
     for(let k=0;k<pool.length;k++){
       let best=-1,distance=85*85;
       for(let i=0;i<positions.length;i++){
@@ -70,7 +70,8 @@ export function createStreetLighting(THREE,{scene,camera,roads,widths,height,blo
         if(d<distance){distance=d;best=i}
       }
       selected[k]=best;const light=pool[k];
-      light.intensity=best<0?0:level*3.8;
+      light.visible=best>=0&&level>.04;
+      light.intensity=light.visible?level*5.1:0;
       if(best>=0){const p=positions[best];light.position.set(p[0]+.35,height(p[0],p[1])+4.9,p[1])}
     }
     active=0;for(const light of pool)if(light.intensity>.01)active++;

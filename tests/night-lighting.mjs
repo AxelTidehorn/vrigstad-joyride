@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import {windowSites} from '../src/visual/night-lighting.mjs';
+import {daylightState} from '../src/visual/daylight.mjs';
+import {streetlightLevel} from '../src/visual/street-lighting.mjs';
+
+const rect={k:0,p:[0,0,12,0,12,8,0,8]};
+const create=()=>windowSites([rect],()=>0,()=>0);
+const a=create(),b=create();
+assert.deepEqual(a,b,'night windows must not use random runtime state');
+assert.equal(a.length,2,'long street-facing facade gets two window panes');
+assert.ok(a.every(p=>Number.isFinite(p.x)&&Number.isFinite(p.y)&&Number.isFinite(p.z)));
+assert.equal(windowSites([rect],()=>0,()=>99).length,0,'no lit facades where there is no road');
+assert.equal(windowSites([{...rect,k:2}],()=>0,()=>0).length,0,'exclude landmarks');
+assert.ok(streetlightLevel(22)>0.99,'night lamps are fully on');
+assert.equal(streetlightLevel(13),0,'lamps off in daylight');
+const night=daylightState(22,0,.3),day=daylightState(13,0,.3);
+assert.ok(night.exposure>.75&&night.exposure<day.exposure,'keep night readable without fake daylight');
+assert.ok(night.skyBrightness>=.19,'retain a minimum night sky');
+assert.ok(day.daytime>night.daytime,'day-to-night contrast preserved');
+console.log('Night lighting: window placement, schedules and ambient floor passed.');
