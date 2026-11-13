@@ -44,12 +44,19 @@ def main():
             print("ERROR", name, "excessive triangle count", tris)
             failed = True
         if body:
-            main_body = nodes[body[0]]
-            # For review only: note any topology defects, never silently 'repair'.
+            main_body = nodes[body[0]].copy()
+            # glTF can duplicate vertices along UV and normal seams. Welding the
+            # diagnostic copy avoids treating every face as a separate shell.
+            # Do not export this welded mesh: the source GLB remains unchanged.
+            main_body.merge_vertices(digits_vertex=5)
+            is_closed = main_body.is_watertight and main_body.is_winding_consistent
+            components = len(main_body.split(only_watertight=False))
             print(name, "triangles", tris, "bounds", np.round(bounds[1]-bounds[0], 3),
-                  "body_watertight", main_body.is_watertight,
-                  "body_components", len(main_body.split(only_watertight=False)),
-                  "meshes", len(nodes))
+                  "welded_body_watertight", is_closed,
+                  "body_components", components, "meshes", len(nodes))
+            if not is_closed or components != 1:
+                print("REJECT", name, "body still open, inconsistent, or disconnected after diagnostic welding")
+                failed = True
     return int(failed)
 
 
