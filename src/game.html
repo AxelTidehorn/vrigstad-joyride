@@ -865,6 +865,9 @@ if(RESIDENTIAL_YARD_ENABLED){
 const streetLighting=STREET_LIGHTING.createStreetLighting(THREE,{scene,camera,roads:R,widths:ROAD_W,height:hAt,coarse,
   blocked:(x,z)=>inWater(x,z)||bPolys.some(p=>x>p.x0-3&&x<p.x1+3&&z>p.z0-3&&z<p.z1+3)
 });
+/*NIGHT_LIGHTING*/
+const windowLighting=NIGHT_LIGHTING.createWindowLighting(THREE,{scene,camera,buildings:D.b,hAt,nearestRoad,coarse});
+const vehicleLighting=NIGHT_LIGHTING.createVehicleLighting(THREE,{scene,coarse});
 
 // Temporary landmark GLB lineup intentionally disabled for artstyle review.
 // Existing mapped building footprints, landmark geometry and media/*.glb
@@ -1079,6 +1082,7 @@ function addCar(type, x, z, h, mode) {
   attachContactShadow(mesh,2.8,5.8);
   if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); mesh.add(bar); }
   const c = { type, T, mesh, x, z, h, v: 0, driveState: null, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
+  vehicleLighting.attach(mesh,type,c);
   scene.add(mesh); cars.push(c); placeCar(c); return c;
 }
 function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
@@ -1643,6 +1647,9 @@ function frame(now) {
   else sun.position.copy(sun.target.position).addScaledVector(SUN_DIR,400);
 
   streetLighting.update(dt,daylight.getHour(),daylight.getSolarElevation());
+  const nightLevel=streetLighting.stats().level;
+  windowLighting.update(nightLevel);
+  vehicleLighting.update(cars,pcar,camera,nightLevel);
 
   // HUD
   if (toastT > 0) { toastT -= dt; if (toastT <= 0.3) $('toast').style.opacity = 0; if (toastT <= 0) $('toast').hidden = true; }
