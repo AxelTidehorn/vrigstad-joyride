@@ -1,0 +1,25 @@
+name: Driving V4 validation
+on:
+  pull_request:
+    paths:
+      - 'src/physics/**'
+      - 'src/game.html'
+      - 'tools/build.py'
+      - 'tests/driving-v4.mjs'
+      - '.github/workflows/driving-v4.yml'
+permissions:
+  contents: read
+jobs:
+  physics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate physics syntax and scenarios
+        run: |
+          node --check src/physics/driving-v4.mjs
+          node tests/driving-v4.mjs
+          python3 -m py_compile tools/build.py
