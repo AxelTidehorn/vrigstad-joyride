@@ -170,7 +170,8 @@ scene.background = new THREE.Color(SKY);
 scene.fog = new THREE.Fog(SKY, 390, 2000);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
 // Softer fill preserves natural daylight but lets the sun shape roofs, cars and trees.
-scene.add(new THREE.HemisphereLight(0xcddceb, 0x5e6857, 0.30));
+const hemi = new THREE.HemisphereLight(0xcddceb, 0x5e6857, 0.30);
+scene.add(hemi);
 // Lower sun angle and stronger direct/fill ratio create readable mid-day shadows.
 const sun = new THREE.DirectionalLight(0xffe2bd, 1.38);
 const SUN_DIR = new THREE.Vector3(-0.62, 0.57, 0.55).normalize();
@@ -214,7 +215,10 @@ scene.fog = new THREE.Fog(filmHorizon, 390, 2000);
 const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE.ShaderMaterial({
   uniforms: {
     uZenith: { value: new THREE.Color(0x2c5277) },
-    uHorizon: { value: filmHorizon }
+    uHorizon: { value: filmHorizon },
+    uSunDirection: { value: new THREE.Vector3(0, 1, 0) },
+    uCloudTime: { value: 0 },
+    uCloudCoverage: { value: 0.4 }
   },
   side: THREE.BackSide,
   depthWrite: false,
@@ -223,21 +227,46 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
   toneMapped: false,
   vertexShader: `
     varying float vElevation;
+    varying vec3 vSkyDir;
     void main() {
-      vElevation = normalize(position).y;
+      vSkyDir = normalize(position);
+      vElevation = vSkyDir.y;
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
   `,
   fragmentShader: `
     uniform vec3 uZenith;
     uniform vec3 uHorizon;
+    uniform vec3 uSunDirection;
+    uniform float uCloudTime;
+    uniform float uCloudCoverage;
     varying float vElevation;
+    varying vec3 vSkyDir;
+    float cloudHash(vec2 p) {
+      return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);
+    }
+    float cloudNoise(vec2 p) {
+      vec2 i=floor(p),f=fract(p);
+      f=f*f*(3.0-2.0*f);
+      return mix(mix(cloudHash(i),cloudHash(i+vec2(1.0,0.0)),f.x),
+        mix(cloudHash(i+vec2(0.0,1.0)),cloudHash(i+vec2(1.0,1.0)),f.x),f.y);
+    }
     void main() {
-      float t = pow(smoothstep(-0.16, 0.80, vElevation), 0.78);
-      vec3 sky = mix(uHorizon, uZenith, t);
-      // Very subtle warmth where Swedish daylight meets the landscape.
-      sky += vec3(0.022, 0.012, -0.008) * (1.0 - smoothstep(-0.12, 0.25, vElevation));
-      gl_FragColor = vec4(sky, 1.0);
+      float t=pow(smoothstep(-0.16,0.80,vElevation),0.78);
+      vec3 sky=mix(uHorizon,uZenith,t);
+      sky+=vec3(0.022,0.012,-0.008)*(1.0-smoothstep(-0.12,0.25,vElevation));
+      // Cheap cloud bank instead of expensive volumetric raymarching.
+      vec2 coord=vSkyDir.xz/max(0.18,vSkyDir.y+0.23)*1.7+vec2(uCloudTime,0.0);
+      float layer=.62*cloudNoise(coord)+.27*cloudNoise(coord*2.3)+.11*cloudNoise(coord*4.9);
+      float cloud=smoothstep(.59-uCloudCoverage*.26,.77-uCloudCoverage*.15,layer);
+      cloud*=smoothstep(-.08,.19,vElevation);
+      vec3 cloudCol=mix(vec3(.63,.66,.70),vec3(.94,.94,.91),smoothstep(0.0,.6,vElevation));
+      sky=mix(sky,cloudCol,cloud*.85);
+      float towardSun=max(0.0,dot(normalize(vSkyDir),normalize(uSunDirection)));
+      float disc=smoothstep(.99965,.99994,towardSun)*step(0.01,uSunDirection.y);
+      float halo=pow(towardSun,85.0)*step(0.01,uSunDirection.y);
+      sky+=vec3(1.0,.88,.73)*(disc*1.35+halo*.30)*(1.0-cloud*.85);
+      gl_FragColor=vec4(sky,1.0);
     }
   `
 }));
@@ -290,7 +319,9 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
     uGrade: { value: new URLSearchParams(location.search).get('film') === 'off' ? 0.0 : 1.0 },
     uGrain: { value: filmGrainStrength },
     uMist: { value: filmMistStrength },
-    uMistTexel: { value: new THREE.Vector2(1,1) }
+    uMistTexel: { value: new THREE.Vector2(1,1) },
+    uSunUv: { value: new THREE.Vector2(-2,-2) },
+    uSunGlare: { value: 0 }
   },
   vertexShader: `
     varying vec2 vUv;
@@ -305,6 +336,8 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
     uniform float uGrain;
     uniform float uMist;
     uniform vec2 uMistTexel;
+    uniform vec2 uSunUv;
+    uniform float uSunGlare;
     varying vec2 vUv;
 
     // The texture contains ACES-tonemapped LINEAR colour.
@@ -399,6 +432,16 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
         graded=clamp(graded+vec3(1.0,0.95,0.87)*mistGlow,0.0,1.0);
       }
 
+      // Camera-facing sun glare: limited to bright scenery, not the DOM overlay.
+      // A/B via ?lighting=off or a fixed ?time=13 / ?time=19.
+      if (uSunGlare > 0.001) {
+        vec2 delta=(vUv-uSunUv)*vec2(1.7778,1.0);
+        float r2=dot(delta,delta);
+        float nearSun=exp(-r2*95.0)*.54+exp(-r2*13.0)*.16;
+        float sceneBright=smoothstep(.46,.84,dot(graded,vec3(.2126,.7152,.0722)));
+        graded=clamp(graded+vec3(1.0,.88,.72)*uSunGlare*nearSun*(.38+.62*sceneBright),0.0,1.0);
+      }
+
       // Grain is most visible in middle tones, subdued near deep black and
       // diffuse whites. No blur or extra texture fetches are needed.
       if (uGrain > 0.0) {
@@ -433,6 +476,84 @@ function renderFilmFrame() {
   renderer.render(filmFrameScene, filmFrameCamera);
 }
 
+// Daylight experiment is isolated from the film grade and gameplay.
+const DAYLIGHT = (() => {
+// Small experimental daylight controller. Pure solar state + renderer adapter.
+// Sunrise / sunset approximations are aesthetic, not an astronomical ephemeris.
+function daylightState(hour, cloudTime=0) {
+  const h=((hour%24)+24)%24;
+  const phase=(h-4)/18;
+  const altitude=Math.sin(Math.PI*phase);
+  const daytime=Math.max(0,Math.min(1,altitude/.30));
+  const warm=Math.pow(1-Math.max(0,altitude),3);
+  const azimuth=Math.PI*(h-4)/18;
+  const cloudNoise=.5+.24*Math.sin(cloudTime*.19+1.7)+.14*Math.sin(cloudTime*.43-0.8);
+  const cover=Math.max(0,Math.min(.82,cloudNoise));
+  // Broad cloud shadows: coherent across the entire scene; not a weather model.
+  const shade=Math.max(.35,1-cover*.49);
+  return {
+    hour:h,altitude,daytime,warm,cover,shade,
+    dx:Math.cos(azimuth)*Math.cos(Math.max(-.12,altitude)*1.12),
+    dy:Math.max(-.15,altitude),
+    dz:Math.sin(azimuth)*Math.cos(Math.max(-.12,altitude)*1.12),
+    strength:daytime*(1.35-.42*warm)*shade,
+    exposure:.82+.26*daytime+.08*(1-shade)
+  };
+}
+function createDaylightController(THREE, config) {
+  const {sun,hemi,renderer,camera,sky,filmFrameMaterial,filmHorizon}=config;
+  const params=new URLSearchParams(location.search);
+  const enabled=params.get('lighting')!=='off';
+  const specified=params.get('time');
+  const fixedHour=specified!==null&&Number.isFinite(Number(specified))?Number(specified):null;
+  const cycle=params.get('cycle')==='on';
+  const speed=Number(params.get('daySpeed'));
+  const daySpeed=Number.isFinite(speed)&&speed>0?Math.min(5,speed):1;
+  let hour=fixedHour===null?15.5:fixedHour;
+  const vector=new THREE.Vector3(),sunClip=new THREE.Vector3(),look=new THREE.Vector3(),skyCool=new THREE.Color(0xb8c9da),skyWarm=new THREE.Color(0xffc18c);
+  const ambientCold=new THREE.Color(0xbccbdc),ambientWarm=new THREE.Color(0xffc499);
+  const sunCold=new THREE.Color(0xfff2df),sunWarm=new THREE.Color(0xffaa66);
+  const horizonDay=new THREE.Color(0x798b8f),horizonDusk=new THREE.Color(0xd18b75);
+  let clock=0,adapt=1.03;
+  function update(dt) {
+    if(!enabled)return;
+    clock+=dt;
+    if(cycle)hour=(hour+dt*daySpeed*24/720)%24;
+    const state=daylightState(hour,clock);
+    vector.set(state.dx,state.dy,state.dz).normalize();
+    sun.position.copy(sun.target.position).addScaledVector(vector,400);
+    sun.intensity=.03+state.strength;
+    sun.color.copy(sunCold).lerp(sunWarm,state.warm*.90);
+    hemi.intensity=.13+.23*state.daytime;
+    hemi.color.copy(ambientCold).lerp(ambientWarm,state.warm*.65);
+    sky.material.uniforms.uZenith.value.copy(skyCool).lerp(skyWarm,state.warm*.45);
+    filmHorizon.copy(horizonDay).lerp(horizonDusk,state.warm*.62);
+    sky.material.uniforms.uHorizon.value.copy(filmHorizon);
+    sky.material.uniforms.uSunDirection.value.copy(vector);
+    sky.material.uniforms.uCloudTime.value=clock*.0025;
+    sky.material.uniforms.uCloudCoverage.value=state.cover;
+    // Avoid exposure oscillation: adapt over roughly 1.5 s.
+    const target=state.exposure;
+    adapt+=(target-adapt)*(1-Math.exp(-dt*1.5));
+    renderer.toneMappingExposure=adapt;
+    sunClip.copy(camera.position).addScaledVector(vector,1000).project(camera);
+    camera.getWorldDirection(look);
+    const facing=Math.max(0,look.dot(vector));
+    const visible=sunClip.z>-1&&sunClip.z<1&&facing>.35&&state.altitude>0;
+    filmFrameMaterial.uniforms.uSunUv.value.set(sunClip.x*.5+.5,sunClip.y*.5+.5);
+    filmFrameMaterial.uniforms.uSunGlare.value=visible?
+      Math.pow((facing-.35)/.65,2)*state.daytime*state.shade*.90:0;
+    return state;
+  }
+  return {update,enabled,getHour:()=>hour};
+}
+
+return {daylightState, createDaylightController};
+})();
+
+const daylight = DAYLIGHT.createDaylightController(THREE, {
+  sun, hemi, renderer, camera, sky:filmSky, filmFrameMaterial, filmHorizon
+});
 
 // ---------- ground texture (also feeds the minimap) ----------
 const CW = (coarse || renderer.capabilities.maxTextureSize < 4096) ? 2048 : 4096, K = CW / S;
@@ -2750,7 +2871,9 @@ function frame(now) {
   const cp = Math.cos(camPitch), cx = T.x - Math.sin(camYaw) * dist * cp, cz = T.z + Math.cos(camYaw) * dist * cp;
   camera.position.set(cx, Math.max(ty + 1.5 + dist * Math.sin(camPitch), hAt(cx, cz) + 0.8), cz);
   camera.lookAt(T.x, ty + 1.5, T.z);
-  sun.target.position.set(T.x, ty, T.z); sun.position.copy(sun.target.position).addScaledVector(SUN_DIR, 400);
+  sun.target.position.set(T.x, ty, T.z);
+  if(daylight.enabled)daylight.update(dt);
+  else sun.position.copy(sun.target.position).addScaledVector(SUN_DIR,400);
 
   // HUD
   if (toastT > 0) { toastT -= dt; if (toastT <= 0.3) $('toast').style.opacity = 0; if (toastT <= 0) $('toast').hidden = true; }
