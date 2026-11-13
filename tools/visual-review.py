@@ -16,13 +16,32 @@ OUT.mkdir(exist_ok=True)
 PORT = 8765
 SERVER = f"http://127.0.0.1:{PORT}"
 FRAMES = 36
+# Actual road positions derived from the current OSM map. The HTML is patched
+# in-memory by the screenshot harness only; the checked-in game is unmodified.
+SITES = {
+    "torget": None,
+    "villa": (28.7, -67.1),       # Gästgivaregatan near catalogue houses
+    "historic": (248.4, -278.7), # Parkvägen near eligible red two-storey house
+    "garden": (67.7, 346.9),     # Kopparslagarevägen residential environment
+}
 
 
-def capture(browser, name, query=""):
+def capture(browser, name, query="", site="torget"):
     errors = []
     page = browser.new_page(viewport={"width": 1280, "height": 720}, device_scale_factor=1)
     page.on("pageerror", lambda e: errors.append(str(e)))
     page.on("console", lambda msg: errors.append(msg.text) if msg.type == "error" else None)
+    if site != "torget":
+        x, z = SITES[site]
+        def redirect_home(route):
+            response = route.fetch()
+            body = response.text()
+            original = "const HOME = { x: -8.9, z: 30.1 };"
+            if body.count(original) != 1:
+                raise RuntimeError("Missing default HOME site in real game")
+            body = body.replace(original, f"const HOME = {{ x: {x}, z: {z} }};", 1)
+            route.fulfill(response=response, body=body)
+        page.route("**/index.html*", redirect_home)
     # A fixed frame cap ensures exact camera/NPC timing across slow/fast
     # SwiftShader runs; the game is untouched outside this screenshot process.
     page.add_init_script(
@@ -59,19 +78,21 @@ def capture(browser, name, query=""):
     fail = page.locator("#fail").is_visible()
     # Freeze only after the frame finishes: capture byte-identical camera states.
     # Keep each mode's screenshots distinct; no game-specific test UI.
-    stem = name + ("-heights-original" if "heights=original" in query
-                   else "-mist-off" if "mist=off" in query else "")
-    page.screenshot(path=str(OUT / f"{stem}-torget.png"), animations="disabled")
+    suffix = "-neighborhood-off" if "neighborhood=off" in query else ""
+    stem = name + suffix + "-" + site
+    page.screenshot(path=str(OUT / f"{stem}.png"), animations="disabled")
     page.mouse.move(800, 375)
     page.mouse.down()
     page.mouse.move(470, 345, steps=10)
     page.mouse.up()
     page.evaluate("window.__advanceVisualFrames(18)")
     page.wait_for_function("window.__visualPaused === true", polling=100, timeout=90000)
-    page.screenshot(path=str(OUT / f"{stem}-torget-side.png"), animations="disabled")
-    result = {"branch": name, "webgl_error": fail, "console_errors": errors[:30],
+    page.screenshot(path=str(OUT / f"{stem}-side.png"), animations="disabled")
+    result = {"branch": name, "site": site, "query": query,
+              "webgl_error": fail, "console_errors": errors[:30],
               "elapsed_s": round(time.monotonic() - start, 2),
-              "frames": page.evaluate("window.__visualFrame")}
+              "frames": page.evaluate("window.__visualFrame"),
+              "neighborhood": page.evaluate("window.__residentialStats || null")}
     page.close()
     return result
 
@@ -88,10 +109,17 @@ def main():
                       "--enable-unsafe-swiftshader", "--disable-features=Vulkan"],
             )
             try:
-                results = [capture(browser, "before"),
-                           capture(browser, "after"),
-                           capture(browser, "after", "?heights=original"),
-                           capture(browser, "after", "?mist=off&grain=strong")]
+                results = [
+                    capture(browser, "before", site="torget"),
+                    capture(browser, "after", site="torget"),
+                    capture(browser, "before", site="villa"),
+                    capture(browser, "after", site="villa"),
+                    capture(browser, "after", "?neighborhood=off", site="villa"),
+                    capture(browser, "before", site="historic"),
+                    capture(browser, "after", site="historic"),
+                    capture(browser, "before", site="garden"),
+                    capture(browser, "after", site="garden"),
+                ]
             finally:
                 browser.close()
         (OUT / "results.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
