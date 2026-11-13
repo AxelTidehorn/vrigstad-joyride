@@ -109,9 +109,7 @@ export function createResidentialNeighborhood(THREE, scene, env) {
   }
   const hedgeBatches=[];
   const trees=[];
-  const boundaries=[];
   const placedTreePositions=[];
-  const furnitureStats={walkCount:0};
   const treeKinds=['small','mature','apple','spruce'];
   function addTree(x,z,kind,seed,exclude){
     const h=kind==='mature'?7.2:kind==='spruce'?6.3:kind==='small'?4.8:3.7;
@@ -146,7 +144,6 @@ export function createResidentialNeighborhood(THREE, scene, env) {
     const seg=near.seg,tanX=seg.dx/seg.len,tanZ=seg.dz/seg.len;
     const dirX=site.entryX-near.cx,dirZ=site.entryZ-near.cz,distToAxis=len(dirX,dirZ);
     if(distToAxis<seg.w/2+1.2)continue;
-    const outwardX=-site.normalX,outwardZ=-site.normalZ;
     const roadDirection=(near.cx-site.entryX)*site.normalX+(near.cz-site.entryZ)*site.normalZ;
     if(roadDirection<1.0)continue;
     const nx=dirX/distToAxis,nz=dirZ/distToAxis;
@@ -241,8 +238,11 @@ export function createResidentialNeighborhood(THREE, scene, env) {
     }
 
     // A sparse garden selection. Prefer back gardens, and leave many open.
+    let backEdge=-Infinity;
+    for(let j=0;j<site.poly.length;j+=2)
+      backEdge=Math.max(backEdge,(site.poly[j]-site.x)*nx+(site.poly[j+1]-site.z)*nz);
     if(chance(seed,12)>.36){
-      const back=3.7+chance(seed,13)*2.5;
+      const back=backEdge+2.5+chance(seed,13)*3.3;
       const lateral=(chance(seed,14)-.5)*7.5;
       const tx=site.x+tanX*lateral+nx*back;
       const tz=site.z+tanZ*lateral+nz*back;
@@ -250,8 +250,9 @@ export function createResidentialNeighborhood(THREE, scene, env) {
       addTree(tx,tz,kind,seed,site.bi);
     }
     if(chance(seed,16)>.83){
-      const tx=site.x-tanX*(3.2+chance(seed,17)*3.2)+nx*5.2;
-      const tz=site.z-tanZ*(3.2+chance(seed,17)*3.2)+nz*5.2;
+      const back=backEdge+2.3+chance(seed,17)*2;
+      const tx=site.x-tanX*(3.2+chance(seed,17)*3.2)+nx*back;
+      const tz=site.z-tanZ*(3.2+chance(seed,17)*3.2)+nz*back;
       addTree(tx,tz,'small',hash(seed,18),site.bi);
     }
   }
