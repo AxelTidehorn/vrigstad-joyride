@@ -69,3 +69,17 @@ Compare fixed camera views at `?time=13`, `?time=19`,
 `?time=20.5`, and `?time=22`. Observe clipping in white
 facades and roads, dimming under clouds, and dark-road visibility.
 Numerical checks are not visual confirmation.
+
+## Geographic solar arc (Vrigstad)
+
+Uses approximate NOAA solar-position formula (equation of time and declination).
+Location: 57.3555° N, 14.4756° E. Scene axes: +X east, -Z north, +Z south.
+Time inputs are Swedish local clock time, using European DST transitions.
+Reference default: **2026-08-15**, configurable in the Visual Lab date input
+or via `?date=YYYY-MM-DD`. Date changes affect actual solar azimuth, altitude,
+the existing lighting transitions, sky colour and directional shadows.
+
+The light intensity, photographic glare, mist, colours and exposure remain
+deliberately art-directed rather than physically calibrated. The streetlights
+continue to switch at the intentionally fixed 19:00 rule; no automatic
+seasonal streetlight schedule is introduced.

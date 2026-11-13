@@ -41,5 +41,12 @@ for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
         daylight = re.sub(r'(?m)^export\s+', '', daylight)
         daylight = 'const DAYLIGHT = (() => {\n' + daylight + '\nreturn {daylightState, createDaylightController};\n})();\n'
         page = page.replace('/*DAYLIGHT_CONTROLLER*/', daylight)
+        for marker,filename,exports in [('STREET_LIGHTING','street-lighting.mjs','streetlightLevel, placeStreetlights, createStreetLighting'),('VISUAL_LAB','visual-lab.js',None)]:
+            assert page.count('/*'+marker+'*/') == 1
+            code = open(os.path.join(root,'src','visual',filename),encoding='utf-8').read()
+            if exports:
+                code = re.sub(r'(?m)^export\s+', '', code)
+                code = 'const '+marker+' = (() => {\n'+code+'\nreturn {'+exports+'};\n})();\n'
+            page = page.replace('/*'+marker+'*/',code)
     open(os.path.join(root, out), 'w', encoding='utf-8').write(HEAD + page.replace('/*DATA*/', blob) + '</body>\n</html>\n')
     print('built', out)

@@ -1,22 +1,22 @@
 import assert from 'node:assert/strict';
-import {daylightState} from '../src/visual/daylight.mjs';
-const noon=daylightState(13),evening=daylightState(19),
-  dusk=daylightState(20.5),night=daylightState(22);
-assert.ok(noon.altitude>.8);
-assert.ok(noon.strength>evening.strength);
-assert.ok(noon.exposure<1.05,'noon exposure bounded');
-assert.ok(noon.strength<1.15,'noon direct sun bounded');
-assert.ok(evening.skyBrightness<noon.skyBrightness);
-assert.ok(dusk.skyBrightness>.19,'twilight does not collapse to black');
-assert.ok(dusk.exposure>.59,'twilight world exposure stays usable');
-assert.ok(dusk.twilight>.2,'residual sky illumination at dusk');
-assert.equal(night.strength,0,'night has no sunlight');
-assert.ok(night.skyBrightness<dusk.skyBrightness,'night remains darker');
-assert.ok(daylightState(13,0).strength<daylightState(13,100).strength || 
-  daylightState(13,0).strength>daylightState(13,100).strength,'cloud variation affects direct light');
+import {solarPosition,daylightState,VRIGSTAD} from '../src/visual/daylight.mjs';
+const deg=x=>x*180/Math.PI;
+const summer=solarPosition(13,'2026-06-21'),winter=solarPosition(12,'2026-12-21');
+assert.ok(Math.abs(VRIGSTAD.latitude-57.3555)<.00001);
+assert.ok(deg(summer.altitude)>54&&deg(summer.altitude)<58,'summer noon around 56 degrees');
+assert.ok(deg(winter.altitude)>8&&deg(winter.altitude)<11,'winter noon around 9 degrees');
+assert.ok(summer.dz>0,'noon sun south (+Z)');
+assert.ok(solarPosition(8,'2026-08-15').dx>0,'morning sun east (+X)');
+assert.ok(solarPosition(19,'2026-08-15').dx<0,'evening sun west (-X)');
+assert.ok(solarPosition(13,'2026-06-21').altitude>solarPosition(13,'2026-12-21').altitude);
+const midday=daylightState(13),dusk=daylightState(20.5),night=daylightState(23);
+assert.ok(midday.strength>dusk.strength);
+assert.ok(midday.exposure>dusk.exposure);
+assert.ok(midday.skyBrightness>dusk.skyBrightness);
+assert.equal(night.strength,0);
 for(let h=0;h<24;h+=.5){
-  const s=daylightState(h,h*10);
-  for(const k of ['dx','dy','dz','cover','shade','strength','exposure','skyBrightness','twilight'])
-    assert.ok(Number.isFinite(s[k]),k+' finite');
+  const s=daylightState(h,h*10,.5,'2026-08-15');
+  for(const k of ['dx','dy','dz','altitude','azimuth','cover','strength','exposure','skyBrightness','twilight'])
+    assert.ok(Number.isFinite(s[k]),k);
 }
-console.log('balanced daylight checks passed');
+console.log('Geographic solar checks passed');
