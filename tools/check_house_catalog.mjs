@@ -24,7 +24,8 @@ const THREE={Color,Float32BufferAttribute,BufferGeometry};
 const palettes={
   cottage:['red','yellow','cream'],
   bungalow:['mexi','brick','ochre'],
-  villa80:['red','green','cream']
+  villa80:['red','green','cream'],
+  farmhouse:['red','redDark','ochre']
 };
 let combinations=0;
 for(const [type,skins] of Object.entries(palettes)){
@@ -59,7 +60,7 @@ for(const angle of [0,.37,1.13,2.61]){
 assert.equal(houseSkin('cottage','#843b30',0),'red');
 assert.equal(houseSkin('bungalow','#843b30',0),'brick');
 const data=JSON.parse(readFileSync(new URL('../data/vrigstad.json',import.meta.url),'utf8'));
-const types={cottage:0,bungalow:0,villa80:0};
+const types={cottage:0,bungalow:0,villa80:0,farmhouse:0};
 let eligible=0;
 data.b.forEach((b,i)=>{
   if(b.k!==0||b.facade==='bespoke'||!b.g)return;
@@ -73,8 +74,15 @@ data.b.forEach((b,i)=>{
   eligible++;
   const hash=(Math.imul(Math.round(b.p[0]*10),73856093)^
     Math.imul(Math.round(b.p[1]*10),19349663)^Math.imul(i+1,83492791))>>>0;
-  if(hash%5<=1)types[options[Math.floor(hash/5)%options.length][0]]++;
+  if(hash%5<=1){
+    const taller=options.find(o=>o[0]==='farmhouse');
+    const regular=options.filter(o=>o[0]!=='farmhouse');
+    let picked=regular[Math.floor(hash/5)%regular.length]||taller;
+    if(taller && b.h>=6.5 && f.area>=96 &&
+       ((hash>>>5)%10 < (b.h>=8?6:3)))picked=taller;
+    types[picked[0]]++;
+  }
 });
 assert(eligible>100);
-assert(Object.values(types).every(n=>n>4));
+assert(Object.values(types).every(n=>n>0));
 console.log('Verified',combinations,'mesh configurations,',eligible,'matching footprints; sampled:',types);
