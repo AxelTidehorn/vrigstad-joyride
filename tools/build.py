@@ -30,8 +30,8 @@ for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
         page = page.replace('/*HOUSE_MODELS*/', houses)
         assert page.count('/*RESIDENTIAL_ENVIRONMENT*/') == 1
         env = open(os.path.join(root, 'src', 'environment', 'residential-neighborhood.mjs'), encoding='utf-8').read()
-        env = re.sub(r'(?m)^export\\s+', '', env)
-        env = 'const RESIDENTIAL_ENV = (() => {\\n' + env + '\\nreturn {createResidentialNeighborhood};\\n})();\\n'
+        env = re.sub(r'(?m)^export\s+', '', env)
+        env = 'const RESIDENTIAL_ENV = (() => {\n' + env + '\nreturn {createResidentialNeighborhood};\n})();\n'
         page = page.replace('/*RESIDENTIAL_ENVIRONMENT*/', env)
         assert page.count('/*FILM_PIPELINE*/') == 1
         film = open(os.path.join(root, 'src', 'visual', 'film-pipeline.js'), encoding='utf-8').read()
