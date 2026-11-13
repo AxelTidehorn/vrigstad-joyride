@@ -34,6 +34,24 @@ Not an exact simulation of Fujifilm proprietary transforms.
 5. Query `?film=off` temporarily bypasses only the creative grade **within the
    same render pipeline** for matched capture. It does not disable the new
    lighting or palette and is not a player settings feature.
+6. After colour grading, a small **monochrome, deterministic grain** is added
+   directly to the final shader's sRGB output. Brightness modulation protects
+   extreme shadows and whites; the same noise is added to R/G/B to avoid
+   coloured speckles. No texture upload, extra pass, temporal seed or blur.
+   The unchanged HTML HUD/minimap/menus remain above the WebGL canvas.
+
+## Grain comparison (development only)
+- `?grain=off`: no grain.
+- `?grain=subtle`: 0.62 (also the default).
+- `?grain=strong`: 1.35; an intentionally clearer review setting.
+- `?film=off&grain=off`: the ungraded intermediate, with the new scene
+  lighting and palette retained.
+
+Default strength can be changed at `FILM_GRAIN_STRENGTH` in
+`src/visual/film-pipeline.js`. Grain is spatially stable at pixel scale
+(no temporal flashing), primarily visible in midtones, and clamped to avoid
+adding false highlight/shadow details. It is a film-like texture rather
+than a faithful chemical emulsion simulation.
 
 ## Artistic changes
 - Sky: deeper blue upper hemisphere, neutral warm grey-blue horizon, fog matched.
@@ -47,7 +65,7 @@ Not an exact simulation of Fujifilm proprietary transforms.
 
 ## Why no heavy composer / LUT?
 One fullscreen triangle-equivalent quad after the existing scene render is enough
-to apply a coherent transform. No multipass bloom/SSAO, no imported library, no
+to apply a coherent colour transform and grain. No multipass bloom/SSAO, no imported library, no
 network-hosted LUT. It adds one full-screen pass and one colour+depth target at the
 active drawing-buffer resolution (WebGL2 uses 2–4x MSAA; WebGL1 falls back
 to a basic render target). The performance cost is **not yet benchmarked**.
@@ -59,6 +77,11 @@ to a basic render target). The performance cost is **not yet benchmarked**.
   and a larger landmark or industrial building.
 - [ ] Compare default vs `?film=off` at each pose for the creative pass,
   and compare main vs branch for the complete visual overhaul.
+- [ ] Inspect `grain=off` / `grain=subtle` / `grain=strong` at identical
+      camera positions and resolution (especially sky, asphalt and facades).
+- [ ] Confirm that grain never appears on HTML HUD, minimap, text or menus.
+- [ ] Confirm screenshots from stationary camera are stable between frames
+      (no temporal flicker), including driving on low-end GPUs.
 - [ ] Check sky-fog horizon (no sharp seam), white facade highlight texture,
   red timber, dark glass/vehicle paint, and vegetation shadow detail.
 - [ ] Check asphalt patch visibility, speedometer/HUD unaffected.
