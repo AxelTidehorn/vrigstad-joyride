@@ -1504,7 +1504,7 @@ function frame(now) {
   if(daylight.enabled)daylight.update(dt);
   else sun.position.copy(sun.target.position).addScaledVector(SUN_DIR,400);
 
-  streetLighting.update(dt,daylight.getHour());
+  streetLighting.update(dt,daylight.getHour(),daylight.getSolarElevation());
 
   // HUD
   if (toastT > 0) { toastT -= dt; if (toastT <= 0.3) $('toast').style.opacity = 0; if (toastT <= 0) $('toast').hidden = true; }
