@@ -855,34 +855,10 @@ if(RESIDENTIAL_YARD_ENABLED){
 }
 
 // Reusable roadside objects drawn directly in the playable map, not a test scene.
-(function roadsideFurniture() {
-  const positions = [];
-  for (const r of R) {
-    if (r.c > 2) continue;
-    for (let i = 1; i < r.p.length; i++) {
-      const a = r.p[i-1], b = r.p[i], dx = b[0]-a[0], dz = b[1]-a[1], len = Math.hypot(dx,dz);
-      if (len < 28 || positions.length >= 40) continue;
-      const nx = -dz/len, nz = dx/len;
-      const x = (a[0]+b[0])/2 + nx*(ROAD_W[r.c]/2 + 1.8);
-      const z = (a[1]+b[1])/2 + nz*(ROAD_W[r.c]/2 + 1.8);
-      if (positions.some(p => Math.hypot(p[0]-x,p[1]-z)<65)) continue;
-      if (bPolys.some(p => x>p.x0-1.2 && x<p.x1+1.2 && z>p.z0-1.2 && z<p.z1+1.2)) continue;
-      positions.push([x,z]);
-    }
-  }
-  const poleGeo = new THREE.CylinderGeometry(0.06,0.09,5.3,8);
-  const lampGeo = new THREE.BoxGeometry(0.85,0.12,0.32);
-  const pole = new THREE.InstancedMesh(poleGeo, new THREE.MeshLambertMaterial({color:0x646e70}), positions.length);
-  const lamps = new THREE.InstancedMesh(lampGeo, new THREE.MeshLambertMaterial({color:0xdbd5b8}), positions.length);
-  const matrix = new THREE.Matrix4();
-  positions.forEach(([x,z],i) => {
-    const y = hAt(x,z);
-    matrix.makeTranslation(x,y+2.65,z); pole.setMatrixAt(i,matrix);
-    matrix.makeTranslation(x+0.35,y+5.25,z); lamps.setMatrixAt(i,matrix);
-  });
-  pole.instanceMatrix.needsUpdate = lamps.instanceMatrix.needsUpdate = true;
-  scene.add(pole,lamps);
-})();
+/*STREET_LIGHTING*/
+const streetLighting=STREET_LIGHTING.createStreetLighting(THREE,{scene,camera,roads:R,widths:ROAD_W,height:hAt,coarse,
+  blocked:(x,z)=>inWater(x,z)||bPolys.some(p=>x>p.x0-3&&x<p.x1+3&&z>p.z0-3&&z<p.z1+3)
+});
 
 // Temporary landmark GLB lineup intentionally disabled for artstyle review.
 // Existing mapped building footprints, landmark geometry and media/*.glb
@@ -1528,6 +1504,8 @@ function frame(now) {
   if(daylight.enabled)daylight.update(dt);
   else sun.position.copy(sun.target.position).addScaledVector(SUN_DIR,400);
 
+  streetLighting.update(dt,daylight.getHour());
+
   // HUD
   if (toastT > 0) { toastT -= dt; if (toastT <= 0.3) $('toast').style.opacity = 0; if (toastT <= 0) $('toast').hidden = true; }
   signT -= dt; if (signT <= 0) { signT = 0.25; updateSign(T);
@@ -1545,6 +1523,7 @@ function frame(now) {
 }
 $('go').addEventListener('click', () => { started = true; $('intro').hidden = true; camYaw = 0.6; camPitch = 0.34; canvas.focus();
   toast('Find a car and press E to take it. Occupied cars always get you a wanted star.', 5); });
+/*VISUAL_LAB*/
 resize(); requestAnimationFrame(frame);
 })();
 </script>

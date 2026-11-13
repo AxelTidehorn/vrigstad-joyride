@@ -29,7 +29,9 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
     uSunDirection: { value: new THREE.Vector3(0, -1, 0) },
     uCloudTime: { value: 0 },
     uCloudCoverage: { value: 0.4 },
-    uSkyBrightness: { value: 1.0 }
+    uSkyBrightness: { value: 1.0 },
+    uSunDiffusion: { value: .17 },
+    uSunTint: { value: new THREE.Vector3(1,.88,.73) }
   },
   side: THREE.BackSide,
   depthWrite: false,
@@ -52,6 +54,8 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
     uniform float uCloudTime;
     uniform float uCloudCoverage;
     uniform float uSkyBrightness;
+    uniform float uSunDiffusion;
+    uniform vec3 uSunTint;
     varying float vElevation;
     varying vec3 vSkyDir;
     float cloudHash(vec2 p) {
@@ -77,7 +81,7 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
       float towardSun=max(0.0,dot(normalize(vSkyDir),normalize(uSunDirection)));
       float disc=smoothstep(.99965,.99994,towardSun)*step(0.01,uSunDirection.y);
       float halo=pow(towardSun,85.0)*step(0.01,uSunDirection.y);
-      sky+=vec3(1.0,.88,.73)*(disc*.78+halo*.17)*(1.0-cloud*.85);
+      sky+=uSunTint*(disc*.78+halo*uSunDiffusion)*(1.0-cloud*.85);
       gl_FragColor=vec4(sky*uSkyBrightness,1.0);
     }
   `
@@ -133,7 +137,7 @@ const FILM_PRESETS = {
     saturation:1.045, neutral:0
   },
   chrome: {
-    curve:[.035,1.04,.53], shadow:[-.010,.001,.019], highlight:[0,0,0],
+    curve:[.025,1.055,.28], shadow:[-.010,.001,.019], highlight:[0,0,0],
     mid:[0,0,0], shoulder:.085,
     green:[.96,.91,.94], greenMix:.85, blue:[-.018,-.006,.018],
     red:[-.018,.004,.006], yellow:[-.012,-.010,.012], cyan:[-.009,-.004,.012],
@@ -346,4 +350,12 @@ function renderFilmFrame() {
   renderer.render(scene, camera);
   renderer.setRenderTarget(null);
   renderer.render(filmFrameScene, filmFrameCamera);
+}
+
+// Runtime grade changes never touch exposure, simulation or lighting.
+function setFilmPreset(name) {
+  const p=FILM_PRESETS[name]||FILM_PRESETS.negative,u=filmFrameMaterial.uniforms;
+  u.uGrade.value=(name==='off'||name==='neutral')?0:1;
+  for(const key of ['curve','shadow','highlight','mid','green','blue','red','yellow','cyan'])u['u'+key[0].toUpperCase()+key.slice(1)].value.fromArray(p[key]);
+  for(const key of ['shoulder','greenMix','saturation','neutral'])u['u'+key[0].toUpperCase()+key.slice(1)].value=p[key];
 }
