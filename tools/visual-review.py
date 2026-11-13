@@ -55,7 +55,7 @@ def capture(browser, name, query=""):
     start = time.monotonic()
     page.goto(f"{SERVER}/{name}/index.html{query}", wait_until="domcontentloaded", timeout=70000)
     page.locator("#go").click(timeout=80000)
-    page.wait_for_function("window.__visualPaused === true", timeout=180000)
+    page.wait_for_function("window.__visualPaused === true", polling=100, timeout=180000)
     fail = page.locator("#fail").is_visible()
     # Freeze only after the frame finishes: capture byte-identical camera states.
     stem = name + ("-mist-off" if query else "")
@@ -65,7 +65,7 @@ def capture(browser, name, query=""):
     page.mouse.move(470, 345, steps=10)
     page.mouse.up()
     page.evaluate("window.__advanceVisualFrames(18)")
-    page.wait_for_function("window.__visualPaused === true", timeout=90000)
+    page.wait_for_function("window.__visualPaused === true", polling=100, timeout=90000)
     page.screenshot(path=str(OUT / f"{stem}-torget-side.png"), animations="disabled")
     result = {"branch": name, "webgl_error": fail, "console_errors": errors[:30],
               "elapsed_s": round(time.monotonic() - start, 2),
