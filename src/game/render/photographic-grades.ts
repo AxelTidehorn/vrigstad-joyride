@@ -13,6 +13,7 @@ interface FilmPreset {
 	cyan: number[];
 	shoulder: number;
 	greenMix: number;
+	foliageReach: number;
 	saturation: number;
 	neutral: number;
 }
@@ -23,8 +24,9 @@ const FILM_PRESETS: Record<string, FilmPreset> = {
 		highlight: [0.008, 0.001, -0.01],
 		mid: [0, 0, 0],
 		shoulder: 0.092,
-		green: [0.93, 0.85, 0.88],
-		greenMix: 0.94,
+		green: [0.62, 0.66, 0.58],
+		greenMix: 1,
+		foliageReach: 1,
 		blue: [-0.016, -0.007, 0.023],
 		red: [0.018, 0.002, -0.007],
 		yellow: [0, 0, 0],
@@ -40,6 +42,7 @@ const FILM_PRESETS: Record<string, FilmPreset> = {
 		shoulder: 0.085,
 		green: [0.95, 0.88, 0.92],
 		greenMix: 0.85,
+		foliageReach: 0,
 		blue: [-0.025, -0.008, 0.026],
 		red: [-0.023, 0.005, 0.01],
 		yellow: [-0.012, -0.01, 0.012],
@@ -55,6 +58,7 @@ const FILM_PRESETS: Record<string, FilmPreset> = {
 		shoulder: 0.085,
 		green: [1.02, 0.98, 0.88],
 		greenMix: 0.65,
+		foliageReach: 0,
 		blue: [-0.01, 0.002, 0.018],
 		red: [0.024, 0.002, -0.008],
 		yellow: [0.028, 0.019, -0.021],
@@ -70,6 +74,7 @@ const FILM_PRESETS: Record<string, FilmPreset> = {
 		shoulder: 0.105,
 		green: [1.03, 1, 0.955],
 		greenMix: 0.7,
+		foliageReach: 0,
 		blue: [0.004, 0.006, -0.006],
 		red: [0.01, 0.005, 0.003],
 		yellow: [0.004, 0.003, -0.002],
@@ -102,7 +107,7 @@ export function createPhotographicGrades(
 		uniforms["u" + key[0].toUpperCase() + key.slice(1)] = {
 			value: new THREE.Vector3(...(preset[key] as [number, number, number])),
 		};
-	for (const key of ["shoulder", "greenMix", "saturation", "neutral"] as const)
+	for (const key of ["shoulder", "greenMix", "foliageReach", "saturation", "neutral"] as const)
 		uniforms["u" + key[0].toUpperCase() + key.slice(1)] = {
 			value: preset[key],
 		};
@@ -112,7 +117,7 @@ export function createPhotographicGrades(
 		state: { setting: q, preset: q },
 		fragmentShader: `uniform sampler2D uScene;varying vec2 vUv;
 uniform vec3 uCurve,uShadow,uHighlight,uMid,uGreen,uBlue,uRed,uYellow,uCyan;
-uniform float uShoulder,uGreenMix,uSaturation,uNeutral;
+uniform float uShoulder,uGreenMix,uFoliageReach,uSaturation,uNeutral;
     vec3 photographicGrade(vec3 c) {
       // Controlled photographic S-curve in display space, keeping black and
       // white points without clipping interiors or the pale house facades.
@@ -143,6 +148,11 @@ uniform float uShoulder,uGreenMix,uSaturation,uNeutral;
 
       // Foliage should be olive/forest green, not a bright lime-coloured mass.
       float green = smoothstep(0.022, 0.20, c.g - max(c.r, c.b));
+      // Negative only: pick up pale yellow-green grass as well as dark foliage.
+      // Green dominance and a blue gap protect beige, grey and painted walls.
+      float olive = smoothstep(-0.012, 0.042, c.g - c.r)
+                  * smoothstep(0.05, 0.17, c.g - c.b);
+      green = mix(green, max(green, olive), uFoliageReach);
       c = mix(c, c * uGreen, green * uGreenMix);
 
       // Strong but restrained sky/blue-car separation.
