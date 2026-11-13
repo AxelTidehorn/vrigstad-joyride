@@ -1,0 +1,84 @@
+#!/usr/bin/env python3
+"""Capture a reproducible, playable-map WebGL smoke test for visual PRs.
+
+This is a CI-only review aid. It does not change the game, camera code or
+runtime dependencies. Both branches load the same real Vrigstad map.
+"""
+from pathlib import Path
+import json
+import subprocess
+import time
+
+from playwright.sync_api import sync_playwright
+
+OUT = Path("visual-review")
+OUT.mkdir(exist_ok=True)
+PORT = 8765
+SERVER = f"http://127.0.0.1:{PORT}"
+FRAMES = 48
+
+
+def capture(browser, name, query=""):
+    errors = []
+    page = browser.new_page(viewport={"width": 1280, "height": 720}, device_scale_factor=1)
+    page.on("pageerror", lambda e: errors.append(str(e)))
+    page.on("console", lambda msg: errors.append(msg.text) if msg.type == "error" else None)
+    page.add_init_script(
+        """(() => {
+          const original = window.requestAnimationFrame.bind(window);
+          let frameNumber = 0;
+          window.__visualFrame = 0;
+          window.requestAnimationFrame = cb => original(() => {
+            frameNumber += 1;
+            window.__visualFrame = frameNumber;
+            cb(frameNumber * 16.6667);
+          });
+        })();"""
+    )
+    start = time.monotonic()
+    page.goto(f"{SERVER}/{name}/index.html{query}", wait_until="domcontentloaded", timeout=70000)
+    page.locator("#go").click(timeout=80000)
+    page.wait_for_function(f"window.__visualFrame >= {FRAMES}", timeout=180000)
+    fail = page.locator("#fail").is_visible()
+    # Ensure no first-frame-only screenshot: give the GPU one more paint opportunity.
+    page.screenshot(path=str(OUT / f"{name}-torget.png"), animations="disabled")
+    page.mouse.move(800, 375)
+    page.mouse.down()
+    page.mouse.move(470, 345, steps=10)
+    page.mouse.up()
+    page.wait_for_function(f"window.__visualFrame >= {FRAMES + 18}", timeout=90000)
+    page.screenshot(path=str(OUT / f"{name}-torget-side.png"), animations="disabled")
+    result = {"branch": name, "webgl_error": fail, "console_errors": errors[:30],
+              "elapsed_s": round(time.monotonic() - start, 2),
+              "frames": page.evaluate("window.__visualFrame")}
+    page.close()
+    return result
+
+
+def main():
+    server = subprocess.Popen(["python3", "-m", "http.server", str(PORT), "--bind", "127.0.0.1"],
+                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        time.sleep(2)
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                headless=True,
+                args=["--enable-webgl", "--use-gl=angle", "--use-angle=swiftshader",
+                      "--enable-unsafe-swiftshader", "--disable-features=Vulkan"],
+            )
+            try:
+                results = [capture(browser, "before"),
+                           capture(browser, "after"),
+                           capture(browser, "after", "?mist=off&grain=strong")]
+            finally:
+                browser.close()
+        (OUT / "results.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
+        if any(r["webgl_error"] or r["console_errors"] for r in results):
+            raise RuntimeError("WebGL or JS errors; inspect visual-review/results.json")
+    finally:
+        server.terminate()
+        server.wait(timeout=15)
+
+
+if __name__ == "__main__":
+    main()
