@@ -1496,7 +1496,7 @@ joyEl.addEventListener('pointerup', joyEnd); joyEl.addEventListener('pointercanc
 const hold = (el, k) => { el.addEventListener('pointerdown', e => { keys[k] = true; e.preventDefault(); });
   for (const t of ['pointerup', 'pointercancel', 'pointerleave']) el.addEventListener(t, () => { keys[k] = false; }); };
 hold($('p-brake'), 'brake');
-hold($('p-handbrake'), 'run');
+hold($('p-handbrake'), 'handbrake');
 $('p-act').addEventListener('click', () => action());
 function showTouch() { $('joy').hidden = false; $('pad').hidden = false; }
 if (coarse) showTouch(); else addEventListener('touchstart', showTouch, { once: true, passive: true });
@@ -1598,7 +1598,7 @@ function frame(now) {
   if (trissT > 0) { trissT -= dt; if (trissT <= 0) trissResult(); }
   for (const p of places) p.gem.rotation.y += dt * 1.6;
 
-  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt, !!keys.run); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = pcar.driveState?pcar.driveState.speed:Math.abs(pcar.v); }
+  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt, !!keys.run || !!keys.handbrake); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = pcar.driveState?pcar.driveState.speed:Math.abs(pcar.v); }
   else {
     const mag = Math.min(1, Math.hypot(mx, my)), wet = inWater(player.x, player.z);
     if (mag > 0.08 && bigT <= 0 && !inside) {
@@ -1613,6 +1613,7 @@ function frame(now) {
     player.mesh.position.set(player.x, hAt(player.x, player.z) - (wet ? 0.95 : 0), player.z); player.mesh.rotation.y = -player.h;
   }
   const T = inCar ? pcar : player;
+  $('p-handbrake').hidden = !inCar;
   for (const c of cars) if (c.mode === 'ai') updateTraffic(c, dt, T);
   updateNpcs(T, dt);
   updateCats(T, dt);
