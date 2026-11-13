@@ -49,7 +49,8 @@ Not an exact simulation of Fujifilm proprietary transforms.
 One fullscreen triangle-equivalent quad after the existing scene render is enough
 to apply a coherent transform. No multipass bloom/SSAO, no imported library, no
 network-hosted LUT. It adds one full-screen pass and one colour+depth target at the
-active drawing-buffer resolution. The performance cost is **not yet benchmarked**.
+active drawing-buffer resolution (WebGL2 uses 2–4x MSAA; WebGL1 falls back
+to a basic render target). The performance cost is **not yet benchmarked**.
 
 ## Regression / review checklist (draft)
 - [ ] Run in Edge/Chrome WebGL; verify no shader compile errors.
