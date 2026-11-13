@@ -70,7 +70,8 @@ export function createStreetLighting(THREE,{scene,camera,roads,widths,height,blo
         if(d<distance){distance=d;best=i}
       }
       selected[k]=best;const light=pool[k];
-      light.intensity=best<0?0:level*5.1;
+      light.visible=best>=0&&level>.04;
+      light.intensity=light.visible?level*5.1:0;
       if(best>=0){const p=positions[best];light.position.set(p[0]+.35,height(p[0],p[1])+4.9,p[1])}
     }
     active=0;for(const light of pool)if(light.intensity>.01)active++;
