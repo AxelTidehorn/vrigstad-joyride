@@ -2,7 +2,7 @@
  * Vrigstad Joyride cinematic grade (Three.js r128).
  *
  * The main scene renders once to a LINEAR render target with ACES tone mapping;
- * this fullscreen pass applies the creative Classic Negative-inspired transform
+ * this fullscreen pass applies the selected photographic creative transform
  * to display-referred sRGB. Do not include Three's <encodings_fragment> in the
  * final shader: that would encode the result twice.
  *
@@ -122,13 +122,62 @@ const filmMistSetting = new URLSearchParams(location.search).get('mist');
 const filmMistStrength = filmMistSetting === 'off' ? 0
   : filmMistSetting === 'strong' ? 0.95
   : filmMistSetting === 'subtle' ? 0.42 : FILM_MIST_STRENGTH;
+// Display-referred interpretations, not proprietary film emulation. Negative
+// retains the previous transform exactly; the other looks share its operations.
+const FILM_PRESETS = {
+  negative: {
+    curve:[.045,1.045,.36], shadow:[-.016,.002,.028], highlight:[.008,.001,-.010],
+    mid:[0,0,0], shoulder:.092,
+    green:[.93,.85,.88], greenMix:.94, blue:[-.016,-.007,.023],
+    red:[.018,.002,-.007], yellow:[0,0,0], cyan:[0,0,0],
+    saturation:1.045, neutral:0
+  },
+  chrome: {
+    curve:[.035,1.04,.53], shadow:[-.010,.001,.019], highlight:[0,0,0],
+    mid:[0,0,0], shoulder:.085,
+    green:[.96,.91,.94], greenMix:.85, blue:[-.018,-.006,.018],
+    red:[-.018,.004,.006], yellow:[-.012,-.010,.012], cyan:[-.009,-.004,.012],
+    saturation:.81, neutral:.85
+  },
+  gold: {
+    curve:[.015,1.06,.20], shadow:[.008,.002,-.009], highlight:[.023,.013,-.024],
+    mid:[.016,.006,-.012], shoulder:.085,
+    green:[1.02,.98,.88], greenMix:.65, blue:[-.010,.002,.018],
+    red:[.024,.002,-.008], yellow:[.018,.012,-.014], cyan:[-.008,.002,.012],
+    saturation:1.065, neutral:.60
+  },
+  portra: {
+    curve:[.015,1.075,.18], shadow:[-.005,.002,.012], highlight:[.008,.005,-.006],
+    mid:[.006,.002,-.003], shoulder:.105,
+    green:[1.01,.98,.97], greenMix:.70, blue:[.004,.006,-.006],
+    red:[.004,.003,.002], yellow:[.004,.003,-.002], cyan:[.004,.003,0],
+    saturation:.94, neutral:.92
+  }
+};
+const filmQuery = new URLSearchParams(location.search).get('film');
+const filmPresetName = Object.prototype.hasOwnProperty.call(FILM_PRESETS, filmQuery) ? filmQuery : 'negative';
+const filmPreset = FILM_PRESETS[filmPresetName];
+const filmVector = values => new THREE.Vector3(...values);
 const filmFrameMaterial = new THREE.ShaderMaterial({
   depthTest: false,
   depthWrite: false,
   toneMapped: false,
   uniforms: {
     uScene: { value: filmTarget.texture },
-    uGrade: { value: new URLSearchParams(location.search).get('film') === 'off' ? 0.0 : 1.0 },
+    uGrade: { value: filmQuery === 'off' ? 0.0 : 1.0 },
+    uCurve: { value: filmVector(filmPreset.curve) },
+    uShadow: { value: filmVector(filmPreset.shadow) },
+    uHighlight: { value: filmVector(filmPreset.highlight) },
+    uMid: { value: filmVector(filmPreset.mid) },
+    uShoulder: { value: filmPreset.shoulder },
+    uGreen: { value: filmVector(filmPreset.green) },
+    uGreenMix: { value: filmPreset.greenMix },
+    uBlue: { value: filmVector(filmPreset.blue) },
+    uRed: { value: filmVector(filmPreset.red) },
+    uYellow: { value: filmVector(filmPreset.yellow) },
+    uCyan: { value: filmVector(filmPreset.cyan) },
+    uSaturation: { value: filmPreset.saturation },
+    uNeutral: { value: filmPreset.neutral },
     uGrain: { value: filmGrainStrength },
     uMist: { value: filmMistStrength },
     uMistTexel: { value: new THREE.Vector2(1,1) },
@@ -145,6 +194,9 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
   fragmentShader: `
     uniform sampler2D uScene;
     uniform float uGrade;
+    uniform vec3 uCurve, uShadow, uHighlight, uMid, uGreen;
+    uniform vec3 uBlue, uRed, uYellow, uCyan;
+    uniform float uShoulder, uGreenMix, uSaturation, uNeutral;
     uniform float uGrain;
     uniform float uMist;
     uniform vec2 uMistTexel;
@@ -160,21 +212,25 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
       vec3 high = 1.055 * pow(x, vec3(1.0 / 2.4)) - 0.055;
       return mix(low, high, step(vec3(0.0031308), x));
     }
-    vec3 classicNegative(vec3 c) {
+    vec3 photographicGrade(vec3 c) {
       // Controlled photographic S-curve in display space, keeping black and
       // white points without clipping interiors or the pale house facades.
       // Wider white shoulder than v0.6: retain local differences within pale
       // siding, cloudy sky and sunlit concrete instead of approaching pure white.
-      vec3 curve = smoothstep(vec3(0.045), vec3(1.045), c);
-      c = mix(c, curve, 0.36);
+      vec3 curve = smoothstep(vec3(uCurve.x), vec3(uCurve.y), c);
+      c = mix(c, curve, uCurve.z);
       float y = dot(c, vec3(0.2126, 0.7152, 0.0722));
 
       // Cool low values, softly warm high values; no heavy orange/teal split.
       float shadows = 1.0 - smoothstep(0.12, 0.57, y);
       float highlights = smoothstep(0.53, 0.89, y);
-      c += vec3(-0.016, 0.002, 0.028) * shadows;
+      // Chroma gate protects greys/white paint from the warmer looks.
+      float chroma = max(c.r,max(c.g,c.b))-min(c.r,min(c.g,c.b));
+      float tint = mix(1.0, smoothstep(.015,.16,chroma), uNeutral);
+      c += uShadow * shadows * tint;
+      c += uMid * (4.0*y*(1.0-y)) * tint;
       // Keep chromatic warmth, but stop actively lifting bright luminance.
-      c += vec3(0.008, 0.001, -0.010) * highlights;
+      c += uHighlight * highlights * tint;
       // A stronger chroma-preserving photographic shoulder: compress bright
       // material responses without flattening the whole day scene or crushing
       // the difference between a white wall and a warmer roof.
@@ -182,24 +238,28 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
       // together maintains the colour ratio of sunlit yellows and brick.
       float shoulderY = dot(c, vec3(0.2126, 0.7152, 0.0722));
       float shoulder = smoothstep(0.59, 0.95, shoulderY);
-      c *= 1.0 - 0.092 * shoulder;
+      c *= 1.0 - uShoulder * shoulder;
 
       // Foliage should be olive/forest green, not a bright lime-coloured mass.
       float green = smoothstep(0.022, 0.20, c.g - max(c.r, c.b));
-      c = mix(c, c * vec3(0.93, 0.85, 0.88), green * 0.94);
+      c = mix(c, c * uGreen, green * uGreenMix);
 
       // Strong but restrained sky/blue-car separation.
       float blue = smoothstep(0.035, 0.24, c.b - c.r)
                  * smoothstep(-0.03, 0.15, c.b - c.g);
-      c += vec3(-0.016, -0.007, 0.023) * blue;
+      c += uBlue * blue;
 
       // Pigmented red timber and ochre should retain their character.
       float red = smoothstep(0.035, 0.23, c.r - c.g)
                 * smoothstep(0.015, 0.20, c.r - c.b);
-      c += vec3(0.018, 0.002, -0.007) * red;
+      c += uRed * red;
 
+      float yellow = smoothstep(.03,.20,min(c.r,c.g)-c.b)
+                   * (1.0-smoothstep(.08,.30,abs(c.r-c.g)));
+      float cyan = smoothstep(.025,.18,min(c.g,c.b)-c.r);
+      c += uYellow * yellow + uCyan * cyan;
       float neutral = dot(c, vec3(0.2126, 0.7152, 0.0722));
-      c = mix(vec3(neutral), c, 1.045);
+      c = mix(vec3(neutral), c, uSaturation);
       return clamp(c, 0.0, 1.0);
     }
     // Fine, deterministic screen-space grain: single luminance value is added
@@ -222,7 +282,7 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
     }
     void main() {
       vec3 base = clamp(toSRGB(texture2D(uScene, vUv).rgb), 0.0, 1.0);
-      vec3 graded = mix(base, classicNegative(base), uGrade);
+      vec3 graded = mix(base, photographicGrade(base), uGrade);
 
       // Selective Black-Pro-Mist-like highlight glow after colour grading.
       // Only compact, intense peaks contribute; the source image remains sharp.
