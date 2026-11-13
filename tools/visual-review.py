@@ -15,7 +15,7 @@ OUT = Path("visual-review")
 OUT.mkdir(exist_ok=True)
 PORT = 8765
 SERVER = f"http://127.0.0.1:{PORT}"
-FRAMES = 48
+FRAMES = 36
 
 
 def capture(browser, name, query=""):
@@ -23,31 +23,49 @@ def capture(browser, name, query=""):
     page = browser.new_page(viewport={"width": 1280, "height": 720}, device_scale_factor=1)
     page.on("pageerror", lambda e: errors.append(str(e)))
     page.on("console", lambda msg: errors.append(msg.text) if msg.type == "error" else None)
+    # A fixed frame cap ensures exact camera/NPC timing across slow/fast
+    # SwiftShader runs; the game is untouched outside this screenshot process.
     page.add_init_script(
         """(() => {
-          const original = window.requestAnimationFrame.bind(window);
-          let frameNumber = 0;
+          const raf = window.requestAnimationFrame.bind(window);
+          let n = 0, limit = 36, pending = null;
           window.__visualFrame = 0;
-          window.requestAnimationFrame = cb => original(() => {
-            frameNumber += 1;
-            window.__visualFrame = frameNumber;
-            cb(frameNumber * 16.6667);
+          window.__visualPaused = false;
+          window.requestAnimationFrame = callback => raf(() => {
+            if (n >= limit) {
+              pending = callback;
+              window.__visualPaused = true;
+              return;
+            }
+            n += 1;
+            window.__visualFrame = n;
+            callback(n * 16.6667);
           });
+          window.__advanceVisualFrames = extra => {
+            limit += extra;
+            window.__visualPaused = false;
+            if (pending) {
+              const callback = pending;
+              pending = null;
+              window.requestAnimationFrame(callback);
+            }
+          };
         })();"""
     )
     start = time.monotonic()
     page.goto(f"{SERVER}/{name}/index.html{query}", wait_until="domcontentloaded", timeout=70000)
     page.locator("#go").click(timeout=80000)
-    page.wait_for_function(f"window.__visualFrame >= {FRAMES}", timeout=180000)
+    page.wait_for_function("window.__visualPaused === true", timeout=180000)
     fail = page.locator("#fail").is_visible()
-    # Ensure no first-frame-only screenshot: give the GPU one more paint opportunity.
+    # Freeze only after the frame finishes: capture byte-identical camera states.
     stem = name + ("-mist-off" if query else "")
     page.screenshot(path=str(OUT / f"{stem}-torget.png"), animations="disabled")
     page.mouse.move(800, 375)
     page.mouse.down()
     page.mouse.move(470, 345, steps=10)
     page.mouse.up()
-    page.wait_for_function(f"window.__visualFrame >= {FRAMES + 18}", timeout=90000)
+    page.evaluate("window.__advanceVisualFrames(18)")
+    page.wait_for_function("window.__visualPaused === true", timeout=90000)
     page.screenshot(path=str(OUT / f"{stem}-torget-side.png"), animations="disabled")
     result = {"branch": name, "webgl_error": fail, "console_errors": errors[:30],
               "elapsed_s": round(time.monotonic() - start, 2),
