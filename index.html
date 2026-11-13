@@ -636,8 +636,8 @@ function daylightState(hour, cloudTime=0, coverage=null, date=DEFAULT_SOLAR_DATE
     hour:h,date:solar.date,altitude,azimuth:solar.azimuth,daytime,warm,cover,shade,
     dx:solar.dx,dy:solar.dy,dz:solar.dz,
     strength:daytime*(1.44-.48*warm)*shade,
-    exposure:.69+.30*daytime-.11*warm+.03*(1-shade),
-    skyBrightness:Math.max(.15,(.25+.75*daytime)*(1-.27*warm)),
+    exposure:.78+.21*daytime-.11*warm+.03*(1-shade),
+    skyBrightness:Math.max(.19,(.28+.72*daytime)*(1-.27*warm)), 
     twilight
   };
 }
@@ -679,7 +679,7 @@ function createDaylightController(THREE, config) {
     occlusion+=(1-cloud*.70-occlusion)*(1-Math.exp(-dt*2));
     sun.intensity=state.strength*occlusion;
     sun.color.copy(sunCold).lerp(sunWarm,state.warm*.98);
-    hemi.intensity=.09+.35*state.daytime-.065*state.warm*state.daytime
+    hemi.intensity=.17+.27*state.daytime-.065*state.warm*state.daytime
       +.13*state.twilight;
     hemi.color.copy(ambientCold).lerp(ambientWarm,state.warm*.78);
     sky.material.uniforms.uZenith.value.copy(skyCool).lerp(skyWarm,state.warm*.86)
@@ -2045,16 +2045,16 @@ function createStreetLighting(THREE,{scene,camera,roads,widths,height,blocked,co
   positions.forEach(([x,z],i)=>{
     const y=height(x,z);matrix.makeTranslation(x,y+2.65,z);pole.setMatrixAt(i,matrix);
     matrix.makeTranslation(x+.35,y+5.25,z);bulbs.setMatrixAt(i,matrix);
-    const sprite=new THREE.Sprite(haloMat);sprite.position.set(x+.35,y+5.25,z);sprite.scale.set(3.4,3.4,1);scene.add(sprite);halos.push(sprite);
+    const sprite=new THREE.Sprite(haloMat);sprite.position.set(x+.35,y+5.25,z);sprite.scale.set(3.8,3.8,1);scene.add(sprite);halos.push(sprite);
   });
   scene.add(pole,bulbs);
   // Fixed pool: no shader light-count changes while driving, no shadow maps.
-  const pool=Array.from({length:coarse?2:4},()=>{const light=new THREE.PointLight(0xff9b32,0,26,2);scene.add(light);return light});
+  const pool=Array.from({length:coarse?3:5},()=>{const light=new THREE.PointLight(0xffae4f,0,32,2);scene.add(light);return light});
   const selected=new Int32Array(pool.length);let mode='auto',level=0,active=0;
   function update(dt,hour,solarElevation=null){
     const target=mode==='on'?1:mode==='off'?0:streetlightLevel(hour,solarElevation);
     level+=(target-level)*(dt===0?1:1-Math.exp(-dt*4));
-    bulbMat.emissiveIntensity=level*1.8;haloMat.opacity=level;
+    bulbMat.emissiveIntensity=level*2.3;haloMat.opacity=level;
     for(let k=0;k<pool.length;k++){
       let best=-1,distance=85*85;
       for(let i=0;i<positions.length;i++){
@@ -2064,7 +2064,7 @@ function createStreetLighting(THREE,{scene,camera,roads,widths,height,blocked,co
         if(d<distance){distance=d;best=i}
       }
       selected[k]=best;const light=pool[k];
-      light.intensity=best<0?0:level*3.8;
+      light.intensity=best<0?0:level*5.1;
       if(best>=0){const p=positions[best];light.position.set(p[0]+.35,height(p[0],p[1])+4.9,p[1])}
     }
     active=0;for(const light of pool)if(light.intensity>.01)active++;
@@ -2079,6 +2079,130 @@ return {streetlightLevel, placeStreetlights, createStreetLighting};
 const streetLighting=STREET_LIGHTING.createStreetLighting(THREE,{scene,camera,roads:R,widths:ROAD_W,height:hAt,coarse,
   blocked:(x,z)=>inWater(x,z)||bPolys.some(p=>x>p.x0-3&&x<p.x1+3&&z>p.z0-3&&z<p.z1+3)
 });
+const NIGHT_LIGHTING = (() => {
+// Playable-night lighting for the r128 standalone game.
+// Geometry/glow is cheap and instanced where possible. Real local lighting uses
+// a fixed pool of unshadowed lights, not one costly light per window/car.
+function windowSites(buildings,hAt,roadDistance){
+  const sites=[];
+  for(let bi=0;bi<buildings.length;bi++){
+    const b=buildings[bi],p=b.p;
+    if(b.k!==0||!p||p.length<8)continue;
+    // A deterministic subset of occupied houses; never consume gameplay RNG.
+    const hash=((Math.imul(bi+1,1103515245)>>>0)%1000)/1000;
+    if(hash>.43)continue;
+    const n=p.length/2;
+    let area=0;
+    for(let i=0;i<n;i++){const j=(i+1)%n;area+=p[2*i]*p[2*j+1]-p[2*j]*p[2*i+1];}
+    const side=area>=0?1:-1;
+    let best=null;
+    for(let i=0;i<n;i++){
+      const j=(i+1)%n,ax=p[2*i],az=p[2*i+1],bx=p[2*j],bz=p[2*j+1];
+      const dx=bx-ax,dz=bz-az,len=Math.hypot(dx,dz);
+      if(len<6.5)continue;
+      const nx=side*dz/len,nz=-side*dx/len;
+      const cx=(ax+bx)*.5,cz=(az+bz)*.5;
+      const d=roadDistance(cx+nx*2,cz+nz*2);
+      if(!Number.isFinite(d)||d>12)continue;
+      const score=d-len*.014;
+      if(!best||score<best.score)best={ax,az,dx,dz,len,nx,nz,score};
+    }
+    if(!best)continue;
+    const xs=best.len>10.5?[.26,.74]:[.57];
+    for(const u of xs){
+      const x=best.ax+best.dx*u+best.nx*.16,z=best.az+best.dz*u+best.nz*.16;
+      const y=hAt(x,z)+1.64;
+      if([x,y,z].every(Number.isFinite))sites.push({x,y,z,nx:best.nx,nz:best.nz,buildingIndex:bi});
+    }
+  }
+  return sites;
+}
+function createWindowLighting(THREE,{scene,camera,buildings,hAt,nearestRoad,coarse}){
+  const sites=windowSites(buildings,hAt,(x,z)=>nearestRoad(x,z).d);
+  const color=new THREE.Color(),position=new THREE.Vector3(),scale=new THREE.Vector3(1,1,1),
+        normal=new THREE.Vector3(),front=new THREE.Vector3(0,0,1),quaternion=new THREE.Quaternion(),matrix=new THREE.Matrix4();
+  const mat=new THREE.MeshBasicMaterial({color:0xffd3a0,transparent:true,opacity:0,depthWrite:false,
+    side:THREE.DoubleSide,toneMapped:false});
+  const quads=new THREE.InstancedMesh(new THREE.PlaneGeometry(.92,1.05),mat,sites.length);
+  const shades=[0xffc47a,0xf6d9a3,0xffa95e,0xffe5b8];
+  for(let i=0;i<sites.length;i++){
+    const p=sites[i];
+    position.set(p.x,p.y,p.z);normal.set(p.nx,0,p.nz);
+    quaternion.setFromUnitVectors(front,normal);
+    matrix.compose(position,quaternion,scale);quads.setMatrixAt(i,matrix);
+    color.setHex(shades[(p.buildingIndex*7+i)%shades.length]);quads.setColorAt(i,color);
+  }
+  quads.instanceMatrix.needsUpdate=true;
+  quads.frustumCulled=false;quads.visible=false;scene.add(quads);
+  const pool=Array.from({length:coarse?0:1},()=>{
+    const light=new THREE.PointLight(0xffbc7a,0,11,2);scene.add(light);return light;
+  });
+  function update(level){
+    quads.visible=level>.03;mat.opacity=.86*level;
+    for(const light of pool){
+      let best=null,dist=32*32;
+      for(const p of sites){
+        const d=(p.x-camera.position.x)**2+(p.z-camera.position.z)**2;
+        if(d<dist){dist=d;best=p}
+      }
+      light.intensity=best?level*.95:0;
+      if(best)light.position.set(best.x+best.nx*.7,best.y,best.z+best.nz*.7);
+    }
+  }
+  return {update,stats:()=>({windows:sites.length,active:quads.visible?sites.length:0,localLights:pool.length})};
+}
+function createVehicleLighting(THREE,{scene,coarse}){
+  const bulbMat=new THREE.MeshBasicMaterial({color:0xfff0ca,transparent:true,opacity:0,
+    depthWrite:false,side:THREE.DoubleSide,toneMapped:false});
+  const geometries=new Map(),lamps=new Map();
+  function geometryFor(type){
+    const tractor=type==='traktor'||type==='newHolland'||type==='johnDeere';
+    const key=tractor?'tractor':type==='saab'?'saab':'car';
+    if(geometries.has(key))return geometries.get(key);
+    const z=tractor?-2.22:key==='saab'?-2.34:-2.46;
+    const y=tractor?1.46:.78,x=tractor?.41:.64,w=tractor?.19:.24,h=.13;
+    const pos=[];
+    for(const side of [-1,1]){
+      const cx=side*x,a=cx-w,b=cx+w,bottom=y-h,top=y+h;
+      pos.push(a,bottom,z,b,bottom,z,b,top,z,a,bottom,z,b,top,z,a,top,z);
+    }
+    const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+    geo.computeVertexNormals();geometries.set(key,geo);return geo;
+  }
+  function attach(body,type,car){
+    const mesh=new THREE.Mesh(geometryFor(type),bulbMat);body.add(mesh);lamps.set(car,mesh);
+  }
+  const pool=Array.from({length:coarse?1:2},()=>{
+    const lamp=new THREE.SpotLight(0xffe9c3,0,45,Math.PI/5,.65,1.5);
+    lamp.castShadow=false;scene.add(lamp,lamp.target);return lamp;
+  });
+  function update(cars,playerCar,camera,level){
+    bulbMat.opacity=level*.98;
+    for(const [c,m] of lamps)m.visible=level>.03&&['ai','player','police'].includes(c.mode);
+    const active=cars.filter(c=>['player','police','ai'].includes(c.mode)
+       &&(c.x-camera.position.x)**2+(c.z-camera.position.z)**2<135*135);
+    active.sort((a,b)=>(a===playerCar?-1:b===playerCar?1:0)||
+      ((a.x-camera.position.x)**2+(a.z-camera.position.z)**2
+      -(b.x-camera.position.x)**2-(b.z-camera.position.z)**2));
+    for(let i=0;i<pool.length;i++){
+      const light=pool[i],c=active[i];
+      light.intensity=c?level*5.2:0;
+      if(!c)continue;
+      const fx=Math.sin(c.h),fz=-Math.cos(c.h);
+      const tractor=c.type==='newHolland'||c.type==='johnDeere'||c.type==='traktor';
+      const height=tractor?1.46:.84,d=tractor?1.9:2.1;
+      const y=c.mesh.position.y+height;
+      light.position.set(c.x+fx*d,y,c.z+fz*d);
+      light.target.position.set(c.x+fx*36,y-.65,c.z+fz*36);
+    }
+  }
+  return {attach,update,stats:()=>({carFixtures:lamps.size,beamBudget:pool.length})};
+}
+
+return {windowSites,createWindowLighting,createVehicleLighting};
+})();
+const windowLighting=NIGHT_LIGHTING.createWindowLighting(THREE,{scene,camera,buildings:D.b,hAt,nearestRoad,coarse});
+const vehicleLighting=NIGHT_LIGHTING.createVehicleLighting(THREE,{scene,coarse});
 
 // Temporary landmark GLB lineup intentionally disabled for artstyle review.
 // Existing mapped building footprints, landmark geometry and media/*.glb
@@ -2875,6 +2999,7 @@ function addCar(type, x, z, h, mode) {
   attachContactShadow(mesh,2.8,5.8);
   if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); mesh.add(bar); }
   const c = { type, T, mesh, x, z, h, v: 0, driveState: null, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
+  vehicleLighting.attach(mesh,type,c);
   scene.add(mesh); cars.push(c); placeCar(c); return c;
 }
 function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
@@ -3439,6 +3564,9 @@ function frame(now) {
   else sun.position.copy(sun.target.position).addScaledVector(SUN_DIR,400);
 
   streetLighting.update(dt,daylight.getHour(),daylight.getSolarElevation());
+  const nightLevel=streetLighting.stats().level;
+  windowLighting.update(nightLevel);
+  vehicleLighting.update(cars,pcar,camera,nightLevel);
 
   // HUD
   if (toastT > 0) { toastT -= dt; if (toastT <= 0.3) $('toast').style.opacity = 0; if (toastT <= 0) $('toast').hidden = true; }
