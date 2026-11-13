@@ -84,6 +84,14 @@ const filmGrainStrength = filmGrainSetting === 'off' ? 0.0
   : filmGrainSetting === 'subtle' ? 0.62
   : FILM_GRAIN_STRENGTH;
 
+// Mist / weak diffusion (1/8 strength as artistic reference).
+// The mask prefers isolated bright glints, avoiding broad white walls or sky.
+// Review without a new settings UI using ?mist=off, ?mist=subtle, ?mist=strong.
+const FILM_MIST_STRENGTH = 0.42;
+const filmMistSetting = new URLSearchParams(location.search).get('mist');
+const filmMistStrength = filmMistSetting === 'off' ? 0
+  : filmMistSetting === 'strong' ? 0.95
+  : filmMistSetting === 'subtle' ? 0.42 : FILM_MIST_STRENGTH;
 const filmFrameMaterial = new THREE.ShaderMaterial({
   depthTest: false,
   depthWrite: false,
@@ -91,7 +99,9 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
   uniforms: {
     uScene: { value: filmTarget.texture },
     uGrade: { value: new URLSearchParams(location.search).get('film') === 'off' ? 0.0 : 1.0 },
-    uGrain: { value: filmGrainStrength }
+    uGrain: { value: filmGrainStrength },
+    uMist: { value: filmMistStrength },
+    uMistTexel: { value: new THREE.Vector2(1,1) }
   },
   vertexShader: `
     varying vec2 vUv;
@@ -104,6 +114,8 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
     uniform sampler2D uScene;
     uniform float uGrade;
     uniform float uGrain;
+    uniform float uMist;
+    uniform vec2 uMistTexel;
     varying vec2 vUv;
 
     // The texture contains ACES-tonemapped LINEAR colour.
@@ -158,9 +170,39 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
       p += dot(p, p.yzx + 33.33);
       return fract((p.x + p.y) * p.z);
     }
+    // Strictly brightness-selective micro diffusion. Eight taps in the
+    // existing final pass; large equally bright areas yield no halo because
+    // they have a high mask coverage. Thin glints remain isolated.
+    float mistLuma(vec2 uv) {
+      vec3 c = texture2D(uScene, clamp(uv,vec2(0.001),vec2(0.999))).rgb;
+      return dot(c,vec3(0.2126,0.7152,0.0722));
+    }
+    float mistBright(vec2 uv) {
+      return smoothstep(0.63,0.89,mistLuma(uv));
+    }
     void main() {
       vec3 base = clamp(toSRGB(texture2D(uScene, vUv).rgb), 0.0, 1.0);
       vec3 graded = mix(base, classicNegative(base), uGrade);
+
+      // Selective Black-Pro-Mist-like highlight glow after colour grading.
+      // Only compact, intense peaks contribute; the source image remains sharp.
+      // No all-scene blur, no glow on DOM HUD or minimap.
+      if (uMist > 0.0) {
+        vec2 t=uMistTexel;
+        float n0=mistBright(vUv+vec2( 3.0, 0.0)*t);
+        float n1=mistBright(vUv+vec2(-3.0, 0.0)*t);
+        float n2=mistBright(vUv+vec2( 0.0, 3.0)*t);
+        float n3=mistBright(vUv+vec2( 0.0,-3.0)*t);
+        float n4=mistBright(vUv+vec2( 7.0, 7.0)*t);
+        float n5=mistBright(vUv+vec2(-7.0, 7.0)*t);
+        float n6=mistBright(vUv+vec2( 7.0,-7.0)*t);
+        float n7=mistBright(vUv+vec2(-7.0,-7.0)*t);
+        float local=(n0+n1+n2+n3)*0.125+(n4+n5+n6+n7)*0.125;
+        float peak=max(max(max(n0,n1),max(n2,n3)),max(max(n4,n5),max(n6,n7)));
+        float isolated=1.0-smoothstep(0.22,0.55,local);
+        float mistGlow=0.095*uMist*peak*isolated;
+        graded=clamp(graded+vec3(1.0,0.95,0.87)*mistGlow,0.0,1.0);
+      }
 
       // Grain is most visible in middle tones, subdued near deep black and
       // diffuse whites. No blur or extra texture fetches are needed.
@@ -184,7 +226,9 @@ filmFrameScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), filmFrameMateri
 const filmDrawingSize = new THREE.Vector2();
 function resizeFilmFrame() {
   renderer.getDrawingBufferSize(filmDrawingSize);
-  filmTarget.setSize(Math.max(1, filmDrawingSize.x), Math.max(1, filmDrawingSize.y));
+  const w=Math.max(1,filmDrawingSize.x),h=Math.max(1,filmDrawingSize.y);
+  filmTarget.setSize(w,h);
+  filmFrameMaterial.uniforms.uMistTexel.value.set(1/w,1/h);
 }
 function renderFilmFrame() {
   filmSky.position.copy(camera.position);
