@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {createBodyMotion,stepBodyMotion} from '../src/physics/body-motion.mjs';
 import {AUTO_SPECS, VEHICLE_PRESETS, newCar, stepCar} from '../src/physics/driving-v4.mjs';
 
 const dt=1/120;
@@ -31,4 +32,16 @@ const capped=simulate('awd',16,{throttle:1},{speedLimit:2.5,hardCap:2.5});
 assert.ok(capped.u<=2.50001,'water speed cap respected');
 const direct=simulate('rwd',8,{throttle:1},{powertrain:'v3'});
 assert.equal(direct.gearLabel,'–','V3 direct drive remains an A/B option');
+
+for(const [type,power] of [['rwd',.63],['fwd',.765]]){
+  const car=simulate(type,45,{throttle:1},{powerScale:power});
+  assert.ok(car.gear>=4,type+' must reach overdrive using in-game power scaling: got '+car.gear);
+}
+const motion=createBodyMotion();
+for(let i=0;i<240;i++)stepBodyMotion(motion,{lateralAcceleration:7.5,forwardAcceleration:3.5,speed:18,distance:i*.15},dt);
+assert.ok(motion.roll>.04&&motion.roll<.12,'body banks smoothly under cornering');
+assert.ok(motion.pitch>.01&&motion.pitch<.08,'body pitches up while accelerating');
+for(let i=0;i<600;i++)stepBodyMotion(motion,{speed:0},dt);
+assert.ok(Math.abs(motion.roll)<.005&&Math.abs(motion.pitch)<.005,'body settles after inputs stop');
+assert.ok(Math.abs(motion.heave)<.01,'heave settles after terrain');
 console.log('Driving V4: automatic FWD/RWD/AWD, reverse, steering, gravel, and caps passed.');
