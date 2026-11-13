@@ -15,7 +15,7 @@ renderer.outputEncoding = THREE.LinearEncoding;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 // Reduced from 1.29: protect white facades and bright roads without dimming
 // the world uniformly (the directional/fill balance is retuned separately).
-renderer.toneMappingExposure = 1.13;
+renderer.toneMappingExposure = 1.03; // 1.13 was still washing out pale facades
 
 // A distant sky sphere, centered on the active camera. The fog colour matches
 // the horizon; the sphere is rendered before all world geometry with no depth write.
@@ -141,8 +141,14 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
       c += vec3(-0.016, 0.002, 0.028) * shadows;
       // Keep chromatic warmth, but stop actively lifting bright luminance.
       c += vec3(0.008, 0.001, -0.010) * highlights;
-      // A restrained upper-shoulder roll-off protects the brightest surfaces.
-      c -= vec3(0.010) * smoothstep(0.77, 0.98, y);
+      // A stronger chroma-preserving photographic shoulder: compress bright
+      // material responses without flattening the whole day scene or crushing
+      // the difference between a white wall and a warmer roof.
+      // Unlike subtracting a constant RGB value, scaling all three channels
+      // together maintains the colour ratio of sunlit yellows and brick.
+      float shoulderY = dot(c, vec3(0.2126, 0.7152, 0.0722));
+      float shoulder = smoothstep(0.59, 0.95, shoulderY);
+      c *= 1.0 - 0.092 * shoulder;
 
       // Foliage should be olive/forest green, not a bright lime-coloured mass.
       float green = smoothstep(0.022, 0.20, c.g - max(c.r, c.b));
