@@ -37,7 +37,7 @@ The kiosk on Torget sells trisslotter. One in a thousand wins, and the more losi
 
 ## How it is built
 
-Contributors (human or agent): read [AGENTS.md](AGENTS.md) for conventions and [ARCHITECTURE.md](ARCHITECTURE.md) for the structure and where it's heading.
+Contributors (human or agent): read [AGENTS.md](AGENTS.md) for conventions, including how tickets are filed, labelled and linked, and [ARCHITECTURE.md](ARCHITECTURE.md) for the structure and where it's heading.
 
 ```
 src/game.html      game source (HTML, CSS, JS) with a /*DATA*/ placeholder
@@ -56,6 +56,16 @@ python3 tools/build.py
 ```
 
 Refresh the map data first with `tools/fetch.sh` if you want the latest OpenStreetMap edits. Only the Python standard library is needed.
+
+## Tests
+
+A small Playwright suite in `tests/e2e/` smoke-tests the built pages: both load without console errors, Start shows the HUD, and the player can walk and get into the parked Volvo at Torget. It needs Node, and runs on every pull request.
+
+```sh
+npm install
+npx playwright install chromium   # once
+npm run test:e2e
+```
 
 ## Releases
 

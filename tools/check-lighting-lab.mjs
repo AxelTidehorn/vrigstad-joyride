@@ -3,6 +3,9 @@ import {streetlightLevel,placeStreetlights} from '../src/visual/street-lighting.
 import {daylightState} from '../src/visual/daylight.mjs';
 assert.equal(streetlightLevel(13),0);assert.equal(streetlightLevel(18.99),0);
 assert.ok(streetlightLevel(19.04)>0);assert.equal(streetlightLevel(22),1);assert.equal(streetlightLevel(4),1);assert.equal(streetlightLevel(6),0);
+assert.equal(streetlightLevel(13,2),0,'lights off above horizon');
+assert.equal(streetlightLevel(23,-7),1,'lights on below civil twilight');
+assert.ok(Math.abs(streetlightLevel(19,-3)-.5)<.0001,'smooth twilight transition');
 const roads=[{c:0,p:[[0,0],[200,0]]}],h=()=>0;
 const a=placeStreetlights(roads,[8],h,()=>false);
 assert.ok(a.length>=3);assert.deepEqual(a,placeStreetlights(roads,[8],h,()=>false));

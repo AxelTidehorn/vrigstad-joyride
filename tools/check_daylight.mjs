@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {solarPosition,daylightState,VRIGSTAD} from '../src/visual/daylight.mjs';
+import {solarPosition,daylightState,weatherCoverage,VRIGSTAD} from '../src/visual/daylight.mjs';
 const deg=x=>x*180/Math.PI;
 const summer=solarPosition(13,'2026-06-21'),winter=solarPosition(12,'2026-12-21');
 assert.ok(Math.abs(VRIGSTAD.latitude-57.3555)<.00001);
@@ -20,3 +20,10 @@ for(let h=0;h<24;h+=.5){
     assert.ok(Number.isFinite(s[k]),k);
 }
 console.log('Geographic solar checks passed');
+
+for(let h=0;h<24;h+=.5){
+  const a=weatherCoverage(h,'2026-08-15');
+  assert.ok(a>=0&&a<=1,'coverage bounded');
+}
+assert.ok(Math.abs(weatherCoverage(23.999,'2026-08-15')-weatherCoverage(0,'2026-08-16'))<.002,'weather continuous at midnight');
+assert.ok(Math.abs(weatherCoverage(12,'2026-08-15')-weatherCoverage(12,'2026-08-18'))>.001,'weather changes between days');
