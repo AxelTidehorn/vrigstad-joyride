@@ -636,7 +636,7 @@ const neighborhoodCandidates = []; // entrances shared by catalogue and fallback
           const ordinary=options.filter(o=>o.type!=='farmhouse');
           let choice=ordinary[Math.floor(hash/5)%ordinary.length]||taller;
           if(taller && b.h>=6.5 && area>=96 &&
-             ((hash>>>5)%10 < (b.h>=8?6:3)))choice=taller;
+             ((hash>>>5)%10 < (b.h>=8?8:8)))choice=taller;
           const entrance=doorFacingRoad(contour,orientation);
           if(entrance){
             const along=entrance.nx*fp.ux+entrance.nz*fp.uz;
