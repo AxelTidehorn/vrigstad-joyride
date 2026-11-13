@@ -26,7 +26,7 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
   uniforms: {
     uZenith: { value: new THREE.Color(0x2c5277) },
     uHorizon: { value: filmHorizon },
-    uSunDirection: { value: new THREE.Vector3(0, 1, 0) },
+    uSunDirection: { value: new THREE.Vector3(0, -1, 0) },
     uCloudTime: { value: 0 },
     uCloudCoverage: { value: 0.4 }
   },
@@ -69,7 +69,7 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
       vec2 coord=vSkyDir.xz/max(0.18,vSkyDir.y+0.23)*1.7+vec2(uCloudTime,0.0);
       float layer=.62*cloudNoise(coord)+.27*cloudNoise(coord*2.3)+.11*cloudNoise(coord*4.9);
       float cloud=smoothstep(.59-uCloudCoverage*.26,.77-uCloudCoverage*.15,layer);
-      cloud*=smoothstep(-.08,.19,vElevation);
+      cloud*=smoothstep(-.08,.19,vElevation)*step(.01,uCloudCoverage);
       vec3 cloudCol=mix(vec3(.63,.66,.70),vec3(.94,.94,.91),smoothstep(0.0,.6,vElevation));
       sky=mix(sky,cloudCol,cloud*.85);
       float towardSun=max(0.0,dot(normalize(vSkyDir),normalize(uSunDirection)));
