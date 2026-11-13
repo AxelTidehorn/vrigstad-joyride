@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vehicle candidates – Vrigstad Joyride</title>
+<style>
+html,body{margin:0;height:100%;background:#b2c2c6;color:#172629;font:15px system-ui,sans-serif}
+header{position:absolute;z-index:2;top:14px;left:14px;right:14px;background:#f9faf6ed;border-radius:9px;padding:12px;max-width:590px;box-shadow:0 4px 20px #3333}
+h1{font-size:19px;margin:0 0 5px}p{font-size:13px;line-height:1.3;margin:6px 0;color:#526166}
+button{background:white;border:1px solid #c7cecc;border-radius:5px;padding:7px 9px;margin:3px;cursor:pointer}
+button.selected{background:#1c4c63;color:white;border-color:#1c4c63}
+#view{width:100%;height:100%;display:block;touch-action:none}
+#info{font-size:12px;color:#526166}
+</style></head><body>
+<header><h1>Vehicle candidate review</h1>
+<p>Generic CC0 traffic vehicles by Kenney. NOT replacements for Saab or Volvo. Front points toward the viewer's left in the side view.</p>
+<div id="cars"></div>
+<div id="views"></div>
+<div id="info" role="status">Loading…</div>
+<p>Drag to rotate, scroll or pinch to zoom. No game files are changed by this viewer.</p></header>
+<canvas id="view"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(function(){
+'use strict';
+const files=['sedan','van','tractor','police'];
+const canvas=document.getElementById('view');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+renderer.outputEncoding=THREE.sRGBEncoding;
+const scene=new THREE.Scene();scene.background=new THREE.Color('#b2c2c6');
+scene.add(new THREE.HemisphereLight(0xffffff,0x6d7572,1.35));
+const light=new THREE.DirectionalLight(0xffffff,0.9);light.position.set(-3,8,6);scene.add(light);
+const grid=new THREE.GridHelper(14,28,0x97a9aa,0xa3b5b4);grid.position.y=-0.012;scene.add(grid);
+const camera=new THREE.PerspectiveCamera(38,1,0.1,100);
+const loader=new THREE.GLTFLoader(),cache={};
+let root=null,az=Math.PI/4,el=0.27,dist=10,drag=null;
+const carBar=document.getElementById('cars'),viewBar=document.getElementById('views'),info=document.getElementById('info');
+function button(parent,label,callback){const e=document.createElement('button');e.textContent=label;e.onclick=()=>{parent.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));e.classList.add('selected');callback()};parent.appendChild(e);return e}
+files.forEach(id=>button(carBar,id.toUpperCase(),()=>show(id)));
+const views=[['3/4',Math.PI/4,.27],['SIDE',Math.PI/2,0.12],['FRONT',Math.PI,0.1],['REAR',0,0.1]];
+views.forEach(([label,a,e])=>button(viewBar,label,()=>{az=a;el=e}));
+async function show(id){
+ info.textContent='Loading '+id+'…';
+ if(root){scene.remove(root);root=null}
+ try{
+  const source=cache[id]||(cache[id]=await new Promise((resolve,reject)=>loader.load('traffic/'+id+'.glb',g=>resolve(g.scene),undefined,reject)));
+  root=source.clone(true);scene.add(root);
+  // Source: Kenney/Unity model, +Z forward. Game convention: -Z forward.
+  root.rotation.y=Math.PI;
+  root.updateMatrixWorld(true);
+  let bounds=new THREE.Box3().setFromObject(root),size=bounds.getSize(new THREE.Vector3());
+  const uniform=4.35/size.z;root.scale.setScalar(uniform);root.updateMatrixWorld(true);
+  bounds.setFromObject(root);
+  const center=bounds.getCenter(new THREE.Vector3());
+  root.position.x-=center.x;root.position.z-=center.z;root.position.y-=bounds.min.y;
+  root.updateMatrixWorld(true);
+  const dim=bounds.getSize(new THREE.Vector3()).multiplyScalar(uniform);
+  info.textContent=id+' · original proportions preserved (uniform scale) · approx length 4.35m';
+ }catch(error){info.textContent='Cannot load '+id+': '+error.message;console.error(error)}
+}
+const down=e=>{drag={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId)};
+canvas.addEventListener('pointerdown',down);
+canvas.addEventListener('pointermove',e=>{if(!drag)return;az+=(e.clientX-drag.x)*.007;el=Math.max(-.05,Math.min(1.15,el+(drag.y-e.clientY)*.007));drag={x:e.clientX,y:e.clientY}});
+canvas.addEventListener('pointerup',()=>drag=null);
+canvas.addEventListener('pointercancel',()=>drag=null);
+canvas.addEventListener('wheel',e=>{e.preventDefault();dist=Math.max(4,Math.min(22,dist*Math.exp(e.deltaY*.001)))},{passive:false});
+function tick(){requestAnimationFrame(tick);const w=canvas.clientWidth,h=canvas.clientHeight;if(canvas.width!==Math.floor(w*renderer.getPixelRatio())||canvas.height!==Math.floor(h*renderer.getPixelRatio()))renderer.setSize(w,h,false);
+camera.aspect=w/h;camera.updateProjectionMatrix();
+camera.position.set(Math.sin(az)*dist*Math.cos(el),Math.sin(el)*dist+1.6,Math.cos(az)*dist*Math.cos(el));
+camera.lookAt(0,1.25,0);renderer.render(scene,camera)}
+carBar.firstChild.click();viewBar.firstChild.click();tick();
+})();
+</script></body></html>
