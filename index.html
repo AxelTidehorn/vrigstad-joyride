@@ -665,7 +665,7 @@ function inWater(x, z) {
 }
 
 // ---------- reusable Swedish residential house catalogue ----------
-const HOUSE_LIBRARY=(()=>{
+const HOUSE_LIBRARY = (() => {
 // Residential house catalogue for the playable Vrigstad map.
 // Each archetype is built ONCE as a complete mesh and reused by InstancedMesh.
 // GIS footprints are used for placement, not as a source for per-house modelling.
@@ -906,10 +906,10 @@ function createHouseGeometry(THREE, type, skin, entrance) {
   return geometry;
 }
 
-return {HOUSE_TYPES,houseSkin,footprintRect,createHouseGeometry};
+return {HOUSE_TYPES, houseSkin, footprintRect, createHouseGeometry};
 })();
 
-const RESIDENTIAL_ENV=(()=>{
+const RESIDENTIAL_ENV = (() => {
 // Residential landscape layer for the real, playable Vrigstad map.
 // Deliberately conservative: every feature is computed once and omitted
 // rather than guessed when road/lot/terrain geometry cannot support it.
@@ -1585,15 +1585,16 @@ const neighborhoodCandidates = []; // entrances shared by catalogue and fallback
               normalX:side.nx,normalZ:side.nz,type:'legacy'});
           }
           const half=0.45/L,frame=0.10/L,knob=0.035/L,lintel=0.12;
-          const x0=.5-half,x1=.5+half;
+          // Door-local UVs must not shadow the building bbox x0/x1 above.
+          const doorU0=.5-half,doorU1=.5+half;
           const doorColor=((bi*2654435761>>>0)&3)===0?detailColors.doorRed:detailColors.door;
           // Surface-mounted door with a distinct surround; no fake geometry hole.
-          detailQuad(a,d,side.nx,side.nz,x0,x1,low,doorHigh,.075,doorColor);
-          detailQuad(a,d,side.nx,side.nz,x0-frame,x0,low,doorHigh+lintel,.092,detailColors.white);
-          detailQuad(a,d,side.nx,side.nz,x1,x1+frame,low,doorHigh+lintel,.092,detailColors.white);
-          detailQuad(a,d,side.nx,side.nz,x0-frame,x1+frame,doorHigh,doorHigh+lintel,.092,detailColors.white);
-          detailQuad(a,d,side.nx,side.nz,x0,x1,low-.055,low,.096,detailColors.shade);
-          detailQuad(a,d,side.nx,side.nz,x1-.15/L-knob,x1-.15/L+knob,low+1.0,low+1.08,.109,detailColors.knob);
+          detailQuad(a,d,side.nx,side.nz,doorU0,doorU1,low,doorHigh,.075,doorColor);
+          detailQuad(a,d,side.nx,side.nz,doorU0-frame,doorU0,low,doorHigh+lintel,.092,detailColors.white);
+          detailQuad(a,d,side.nx,side.nz,doorU1,doorU1+frame,low,doorHigh+lintel,.092,detailColors.white);
+          detailQuad(a,d,side.nx,side.nz,doorU0-frame,doorU1+frame,doorHigh,doorHigh+lintel,.092,detailColors.white);
+          detailQuad(a,d,side.nx,side.nz,doorU0,doorU1,low-.055,low,.096,detailColors.shade);
+          detailQuad(a,d,side.nx,side.nz,doorU1-.15/L-knob,doorU1-.15/L+knob,low+1.0,low+1.08,.109,detailColors.knob);
         }
       }
     }
@@ -1800,7 +1801,7 @@ function mergeGeo(parts){
 })();
 
 // ---------- standalone low-poly vehicle models ----------
-const VEHICLE_MODELS=(()=>{
+const VEHICLE_MODELS = (() => {
 /**
  * Standalone low-poly vehicle models for Vrigstad Joyride.
  * Front is -Z, +Y is up. Geometry is cached by model and paint.
