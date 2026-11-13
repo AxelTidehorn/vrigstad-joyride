@@ -1,0 +1,30 @@
+name: Residential neighborhood checks
+on:
+  pull_request:
+    paths:
+      - 'src/houses/**'
+      - 'src/environment/residential-neighborhood.mjs'
+      - 'src/game.html'
+      - 'tools/build.py'
+      - 'tools/check_house_catalog.mjs'
+      - 'tools/check_residential_neighborhood.mjs'
+      - '.github/workflows/residential-neighborhood-checks.yml'
+permissions:
+  contents: read
+jobs:
+  model-and-placement:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate four house types and garden scene
+        run: |
+          node --check src/houses/house-library.mjs
+          node --check src/environment/residential-neighborhood.mjs
+          node tools/check_house_catalog.mjs
+          node tools/check_residential_neighborhood.mjs
+      - name: Check embedded Python builder syntax
+        run: python3 -m py_compile tools/build.py
