@@ -25,7 +25,7 @@ for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
         page = page.replace('/*VEHICLE_MODELS*/', models)
         assert page.count('/*DRIVING_PHYSICS*/') == 1
         physics = open(os.path.join(root, 'src', 'physics', 'driving-v4.mjs'), encoding='utf-8').read()
-        physics = re.sub(r'(?m)^export\\s+', '', physics)
+        physics = re.sub(r'(?m)^export\s+', '', physics)
         physics = 'const DRIVING_PHYSICS = (() => {\n' + physics + '\nreturn {newCar,stepCar,VEHICLE_PRESETS};\n})();\n'
         page = page.replace('/*DRIVING_PHYSICS*/', physics)
         assert page.count('/*HOUSE_MODELS*/') == 1
