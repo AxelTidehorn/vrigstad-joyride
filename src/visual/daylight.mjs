@@ -76,7 +76,7 @@ export function daylightState(hour, cloudTime=0, coverage=null, date=DEFAULT_SOL
     hour:h,date:solar.date,altitude,azimuth:solar.azimuth,daytime,warm,cover,shade,
     dx:solar.dx,dy:solar.dy,dz:solar.dz,
     strength:daytime*(1.44-.48*warm)*shade,
-    exposure:.78+.21*daytime-.11*warm+.03*(1-shade),
+    exposure:.78+.21*daytime-.11*warm*daytime+.03*(1-shade),
     skyBrightness:Math.max(.19,(.28+.72*daytime)*(1-.27*warm)), 
     twilight
   };
