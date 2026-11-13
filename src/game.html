@@ -4,7 +4,7 @@
 <style>
 /* Layout: the game view fills the screen; HUD pieces sit in the corners (minimap + street sign, wanted level, speed, touch controls). Single daylight look by choice. */
 :root {
-  --sky: #a8b9c1;
+  --sky: #84969a;
   --hud: rgba(16, 22, 20, .74);
   --ink: #f4f1e6;
   --dim: rgba(244, 241, 230, .55);
@@ -157,19 +157,22 @@ const coarse = matchMedia('(pointer: coarse)').matches;
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-const SKY = 0xa8b9c1;
+const SKY = 0x84969a;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(SKY);
-scene.fog = new THREE.Fog(SKY, 260, 1900);
+scene.fog = new THREE.Fog(SKY, 285, 1840);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
-scene.add(new THREE.HemisphereLight(0xeaf1f3, 0x68745c, 0.64));
-const sun = new THREE.DirectionalLight(0xfff1dc, 0.9);
+scene.add(new THREE.HemisphereLight(0xd2e0ef, 0x5d6753, 0.47));
+const sun = new THREE.DirectionalLight(0xffdbb0, 1.22);
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, { left: -110, right: 110, top: 110, bottom: -110, near: 50, far: 800 });
 sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.05;
 scene.add(sun, sun.target);
+
+// Single display-referred film pass, embedded by tools/build.py.
+/*FILM_PIPELINE*/
 
 // ---------- ground texture (also feeds the minimap) ----------
 const CW = (coarse || renderer.capabilities.maxTextureSize < 4096) ? 2048 : 4096, K = CW / S;
@@ -180,24 +183,25 @@ function trace(p, close) { ctx.moveTo(P(p[0]), P(p[1])); for (let i = 2; i < p.l
 const ROAD_W = [9, 7.5, 5.5, 3.5, 2.6, 1.5];
 (function paint() {
   // v0.5.1 style-study palette: grounded Swedish greens instead of pale lime.
-  const land = ['#577448', '#807d70', '#8c8e88', '#4d6942', '#5a754b', '#486b43', '#4b6a40'];
+  const land = ['#3f6549', '#767b70', '#848781', '#365740', '#486747', '#34543c', '#3d5e42'];
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  ctx.fillStyle = '#577448'; ctx.fillRect(0, 0, CW, CW);
+  ctx.fillStyle = '#3f6549'; ctx.fillRect(0, 0, CW, CW);
   for (let k = 0; k < 7; k++) { ctx.fillStyle = land[k]; ctx.beginPath(); for (const l of D.l) if (l.k === k) trace(l.p, true); ctx.fill(); }
-  ctx.strokeStyle = '#4f8fb8';
+  ctx.strokeStyle = '#457f9a';
   for (const w of D.ww) { ctx.lineWidth = (w.k === 0 ? 6 : 2) * K; ctx.beginPath(); trace(w.p); ctx.stroke(); }
-  ctx.fillStyle = '#4f8fb8';
+  ctx.fillStyle = '#457f9a';
   for (const w of D.w) { ctx.beginPath(); for (const ring of w) trace(ring, true); ctx.fill('evenodd'); }
-  const fill = ['#505656', '#626568', '#626568', '#807d70', '#807d70', '#828075'];
+  const fill = ['#4b5458', '#62686a', '#666968', '#777670', '#817d70', '#80796d'];
   for (const pass of [1, 0]) for (const c of [5, 4, 3, 2, 1, 0]) {
     if (pass && c > 3) continue;
-    ctx.strokeStyle = pass ? '#a8a69e' : fill[c]; ctx.lineWidth = (ROAD_W[c] + (pass ? 2.4 : 0)) * K;
+    ctx.strokeStyle = pass ? '#b4aea1' : fill[c]; ctx.lineWidth = (ROAD_W[c] + (pass ? 2.4 : 0)) * K;
     ctx.beginPath(); for (const r of D.r) if (r.c === c) trace(r.p); ctx.stroke();
   }
-  ctx.fillStyle = '#8a8378'; ctx.beginPath(); for (const b of D.b) trace(b.p, true); ctx.fill();
+  ctx.fillStyle = '#827969'; ctx.beginPath(); for (const b of D.b) trace(b.p, true); ctx.fill();
 })();
 const texture = new THREE.CanvasTexture(tex2d);
 texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+texture.encoding = THREE.sRGBEncoding; // canvas colour data is authored in sRGB
 
 // ---------- terrain ----------
 (function () {
@@ -212,7 +216,7 @@ texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   g.setIndex(idx); g.computeVertexNormals();
   const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ map: texture })); m.receiveShadow = true; scene.add(m);
-  const far = new THREE.Mesh(new THREE.PlaneGeometry(14000, 14000), new THREE.MeshLambertMaterial({ color: 0x6f9a5e }));
+  const far = new THREE.Mesh(new THREE.PlaneGeometry(14000, 14000), new THREE.MeshLambertMaterial({ color: 0x426c4b }));
   far.rotation.x = -Math.PI / 2; far.position.y = -1.5; scene.add(far);
   const v = [], c = i => -HALF + S * i / (N - 1);
   const edge = fx => { for (let i = 0; i < N - 1; i++) { const a = fx(i), b = fx(i + 1);
@@ -220,7 +224,7 @@ texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   edge(i => [c(i), hAt(c(i), HALF), HALF]); edge(i => [c(i), hAt(c(i), -HALF), -HALF]);
   edge(i => [HALF, hAt(HALF, c(i)), c(i)]); edge(i => [-HALF, hAt(-HALF, c(i)), c(i)]);
   const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.Float32BufferAttribute(v, 3)); sg.computeVertexNormals();
-  scene.add(new THREE.Mesh(sg, new THREE.MeshLambertMaterial({ color: 0x6f8a58, side: THREE.DoubleSide })));
+  scene.add(new THREE.Mesh(sg, new THREE.MeshLambertMaterial({ color: 0x476e4d, side: THREE.DoubleSide })));
 })();
 
 // ---------- roads: crisp ribbons on the terrain + lookup grid + junction graph ----------
@@ -240,6 +244,7 @@ function makeAsphaltTexture() {
   g.putImageData(img, 0, 0);
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.encoding = THREE.sRGBEncoding;
   t.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
   return t;
 }
@@ -264,7 +269,7 @@ const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p
   }
   for (const r of R) { ribbon(bufs[r.c], r.p, ROAD_W[r.c], 0.25 - r.c * 0.03); if (r.c < 2) ribbon(bufs[6], r.p, 0.2, 0.3); }
   // Asphalt mesh colors compensate for the ~0.76 greyscale albedo of the procedural texture.
-  const cols = [0x697171, 0x818588, 0x818588, 0x808079, 0x807d70, 0x828075, 0xdbd9cf];
+  const cols = [0x737b7b, 0x858688, 0x848587, 0x74746d, 0x777269, 0x7e786e, 0xbab4a8];
   bufs.forEach((b, i) => { if (!b.length) return;
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(b, 3));
     if (i <= 3) {
@@ -385,7 +390,7 @@ function facadeKind(hex, b, area) {
   if(b.k !== 0 || b.facade === 'bespoke' || area > BESPOKE_FACADE_AREA) return 'bespoke';
   const n=((Math.round(b.p[0]*10)*73856093)^(Math.round(b.p[1]*10)*19349663))>>>0;
   const choice=n%100;
-  if(hex==='#925847'||hex==='#9a5945')return choice<86?'wood':'brick';
+  if(hex==='#843b30'||hex==='#934739')return choice<86?'wood':'brick';
   if(hex==='#c2a66a')return choice<88?'wood':'stucco';
   if(hex==='#778c80')return choice<70?'wood':'stucco';
   return choice<34?'mexi':choice<67?'stucco':'wood';
@@ -407,8 +412,8 @@ const BC = 40, bGrid = new Map(), bPolys = [];
   const detailPos=[],detailCol=[];
   const c=new THREE.Color(), c2=new THREE.Color();
   // Keep the user's v0.5.1 colors; add a realistic material response per facade.
-  const house=['#925847','#925847','#9a5945','#dbd9cb','#c6c5b8','#c2a66a','#c7c0ad','#778c80'];
-  const big=['#c7c0ad','#b2b0a5','#d3cfc3','#a5aeac'];
+  const house=['#843b30','#843b30','#934739','#d7d3c7','#c0c1b8','#b99550','#bdb5a4','#70867d'];
+  const big=['#c0b6a3','#aaa79e','#c8c5ba','#98a6a5'];
   // One shared mesh for all door faces and corner boards; no mesh per building.
   // Offset the details from the underlying walls to avoid coplanar z-fighting.
   const detailColors = {
@@ -477,9 +482,9 @@ const BC = 40, bGrid = new Map(), bPolys = [];
     }
     const orientation=area>=0?1:-1;
     area=Math.abs(area)/2;
-    const wallHex=b.k===2?'#925847':b.k?'#efece3':area>450?pick(big):pick(house);
+    const wallHex=b.k===2?'#843b30':b.k?'#e6e2d6':area>450?pick(big):pick(house);
     c.set(wallHex);
-    c2.set(b.k===2?'#a8573f':b.k?'#3f4447':rnd()<.5?'#4d4a48':'#7a4a3c');
+    c2.set(b.k===2?'#94503d':b.k?'#3c4447':rnd()<.5?'#4b4d4c':'#715044');
     const facade=facadeKind(wallHex,b,area);
     const W=walls[facade];
     const base=lo-1,top=hi+b.h,{ring,yAt,sides}=roofParts(contour,b.g,top),m=ring.length;
@@ -712,7 +717,7 @@ function collide(o, r) {
     for (let t = Math.round((x1 - x0) * (z1 - z0) / 110); t > 0; t--) { const x = x0 + rnd() * (x1 - x0), z = z0 + rnd() * (z1 - z0);
       if (inPoly(l.p, x, z) && nearestRoad(x, z).d > 2.5) spots.push(x, z, 0.7 + rnd() * 0.8); } }
   const geo = new THREE.ConeGeometry(3.2, 13, 6); geo.translate(0, 7.5, 0);
-  const mesh = new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial({ color: 0x3f7046 }), spots.length / 3), m4 = new THREE.Matrix4();
+  const mesh = new THREE.InstancedMesh(geo, new THREE.MeshLambertMaterial({ color: 0x315b3d }), spots.length / 3), m4 = new THREE.Matrix4();
   for (let i = 0; i < spots.length / 3; i++) { const s = spots[i * 3 + 2]; m4.makeScale(s, s, s);
     m4.setPosition(spots[i * 3], hAt(spots[i * 3], spots[i * 3 + 1]) - 1, spots[i * 3 + 1]); mesh.setMatrixAt(i, m4); }
   mesh.castShadow = true; scene.add(mesh);
@@ -1165,7 +1170,7 @@ function updatePolice(c, dt, T, tv) {
 
 // ---------- main loop ----------
 function resize() { const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
-  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); resizeFilmFrame(); }
 addEventListener('resize', resize); if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas);
 let last = performance.now();
 function frame(now) {
@@ -1230,7 +1235,7 @@ function frame(now) {
     else pr.hidden = true;
     $('speed').hidden = !inCar; if (inCar) { $('kmh').textContent = Math.round(Math.abs(pcar.v) * 3.6); $('carname').textContent = pcar.T.name; } }
   drawMini(T);
-  renderer.render(scene, camera);
+  renderFilmFrame();
 }
 $('go').addEventListener('click', () => { started = true; $('intro').hidden = true; camYaw = 0.6; camPitch = 0.34; canvas.focus();
   toast('Find a car and press E to take it. Occupied cars always get you a wanted star.', 5); });

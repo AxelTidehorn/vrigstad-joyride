@@ -23,5 +23,8 @@ for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
         models = re.sub(r'(?m)^export\s+', '', models)
         models = 'const VEHICLE_MODELS = (() => {\n' + models + '\nreturn {createVehicleGeometry};\n})();\n'
         page = page.replace('/*VEHICLE_MODELS*/', models)
+        assert page.count('/*FILM_PIPELINE*/') == 1
+        film = open(os.path.join(root, 'src', 'visual', 'film-pipeline.js'), encoding='utf-8').read()
+        page = page.replace('/*FILM_PIPELINE*/', film)
     open(os.path.join(root, out), 'w', encoding='utf-8').write(HEAD + page.replace('/*DATA*/', blob) + '</body>\n</html>\n')
     print('built', out)
