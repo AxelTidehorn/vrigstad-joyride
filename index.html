@@ -1459,7 +1459,7 @@ const neighborhoodCandidates = []; // entrances shared by catalogue and fallback
     const wallHex=b.k===2?'#843b30':b.k?'#e6e2d6':area>450?pick(big):pick(house);
     c.set(wallHex);
     wallBaseShade.copy(c).multiplyScalar(0.72); // Oliver #116: shaded wall feet
-    c2.set(b.k===2?'#94503d':b.k?'#3c4447':rnd()<.5?'#4b4d4c':'#715044');
+    c2.set(b.k===2?'#94503d':b.k?'#3c4447':rnd()<.29?'#4b4d4c':'#715044');
     const facade=facadeKind(wallHex,b,area);
     const W=walls[facade];
     const base=lo-1,top=hi+buildingWallHeight(b),{ring,yAt,sides}=roofParts(contour,b.g,top,buildingRoofRise(b)),m=ring.length;
@@ -1474,13 +1474,18 @@ const neighborhoodCandidates = []; // entrances shared by catalogue and fallback
          inPoly(b.p,fp.cx,fp.cz)){
         const options=[];
         for(const [type,spec] of Object.entries(HOUSE_LIBRARY.HOUSE_TYPES)){
+          // Never place a genuine two-storey farmhouse on a small single-floor
+          // building merely because the horizontal footprint happens to fit.
+          if(type==='farmhouse' && (b.h<6.5 || area<96))continue;
           const sx=(fp.length-.22)/spec.length,sz=(fp.width-.22)/spec.width;
           if(sx>=.82 && sx<=1.35 && sz>=.81 && sz<=1.34 && Math.abs(sx-sz)<=.19)
             options.push({type,sx,sz});
         }
         const hash=(Math.imul(Math.round(b.p[0]*10),73856093)^
           Math.imul(Math.round(b.p[1]*10),19349663)^Math.imul(bi+1,83492791))>>>0;
-        if(options.length && hash%5<=1){
+        const canBeHistoricTwoStorey=options.some(o=>o.type==='farmhouse');
+        const selected=hash%5<=1 || (canBeHistoricTwoStorey && hash%5<=3);
+        if(options.length && selected){
           // The extra historical type is reserved for plausible tall / broad
           // residential footprints. One-storey houses never turn into two floors.
           const taller=options.find(o=>o.type==='farmhouse');
