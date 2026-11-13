@@ -52,3 +52,20 @@ warm dusk to dark blue. This keeps dusk from looking like noon with orange tint.
 
 Test `?time=13`, `?time=17`, `?time=19`, `?time=20.5`, `?time=22`
 in one street view. Browser WebGL and screenshot tests are still needed.
+
+## Exposure balance follow-up
+
+After visual review the 13:00 shot was overexposed and 20:30/22:00
+became too dark to navigate. This change reduces peak sun intensity
+and midday exposure; keeps residual skylight into twilight; and
+strengthens cloud-cover attenuation of direct sunlight and glare.
+
+Night is **not** made into fake daylight: 22:00 should remain dark,
+but proper streetlights, building illumination and car headlights
+will be needed for a playable nighttime mode. The sky renderer and
+world exposure remain separately controlled.
+
+Compare fixed camera views at `?time=13`, `?time=19`,
+`?time=20.5`, and `?time=22`. Observe clipping in white
+facades and roads, dimming under clouds, and dark-road visibility.
+Numerical checks are not visual confirmation.
