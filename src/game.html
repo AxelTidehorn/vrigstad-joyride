@@ -157,18 +157,20 @@ const coarse = matchMedia('(pointer: coarse)').matches;
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-const SKY = 0x84969a;
+const SKY = 0x798b8f;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(SKY);
-scene.fog = new THREE.Fog(SKY, 285, 1840);
+scene.fog = new THREE.Fog(SKY, 390, 2000);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
-scene.add(new THREE.HemisphereLight(0xd2e0ef, 0x5d6753, 0.47));
-const sun = new THREE.DirectionalLight(0xffdbb0, 1.22);
-const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
+// Softer fill preserves natural daylight but lets the sun shape roofs, cars and trees.
+scene.add(new THREE.HemisphereLight(0xcddceb, 0x5e6857, 0.30));
+// Lower sun angle and stronger direct/fill ratio create readable mid-day shadows.
+const sun = new THREE.DirectionalLight(0xffe2bd, 1.38);
+const SUN_DIR = new THREE.Vector3(-0.62, 0.57, 0.55).normalize();
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, { left: -110, right: 110, top: 110, bottom: -110, near: 50, far: 800 });
-sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.05;
+sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.040;
 scene.add(sun, sun.target);
 
 // Single display-referred film pass, embedded by tools/build.py.

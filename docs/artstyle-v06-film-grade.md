@@ -16,7 +16,7 @@ Not an exact simulation of Fujifilm proprietary transforms.
 
 ## Pipeline / r128 colour notes
 1. Render scene once into a **linear 8-bit target** with Three r128's
-   **ACESFilmicToneMapping**, exposure 1.29. This compresses highlights *before*
+   **ACESFilmicToneMapping**, exposure 1.13. This compresses highlights *before*
    the 8-bit intermediate. The intermediate texture encoding is explicitly linear.
 2. Shader samples the intermediate and applies a **single linear-to-sRGB
    transfer**, followed by a photo-inspired contrast curve, selective olive-green
@@ -42,8 +42,8 @@ Not an exact simulation of Fujifilm proprietary transforms.
 
 ## Grain comparison (development only)
 - `?grain=off`: no grain.
-- `?grain=subtle`: 0.62 (also the default).
-- `?grain=strong`: 1.35; an intentionally clearer review setting.
+- `?grain=subtle`: 0.62; the previous default.
+- `?grain=strong`: 1.35; **the new default** chosen after visual feedback.
 - `?film=off&grain=off`: the ungraded intermediate, with the new scene
   lighting and palette retained.
 
@@ -52,6 +52,46 @@ Default strength can be changed at `FILM_GRAIN_STRENGTH` in
 (no temporal flashing), primarily visible in midtones, and clamped to avoid
 adding false highlight/shadow details. It is a film-like texture rather
 than a faithful chemical emulsion simulation.
+
+## v0.6 follow-up: stronger grain, calmer highlights, shaped daylight
+The initial v0.6 treatment was too flat and too white in its brightest areas.
+This pass changes existing settings without touching geometry, game logic or UI:
+
+| Parameter | Previous | This pass |
+|---|---|---|
+| Default monochrome grain | 0.62 (`subtle`) | **1.35 (`strong`)** |
+| ACES exposure | 1.29 | **1.13** |
+| Hemisphere fill intensity | 0.47 | **0.30** |
+| Directional sunlight intensity | 1.22 | **1.38** |
+| Sun vector (normalized in shader setup) | (-0.55, 0.75, 0.37) | **(-0.62, 0.57, 0.55)** |
+| Shadow normal bias | 0.05 | **0.040** |
+| Fog near/far | 285 / 1840 | **390 / 2000** |
+| Film horizon | #84969a | **#798b8f** |
+| S-curve upper white point | 0.955 | **1.045** |
+| S-curve blend | 0.42 | **0.36** |
+
+The lower sun angle, increased sunlight-to-fill ratio and slightly lower
+shadow normal bias aim to define roof overhangs, windows and parked cars.
+The lower exposure and widened highlight shoulder target bright white
+facades while keeping the environment a readable Swedish daytime scene.
+Highlight warmth is retained, but the grade no longer pushes luminance
+upward with a large red/yellow offset. The film sky and fog are slightly
+darker and less intrusive in the distance.
+
+### Visual regression checks specifically for this follow-up
+- [ ] Examine white wood cladding, pale sky and silver vehicle paint for
+      highlight clipping (including against the **merged v0.6 main**).
+- [ ] Confirm the sun produces directional roof, building and tree shadows
+      while dark green foliage keeps readable shadow detail.
+- [ ] Compare the default strong grain against `?grain=off` and
+      `?grain=subtle` with the *same resolution and camera position*.
+- [ ] Drive through Torget, a villa area, open road and larger buildings;
+      ensure shadow transitions are natural while the car moves.
+- [ ] Measure FPS/GPU cost relative to main (this pass adds no render pass,
+      texture or draw call; shader strength does not change arithmetic cost).
+
+**Status:** source/build/syntax verification only. Visual signoff requires
+WebGL gameplay screenshots and driving tests.
 
 ## Artistic changes
 - Sky: deeper blue upper hemisphere, neutral warm grey-blue horizon, fog matched.

@@ -165,18 +165,20 @@ const coarse = matchMedia('(pointer: coarse)').matches;
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-const SKY = 0x84969a;
+const SKY = 0x798b8f;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(SKY);
-scene.fog = new THREE.Fog(SKY, 285, 1840);
+scene.fog = new THREE.Fog(SKY, 390, 2000);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
-scene.add(new THREE.HemisphereLight(0xd2e0ef, 0x5d6753, 0.47));
-const sun = new THREE.DirectionalLight(0xffdbb0, 1.22);
-const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
+// Softer fill preserves natural daylight but lets the sun shape roofs, cars and trees.
+scene.add(new THREE.HemisphereLight(0xcddceb, 0x5e6857, 0.30));
+// Lower sun angle and stronger direct/fill ratio create readable mid-day shadows.
+const sun = new THREE.DirectionalLight(0xffe2bd, 1.38);
+const SUN_DIR = new THREE.Vector3(-0.62, 0.57, 0.55).normalize();
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, { left: -110, right: 110, top: 110, bottom: -110, near: 50, far: 800 });
-sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.05;
+sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.040;
 scene.add(sun, sun.target);
 
 // Single display-referred film pass, embedded by tools/build.py.
@@ -195,13 +197,15 @@ scene.add(sun, sun.target);
  */
 renderer.outputEncoding = THREE.LinearEncoding;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.29;
+// Reduced from 1.29: protect white facades and bright roads without dimming
+// the world uniformly (the directional/fill balance is retuned separately).
+renderer.toneMappingExposure = 1.13;
 
 // A distant sky sphere, centered on the active camera. The fog colour matches
 // the horizon; the sphere is rendered before all world geometry with no depth write.
-const filmHorizon = new THREE.Color(0x84969a);
+const filmHorizon = new THREE.Color(0x798b8f);
 scene.background = filmHorizon;
-scene.fog = new THREE.Fog(filmHorizon, 285, 1840);
+scene.fog = new THREE.Fog(filmHorizon, 390, 2000);
 const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE.ShaderMaterial({
   uniforms: {
     uZenith: { value: new THREE.Color(0x2c5277) },
@@ -255,9 +259,9 @@ const filmFrameScene = new THREE.Scene();
 const filmFrameCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 // Grain is stable in framebuffer pixel space. Avoid per-frame random seeds:
 // animated white noise would shimmer badly on thin geometry and during driving.
-// Adjust this constant for the default look, without adding a settings system.
+// Strong is the default by artistic decision; no new settings system.
 // URL overrides for review: ?grain=off, ?grain=subtle, ?grain=strong.
-const FILM_GRAIN_STRENGTH = 0.62;
+const FILM_GRAIN_STRENGTH = 1.35;
 const filmGrainSetting = new URLSearchParams(location.search).get('grain');
 const filmGrainStrength = filmGrainSetting === 'off' ? 0.0
   : filmGrainSetting === 'strong' ? 1.35
@@ -297,15 +301,20 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
     vec3 classicNegative(vec3 c) {
       // Controlled photographic S-curve in display space, keeping black and
       // white points without clipping interiors or the pale house facades.
-      vec3 curve = smoothstep(vec3(0.045), vec3(0.955), c);
-      c = mix(c, curve, 0.42);
+      // Wider white shoulder than v0.6: retain local differences within pale
+      // siding, cloudy sky and sunlit concrete instead of approaching pure white.
+      vec3 curve = smoothstep(vec3(0.045), vec3(1.045), c);
+      c = mix(c, curve, 0.36);
       float y = dot(c, vec3(0.2126, 0.7152, 0.0722));
 
       // Cool low values, softly warm high values; no heavy orange/teal split.
       float shadows = 1.0 - smoothstep(0.12, 0.57, y);
       float highlights = smoothstep(0.53, 0.89, y);
       c += vec3(-0.016, 0.002, 0.028) * shadows;
-      c += vec3(0.027, 0.013, -0.015) * highlights;
+      // Keep chromatic warmth, but stop actively lifting bright luminance.
+      c += vec3(0.008, 0.001, -0.010) * highlights;
+      // A restrained upper-shoulder roll-off protects the brightest surfaces.
+      c -= vec3(0.010) * smoothstep(0.77, 0.98, y);
 
       // Foliage should be olive/forest green, not a bright lime-coloured mass.
       float green = smoothstep(0.022, 0.20, c.g - max(c.r, c.b));
