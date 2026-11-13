@@ -841,6 +841,7 @@ const neighborhoodCandidates = []; // entrances shared by catalogue and fallback
 if(RESIDENTIAL_YARD_ENABLED){
   const residentialStats=RESIDENTIAL_ENV.createResidentialNeighborhood(THREE,scene,{
     sites:neighborhoodCandidates,buildings:D.b,roads:R,
+    debugPlots:new URLSearchParams(location.search).get('plots')==='debug',
     roadWidths:ROAD_W,hAt,inPoly,
     protectedCenters:[[-8.9,30.1,75],...HOUSE_CATALOG_SAFEHOUSES.map(p=>[p[0],p[1],18])]
   });

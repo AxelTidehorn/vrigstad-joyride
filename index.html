@@ -910,6 +910,67 @@ return {HOUSE_TYPES, houseSkin, footprintRect, createHouseGeometry};
 })();
 
 const RESIDENTIAL_ENV = (() => {
+// Conservative visual lot cells: clipped house-centre Voronoi regions, never cadastral parcels.
+// Road strips and the finite scene bound clip each cell. All inputs are map metres.
+function estimateResidentialPlots(sites, buildings, roads, roadWidths, limit=28) {
+  const clip=(poly,nx,nz,c)=>{
+    if(!poly.length)return [];
+    const out=[];
+    for(let i=0;i<poly.length;i++){
+      const a=poly[i],b=poly[(i+1)%poly.length];
+      const da=a.x*nx+a.z*nz-c,db=b.x*nx+b.z*nz-c;
+      if(da<=0)out.push(a);
+      if((da<0&&db>0)||(da>0&&db<0)){
+        const t=da/(da-db);
+        out.push({x:a.x+(b.x-a.x)*t,z:a.z+(b.z-a.z)*t});
+      }
+    }
+    return out;
+  };
+  const centers=sites.map(s=>({bi:s.bi,x:s.x,z:s.z}));
+  const segments=[];
+  for(const r of roads){
+    if(r.c>3)continue;
+    for(let i=1;i<r.p.length;i++){
+      const a=r.p[i-1],b=r.p[i],dx=b[0]-a[0],dz=b[1]-a[1],d2=dx*dx+dz*dz;
+      if(d2>1)segments.push({x:a[0],z:a[1],dx,dz,d2,half:(roadWidths[r.c]||5)/2});
+    }
+  }
+  const results=new Map();
+  for(const s of sites){
+    const x=s.x,z=s.z,R=Math.max(limit,Math.sqrt(Math.max(0,s.area||0))*.9+7);
+    let poly=[{x:x-R,z:z-R},{x:x+R,z:z-R},{x:x+R,z:z+R},{x:x-R,z:z+R}];
+    // Neighbouring homes split the intervening space. Include unselected homes
+    // so an omitted/decoratively skipped lot cannot steal its neighbour's yard.
+    for(const other of centers){
+      if(other.bi===s.bi)continue;
+      const dx=other.x-x,dz=other.z-z,d2=dx*dx+dz*dz;
+      if(d2<1||d2>(2*R+10)**2)continue;
+      poly=clip(poly,dx,dz,(other.x*other.x+other.z*other.z-x*x-z*z)/2);
+      if(poly.length<3)break;
+    }
+    // Roads are hard boundaries. Only finite segments close to the house clip
+    // the lot: a distant road extension must not cut across an unrelated yard.
+    for(const road of segments){
+      const u=Math.max(0,Math.min(1,((x-road.x)*road.dx+(z-road.z)*road.dz)/road.d2));
+      const qx=road.x+u*road.dx,qz=road.z+u*road.dz;
+      const vx=x-qx,vz=z-qz,d=Math.hypot(vx,vz);
+      if(d>R+road.half+5||d<road.half+.5)continue;
+      // Ignore a segment whose nearest point is its remote endpoint unless
+      // that endpoint is genuinely near this building.
+      if((u===0||u===1)&&d>12)continue;
+      const nx=vx/d,nz=vz/d;
+      // Keep the house side of the road, offset from the carriageway.
+      poly=clip(poly,-nx,-nz,-(qx*nx+qz*nz+road.half+1.2));
+      if(poly.length<3)break;
+    }
+    const area=Math.abs(poly.reduce((sum,p,i)=>{const q=poly[(i+1)%poly.length];return sum+p.x*q.z-q.x*p.z;},0))*.5;
+    if(poly.length>=3&&area>=Math.max(85,(s.area||0)*1.1)&&
+      poly.every(p=>Number.isFinite(p.x)&&Number.isFinite(p.z)))results.set(s.bi,poly);
+  }
+  return results;
+}
+
 // Residential landscape layer for the real, playable Vrigstad map.
 // Deliberately conservative: every feature is computed once and omitted
 // rather than guessed when road/lot/terrain geometry cannot support it.
@@ -917,7 +978,7 @@ const RESIDENTIAL_ENV = (() => {
 
 function createResidentialNeighborhood(THREE, scene, env) {
   const {sites, buildings, roads, roadWidths, hAt, inPoly, protectedCenters=[]} = env;
-  const stats={candidates:sites.length,walks:0,drives:0,fences:0,hedges:0,walls:0,trees:0,skipped:0};
+  const stats={candidates:sites.length,plots:0,walks:0,drives:0,fences:0,hedges:0,walls:0,trees:0,skipped:0};
   const hash=(n,s=0)=>{let x=(n+Math.imul(s+1,0x9e3779b1))|0;
     x^=x>>>16;x=Math.imul(x,0x7feb352d);x^=x>>>15;
     x=Math.imul(x,0x846ca68b);return (x^x>>>16)>>>0;};
@@ -1045,6 +1106,49 @@ function createResidentialNeighborhood(THREE, scene, env) {
     }
     return false;
   }
+  // Plot boundaries are generated before garden props and serve as a
+  // conservative mask, not as a substitute for building and road clearances.
+  const plotCells=estimateResidentialPlots(sites,buildings,roads,roadWidths);
+  stats.plots=plotCells.size;
+  const plotContains=(poly,x,z)=>{
+    let inside=false;
+    for(let i=0,j=poly.length-1;i<poly.length;j=i++){
+      const a=poly[i],b=poly[j];
+      if(((a.z>z)!==(b.z>z))&&(x<(b.x-a.x)*(z-a.z)/(b.z-a.z)+a.x))inside=!inside;
+    }
+    return inside;
+  };
+  const plotDebugSegments=[];
+  if(env.debugPlots){
+    for(const poly of plotCells.values())
+      for(let i=0;i<poly.length;i++){
+        const a=poly[i],b=poly[(i+1)%poly.length];
+        plotDebugSegments.push(a.x,hAt(a.x,a.z)+.40,a.z,b.x,hAt(b.x,b.z)+.40,b.z);
+      }
+  }
+  const boundaryUsed=new Map();
+  function boundaryAlreadyUsed(x,z){
+    const ix=Math.round(x),iz=Math.round(z);
+    for(let a=-1;a<=1;a++)for(let b=-1;b<=1;b++){
+      for(const q of boundaryUsed.get((ix+a)+','+(iz+b))||[]){
+        if(Math.hypot(q.x-x,q.z-z)<.92)return true;
+      }
+    }
+    return false;
+  }
+  function markBoundary(x,z){
+    const key=Math.round(x)+','+Math.round(z);
+    let list=boundaryUsed.get(key);if(!list)boundaryUsed.set(key,list=[]);
+    list.push({x,z});
+  }
+  function segmentIntersection(a,b,c,d){
+    const rx=b.x-a.x,rz=b.z-a.z,sx=d.x-c.x,sz=d.z-c.z;
+    const cross=rx*sz-rz*sx;
+    if(Math.abs(cross)<.00001)return null;
+    const qx=c.x-a.x,qz=c.z-a.z;
+    const t=(qx*sz-qz*sx)/cross,u=(qx*rz-qz*rx)/cross;
+    return t>=0&&t<=1&&u>=0&&u<=1?u:null;
+  }
   const sorted=sites.slice().sort((a,b)=>a.bi-b.bi);
   for(const site of sorted){
     const seed=hash(site.bi,Math.round(site.x*10));
@@ -1093,58 +1197,60 @@ function createResidentialNeighborhood(THREE, scene, env) {
       }
     }
 
-    // The fence/hard boundary is just beyond the roadway, parallel to it.
-    // Openings are derived from the intersection with the real footpath and
-    // side driveway. A blocked gap cannot be produced by this construction.
-    if(chance(seed,5)>.30){
-      const gapDepth=2.10,denom=(entry.x-edge.x)*nx+(entry.z-edge.z)*nz;
-      if(denom>gapDepth+.3){
-        const alpha=gapDepth/denom;
-        const gateX=edge.x+(entry.x-edge.x)*alpha;
-        const gateZ=edge.z+(entry.z-edge.z)*alpha;
-        const half=7.2+chance(seed,6)*3.7;
-        const ux=tanX,uz=tanZ;
-        if(!overlappingFrontage(gateX,gateZ,ux,uz,half)){
-          let style=hash(seed,7)%4; // hedge, white pickets, stone wall, rail
-          const openings=[{a:-.78,b:.78}];
-          if(drive){
-            const gx=edge.x+tanX*drive.offset+nx*gapDepth;
-            const gz=edge.z+tanZ*drive.offset+nz*gapDepth;
-            const offset=(gx-gateX)*ux+(gz-gateZ)*uz;
-            openings.push({a:offset-1.65,b:offset+1.65});
-          }
-          let included=0;
-          for(let u=-half;u<half-0.3;u+=1.25){
-            const center=u+.625;
-            if(openings.some(o=>u<o.b+.12&&u+1.25>o.a-.12))continue;
-            const x=gateX+ux*center,z=gateZ+uz*center,y=hAt(x,z);
-            if(buildingBlocked(x,z,site.bi,.70))continue;
-            const road=roadNear(x,z);
-            if(road && road.d<.5)continue;
-            if(style===0){
-              const height=.85+.29*chance(seed,Math.round(u*11));
-              hedgeBatches.push({x,z,y:y+height*.43,height,angle:-Math.atan2(uz,ux),
-                color:hash(seed,Math.round(u*2))%2?'#4b6741':'#506b43'});
-              stats.hedges++;
-            }else if(style===2){
-              box('stone',x,z,y+.36,1.23,.70,.48,-Math.atan2(uz,ux));stats.walls++;
+    // Actual approximate lot-cell perimeter, rather than a fixed front strip.
+    // Calculate access gaps by intersecting the paths with each boundary edge.
+    const plot=plotCells.get(site.bi);
+    if(plot&&chance(seed,5)>.30){
+      const style=hash(seed,7)%4; // hedge, white pickets, stone wall, rail
+      for(let pi=0;pi<plot.length;pi++){
+        const a=plot[pi],b=plot[(pi+1)%plot.length];
+        const dx=b.x-a.x,dz=b.z-a.z,length=Math.hypot(dx,dz);
+        if(length<1.25)continue;
+        const ux=dx/length,uz=dz/length,yaw=-Math.atan2(uz,ux);
+        const openings=[];
+        const walkGate=segmentIntersection(entry,edge,a,b);
+        if(walkGate!==null)openings.push({center:walkGate*length,half:.92});
+        if(drive){
+          const driveGate=segmentIntersection(drive.end,drive.begin,a,b);
+          if(driveGate!==null)openings.push({center:driveGate*length,half:1.75});
+        }
+        for(let u=.4;u<length-.4;u+=1.25){
+          const span=Math.min(1.25,length-.4-u),center=u+span*.5;
+          if(openings.some(o=>Math.abs(center-o.center)<o.half+span*.65))continue;
+          const x=a.x+ux*center,z=a.z+uz*center,y=hAt(x,z);
+          if(boundaryAlreadyUsed(x,z))continue;
+          if(buildingBlocked(x,z,-1,.9))continue;
+          const road=roadNear(x,z);
+          if(road&&road.d<1.05)continue;
+          if(protectedCenters.some(q=>len(x-q[0],z-q[1])<q[2]))continue;
+          // Large grade changes would create floating or buried rigid sections.
+          if(Math.abs(hAt(a.x+ux*(u+.1),a.z+uz*(u+.1))-
+                      hAt(a.x+ux*(u+span-.1),a.z+uz*(u+span-.1)))>.38)continue;
+          if(style===0){
+            const height=.85+.29*chance(seed,Math.round(u*11));
+            hedgeBatches.push({x,z,y:y+height*.43,height,angle:yaw,
+              color:hash(seed,Math.round(u*2))%2?'#4b6741':'#506b43'});
+            stats.hedges++;
+          }else if(style===2){
+            box('stone',x,z,y+.36,span*.96,.70,.48,yaw);stats.walls++;
+          }else{
+            const height=style===1?1.05:.86;
+            box('fencepost',x-ux*span*.48,z-uz*span*.48,y+height/2,.12,height,.12,yaw);
+            if(style===1){
+              const pickets=Math.max(2,Math.floor(span/.23));
+              for(let k=0;k<pickets;k++)
+                box('picket',x+ux*(k-(pickets-1)/2)*span/pickets,
+                  z+uz*(k-(pickets-1)/2)*span/pickets,
+                  y+.53,.11,1.04,.07,yaw);
+              box('fencerail',x,z,y+.31,span*.94,.075,.075,yaw);
+              box('fencerail',x,z,y+.79,span*.94,.075,.075,yaw);
             }else{
-              const yaw=-Math.atan2(uz,ux),height=style===1?1.05:.86;
-              box('fencepost',x-ux*.60,z-uz*.60,y+height/2,.12,height,.12,yaw);
-              if(style===1){
-                for(let k=0;k<5;k++)
-                  box('picket',x+ux*(k-2)*.23,z+uz*(k-2)*.23,y+.53,.11,1.04,.07,yaw);
-                box('fencerail',x,z,y+.31,1.19,.075,.075,yaw);
-                box('fencerail',x,z,y+.79,1.19,.075,.075,yaw);
-              }else{
-                box('rail',x,z,y+.42,1.22,.095,.08,yaw);
-                box('rail',x,z,y+.73,1.22,.095,.08,yaw);
-              }
-              stats.fences++;
+              box('rail',x,z,y+.42,span*.94,.095,.08,yaw);
+              box('rail',x,z,y+.73,span*.94,.095,.08,yaw);
             }
-            included++;
+            stats.fences++;
           }
-          if(included>2)frontageOccupied.push({x:gateX,z:gateZ,half});
+          markBoundary(x,z);
         }
       }
     }
@@ -1159,16 +1265,25 @@ function createResidentialNeighborhood(THREE, scene, env) {
       const tx=site.x+tanX*lateral+nx*back;
       const tz=site.z+tanZ*lateral+nz*back;
       const kind=treeKinds[hash(seed,15)%treeKinds.length];
-      addTree(tx,tz,kind,seed,site.bi);
+      if(!plotCells.has(site.bi)||plotContains(plotCells.get(site.bi),tx,tz))addTree(tx,tz,kind,seed,site.bi);
     }
     if(chance(seed,16)>.83){
       const back=backEdge+2.3+chance(seed,17)*2;
       const tx=site.x-tanX*(3.2+chance(seed,17)*3.2)+nx*back;
       const tz=site.z-tanZ*(3.2+chance(seed,17)*3.2)+nz*back;
-      addTree(tx,tz,'small',hash(seed,18),site.bi);
+      if(!plotCells.has(site.bi)||plotContains(plotCells.get(site.bi),tx,tz))addTree(tx,tz,'small',hash(seed,18),site.bi);
     }
   }
 
+  if(plotDebugSegments.length){
+    const geo=new THREE.BufferGeometry();
+    geo.setAttribute('position',new THREE.Float32BufferAttribute(plotDebugSegments,3));
+    const lines=new THREE.LineSegments(geo,new THREE.LineBasicMaterial({
+      color:0x12e6e2,depthTest:false,depthWrite:false
+    }));
+    lines.renderOrder=900;
+    scene.add(lines);
+  }
   if(surface.p.length){
     const geom=new THREE.BufferGeometry();
     geom.setAttribute('position',new THREE.Float32BufferAttribute(surface.p,3));
@@ -1692,6 +1807,7 @@ const neighborhoodCandidates = []; // entrances shared by catalogue and fallback
 if(RESIDENTIAL_YARD_ENABLED){
   const residentialStats=RESIDENTIAL_ENV.createResidentialNeighborhood(THREE,scene,{
     sites:neighborhoodCandidates,buildings:D.b,roads:R,
+    debugPlots:new URLSearchParams(location.search).get('plots')==='debug',
     roadWidths:ROAD_W,hAt,inPoly,
     protectedCenters:[[-8.9,30.1,75],...HOUSE_CATALOG_SAFEHOUSES.map(p=>[p[0],p[1],18])]
   });
