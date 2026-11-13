@@ -28,6 +28,11 @@ for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
         houses = re.sub(r'(?m)^export\s+', '', houses)
         houses = 'const HOUSE_LIBRARY = (() => {\n' + houses + '\nreturn {HOUSE_TYPES, houseSkin, footprintRect, createHouseGeometry};\n})();\n'
         page = page.replace('/*HOUSE_MODELS*/', houses)
+        assert page.count('/*RESIDENTIAL_ENVIRONMENT*/') == 1
+        env = open(os.path.join(root, 'src', 'environment', 'residential-neighborhood.mjs'), encoding='utf-8').read()
+        env = re.sub(r'(?m)^export\s+', '', env)
+        env = 'const RESIDENTIAL_ENV = (() => {\n' + env + '\nreturn {createResidentialNeighborhood};\n})();\n'
+        page = page.replace('/*RESIDENTIAL_ENVIRONMENT*/', env)
         assert page.count('/*FILM_PIPELINE*/') == 1
         film = open(os.path.join(root, 'src', 'visual', 'film-pipeline.js'), encoding='utf-8').read()
         page = page.replace('/*FILM_PIPELINE*/', film)

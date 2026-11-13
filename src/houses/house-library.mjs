@@ -4,24 +4,30 @@
 export const HOUSE_TYPES = {
   cottage: { length: 10.5, width: 8.0, wallHeight: 3.15, ridgeHeight: 5.65, roof: 'gable' },
   bungalow: { length: 13.0, width: 9.2, wallHeight: 3.28, ridgeHeight: 4.62, roof: 'hip' },
-  villa80: { length: 12.0, width: 8.8, wallHeight: 3.75, ridgeHeight: 6.25, roof: 'gable' }
+  villa80: { length: 12.0, width: 8.8, wallHeight: 3.75, ridgeHeight: 6.25, roof: 'gable' },
+  farmhouse: { length: 12.4, width: 8.5, wallHeight: 5.80, ridgeHeight: 8.35, roof: 'gable' }
 };
 
 const PALETTES = {
   cottage: {
-    red: { wall:'#843b30', groove:'#75352d', trim:'#e7e5db', roof:'#534840', foundation:'#6e6e65', door:'#425564' },
+    red: { wall:'#843b30', groove:'#75352d', trim:'#e7e5db', roof:'#66483a', foundation:'#6e6e65', door:'#425564' },
     yellow: { wall:'#b99550', groove:'#a88a47', trim:'#f0eee4', roof:'#8b5948', foundation:'#747269', door:'#566e71' },
     cream: { wall:'#d7d3c7', groove:'#c8c4b7', trim:'#f4f0e8', roof:'#5f5a58', foundation:'#71716e', door:'#59717b' }
   },
   bungalow: {
-    mexi: { wall:'#c7c6ba', groove:'#b5b3a9', trim:'#ddd9ce', roof:'#5d5551', foundation:'#71716a', door:'#564a43' },
+    mexi: { wall:'#c7c6ba', groove:'#b5b3a9', trim:'#ddd9ce', roof:'#665247', foundation:'#71716a', door:'#564a43' },
     brick: { wall:'#9e7865', groove:'#836858', trim:'#dedbd2', roof:'#4b4746', foundation:'#71716a', door:'#4c5957' },
     ochre: { wall:'#bda46b', groove:'#a68e61', trim:'#e7e3d7', roof:'#5d5551', foundation:'#74726d', door:'#4e625c' }
   },
   villa80: {
-    red: { wall:'#934739', groove:'#7d4035', trim:'#ebe7dc', roof:'#4f4e4d', foundation:'#77746e', door:'#36575c' },
+    red: { wall:'#934739', groove:'#7d4035', trim:'#ebe7dc', roof:'#55443b', foundation:'#77746e', door:'#36575c' },
     green: { wall:'#70867d', groove:'#60756e', trim:'#eceae2', roof:'#4a4c4c', foundation:'#73736d', door:'#734d45' },
     cream: { wall:'#d7d3c7', groove:'#c6c1b7', trim:'#f2eee5', roof:'#8a6150', foundation:'#73716c', door:'#48606b' }
+  },
+  farmhouse: {
+    red: { wall:'#77372e', groove:'#663129', trim:'#f1eee2', roof:'#654737', foundation:'#77766f', door:'#4a575e' },
+    redDark: { wall:'#843d32', groove:'#71362e', trim:'#e9e6df', roof:'#523d35', foundation:'#73746d', door:'#51433c' },
+    ochre: { wall:'#aa824e', groove:'#987344', trim:'#eae7dc', roof:'#675040', foundation:'#77746b', door:'#5a5a56' }
   }
 };
 
@@ -29,6 +35,8 @@ export function houseSkin(type, wallHex, hash) {
   const red = wallHex === '#843b30' || wallHex === '#934739';
   const yellow = wallHex === '#b99550' || wallHex === '#c2a66a';
   const green = wallHex === '#70867d' || wallHex === '#778c80';
+  if (type === 'farmhouse') return red ? ((hash & 3) === 0 ? 'redDark' : 'red')
+    : yellow && (hash & 7) === 0 ? 'ochre' : 'red';
   if (type === 'cottage') return red ? 'red' : yellow ? 'yellow' : 'cream';
   if (type === 'bungalow') return red ? 'brick' : yellow ? 'ochre' : 'mexi';
   return red ? 'red' : green ? 'green' : (hash & 3) === 0 ? 'green' : 'cream';
@@ -86,7 +94,7 @@ export function createHouseGeometry(THREE, type, skin, entrance) {
   c.glassEdge=new THREE.Color('#203842');
   c.sill=new THREE.Color('#bcbab0');
   c.chimney=new THREE.Color('#8a6154');
-  c.roofTrim=new THREE.Color('#77706a');
+  c.roofTrim=new THREE.Color(type==='farmhouse'?'#d7d1c4':'#77706a');
   c.knob=new THREE.Color('#c5b085');
   const push=(p,col)=>{positions.push(p[0],p[1],p[2]);colors.push(col.r,col.g,col.b);};
   const tri=(a,b,d,col)=>{push(a,col);push(b,col);push(d,col);};
@@ -105,8 +113,15 @@ export function createHouseGeometry(THREE, type, skin, entrance) {
   box(-L/2-.025,0,-W/2-.025,L/2+.025,.34,W/2+.025,c.foundation);
   const X=L/2+.35,Z=W/2+.42,roofE=e+.08;
   if(spec.roof==='gable'){
-    for(const x of [-L/2,L/2])
+    for(const x of [-L/2,L/2]) {
       tri([x,e,-W/2],[x,r,0],[x,e,W/2],c.wall);
+      // Sloped windboards follow the actual roof instead of floating over it.
+      if(type!=='bungalow')for(const sign of [-1,1]){
+        const xx=x+Math.sign(x)*.24;
+        quad([xx,roofE-.08,sign*Z],[xx,roofE+.09,sign*Z],
+             [xx,r+.09,0],[xx,r-.08,0],c.trim);
+      }
+    }
     quad([-X,roofE,-Z],[X,roofE,-Z],[X,r,0],[-X,r,0],c.roof);
     quad([-X,r,0],[X,r,0],[X,roofE,Z],[-X,roofE,Z],c.roof);
     box(-X,r-.06,-.105,X,r+.04,.105,c.roofTrim);
@@ -142,6 +157,22 @@ export function createHouseGeometry(THREE, type, skin, entrance) {
     panel(side,along,w-.07,y0+h*.50-.035,y0+h*.50+.035,.092,c.trim);
     panel(side,along,w+.28,y0-.15,y0-.075,.103,c.sill);
   }
+  function porchBlock(side, a0, a1, height0, height1, dep0, dep1, col){
+    // Local facade coordinates: along the wall and perpendicular outward.
+    let x0,x1,z0,z1;
+    if(side.endsWith('z')){
+      x0=a0;x1=a1;
+      const face=side==='+z'?W/2:-W/2;
+      z0=face+(side==='+z'?dep0:-dep1);
+      z1=face+(side==='+z'?dep1:-dep0);
+    }else{
+      z0=a0;z1=a1;
+      const face=side==='+x'?L/2:-L/2;
+      x0=face+(side==='+x'?dep0:-dep1);
+      x1=face+(side==='+x'?dep1:-dep0);
+    }
+    box(x0,height0,z0,x1,height1,z1,col);
+  }
   function doorOn(side){
     panel(side,0,1.16,.11,2.37,.052,c.trim);
     panel(side,0,.94,.17,2.25,.075,c.door);
@@ -150,6 +181,13 @@ export function createHouseGeometry(THREE, type, skin, entrance) {
     else if(side==='-z')box(-.74,0,-W/2-.68,.74,.18,-W/2-.01,c.foundation);
     else if(side==='+x')box(L/2+.01,0,-.74,L/2+.68,.18,.74,c.foundation);
     else box(-L/2-.68,0,-.74,-L/2-.01,.18,.74,c.foundation);
+    if(type==='farmhouse'){
+      porchBlock(side,-1.10,1.10,2.47,2.67,.16,1.28,c.roof);
+      porchBlock(side,-1.10,-.97,.18,2.52,.96,1.10,c.trim);
+      porchBlock(side,.97,1.10,.18,2.52,.96,1.10,c.trim);
+      porchBlock(side,-.89,.89,.03,.14,1.08,1.55,c.foundation);
+      porchBlock(side,-.72,.72,.11,.23,.65,1.10,c.foundation);
+    }
   }
   for(const side of ['+z','-z','+x','-x']){
     const longWall=side.endsWith('z'),span=longWall?L:W;
@@ -167,8 +205,16 @@ export function createHouseGeometry(THREE, type, skin, entrance) {
       const centers=type==='bungalow'?[-L*.32,0,L*.32]:[-L*.30,0,L*.30];
       for(const at of centers)if(!(side===entrance&&Math.abs(at)<.1))
         windowOn(side,at,type==='bungalow'?1.01:1.10,type==='bungalow'?1.53:1.16,1.23);
-    }else if(side!==entrance){
-      windowOn(side,0,1.08,1.24,1.24);
+      // Genuine second-floor windows with their own vertical rhythm, not an
+      // artificially stretched version of the one-storey cottage.
+      if(type==='farmhouse'){
+        for(const at of [-L*.30,0,L*.30])windowOn(side,at,3.59,1.13,1.21);
+        // Thin belt course reinforces the historical two-storey silhouette.
+        panel(side,0,span-.20,3.10,3.16,.050,c.trim);
+      }
+    }else{
+      if(side!==entrance)windowOn(side,0,1.08,1.24,1.24);
+      if(type==='farmhouse')windowOn(side,0,3.59,1.15,1.21);
     }
     if(side===entrance)doorOn(side);
   }
@@ -180,6 +226,11 @@ export function createHouseGeometry(THREE, type, skin, entrance) {
   }
   if(type!=='bungalow')
     box(-L*.22-.27,e+1.35,-.30,-L*.22+.27,r+.85,.30,c.chimney);
+  if(type==='farmhouse'){
+    // Small stone blocks ground the tall facade instead of a flat plinth.
+    for(let x=-L/2+.48;x<L/2-.30;x+=1.38)
+      box(x,0,-W/2-.07,x+1.24,.34,-W/2-.03,c.foundation);
+  }
   const geometry=new THREE.BufferGeometry();
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
   geometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
