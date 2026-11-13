@@ -608,7 +608,7 @@ const neighborhoodCandidates = []; // entrances shared by catalogue and fallback
     const wallHex=b.k===2?'#843b30':b.k?'#e6e2d6':area>450?pick(big):pick(house);
     c.set(wallHex);
     wallBaseShade.copy(c).multiplyScalar(0.72); // Oliver #116: shaded wall feet
-    c2.set(b.k===2?'#94503d':b.k?'#3c4447':rnd()<.5?'#4b4d4c':'#715044');
+    c2.set(b.k===2?'#94503d':b.k?'#3c4447':rnd()<.29?'#4b4d4c':'#715044');
     const facade=facadeKind(wallHex,b,area);
     const W=walls[facade];
     const base=lo-1,top=hi+buildingWallHeight(b),{ring,yAt,sides}=roofParts(contour,b.g,top,buildingRoofRise(b)),m=ring.length;
