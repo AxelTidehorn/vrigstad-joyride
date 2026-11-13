@@ -4,9 +4,17 @@
   "description": "Open-world driving game set in Vrigstad, Sweden",
   "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "node tools/build.mjs",
+    "preview": "vite preview",
+    "check": "tsc --noEmit",
+    "data": "python3 tools/process.py data/raw data/vrigstad.json",
     "test:e2e": "playwright test"
   },
   "devDependencies": {
-    "@playwright/test": "^1.65.0"
+    "@playwright/test": "^1.65.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vite-plugin-singlefile": "^2.3.4"
   }
 }
