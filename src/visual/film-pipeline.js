@@ -52,7 +52,11 @@ filmSky.renderOrder = -1000;
 filmSky.frustumCulled = false;
 scene.add(filmSky);
 
-const filmTarget = new THREE.WebGLRenderTarget(1, 1, {
+// Rendering into a plain target bypasses canvas antialiasing. Preserve edge
+// quality via WebGL2 MSAA; WebGL1 still uses the portable colour target.
+const FilmTargetType = renderer.capabilities.isWebGL2
+  ? THREE.WebGLMultisampleRenderTarget : THREE.WebGLRenderTarget;
+const filmTarget = new FilmTargetType(1, 1, {
   minFilter: THREE.LinearFilter,
   magFilter: THREE.LinearFilter,
   format: THREE.RGBAFormat,
@@ -60,6 +64,7 @@ const filmTarget = new THREE.WebGLRenderTarget(1, 1, {
   depthBuffer: true,
   stencilBuffer: false
 });
+if (filmTarget.isWebGLMultisampleRenderTarget) filmTarget.samples = coarse ? 2 : 4;
 filmTarget.texture.encoding = THREE.LinearEncoding;
 filmTarget.texture.generateMipmaps = false;
 const filmFrameScene = new THREE.Scene();
