@@ -336,31 +336,130 @@ function inWater(x, z) {
   return false;
 }
 
-// ---------- buildings (painted in Swedish house colours) + collision grid ----------
+// ---------- building wall finishes (v0.5.1 colors, Oliver's pitched roofs) ----------
+// Shared grayscale detail maps multiply each building's existing wall color.
+// One repeatable material per finish: no random textures or extra draw calls per house.
+function facadeDetail(kind) {
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 128;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#f7f6f3'; ctx.fillRect(0,0,128,128);
+  if (kind === 'wood') {
+    // Vertical clapboard: subtle joints and grain, not broad high-contrast stripes.
+    for (let x=0;x<128;x+=16) {
+      ctx.fillStyle='#d9d9d4'; ctx.fillRect(x,0,2,128);
+      ctx.fillStyle='#ffffff'; ctx.fillRect(x+2,0,1,128);
+      ctx.fillStyle='rgba(80,80,75,0.055)';
+      ctx.fillRect(x+7,0,1,128); ctx.fillRect(x+12,0,1,128);
+    }
+  } else if (kind === 'mexi' || kind === 'brick') {
+    // Staggered running bond, including pale mortar for sand-lime brick.
+    ctx.fillStyle = kind === 'mexi' ? '#d6d5cc' : '#d5d1c9';
+    for (let y=0;y<128;y+=16) {
+      ctx.fillRect(0,y,128,2);
+      const offset=(Math.floor(y/16)%2)*16;
+      for(let x=-offset;x<128;x+=32)ctx.fillRect(x,y,2,16);
+    }
+  } else {
+    // Low-amplitude mineral aggregate for plaster/stucco.
+    const img=ctx.getImageData(0,0,128,128);
+    let seed=42679;
+    for(let i=0;i<img.data.length;i+=4){
+      seed=(Math.imul(seed,1664525)+1013904223)|0;
+      const n=241+((seed>>>26)&15);
+      img.data[i]=n;img.data[i+1]=n;img.data[i+2]=n;
+    }
+    ctx.putImageData(img,0,0);
+  }
+  const tex=new THREE.CanvasTexture(canvas);
+  tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
+  tex.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());
+  return tex;
+}
+// A color family allows plausible finishes; no house changes identity on reload.
+function facadeKind(hex, b, area) {
+  if(b.k===2)return 'stucco';  // the church remains a bespoke red landmark
+  if(b.k===1)return 'stucco';
+  const n=((Math.round(b.p[0]*10)*73856093)^(Math.round(b.p[1]*10)*19349663))>>>0;
+  const choice=n%100;
+  if(hex==='#925847'||hex==='#9a5945')return choice<86?'wood':'brick';
+  if(hex==='#c2a66a')return choice<88?'wood':'stucco';
+  if(hex==='#778c80')return choice<70?'wood':'stucco';
+  if(area>450)return choice<35?'mexi':choice<76?'stucco':'brick';
+  return choice<34?'mexi':choice<67?'stucco':'wood';
+}
+function roofParts(contour, g, top) {
+  if (!g) return { ring: contour, yAt: () => top, sides: [contour] };
+  const [ax, az, bx, bz, w] = g, l = Math.hypot(bx - ax, bz - az), nx = (az - bz) / l, nz = (bx - ax) / l, rise = Math.min(w * 0.7, 5);
+  const off = v => (v.x - ax) * nx + (v.y - az) * nz, yAt = v => top + rise * Math.max(0, 1 - Math.abs(off(v)) / w), ring = [], o = [];
+  contour.forEach((a, i) => { const d = contour[(i + 1) % contour.length], oa = off(a), od = off(d), t = oa / (oa - od); ring.push(a); o.push(oa);
+    if (oa * od < 0) { ring.push(new THREE.Vector2(a.x + (d.x - a.x) * t, a.y + (d.y - a.y) * t)); o.push(0); } });
+  return { ring, yAt, sides: [1, -1].map(s => ring.filter((v, i) => s * o[i] >= 0)).filter(h => h.length > 2) };
+}
+
 const BC = 40, bGrid = new Map(), bPolys = [];
 (function () {
-  const pos = [], col = [], c = new THREE.Color(), c2 = new THREE.Color();
-  // Color values adapted from the verified v0.5.1 study. Preserve Swedish house variety.
-  const house = ['#925847', '#925847', '#9a5945', '#dbd9cb', '#c6c5b8', '#c2a66a', '#c7c0ad', '#778c80'], big = ['#c7c0ad', '#b2b0a5', '#d3cfc3', '#a5aeac'];
-  D.b.forEach((b, bi) => {
-    const n = b.p.length / 2, contour = []; let lo = 1e9, hi = -1e9, x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9, area = 0;
-    for (let i = 0; i < n; i++) { const x = b.p[i * 2], z = b.p[i * 2 + 1], h = hAt(x, z), j = (i + 1) % n;
-      contour.push(new THREE.Vector2(x, z)); lo = Math.min(lo, h); hi = Math.max(hi, h);
-      x0 = Math.min(x0, x); x1 = Math.max(x1, x); z0 = Math.min(z0, z); z1 = Math.max(z1, z); area += x * b.p[j * 2 + 1] - b.p[j * 2] * z; }
-    area = Math.abs(area) / 2;
-    c.set(b.k ? '#efece3' : area > 450 ? pick(big) : pick(house)); c2.set(b.k ? '#3f4447' : rnd() < 0.5 ? '#4d4a48' : '#7a4a3c');
-    const base = lo - 1, top = hi + b.h;
-    for (let i = 0; i < n; i++) { const a = contour[i], d = contour[(i + 1) % n];
-      pos.push(a.x, base, a.y, d.x, base, d.y, d.x, top, d.y, a.x, base, a.y, d.x, top, d.y, a.x, top, a.y);
-      for (let k = 0; k < 6; k++) col.push(c.r, c.g, c.b); }
-    for (const f of THREE.ShapeUtils.triangulateShape(contour, [])) for (const i of f) { pos.push(contour[i].x, top, contour[i].y); col.push(c2.r, c2.g, c2.b); }
-    bPolys.push({ p: b.p, x0, x1, z0, z1 });
-    for (let x = Math.floor(x0 / BC); x <= Math.floor(x1 / BC); x++) for (let z = Math.floor(z0 / BC); z <= Math.floor(z1 / BC); z++) {
-      const k = x + ',' + z; let l = bGrid.get(k); if (!l) bGrid.set(k, l = []); l.push(bi); }
+  const kinds=['wood','mexi','brick','stucco'];
+  const walls=Object.fromEntries(kinds.map(k=>[k,{pos:[],col:[],uv:[]}]));
+  const roofPos=[],roofCol=[];
+  const c=new THREE.Color(), c2=new THREE.Color();
+  // Keep the user's v0.5.1 colors; add a realistic material response per facade.
+  const house=['#925847','#925847','#9a5945','#dbd9cb','#c6c5b8','#c2a66a','#c7c0ad','#778c80'];
+  const big=['#c7c0ad','#b2b0a5','#d3cfc3','#a5aeac'];
+  D.b.forEach((b,bi)=>{
+    const n=b.p.length/2,contour=[];
+    let lo=1e9,hi=-1e9,x0=1e9,x1=-1e9,z0=1e9,z1=-1e9,area=0;
+    for(let i=0;i<n;i++){
+      const x=b.p[i*2],z=b.p[i*2+1],h=hAt(x,z),j=(i+1)%n;
+      contour.push(new THREE.Vector2(x,z));lo=Math.min(lo,h);hi=Math.max(hi,h);
+      x0=Math.min(x0,x);x1=Math.max(x1,x);z0=Math.min(z0,z);z1=Math.max(z1,z);
+      area+=x*b.p[j*2+1]-b.p[j*2]*z;
+    }
+    area=Math.abs(area)/2;
+    const wallHex=b.k===2?'#925847':b.k?'#efece3':area>450?pick(big):pick(house);
+    c.set(wallHex);
+    c2.set(b.k===2?'#a8573f':b.k?'#3f4447':rnd()<.5?'#4d4a48':'#7a4a3c');
+    const W=walls[facadeKind(wallHex,b,area)];
+    const base=lo-1,top=hi+b.h,{ring,yAt,sides}=roofParts(contour,b.g,top),m=ring.length;
+    for(let i=0;i<m;i++){
+      const a=ring[i],d=ring[(i+1)%m],ta=yAt(a),td=yAt(d),u=Math.hypot(d.x-a.x,d.y-a.y)/1.28;
+      // The UVs use metres of actual facade length and height, not stretched house bounds.
+      const verts=[[a.x,base,a.y],[d.x,base,d.y],[d.x,td,d.y],[a.x,base,a.y],[d.x,td,d.y],[a.x,ta,a.y]];
+      const coords=[[0,0],[u,0],[u,(td-base)/2.5],[0,0],[u,(td-base)/2.5],[0,(ta-base)/2.5]];
+      for(let t=0;t<6;t++){W.pos.push(...verts[t]);W.col.push(c.r,c.g,c.b);W.uv.push(...coords[t]);}
+    }
+    for(const part of sides)for(const f of THREE.ShapeUtils.triangulateShape(part,[]))for(const i of f){
+      roofPos.push(part[i].x,yAt(part[i]),part[i].y);
+      roofCol.push(c2.r,c2.g,c2.b);
+    }
+    if(b.s){
+      let cx=0,cz=0;for(const v of contour){cx+=v.x/n;cz+=v.y/n;}
+      for(let i=0;i<n;i++){
+        const a=contour[i],d=contour[(i+1)%n];
+        roofPos.push(a.x,top,a.y,d.x,top,d.y,cx,top+b.s,cz);
+        for(let t=0;t<3;t++)roofCol.push(c2.r,c2.g,c2.b);
+      }
+    }
+    bPolys.push({p:b.p,x0,x1,z0,z1});
+    for(let x=Math.floor(x0/BC);x<=Math.floor(x1/BC);x++)for(let z=Math.floor(z0/BC);z<=Math.floor(z1/BC);z++){
+      const key=x+','+z;let l=bGrid.get(key);if(!l)bGrid.set(key,l=[]);l.push(bi);
+    }
   });
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3)); g.computeVertexNormals();
-  const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })); m.castShadow = true; m.receiveShadow = true; scene.add(m);
+  for(const kind of kinds){
+    const W=walls[kind];if(!W.pos.length)continue;
+    const geo=new THREE.BufferGeometry();
+    geo.setAttribute('position',new THREE.Float32BufferAttribute(W.pos,3));
+    geo.setAttribute('color',new THREE.Float32BufferAttribute(W.col,3));
+    geo.setAttribute('uv',new THREE.Float32BufferAttribute(W.uv,2));
+    geo.computeVertexNormals();
+    const mat=new THREE.MeshLambertMaterial({vertexColors:true,map:facadeDetail(kind),side:THREE.DoubleSide});
+    const mesh=new THREE.Mesh(geo,mat);mesh.castShadow=true;mesh.receiveShadow=true;scene.add(mesh);
+  }
+  const roofGeo=new THREE.BufferGeometry();
+  roofGeo.setAttribute('position',new THREE.Float32BufferAttribute(roofPos,3));
+  roofGeo.setAttribute('color',new THREE.Float32BufferAttribute(roofCol,3));roofGeo.computeVertexNormals();
+  const roofs=new THREE.Mesh(roofGeo,new THREE.MeshLambertMaterial({vertexColors:true,side:THREE.DoubleSide}));
+  roofs.castShadow=true;roofs.receiveShadow=true;scene.add(roofs);
 })();
 
 // Reusable roadside objects drawn directly in the playable map, not a test scene.

@@ -163,6 +163,24 @@ def length(pts):
     return sum(math.dist(pts[i - 1], pts[i]) for i in range(1, len(pts)))
 
 
+def gable(ring):
+    """Ridge [ax, az, bx, bz, half-width] of a pitched roof over the footprint's bounding rectangle, or None if the footprint is not roughly a rectangle. The pages cut the roof to the footprint."""
+    n = len(ring)
+    i = max(range(n), key=lambda i: math.dist(ring[i - 1], ring[i]))
+    d = math.dist(ring[i - 1], ring[i])
+    ux, uz = (ring[i][0] - ring[i - 1][0]) / d, (ring[i][1] - ring[i - 1][1]) / d
+    us, vs = [x * ux + z * uz for x, z in ring], [z * ux - x * uz for x, z in ring]
+    cu, cv, L, W = (min(us) + max(us)) / 2, (min(vs) + max(vs)) / 2, (max(us) - min(us)) / 2, (max(vs) - min(vs)) / 2
+    if area(ring) < 0.85 * 4 * L * W: return None
+    if W > L: ux, uz, cu, cv, L, W = -uz, ux, cv, -cu, W, L   # ridge runs along the long side
+    px, pz = cu * ux - cv * uz, cu * uz + cv * ux
+    return [round(v, 1) for v in (px - L * ux, pz - L * uz, px + L * ux, pz + L * uz, W)]
+
+
+assert gable([(0, 0), (4, 0), (4, 10), (0, 10)]) in ([2, 0, 2, 10, 2], [2, 10, 2, 0, 2])
+assert gable([(0, 0), (10, 0), (10, 4), (4, 4), (4, 10), (0, 10)]) is None
+
+
 def flat(pts):
     out = []
     for p in pts:
@@ -206,6 +224,7 @@ LAND = {'residential': 0, 'farmland': 1, 'meadow': 1, 'industrial': 2, 'recreati
 LEIS = {'pitch': 6, 'playground': 3, 'sports_centre': 3, 'park': 3}
 SHORT = {'Best Western Hotell Vrigstad Värdshus': 'Vrigstad Värdshus', 'Torget Vrigstad': 'Torget',
          'Tallåsen, Vrigstads Idrottsplats': 'Tallåsen idrottsplats', 'Hagabanan - Vrigstad Motorklubb': 'Hagabanan'}
+CHURCH_WAY = 48762655   # Vrigstad kyrka; its tower is split out of this way's outline
 buildings, roads, water, waterways, land, labels = [], [], [], [], [], {}
 
 
@@ -235,11 +254,22 @@ for e in d['elements']:
     if 'building' in t:
         if not ring or not inside(centroid(ring)): continue
         a = area(ring)
-        kind = 1 if t['building'] in ('church', 'hotel') else 0
+        kind = {'church': 1, 'hotel': 2}.get(t['building'], 0)
         h = 2.8 if a < 40 else 5.5 if a < 150 else 6.5 if a < 400 else 8 if a < 1500 else 9
         if t['building'] == 'church': h = 12 if a > 300 else 8
         if t['building'] == 'hotel': h = 9
-        buildings.append({'p': flat(ring), 'h': h, 'k': kind})
+        walls, tower = ring, None
+        if e['type'] == 'way' and e['id'] == CHURCH_WAY:
+            # shortcut: tower corners picked by index, redo if the way is re-mapped
+            assert len(ring) == 13, len(ring)
+            tower = [ring[i] for i in (7, 8, 10, 11)]
+            walls = [p for i, p in enumerate(ring) if i not in (8, 9, 10)]   # the nave, closed along the tower's south wall
+        b = {'p': flat(walls), 'h': h, 'k': kind}
+        g = gable(walls)
+        if g: b['g'] = g
+        buildings.append(b)
+        if tower:
+            buildings.append({'p': flat(tower), 'h': 25, 'k': 1, 's': 13})   # s = spire height
         if name: add_label(name, centroid(ring), 'p', a)
     elif 'highway' in t:
         if ring and (t.get('area') == 'yes') and name:
@@ -278,6 +308,7 @@ for e in d['elements']:
         if len(r) > 2:
             land.append({'k': k, 'p': flat(r)})
 
+assert sum('s' in b for b in buildings) == 1, f'church way {CHURCH_WAY} missing from osm.json'
 out = {'size': S, 'n': N, 'elev': elev_flat, 'b': buildings, 'r': roads, 'w': water, 'ww': waterways, 'l': land,
        'labels': [{'t': k, 'x': v[0], 'z': v[1], 'k': v[2]} for k, v in labels.items()]}
 json.dump(out, open(out_path, 'w'), ensure_ascii=False, separators=(',', ':'))
