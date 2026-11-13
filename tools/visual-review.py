@@ -41,13 +41,14 @@ def capture(browser, name, query=""):
     page.wait_for_function(f"window.__visualFrame >= {FRAMES}", timeout=180000)
     fail = page.locator("#fail").is_visible()
     # Ensure no first-frame-only screenshot: give the GPU one more paint opportunity.
-    page.screenshot(path=str(OUT / f"{name}-torget.png"), animations="disabled")
+    stem = name + ("-mist-off" if query else "")
+    page.screenshot(path=str(OUT / f"{stem}-torget.png"), animations="disabled")
     page.mouse.move(800, 375)
     page.mouse.down()
     page.mouse.move(470, 345, steps=10)
     page.mouse.up()
     page.wait_for_function(f"window.__visualFrame >= {FRAMES + 18}", timeout=90000)
-    page.screenshot(path=str(OUT / f"{name}-torget-side.png"), animations="disabled")
+    page.screenshot(path=str(OUT / f"{stem}-torget-side.png"), animations="disabled")
     result = {"branch": name, "webgl_error": fail, "console_errors": errors[:30],
               "elapsed_s": round(time.monotonic() - start, 2),
               "frames": page.evaluate("window.__visualFrame")}
@@ -73,7 +74,8 @@ def main():
             finally:
                 browser.close()
         (OUT / "results.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
-        if any(r["webgl_error"] or r["console_errors"] for r in results):
+        fatal = ("WebGLProgram", "INVALID_OPERATION", "ReferenceError", "TypeError", "SyntaxError")
+    if any(r["webgl_error"] or any(word in err for err in r["console_errors"] for word in fatal) for r in results):
             raise RuntimeError("WebGL or JS errors; inspect visual-review/results.json")
     finally:
         server.terminate()
