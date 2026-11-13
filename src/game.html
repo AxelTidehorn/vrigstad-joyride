@@ -122,7 +122,6 @@ body { background: var(--sky); color: var(--ink); font-family: var(--body); font
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 const D = /*DATA*/;
 (function () {
@@ -743,88 +742,10 @@ const BC = 40, bGrid = new Map(), bPolys = [];
   scene.add(pole,lamps);
 })();
 
-// Temporary GLB study lineup by Torget, not geographically verified.
-// GLBs were authored with Z-up; Three.js uses Y-up. The world placement is intentionally reversible.
-(function landmarkStudies() {
-  if (!THREE.GLTFLoader) { console.warn('Landmark studies: GLTFLoader unavailable'); return; }
-  const loader = new THREE.GLTFLoader();
-  const studies = [
-  {
-    "id": "sportringen",
-    "name": "SportRingen",
-    "file": "sportringen_vrigstad_study.glb",
-    "x": -95,
-    "z": 95
-  },
-  {
-    "id": "napoli",
-    "name": "Pizzeria Napoli",
-    "file": "pizzeria_napoli_vrigstad_study.glb",
-    "x": -53,
-    "z": 95
-  },
-  {
-    "id": "qstar",
-    "name": "Qstar",
-    "file": "qstar_vrigstad_study.glb",
-    "x": -13,
-    "z": 95
-  },
-  {
-    "id": "sagverket",
-    "name": "Sågverket",
-    "file": "sagverket_vrigstad_study.glb",
-    "x": 55,
-    "z": 95
-  }
-];
-  const root = new THREE.Group();
-  root.name = 'temporary-landmark-studies';
-  scene.add(root);
-  for (const entry of studies) {
-    loader.load('media/' + entry.file, gltf => {
-      const model = gltf.scene;
-      model.name = 'landmark-study-' + entry.id;
-      // Z-up GLB -> Y-up world. Keep the model at its local origin;
-      // offsets must be applied on a separate, non-rotated parent.
-      const oriented = new THREE.Group();
-      oriented.rotation.x = -Math.PI / 2;
-      oriented.add(model);
-      oriented.updateMatrixWorld(true);
-      const bounds = new THREE.Box3().setFromObject(oriented);
-      const center = bounds.getCenter(new THREE.Vector3());
-      const span = bounds.getSize(new THREE.Vector3());
-      const holder = new THREE.Group();
-      holder.name = 'temporary-landmark-' + entry.id;
-      oriented.position.set(-center.x, -bounds.min.y, -center.z);
-      // Large GLB studies may cover sloping ground; sample their footprint.
-      const x = entry.x, z = entry.z;
-      const xs = [x - span.x/2, x, x + span.x/2];
-      const zs = [z - span.z/2, z, z + span.z/2];
-      let highest = -Infinity;
-      for (const xx of xs) for (const zz of zs) highest = Math.max(highest, hAt(xx,zz));
-      holder.position.set(x, highest + 0.15, z);
-      model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-      holder.add(oriented);
-      // Temporary overhead identifiers, visible from normal driving distance.
-      const tag = document.createElement('canvas'); tag.width = 512; tag.height = 128;
-      const paint = tag.getContext('2d');
-      paint.fillStyle = '#172b34'; paint.fillRect(0,0,512,128);
-      paint.fillStyle = '#ffda63'; paint.fillRect(0,0,512,12);
-      paint.font = 'bold 43px sans-serif'; paint.textAlign = 'center';
-      paint.fillStyle = '#ffffff'; paint.fillText(entry.name,256,79,480);
-      paint.font = '23px sans-serif'; paint.fillStyle = '#ffda63';
-      paint.fillText('TILLFÄLLIG PLACERING',256,112,480);
-      const texture = new THREE.CanvasTexture(tag);
-      const marker = new THREE.Sprite(new THREE.SpriteMaterial({map:texture,depthTest:false,transparent:true}));
-      marker.position.set(0,span.y+6,0);
-      marker.scale.set(15,3.75,1);
-      marker.renderOrder = 20;
-      holder.add(marker);
-      root.add(holder);
-    }, undefined, err => console.warn('Could not load GLB landmark:', entry.file, err));
-  }
-})();
+// Temporary landmark GLB lineup intentionally disabled for artstyle review.
+// Existing mapped building footprints, landmark geometry and media/*.glb
+// assets remain untouched. Only the unverified models / floating labels
+// previously placed near Torget have been removed from the playable scene.
 
 // push a circle out of any building it overlaps; returns true on contact
 function collide(o, r) {
