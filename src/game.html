@@ -413,6 +413,8 @@ function inWater(x, z) {
 
 // ---------- reusable Swedish residential house catalogue ----------
 /*HOUSE_MODELS*/
+/*RESIDENTIAL_ENVIRONMENT*/
+const RESIDENTIAL_YARD_ENABLED = new URLSearchParams(location.search).get('neighborhood') !== 'off';
 const HOUSE_CATALOG_ENABLED = new URLSearchParams(location.search).get('houses') !== 'legacy';
 const HOUSE_CATALOG_SAFEHOUSES = [[39.9,-43.6],[-379.5,-157.8],[340.2,271.5]];
 
@@ -503,6 +505,7 @@ function buildingRoofRise(b) {
 }
 
 const BC = 40, bGrid = new Map(), bPolys = [];
+const neighborhoodCandidates = []; // entrances shared by catalogue and fallback houses
 (function () {
   const kinds=['wood','mexi','brick','stucco','bespoke'];
   const walls=Object.fromEntries(kinds.map(k=>[k,{pos:[],col:[],uv:[]}]));
@@ -627,15 +630,32 @@ const BC = 40, bGrid = new Map(), bPolys = [];
         const hash=(Math.imul(Math.round(b.p[0]*10),73856093)^
           Math.imul(Math.round(b.p[1]*10),19349663)^Math.imul(bi+1,83492791))>>>0;
         if(options.length && hash%5<=1){
-          const choice=options[Math.floor(hash/5)%options.length];
+          // The extra historical type is reserved for plausible tall / broad
+          // residential footprints. One-storey houses never turn into two floors.
+          const taller=options.find(o=>o.type==='farmhouse');
+          const ordinary=options.filter(o=>o.type!=='farmhouse');
+          let choice=ordinary[Math.floor(hash/5)%ordinary.length]||taller;
+          if(taller && b.h>=6.5 && area>=96 &&
+             ((hash>>>5)%10 < (b.h>=8?6:3)))choice=taller;
           const entrance=doorFacingRoad(contour,orientation);
           if(entrance){
             const along=entrance.nx*fp.ux+entrance.nz*fp.uz;
             const across=-entrance.nx*fp.uz+entrance.nz*fp.ux;
             const face=Math.abs(along)>Math.abs(across)?(along>0?'+x':'-x'):(across>0?'+z':'-z');
             const skin=HOUSE_LIBRARY.houseSkin(choice.type,wallHex,hash);
+            const spec=HOUSE_LIBRARY.HOUSE_TYPES[choice.type];
+            const lx=face==='+x'?spec.length*choice.sx*.5:face==='-x'?-spec.length*choice.sx*.5:0;
+            const lz=face==='+z'?spec.width*choice.sz*.5:face==='-z'?-spec.width*choice.sz*.5:0;
+            const ox=face==='+x'?1:face==='-x'?-1:0;
+            const oz=face==='+z'?1:face==='-z'?-1:0;
+            const cosine=Math.cos(fp.yaw),sine=Math.sin(fp.yaw);
+            const doorX=fp.cx+cosine*lx+sine*lz;
+            const doorZ=fp.cz-sine*lx+cosine*lz;
+            const nx=cosine*ox+sine*oz,nz=-sine*ox+cosine*oz;
+            const doorstep=choice.type==='farmhouse'?1.66:1.02;
             model={key:choice.type+'|'+skin+'|'+face,
-              cx:fp.cx,cz:fp.cz,y:lo-.15,yaw:fp.yaw,sx:choice.sx,sz:choice.sz};
+              cx:fp.cx,cz:fp.cz,y:lo-.15,yaw:fp.yaw,sx:choice.sx,sz:choice.sz,
+              entryX:doorX+nx*doorstep,entryZ:doorZ+nz*doorstep,nx,nz};
           }
         }
       }
@@ -644,6 +664,11 @@ const BC = 40, bGrid = new Map(), bPolys = [];
       let batch=catalogInstances.get(model.key);
       if(!batch)catalogInstances.set(model.key,batch=[]);
       batch.push(model);
+      neighborhoodCandidates.push({
+        bi,kind:b.k,area,poly:b.p,x:model.cx,z:model.cz,
+        entryX:model.entryX,entryZ:model.entryZ,
+        normalX:model.nx,normalZ:model.nz,type:model.key.split('|')[0]
+      });
     } else {
     for(let i=0;i<m;i++){
       const a=ring[i],d=ring[(i+1)%m],ta=yAt(a),td=yAt(d),u=Math.hypot(d.x-a.x,d.y-a.y)/(facade==='wood'?1.04:1.28);
@@ -697,6 +722,12 @@ const BC = 40, bGrid = new Map(), bPolys = [];
         const low=hAt(midX,midZ)+0.035,high=Math.min(yAt(a),yAt(d))-.18;
         const doorHigh=Math.min(low+2.05,high);
         if(doorHigh-low>1.5){
+          if(b.k===0&&area>=52&&area<=450){
+            neighborhoodCandidates.push({bi,kind:b.k,area,poly:b.p,
+              x:(x0+x1)/2,z:(z0+z1)/2,
+              entryX:midX+side.nx*.80,entryZ:midZ+side.nz*.80,
+              normalX:side.nx,normalZ:side.nz,type:'legacy'});
+          }
           const half=0.45/L,frame=0.10/L,knob=0.035/L,lintel=0.12;
           const x0=.5-half,x1=.5+half;
           const doorColor=((bi*2654435761>>>0)&3)===0?detailColors.doorRed:detailColors.door;
@@ -797,6 +828,19 @@ const BC = 40, bGrid = new Map(), bPolys = [];
   const roofs=new THREE.Mesh(roofGeo,new THREE.MeshLambertMaterial({vertexColors:true,side:THREE.DoubleSide}));
   roofs.castShadow=true;roofs.receiveShadow=true;scene.add(roofs);
 })();
+
+// All property details use the doors already placed by the building generator.
+// Housing remains geometrically independent from gameplay collision polygons.
+// The conservative planner may omit paths/trees/fences where GIS is ambiguous.
+if(RESIDENTIAL_YARD_ENABLED){
+  const residentialStats=RESIDENTIAL_ENV.createResidentialNeighborhood(THREE,scene,{
+    sites:neighborhoodCandidates,buildings:D.b,roads:R,
+    roadWidths:ROAD_W,hAt,inPoly,
+    protectedCenters:[[-8.9,30.1,75],...HOUSE_CATALOG_SAFEHOUSES.map(p=>[p[0],p[1],18])]
+  });
+  window.__residentialStats=residentialStats;
+  console.info('Residential neighborhood',residentialStats);
+}
 
 // Reusable roadside objects drawn directly in the playable map, not a test scene.
 (function roadsideFurniture() {
