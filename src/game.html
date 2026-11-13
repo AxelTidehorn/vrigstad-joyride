@@ -616,7 +616,8 @@ const BC = 40, bGrid = new Map(), bPolys = [];
        !HOUSE_CATALOG_SAFEHOUSES.some(site=>inPoly(b.p,site[0],site[1]))){
       const fp=HOUSE_LIBRARY.footprintRect(b.p);
       if(fp && fp.fit>=.965 && fp.width>=6.5 && fp.length<=18.2 &&
-         hi-lo<1.25 && inPoly(b.p,fp.cx,fp.cz)){
+         hi-lo<1.25 && Math.hypot(fp.cx+8.9,fp.cz-30.1)>75 &&
+         inPoly(b.p,fp.cx,fp.cz)){
         const options=[];
         for(const [type,spec] of Object.entries(HOUSE_LIBRARY.HOUSE_TYPES)){
           const sx=(fp.length-.22)/spec.length,sz=(fp.width-.22)/spec.width;
