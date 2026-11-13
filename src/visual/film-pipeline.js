@@ -25,7 +25,10 @@ scene.fog = new THREE.Fog(filmHorizon, 390, 2000);
 const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE.ShaderMaterial({
   uniforms: {
     uZenith: { value: new THREE.Color(0x2c5277) },
-    uHorizon: { value: filmHorizon }
+    uHorizon: { value: filmHorizon },
+    uSunDirection: { value: new THREE.Vector3(0, 1, 0) },
+    uCloudTime: { value: 0 },
+    uCloudCoverage: { value: 0.4 }
   },
   side: THREE.BackSide,
   depthWrite: false,
@@ -34,21 +37,46 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
   toneMapped: false,
   vertexShader: `
     varying float vElevation;
+    varying vec3 vSkyDir;
     void main() {
-      vElevation = normalize(position).y;
+      vSkyDir = normalize(position);
+      vElevation = vSkyDir.y;
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
   `,
   fragmentShader: `
     uniform vec3 uZenith;
     uniform vec3 uHorizon;
+    uniform vec3 uSunDirection;
+    uniform float uCloudTime;
+    uniform float uCloudCoverage;
     varying float vElevation;
+    varying vec3 vSkyDir;
+    float cloudHash(vec2 p) {
+      return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);
+    }
+    float cloudNoise(vec2 p) {
+      vec2 i=floor(p),f=fract(p);
+      f=f*f*(3.0-2.0*f);
+      return mix(mix(cloudHash(i),cloudHash(i+vec2(1.0,0.0)),f.x),
+        mix(cloudHash(i+vec2(0.0,1.0)),cloudHash(i+vec2(1.0,1.0)),f.x),f.y);
+    }
     void main() {
-      float t = pow(smoothstep(-0.16, 0.80, vElevation), 0.78);
-      vec3 sky = mix(uHorizon, uZenith, t);
-      // Very subtle warmth where Swedish daylight meets the landscape.
-      sky += vec3(0.022, 0.012, -0.008) * (1.0 - smoothstep(-0.12, 0.25, vElevation));
-      gl_FragColor = vec4(sky, 1.0);
+      float t=pow(smoothstep(-0.16,0.80,vElevation),0.78);
+      vec3 sky=mix(uHorizon,uZenith,t);
+      sky+=vec3(0.022,0.012,-0.008)*(1.0-smoothstep(-0.12,0.25,vElevation));
+      // Cheap cloud bank instead of expensive volumetric raymarching.
+      vec2 coord=vSkyDir.xz/max(0.18,vSkyDir.y+0.23)*1.7+vec2(uCloudTime,0.0);
+      float layer=.62*cloudNoise(coord)+.27*cloudNoise(coord*2.3)+.11*cloudNoise(coord*4.9);
+      float cloud=smoothstep(.59-uCloudCoverage*.26,.77-uCloudCoverage*.15,layer);
+      cloud*=smoothstep(-.08,.19,vElevation);
+      vec3 cloudCol=mix(vec3(.63,.66,.70),vec3(.94,.94,.91),smoothstep(0.0,.6,vElevation));
+      sky=mix(sky,cloudCol,cloud*.85);
+      float towardSun=max(0.0,dot(normalize(vSkyDir),normalize(uSunDirection)));
+      float disc=smoothstep(.99965,.99994,towardSun)*step(0.01,uSunDirection.y);
+      float halo=pow(towardSun,85.0)*step(0.01,uSunDirection.y);
+      sky+=vec3(1.0,.88,.73)*(disc*1.35+halo*.30)*(1.0-cloud*.85);
+      gl_FragColor=vec4(sky,1.0);
     }
   `
 }));
@@ -101,7 +129,9 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
     uGrade: { value: new URLSearchParams(location.search).get('film') === 'off' ? 0.0 : 1.0 },
     uGrain: { value: filmGrainStrength },
     uMist: { value: filmMistStrength },
-    uMistTexel: { value: new THREE.Vector2(1,1) }
+    uMistTexel: { value: new THREE.Vector2(1,1) },
+    uSunUv: { value: new THREE.Vector2(-2,-2) },
+    uSunGlare: { value: 0 }
   },
   vertexShader: `
     varying vec2 vUv;
@@ -116,6 +146,8 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
     uniform float uGrain;
     uniform float uMist;
     uniform vec2 uMistTexel;
+    uniform vec2 uSunUv;
+    uniform float uSunGlare;
     varying vec2 vUv;
 
     // The texture contains ACES-tonemapped LINEAR colour.
@@ -208,6 +240,16 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
         float isolated=1.0-smoothstep(0.22,0.55,local);
         float mistGlow=0.095*uMist*peak*isolated;
         graded=clamp(graded+vec3(1.0,0.95,0.87)*mistGlow,0.0,1.0);
+      }
+
+      // Camera-facing sun glare: limited to bright scenery, not the DOM overlay.
+      // A/B via ?lighting=off or a fixed ?time=13 / ?time=19.
+      if (uSunGlare > 0.001) {
+        vec2 delta=(vUv-uSunUv)*vec2(1.7778,1.0);
+        float r2=dot(delta,delta);
+        float nearSun=exp(-r2*95.0)*.54+exp(-r2*13.0)*.16;
+        float sceneBright=smoothstep(.46,.84,dot(graded,vec3(.2126,.7152,.0722)));
+        graded=clamp(graded+vec3(1.0,.88,.72)*uSunGlare*nearSun*(.38+.62*sceneBright),0.0,1.0);
       }
 
       // Grain is most visible in middle tones, subdued near deep black and
