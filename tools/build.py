@@ -1,5 +1,5 @@
 """Builds the two standalone pages (index.html = game, map.html = 3D map) from src/ and data/raw/."""
-import json, os, subprocess, sys
+import json, os, subprocess, sys, re
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 data_path = os.path.join(root, 'data', 'vrigstad.json')
@@ -17,5 +17,10 @@ HEAD = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
 for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
     page = open(os.path.join(root, 'src', src), encoding='utf-8').read()
     assert page.count('/*DATA*/') == 1
+    if src == 'game.html':
+        assert page.count('/*VEHICLE_MODEL*/') == 1
+        code=open(os.path.join(root,'src','vehicles','saab.mjs'),encoding='utf-8').read()
+        code=re.sub(r'(?m)^export\s+','',code)
+        page=page.replace('/*VEHICLE_MODEL*/','const VEHICLE_MODEL=(()=>{\n'+code+'\nreturn {buildBodyData,createModelGeometry};})();\n')
     open(os.path.join(root, out), 'w', encoding='utf-8').write(HEAD + page.replace('/*DATA*/', blob) + '</body>\n</html>\n')
     print('built', out)

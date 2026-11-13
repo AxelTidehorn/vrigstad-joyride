@@ -483,6 +483,8 @@ function collide(o, r) {
   ctx.globalAlpha = 1; texture.needsUpdate = true;
 })();
 
+/*VEHICLE_MODEL*/
+
 // ---------- low-poly models ----------
 // one geometry from [geometry, sRGB colour] parts; the colour attribute is left out when the parts have no colour
 function mergeGeo(parts) {
@@ -539,6 +541,7 @@ function softTractor(c) {
   return mergeGeo(parts);
 }
 function softCar(t, c) {
+  if (t === 'saab') return VEHICLE_MODEL.createModelGeometry(THREE,c);
   if (t === 'traktor') return softTractor(c);
   const P = PROFILES[t];
   const parts = [[extrude(P.body, P.w, 0.07), c], [extrude(P.glass, P.gw, 0.05), GLASS], [extrude(P.roof, P.gw + 0.04, 0.03), c]];
