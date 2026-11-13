@@ -7,6 +7,8 @@
  * final shader: that would encode the result twice.
  *
  * The ?film=off URL flag removes ONLY the creative grade for matched screenshots.
+ * Fine, monochrome grain is applied after the grade, before the WebGL canvas is
+ * composited under the HTML UI (which never receives grain).
  * No settings UI, new dependencies, world edits or additional simulation passes.
  */
 renderer.outputEncoding = THREE.LinearEncoding;
@@ -69,13 +71,25 @@ filmTarget.texture.encoding = THREE.LinearEncoding;
 filmTarget.texture.generateMipmaps = false;
 const filmFrameScene = new THREE.Scene();
 const filmFrameCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+// Grain is stable in framebuffer pixel space. Avoid per-frame random seeds:
+// animated white noise would shimmer badly on thin geometry and during driving.
+// Adjust this constant for the default look, without adding a settings system.
+// URL overrides for review: ?grain=off, ?grain=subtle, ?grain=strong.
+const FILM_GRAIN_STRENGTH = 0.62;
+const filmGrainSetting = new URLSearchParams(location.search).get('grain');
+const filmGrainStrength = filmGrainSetting === 'off' ? 0.0
+  : filmGrainSetting === 'strong' ? 1.35
+  : filmGrainSetting === 'subtle' ? 0.62
+  : FILM_GRAIN_STRENGTH;
+
 const filmFrameMaterial = new THREE.ShaderMaterial({
   depthTest: false,
   depthWrite: false,
   toneMapped: false,
   uniforms: {
     uScene: { value: filmTarget.texture },
-    uGrade: { value: new URLSearchParams(location.search).get('film') === 'off' ? 0.0 : 1.0 }
+    uGrade: { value: new URLSearchParams(location.search).get('film') === 'off' ? 0.0 : 1.0 },
+    uGrain: { value: filmGrainStrength }
   },
   vertexShader: `
     varying vec2 vUv;
@@ -87,6 +101,7 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
   fragmentShader: `
     uniform sampler2D uScene;
     uniform float uGrade;
+    uniform float uGrain;
     varying vec2 vUv;
 
     // The texture contains ACES-tonemapped LINEAR colour.
@@ -128,9 +143,31 @@ const filmFrameMaterial = new THREE.ShaderMaterial({
       c = mix(vec3(neutral), c, 1.045);
       return clamp(c, 0.0, 1.0);
     }
+    // Fine, deterministic screen-space grain: single luminance value is added
+    // equally to all three channels, so there are no coloured speckles.
+    // Fixed sampling avoids temporal flicker even while the camera is moving.
+    float grainHash(vec2 pixel) {
+      vec3 p = fract(vec3(pixel.xyx) * vec3(0.1031, 0.1030, 0.0973));
+      p += dot(p, p.yzx + 33.33);
+      return fract((p.x + p.y) * p.z);
+    }
     void main() {
       vec3 base = clamp(toSRGB(texture2D(uScene, vUv).rgb), 0.0, 1.0);
-      gl_FragColor = vec4(mix(base, classicNegative(base), uGrade), 1.0);
+      vec3 graded = mix(base, classicNegative(base), uGrade);
+
+      // Grain is most visible in middle tones, subdued near deep black and
+      // diffuse whites. No blur or extra texture fetches are needed.
+      if (uGrain > 0.0) {
+        float luminance = dot(graded, vec3(0.2126, 0.7152, 0.0722));
+        float midtone = smoothstep(0.03, 0.30, luminance)
+                      * (1.0 - 0.62 * smoothstep(0.61, 0.97, luminance));
+        float amplitude = 0.023 * uGrain * (0.25 + 0.75 * midtone);
+        float fine = grainHash(floor(gl_FragCoord.xy));
+        float irregular = grainHash(floor(gl_FragCoord.xy * 0.57) + vec2(91.0, 17.0));
+        float monochrome = (fine * 0.85 + irregular * 0.15) - 0.5;
+        graded = clamp(graded + vec3(monochrome * amplitude), 0.0, 1.0);
+      }
+      gl_FragColor = vec4(graded, 1.0);
     }
   `
 });
