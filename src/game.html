@@ -174,17 +174,29 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(HORIZON);
 scene.fog = new THREE.FogExp2(HORIZON, FOG_PER_M);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
-scene.add(new THREE.HemisphereLight(0xffffff, col(0x9aa58a), 0.62));
+const hemi=new THREE.HemisphereLight(0xffffff,col(0x9aa58a),.62);scene.add(hemi);
 const sun = new THREE.DirectionalLight(col(0xfff4dd), 0.95);
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
 // sky: a gradient dome that follows the camera and fades into the fog at the horizon
 const dome = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 16), new THREE.ShaderMaterial({
   side: THREE.BackSide, depthWrite: false, fog: false,
-  uniforms: { top: { value: new THREE.Color(0x5f97c9) }, hor: { value: new THREE.Color(HORIZON) }, sunC: { value: new THREE.Color(0xfff1d0) }, sunDir: { value: SUN_DIR } },
+  uniforms: { top: { value: new THREE.Color(0x5f97c9) }, hor: { value: new THREE.Color(HORIZON) }, sunC: { value: new THREE.Color(0xfff1d0) }, sunDir: { value: SUN_DIR }, daylight:{value:0}, skyBrightness:{value:1}, coverage:{value:0},cloudTime:{value:0},glare:{value:1},warm:{value:0} },
   vertexShader: 'varying vec3 vDir; void main() { vDir = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
   fragmentShader: `uniform vec3 top, hor, sunC, sunDir; varying vec3 vDir;
+    uniform float daylight,skyBrightness,coverage,cloudTime,glare,warm;
+    float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+    float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}
     void main() { vec3 d = normalize(vDir); vec3 c = mix(hor, top, pow(max(d.y, 0.0), 0.55)); float s = max(dot(d, sunDir), 0.0);
-      gl_FragColor = vec4(c + sunC * (pow(s, 48.0) * 0.6 + pow(s, 6.0) * 0.12), 1.0); }` }));
+      if(daylight<.5){gl_FragColor=vec4(c+sunC*(pow(s,48.)*.6+pow(s,6.)*.12),1.);return;}
+      vec2 p=d.xz/max(.18,d.y+.23)*1.7+vec2(cloudTime,0.);
+      float layer=.62*noise(p)+.27*noise(p*2.3)+.11*noise(p*4.9);
+      float cloud=smoothstep(.59-coverage*.26,.77-coverage*.15,layer)*smoothstep(-.08,.19,d.y)*step(.01,coverage);
+      c=mix(c,mix(vec3(.55,.59,.64),vec3(.94,.94,.91),smoothstep(0.,.6,d.y)),cloud*.85);
+      c*=skyBrightness;
+      float visible=step(.0,sunDir.y);
+      float disc=smoothstep(.99965,.99994,s)*visible;
+      float halo=pow(s,85.)*(.17+.35*warm)*glare*visible;
+      gl_FragColor=vec4(c+sunC*(disc*.78+halo)*(1.-cloud*.85),1.); }` }));
 dome.renderOrder = -1; scene.add(dome);
 // soft round shadow under cars, people and trees, so nothing looks pasted onto the ground
 const blobTex = (function () { const cv = document.createElement('canvas'); cv.width = cv.height = 64; const x = cv.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
@@ -197,6 +209,12 @@ sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, { left: -110, right: 110, top: 110, bottom: -110, near: 50, far: 800 });
 sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.05;
 scene.add(sun, sun.target);
+
+/*DAYLIGHT*/
+const daylight=DAYLIGHT.createDaylightController(THREE,{sun,hemi,renderer,camera,scene,dome,SUN_DIR,col});
+// r128 Lambert is vertex-lit: 25 m terrain cells otherwise create triangular
+// lamp pools. Black-specular Phong evaluates the same diffuse light per pixel.
+const groundLightMaterial=options=>daylight.enabled?new THREE.MeshPhongMaterial({...options,specular:0x000000,shininess:0}):new THREE.MeshLambertMaterial(options);
 
 // ---------- ground texture (also feeds the minimap) ----------
 const CW = (coarse || renderer.capabilities.maxTextureSize < 4096) ? 2048 : 4096, K = CW / S;
@@ -254,7 +272,7 @@ texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); texture.encoding 
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   g.setIndex(idx); g.computeVertexNormals();
-  const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ map: texture })); m.receiveShadow = true; scene.add(m);
+  const m = new THREE.Mesh(g, groundLightMaterial({ map: texture })); m.receiveShadow = true; scene.add(m);
   const far = new THREE.Mesh(new THREE.PlaneGeometry(14000, 14000), new THREE.MeshLambertMaterial({ color: col(0x6f9a5e) }));
   far.rotation.x = -Math.PI / 2; far.position.y = -1.5; scene.add(far);
   const v = [], c = i => -HALF + S * i / (N - 1);
@@ -296,7 +314,7 @@ const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p
   const speck = new THREE.CanvasTexture(cv); speck.wrapS = speck.wrapT = THREE.RepeatWrapping; speck.anisotropy = renderer.capabilities.getMaxAnisotropy(); speck.encoding = THREE.sRGBEncoding;
   bufs.forEach((b, i) => { if (!b.length) return;
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(b, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uvs[i], 2)); g.computeVertexNormals();
-    const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: col(cols[i]), map: i < 6 ? speck : null, side: THREE.DoubleSide, polygonOffset: true,
+    const m = new THREE.Mesh(g, groundLightMaterial({ color: col(cols[i]), map: i < 6 ? speck : null, side: THREE.DoubleSide, polygonOffset: true,
       polygonOffsetFactor: -2, polygonOffsetUnits: -4 * (i === 6 ? 8 : 6 - i) }));
     m.receiveShadow = true; m.renderOrder = i === 6 ? 8 : 6 - i; scene.add(m); });
 })();
@@ -482,6 +500,10 @@ function collide(o, r) {
   for (let i = 0; i < N; i++) { const r = 3.4 * spots[i * 3 + 2] * K; ctx.drawImage(blobTex, P(spots[i * 3]) - r, P(spots[i * 3 + 1]) - r, r * 2, r * 2); }
   ctx.globalAlpha = 1; texture.needsUpdate = true;
 })();
+
+/*STREET_LIGHTING*/
+const streetLighting=STREET_LIGHTING.createStreetLighting(THREE,{scene,camera,roads:R,widths:ROAD_W,height:hAt,coarse,
+ blocked:(x,z)=>inWater(x,z)||bPolys.some(p=>x>p.x0-3&&x<p.x1+3&&z>p.z0-3&&z<p.z1+3)});
 
 // ---------- low-poly models ----------
 // one geometry from [geometry, sRGB colour] parts; the colour attribute is left out when the parts have no colour
@@ -1046,6 +1068,7 @@ function frame(now) {
   camera.lookAt(T.x, ty + 1.5, T.z);
   sun.target.position.set(T.x, ty, T.z); sun.position.copy(sun.target.position).addScaledVector(SUN_DIR, 400);
   dome.position.copy(camera.position);
+  daylight.update(dt);streetLighting.update(dt,daylight.getHour(),daylight.getSolarElevation());
 
   // HUD
   if (toastT > 0) { toastT -= dt; if (toastT <= 0.3) $('toast').style.opacity = 0; if (toastT <= 0) $('toast').hidden = true; }
@@ -1066,9 +1089,10 @@ function frame(now) {
 }
 $('go').addEventListener('click', () => { started = true; $('intro').hidden = true; camYaw = 0.6; camPitch = 0.34; canvas.focus();
   toast('Find a car and press E to take it. Occupied cars always get you a wanted star.', 5); });
+/*VISUAL_LAB*/
 resize(); requestAnimationFrame(frame);
 
 // ---------- test hook: read-only state for the smoke tests (tests/e2e), so they do not have to read pixels ----------
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, daylight:daylight.state(),streetlights:streetLighting.stats() }; } };
 })();
 </script>

@@ -182,17 +182,29 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(HORIZON);
 scene.fog = new THREE.FogExp2(HORIZON, FOG_PER_M);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
-scene.add(new THREE.HemisphereLight(0xffffff, col(0x9aa58a), 0.62));
+const hemi=new THREE.HemisphereLight(0xffffff,col(0x9aa58a),.62);scene.add(hemi);
 const sun = new THREE.DirectionalLight(col(0xfff4dd), 0.95);
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
 // sky: a gradient dome that follows the camera and fades into the fog at the horizon
 const dome = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 16), new THREE.ShaderMaterial({
   side: THREE.BackSide, depthWrite: false, fog: false,
-  uniforms: { top: { value: new THREE.Color(0x5f97c9) }, hor: { value: new THREE.Color(HORIZON) }, sunC: { value: new THREE.Color(0xfff1d0) }, sunDir: { value: SUN_DIR } },
+  uniforms: { top: { value: new THREE.Color(0x5f97c9) }, hor: { value: new THREE.Color(HORIZON) }, sunC: { value: new THREE.Color(0xfff1d0) }, sunDir: { value: SUN_DIR }, daylight:{value:0}, skyBrightness:{value:1}, coverage:{value:0},cloudTime:{value:0},glare:{value:1},warm:{value:0} },
   vertexShader: 'varying vec3 vDir; void main() { vDir = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
   fragmentShader: `uniform vec3 top, hor, sunC, sunDir; varying vec3 vDir;
+    uniform float daylight,skyBrightness,coverage,cloudTime,glare,warm;
+    float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+    float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}
     void main() { vec3 d = normalize(vDir); vec3 c = mix(hor, top, pow(max(d.y, 0.0), 0.55)); float s = max(dot(d, sunDir), 0.0);
-      gl_FragColor = vec4(c + sunC * (pow(s, 48.0) * 0.6 + pow(s, 6.0) * 0.12), 1.0); }` }));
+      if(daylight<.5){gl_FragColor=vec4(c+sunC*(pow(s,48.)*.6+pow(s,6.)*.12),1.);return;}
+      vec2 p=d.xz/max(.18,d.y+.23)*1.7+vec2(cloudTime,0.);
+      float layer=.62*noise(p)+.27*noise(p*2.3)+.11*noise(p*4.9);
+      float cloud=smoothstep(.59-coverage*.26,.77-coverage*.15,layer)*smoothstep(-.08,.19,d.y)*step(.01,coverage);
+      c=mix(c,mix(vec3(.55,.59,.64),vec3(.94,.94,.91),smoothstep(0.,.6,d.y)),cloud*.85);
+      c*=skyBrightness;
+      float visible=step(.0,sunDir.y);
+      float disc=smoothstep(.99965,.99994,s)*visible;
+      float halo=pow(s,85.)*(.17+.35*warm)*glare*visible;
+      gl_FragColor=vec4(c+sunC*(disc*.78+halo)*(1.-cloud*.85),1.); }` }));
 dome.renderOrder = -1; scene.add(dome);
 // soft round shadow under cars, people and trees, so nothing looks pasted onto the ground
 const blobTex = (function () { const cv = document.createElement('canvas'); cv.width = cv.height = 64; const x = cv.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
@@ -205,6 +217,157 @@ sun.shadow.mapSize.set(2048, 2048);
 Object.assign(sun.shadow.camera, { left: -110, right: 110, top: 110, bottom: -110, near: 50, far: 800 });
 sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.05;
 scene.add(sun, sun.target);
+
+const DAYLIGHT=(()=>{
+// Approximate NOAA solar position for Vrigstad; azimuth clockwise from north.
+// World axes are X east, Z south, Y up; solar angles use radians.
+const VRIGSTAD={latitude:57.3555,longitude:14.4756};
+const DEFAULT_SOLAR_DATE='2026-08-15';
+function validSolarDate(value) {
+  if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return DEFAULT_SOLAR_DATE;
+  const [year,month,day]=value.split('-').map(Number);
+  const d=new Date(Date.UTC(year,month-1,day));
+  return d.getUTCFullYear()===year&&d.getUTCMonth()===month-1&&d.getUTCDate()===day?value:DEFAULT_SOLAR_DATE;
+}
+function euDst(year,month,day,hour) {
+  if(month<3||month>10)return false;
+  if(month>3&&month<10)return true;
+  const last=new Date(Date.UTC(year,month,0));
+  const lastSunday=last.getUTCDate()-last.getUTCDay();
+  return month===3?(day>lastSunday||(day===lastSunday&&hour>=3))
+    :(day<lastSunday||(day===lastSunday&&hour<3));
+}
+function solarPosition(hour,date=DEFAULT_SOLAR_DATE,utcOffset=null) {
+  const valid=validSolarDate(date),[year,month,day]=valid.split('-').map(Number);
+  const dateUTC=Date.UTC(year,month-1,day);
+  const n=Math.floor((dateUTC-Date.UTC(year,0,1))/86400000)+1;
+  const timezone=utcOffset===null?(euDst(year,month,day,hour)?2:1):utcOffset;
+  const gamma=2*Math.PI/365*(n-1+(hour-12)/24);
+  const eot=229.18*(.000075+.001868*Math.cos(gamma)-.032077*Math.sin(gamma)
+    -.014615*Math.cos(2*gamma)-.040849*Math.sin(2*gamma));
+  const decl=.006918-.399912*Math.cos(gamma)+.070257*Math.sin(gamma)
+    -.006758*Math.cos(2*gamma)+.000907*Math.sin(2*gamma)
+    -.002697*Math.cos(3*gamma)+.00148*Math.sin(3*gamma);
+  const hourAngle=(hour*60+eot+4*VRIGSTAD.longitude-60*timezone)/4*Math.PI/180-Math.PI;
+  const lat=VRIGSTAD.latitude*Math.PI/180;
+  const sine=Math.sin(lat)*Math.sin(decl)+Math.cos(lat)*Math.cos(decl)*Math.cos(hourAngle);
+  const altitude=Math.asin(Math.max(-1,Math.min(1,sine)));
+  const azimuth=(Math.atan2(Math.sin(hourAngle),
+    Math.cos(hourAngle)*Math.sin(lat)-Math.tan(decl)*Math.cos(lat))+3*Math.PI)%(2*Math.PI);
+  return {altitude,azimuth,dx:Math.sin(azimuth)*Math.cos(altitude),
+    dy:Math.sin(altitude),dz:-Math.cos(azimuth)*Math.cos(altitude),date:valid};
+}
+
+// Seeded, smooth multi-day weather. No gameplay RNG and no per-frame state resets.
+function weatherNoise(n) {
+  const x=Math.sin(n*127.1+82.37)*43758.5453123;
+  return x-Math.floor(x);
+}
+function weatherSmooth(x) {
+  const i=Math.floor(x),f=x-i,t=f*f*(3-2*f);
+  return weatherNoise(i)*(1-t)+weatherNoise(i+1)*t;
+}
+function weatherCoverage(hour,date=DEFAULT_SOLAR_DATE,utcOffset=null) {
+  const valid=validSolarDate(date),day=Date.parse(valid+'T00:00:00Z')/86400000;
+  const [year,month,dateDay]=valid.split('-').map(Number);
+  const t=day+(hour-(utcOffset===null?(euDst(year,month,dateDay,hour)?2:1):utcOffset))/24;
+  // Multi-day front and intra-day fluctuations; no abrupt midnight transition.
+  return Math.max(.04,Math.min(.94,.08+.60*weatherSmooth(t*.42+11)+.30*weatherSmooth(t*2.1+73)));
+}
+function nextSolarDate(date) {
+  const d=new Date(Date.parse(validSolarDate(date)+'T00:00:00Z')+86400000);
+  return d.toISOString().slice(0,10);
+}
+
+// Solar direction is geographic; exposure, clouds and tint are artistic.
+function daylightState(hour, cloudTime=0, coverage=null, date=DEFAULT_SOLAR_DATE,utcOffset=null) {
+  const h=((hour%24)+24)%24;
+  const solar=solarPosition(h,date,utcOffset);
+  const altitude=solar.altitude;
+  const elevation=altitude*180/Math.PI;
+  const daytime=Math.max(0,Math.min(1,(elevation+1.2)/16));
+  const warm=Math.max(0,Math.min(1,(35-elevation)/29));
+  const cover=coverage===null?weatherCoverage(h,date,utcOffset):Math.max(0,Math.min(1,coverage));
+  // Broad cloud shadows: coherent across the entire scene; not a weather model.
+  // Cloud cover also attenuates direct sun and glare, not just sky colour.
+  const shade=Math.max(.30,1-cover*.82);
+  // Twilight keeps residual skylight after direct sun fades; actual night
+  // still requires headlights and street lamps, not artificial daylight.
+  const twilight=Math.max(0,Math.min(1,(elevation+9)/12));
+  return {
+    hour:h,date:solar.date,altitude,azimuth:solar.azimuth,daytime,warm,cover,shade,
+    dx:solar.dx,dy:solar.dy,dz:solar.dz,
+    strength:daytime*(1.44-.48*warm)*shade,
+    exposure:.69+.30*daytime-.11*warm+.03*(1-shade),
+    skyBrightness:Math.max(.15,(.25+.75*daytime)*(1-.27*warm)),
+    twilight
+  };
+}
+// One absolute simulation clock shared with future seasons/events (#114).
+// Input is Stockholm civil time. A repeated autumn hour chooses the first
+// occurrence; a nonexistent spring hour normalizes forward. Advancing thereafter
+// uses UTC instants, so solar direction is continuous through DST transitions.
+function createSolarClock(date=DEFAULT_SOLAR_DATE,hour=15.5) {
+ const utc=new Date(0),local=new Date(0);let instant=0,offset=1,currentDate='',currentHour=0,cacheYear=0,start=0,end=0;
+ function sync(){
+  utc.setTime(instant);const year=utc.getUTCFullYear();
+  if(year!==cacheYear){cacheYear=year;utc.setTime(Date.UTC(year,3,0));const march=utc.getUTCDate()-utc.getUTCDay();utc.setTime(Date.UTC(year,10,0));const october=utc.getUTCDate()-utc.getUTCDay();start=Date.UTC(year,2,march,1);end=Date.UTC(year,9,october,1)}
+  offset=instant>=start&&instant<end?2:1;local.setTime(instant+offset*3600000);
+  currentDate=local.toISOString().slice(0,10);currentHour=local.getUTCHours()+local.getUTCMinutes()/60+local.getUTCSeconds()/3600+local.getUTCMilliseconds()/3600000;
+ }
+ function set(value,h){const valid=validSolarDate(value),[year,month,day]=valid.split('-').map(Number),hours=Number.isFinite(h)?((h%24)+24)%24:15.5;instant=Date.parse(valid+'T00:00:00Z')+(hours-(euDst(year,month,day,hours)?2:1))*3600000;sync()}
+ set(date,hour);
+ return {set,advanceHours(h){instant+=h*3600000;sync()},getHour:()=>currentHour,getDate:()=>currentDate,getOffset:()=>offset,getInstant:()=>instant};
+}
+
+function createDaylightController(THREE,{sun,hemi,renderer,camera,scene,dome,SUN_DIR,col}) {
+ const params=new URLSearchParams(location.search);let enabled=params.get('lighting')!=='off';
+ const initialEnabled=enabled,original={sun:sun.intensity,hemi:hemi.intensity,exposure:renderer.toneMappingExposure,sunColor:sun.color.clone(),hemiColor:hemi.color.clone(),fog:scene.fog.color.clone(),background:scene.background.clone(),direction:SUN_DIR.clone(),top:dome.material.uniforms.top.value.clone(),hor:dome.material.uniforms.hor.value.clone(),sunC:dome.material.uniforms.sunC.value.clone()};
+ const initial={hour:params.has('time')&&Number.isFinite(+params.get('time'))?((+params.get('time')%24)+24)%24:15.5,date:validSolarDate(params.get('date')),cycle:params.get('cycle')==='on'||(!params.has('time')&&params.get('cycle')!=='off')};
+ const clock=createSolarClock(initial.date,initial.hour);
+ let hour=clock.getHour(),date=clock.getDate(),cycle=initial.cycle,cloudOverride=null,glare=1,elapsed=0,occlusion=1;
+ const speed=Math.max(.01,Math.min(5,Number(params.get('daySpeed'))||1));
+ const vector=new THREE.Vector3(),ambient=col(0xc8d9ed),cold=col(0xfff4dd),warm=col(0xff8e38),topDay=new THREE.Color(0x5f97c9),topDusk=new THREE.Color(0xb66b72),topNight=new THREE.Color(0x122137),horDay=new THREE.Color(0xd6e4e6),horDusk=new THREE.Color(0xe99a68),horNight=new THREE.Color(0x1d3046);
+ const hash=(x,z)=>{const v=Math.sin(x*127.1+z*311.7)*43758.5453;return v-Math.floor(v)};
+ function noise(x,z){const ix=Math.floor(x),iz=Math.floor(z);let a=x-ix,b=z-iz;a=a*a*(3-2*a);b=b*b*(3-2*b);return (hash(ix,iz)*(1-a)+hash(ix+1,iz)*a)*(1-b)+(hash(ix,iz+1)*(1-a)+hash(ix+1,iz+1)*a)*b}
+ const smooth=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
+ function update(dt){
+  if(!enabled)return;
+  elapsed+=dt;
+  if(cycle){clock.advanceHours(dt*speed/30);hour=clock.getHour();date=clock.getDate()}
+  const state=daylightState(hour,elapsed,cloudOverride,date,clock.getOffset());
+  vector.set(state.dx,state.dy,state.dz);SUN_DIR.copy(vector);
+  sun.position.copy(sun.target.position).addScaledVector(vector,400);
+  const scale=1.7/Math.max(.18,vector.y+.23),x=vector.x*scale+elapsed*.0025,z=vector.z*scale;
+  const layer=.62*noise(x,z)+.27*noise(x*2.3,z*2.3)+.11*noise(x*4.9,z*4.9);
+  const cover=smooth(.59-state.cover*.26,.77-state.cover*.15,layer)*smooth(-.08,.19,vector.y)*(state.cover>.01?1:0);
+  occlusion+=(1-cover*.7-occlusion)*(1-Math.exp(-dt*2));
+  sun.intensity=state.strength*occlusion;sun.color.copy(cold).lerp(warm,state.warm);
+  hemi.intensity=.07+.40*state.daytime+.13*state.twilight;
+  hemi.color.copy(ambient).lerp(warm,state.warm*.25);
+  renderer.toneMappingExposure=state.exposure;
+  const u=dome.material.uniforms;
+  u.top.value.copy(topDay).lerp(topDusk,state.warm*.8).lerp(topNight,1-state.daytime);
+  u.hor.value.copy(horDay).lerp(horDusk,state.warm*.8).lerp(horNight,1-state.daytime);
+  u.sunC.value.setRGB(1,.88-.30*state.warm,.73-.5*state.warm);
+  u.daylight.value=1;u.skyBrightness.value=state.skyBrightness*(1-state.cover*.10);u.coverage.value=state.cover;u.cloudTime.value=elapsed*.0025;u.glare.value=glare;u.warm.value=state.warm;
+  scene.fog.color.copy(u.hor.value).multiplyScalar(u.skyBrightness.value);scene.background.copy(scene.fog.color);
+ }
+ return {get enabled(){return enabled},update,getHour:()=>hour,getDate:()=>date,getCycle:()=>cycle,getCoverage:()=>cloudOverride===null?weatherCoverage(hour,date,clock.getOffset()):cloudOverride,
+  getSolarElevation:()=>solarPosition(hour,date,clock.getOffset()).altitude*180/Math.PI,
+  setHour(v){enabled=true;clock.set(date,v);hour=clock.getHour();date=clock.getDate();cycle=false;update(0)},setDate(v){enabled=true;clock.set(v,hour);date=clock.getDate();hour=clock.getHour();update(0)},setCycle(v){enabled=true;cycle=v},setCoverage(v){cloudOverride=v;update(0)},setGlare(v){glare=v;update(0)},
+  reset(){enabled=initialEnabled;clock.set(initial.date,initial.hour);hour=clock.getHour();date=clock.getDate();cycle=initial.cycle;cloudOverride=null;glare=1;
+   if(enabled)update(0);else{SUN_DIR.copy(original.direction);sun.position.copy(sun.target.position).addScaledVector(SUN_DIR,400);sun.intensity=original.sun;sun.color.copy(original.sunColor);hemi.intensity=original.hemi;hemi.color.copy(original.hemiColor);renderer.toneMappingExposure=original.exposure;scene.fog.color.copy(original.fog);scene.background.copy(original.background);const u=dome.material.uniforms;u.top.value.copy(original.top);u.hor.value.copy(original.hor);u.sunC.value.copy(original.sunC);u.daylight.value=0}
+  },
+  state:()=>({enabled,hour,date,cycle,coverage:cloudOverride===null?weatherCoverage(hour,date,clock.getOffset()):cloudOverride,sunStrength:sun.intensity,exposure:renderer.toneMappingExposure,elevation:solarPosition(hour,date,clock.getOffset()).altitude*180/Math.PI})};
+}
+
+return {VRIGSTAD, DEFAULT_SOLAR_DATE, solarPosition, weatherCoverage, daylightState, createSolarClock, createDaylightController};})();
+
+const daylight=DAYLIGHT.createDaylightController(THREE,{sun,hemi,renderer,camera,scene,dome,SUN_DIR,col});
+// r128 Lambert is vertex-lit: 25 m terrain cells otherwise create triangular
+// lamp pools. Black-specular Phong evaluates the same diffuse light per pixel.
+const groundLightMaterial=options=>daylight.enabled?new THREE.MeshPhongMaterial({...options,specular:0x000000,shininess:0}):new THREE.MeshLambertMaterial(options);
 
 // ---------- ground texture (also feeds the minimap) ----------
 const CW = (coarse || renderer.capabilities.maxTextureSize < 4096) ? 2048 : 4096, K = CW / S;
@@ -262,7 +425,7 @@ texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); texture.encoding 
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   g.setIndex(idx); g.computeVertexNormals();
-  const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ map: texture })); m.receiveShadow = true; scene.add(m);
+  const m = new THREE.Mesh(g, groundLightMaterial({ map: texture })); m.receiveShadow = true; scene.add(m);
   const far = new THREE.Mesh(new THREE.PlaneGeometry(14000, 14000), new THREE.MeshLambertMaterial({ color: col(0x6f9a5e) }));
   far.rotation.x = -Math.PI / 2; far.position.y = -1.5; scene.add(far);
   const v = [], c = i => -HALF + S * i / (N - 1);
@@ -304,7 +467,7 @@ const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p
   const speck = new THREE.CanvasTexture(cv); speck.wrapS = speck.wrapT = THREE.RepeatWrapping; speck.anisotropy = renderer.capabilities.getMaxAnisotropy(); speck.encoding = THREE.sRGBEncoding;
   bufs.forEach((b, i) => { if (!b.length) return;
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(b, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uvs[i], 2)); g.computeVertexNormals();
-    const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: col(cols[i]), map: i < 6 ? speck : null, side: THREE.DoubleSide, polygonOffset: true,
+    const m = new THREE.Mesh(g, groundLightMaterial({ color: col(cols[i]), map: i < 6 ? speck : null, side: THREE.DoubleSide, polygonOffset: true,
       polygonOffsetFactor: -2, polygonOffsetUnits: -4 * (i === 6 ? 8 : 6 - i) }));
     m.receiveShadow = true; m.renderOrder = i === 6 ? 8 : 6 - i; scene.add(m); });
 })();
@@ -490,6 +653,94 @@ function collide(o, r) {
   for (let i = 0; i < N; i++) { const r = 3.4 * spots[i * 3 + 2] * K; ctx.drawImage(blobTex, P(spots[i * 3]) - r, P(spots[i * 3 + 1]) - r, r * 2, r * 2); }
   ctx.globalAlpha = 1; texture.needsUpdate = true;
 })();
+
+const STREET_LIGHTING=(()=>{
+// Pure placement and schedule; never consumes the gameplay RNG.
+function streetlightLevel(hour,solarElevation=null) {
+  if(Number.isFinite(solarElevation)){
+    // Astronomical dusk/dawn: fully on below -6 degrees, off above 0.
+    const t=Math.max(0,Math.min(1,-solarElevation/6));
+    return t*t*(3-2*t);
+  }
+  const h=((hour%24)+24)%24;
+  const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t)};
+  return h>=19?1:h<5?1:h<5.25?1-smooth((h-5)*4):0;
+}
+function placeStreetlights(roads,widths,height,blocked) {
+  const sites=[];
+  for(const r of roads){
+    if(r.c>2)continue;
+    let remaining=18,side=1;
+    for(let i=1;i<r.p.length;i++){
+      const a=r.p[i-1],b=r.p[i],dx=b[0]-a[0],dz=b[1]-a[1],len=Math.hypot(dx,dz);
+      if(!len)continue;
+      for(let d=remaining;d<len;d+=52){
+        const offset=widths[r.c]/2+2.5,x=a[0]+dx*d/len-dz/len*offset*side,z=a[1]+dz*d/len+dx/len*offset*side;
+        side=-side;
+        if(Math.abs(x)>1090||Math.abs(z)>1090||blocked(x,z))continue;
+        // Reject slopes and all nearby road corridors (including footpaths).
+        if(Math.abs(height(x+2,z)-height(x-2,z))>1||Math.abs(height(x,z+2)-height(x,z-2))>1)continue;
+        if(sites.some(p=>(p[0]-x)**2+(p[1]-z)**2<36**2))continue;
+        let overlaps=false;
+        for(const road of roads){for(let k=1;k<road.p.length;k++){
+          const c=road.p[k-1],e=road.p[k],vx=e[0]-c[0],vz=e[1]-c[1],l=vx*vx+vz*vz;
+          const t=l?Math.max(0,Math.min(1,((x-c[0])*vx+(z-c[1])*vz)/l)):0;
+          if(Math.hypot(x-c[0]-vx*t,z-c[1]-vz*t)<widths[road.c]/2+1.1){overlaps=true;break}
+        }if(overlaps)break}
+        if(!overlaps)sites.push([x,z]);
+      }
+      remaining=((remaining-len)%52+52)%52;
+    }
+  }
+  return sites;
+}
+function createStreetLighting(THREE,{scene,camera,roads,widths,height,blocked,coarse}) {
+  const positions=placeStreetlights(roads,widths,height,blocked);
+  const pole=new THREE.InstancedMesh(new THREE.CylinderGeometry(.07,.10,5.3,8),new THREE.MeshLambertMaterial({color:0x616766}),positions.length);
+  const bulbMat=new THREE.MeshLambertMaterial({color:0xb7aa82,emissive:0xff8e24,emissiveIntensity:0});
+  const bulbs=new THREE.InstancedMesh(new THREE.BoxGeometry(.85,.12,.32),bulbMat,positions.length);
+  const matrix=new THREE.Matrix4();
+  const cv=document.createElement('canvas');cv.width=cv.height=64;
+  const ctx=cv.getContext('2d'),g=ctx.createRadialGradient(32,32,0,32,32,32);
+  g.addColorStop(0,'rgba(255,207,125,.65)');g.addColorStop(.18,'rgba(255,162,47,.24)');g.addColorStop(1,'rgba(255,125,20,0)');ctx.fillStyle=g;ctx.fillRect(0,0,64,64);
+  const haloMat=new THREE.SpriteMaterial({map:new THREE.CanvasTexture(cv),color:0xffb258,transparent:true,depthTest:true,depthWrite:false,opacity:0});
+  const halos=[];
+  positions.forEach(([x,z],i)=>{
+    const y=height(x,z);matrix.makeTranslation(x,y+2.65,z);pole.setMatrixAt(i,matrix);
+    matrix.makeTranslation(x+.35,y+5.25,z);bulbs.setMatrixAt(i,matrix);
+    const sprite=new THREE.Sprite(haloMat);sprite.position.set(x+.35,y+5.25,z);sprite.scale.set(3.4,3.4,1);scene.add(sprite);halos.push(sprite);
+  });
+  pole.material.color.convertSRGBToLinear();bulbMat.color.convertSRGBToLinear();bulbMat.emissive.convertSRGBToLinear();
+  scene.add(pole,bulbs);
+  // Fixed pool: no shader light-count changes while driving, no shadow maps.
+  const pool=Array.from({length:coarse?2:4},()=>{const light=new THREE.PointLight(new THREE.Color(0xff9b32).convertSRGBToLinear(),0,26,2);scene.add(light);return light});
+  const selected=new Int32Array(pool.length);let mode='auto',level=0,active=0;
+  function update(dt,hour,solarElevation=null){
+    const target=mode==='on'?1:mode==='off'?0:streetlightLevel(hour,solarElevation);
+    level+=(target-level)*(dt===0?1:1-Math.exp(-dt*4));
+    bulbMat.emissiveIntensity=level*1.8;haloMat.opacity=level;
+    for(let k=0;k<pool.length;k++){
+      let best=-1,distance=85*85;
+      for(let i=0;i<positions.length;i++){
+        let used=false;for(let j=0;j<k;j++)if(selected[j]===i)used=true;
+        if(used)continue;
+        const p=positions[i],d=(p[0]-camera.position.x)**2+(p[1]-camera.position.z)**2;
+        if(d<distance){distance=d;best=i}
+      }
+      selected[k]=best;const light=pool[k];
+      light.intensity=best<0?0:level*3.8;
+      if(best>=0){const p=positions[best];light.position.set(p[0]+.35,height(p[0],p[1])+4.9,p[1])}
+    }
+    active=0;for(const light of pool)if(light.intensity>.01)active++;
+    for(let i=0;i<halos.length;i++){const p=positions[i];halos[i].visible=level>.005&&(p[0]-camera.position.x)**2+(p[1]-camera.position.z)**2<180**2}
+  }
+  return {update,setMode(value){mode=value},getMode:()=>mode,stats:()=>({count:positions.length,budget:pool.length,active,level}),positions};
+}
+
+return {streetlightLevel,placeStreetlights,createStreetLighting};})();
+
+const streetLighting=STREET_LIGHTING.createStreetLighting(THREE,{scene,camera,roads:R,widths:ROAD_W,height:hAt,coarse,
+ blocked:(x,z)=>inWater(x,z)||bPolys.some(p=>x>p.x0-3&&x<p.x1+3&&z>p.z0-3&&z<p.z1+3)});
 
 // ---------- low-poly models ----------
 // one geometry from [geometry, sRGB colour] parts; the colour attribute is left out when the parts have no colour
@@ -1054,6 +1305,7 @@ function frame(now) {
   camera.lookAt(T.x, ty + 1.5, T.z);
   sun.target.position.set(T.x, ty, T.z); sun.position.copy(sun.target.position).addScaledVector(SUN_DIR, 400);
   dome.position.copy(camera.position);
+  daylight.update(dt);streetLighting.update(dt,daylight.getHour(),daylight.getSolarElevation());
 
   // HUD
   if (toastT > 0) { toastT -= dt; if (toastT <= 0.3) $('toast').style.opacity = 0; if (toastT <= 0) $('toast').hidden = true; }
@@ -1074,10 +1326,43 @@ function frame(now) {
 }
 $('go').addEventListener('click', () => { started = true; $('intro').hidden = true; camYaw = 0.6; camPitch = 0.34; canvas.focus();
   toast('Find a car and press E to take it. Occupied cars always get you a wanted star.', 5); });
+// Optional DOM tooling; no renderer/UI dependencies in the solar calculations.
+if(new URLSearchParams(location.search).get('dev')==='lighting') {
+  const panel=document.createElement('details');panel.id='visual-lab';panel.open=true;
+  panel.style.cssText='position:fixed;right:12px;top:100px;z-index:1000;width:min(290px,85vw);max-height:75vh;overflow:auto;background:#19232ef2;color:white;padding:12px;border:1px solid #8899aa;border-radius:8px;font:14px system-ui';
+  panel.innerHTML=`<summary>Visual Lab</summary>
+    <label>Time <output id="lab-clock"></output><input id="lab-time" aria-label="Time" type="range" min="0" max="24" step=".01"></label>
+    <label>Date <input id="lab-date" aria-label="Solar date" type="date" min="2020-01-01" max="2035-12-31"></label>
+    <div id="lab-presets"></div><label><input id="lab-cycle" type="checkbox"> Run day cycle</label>
+    <label>Streetlights <select id="lab-street"><option value="auto">Auto</option><option value="on">On</option><option value="off">Off</option></select></label>
+    <label>Cloud coverage <input id="lab-cloud" type="range" min="0" max="1" step=".01" value=".5"></label>
+    <label>Sun glare <input id="lab-glare" type="range" min="0" max="3" step=".05" value="1"></label>
+    <button id="lab-reset" type="button">Reset</button>`;
+  const style=document.createElement('style');style.textContent='#visual-lab label{display:block;margin:10px 0}#visual-lab input[type=range]{display:block;width:100%}#visual-lab button,#visual-lab select{font:inherit;margin:3px;padding:5px}#visual-lab summary{cursor:pointer;font-weight:bold}';document.head.append(style);document.body.append(panel);
+  // Stop bubbled keyboard events reaching gameplay; keyup still releases keys.
+  panel.addEventListener('keydown',e=>e.stopPropagation());
+  panel.addEventListener('pointerdown',()=>{for(const k in keys)keys[k]=false;joy.x=joy.y=0});
+  for(const type of ['pointerdown','pointermove','pointerup','wheel'])panel.addEventListener(type,e=>e.stopPropagation());
+  const el=id=>panel.querySelector('#lab-'+id);
+  const clock=()=>{el('date').value=daylight.getDate();const h=daylight.getHour(),m=Math.round(h*60)%1440;el('clock').value=String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');el('time').value=h;el('cycle').checked=daylight.getCycle()};
+  const apply=()=>{daylight.update(0);streetLighting.update(0,daylight.getHour(),daylight.getSolarElevation());clock()};
+  el('time').oninput=e=>{daylight.setHour(+e.target.value);apply()};
+  el('date').value=daylight.getDate();
+  el('date').onchange=e=>{daylight.setDate(e.target.value);apply()};
+  for(const hour of [13,17,19,20.5,22]){const b=document.createElement('button');b.type='button';b.textContent=hour===20.5?'20:30':hour+':00';b.onclick=()=>{daylight.setHour(hour);apply()};el('presets').append(b)}
+  el('cycle').onchange=e=>daylight.setCycle(e.target.checked);
+  el('street').onchange=e=>{streetLighting.setMode(e.target.value);apply()};
+  el('cloud').oninput=e=>{daylight.setCoverage(+e.target.value);apply()};
+  el('glare').oninput=e=>{daylight.setGlare(+e.target.value);apply()};
+  el('reset').onclick=()=>{daylight.reset();streetLighting.setMode('auto');el('street').value='auto';el('cloud').value=daylight.getCoverage();el('glare').value=1;apply()};
+  function daylightStateForLab(){return daylight.getCoverage()}
+  el('cloud').value=daylightStateForLab();clock();setInterval(clock,250);
+}
+
 resize(); requestAnimationFrame(frame);
 
 // ---------- test hook: read-only state for the smoke tests (tests/e2e), so they do not have to read pixels ----------
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, daylight:daylight.state(),streetlights:streetLighting.stats() }; } };
 })();
 </script>
 </body>
