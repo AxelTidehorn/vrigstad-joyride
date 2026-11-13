@@ -1,0 +1,13 @@
+{
+  "id": "saab95Estate",
+  "reference": "Saab 9-5 SportCombi (2002-2005), not the 2006 facelift",
+  "dimensions_m": { "length": 4.828, "width": 1.792, "height": 1.475 },
+  "tolerance_m": { "length": 0.09, "width": 0.09, "height": 0.08 },
+  "wheelbase_m": 2.703,
+  "wheelbase_tolerance_m": 0.05,
+  "triangle_budget": 20000,
+  "detail_clearance_m": 0.45,
+  "reference_links": [
+    "https://commons.wikimedia.org/wiki/Category:Saab_9-5_(YS3E,_2001)_SportCombi"
+  ]
+}
