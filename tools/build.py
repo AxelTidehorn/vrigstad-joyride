@@ -38,8 +38,8 @@ for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
         page = page.replace('/*FILM_PIPELINE*/', film)
         assert page.count('/*DAYLIGHT_CONTROLLER*/') == 1
         daylight = open(os.path.join(root, 'src', 'visual', 'daylight.mjs'), encoding='utf-8').read()
-        daylight = re.sub(r'(?m)^export\\s+', '', daylight)
-        daylight = 'const DAYLIGHT = (() => {\\n' + daylight + '\\nreturn {daylightState, createDaylightController};\\n})();\\n'
+        daylight = re.sub(r'(?m)^export\s+', '', daylight)
+        daylight = 'const DAYLIGHT = (() => {\n' + daylight + '\nreturn {daylightState, createDaylightController};\n})();\n'
         page = page.replace('/*DAYLIGHT_CONTROLLER*/', daylight)
     open(os.path.join(root, out), 'w', encoding='utf-8').write(HEAD + page.replace('/*DATA*/', blob) + '</body>\n</html>\n')
     print('built', out)
