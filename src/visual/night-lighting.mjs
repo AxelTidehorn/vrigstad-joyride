@@ -63,7 +63,8 @@ export function createWindowLighting(THREE,{scene,camera,buildings,hAt,nearestRo
         const d=(p.x-camera.position.x)**2+(p.z-camera.position.z)**2;
         if(d<dist){dist=d;best=p}
       }
-      light.intensity=best?level*.95:0;
+      light.visible=!!best&&level>.04;
+      light.intensity=light.visible?level*.95:0;
       if(best)light.position.set(best.x+best.nx*.7,best.y,best.z+best.nz*.7);
     }
   }
