@@ -77,7 +77,7 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
       float towardSun=max(0.0,dot(normalize(vSkyDir),normalize(uSunDirection)));
       float disc=smoothstep(.99965,.99994,towardSun)*step(0.01,uSunDirection.y);
       float halo=pow(towardSun,85.0)*step(0.01,uSunDirection.y);
-      sky+=vec3(1.0,.88,.73)*(disc*1.35+halo*.30)*(1.0-cloud*.85);
+      sky+=vec3(1.0,.88,.73)*(disc*.78+halo*.17)*(1.0-cloud*.85);
       gl_FragColor=vec4(sky*uSkyBrightness,1.0);
     }
   `
