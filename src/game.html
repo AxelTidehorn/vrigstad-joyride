@@ -413,6 +413,8 @@ function inWater(x, z) {
 
 // ---------- reusable Swedish residential house catalogue ----------
 /*HOUSE_MODELS*/
+const HOUSE_CATALOG_ENABLED = new URLSearchParams(location.search).get('houses') !== 'legacy';
+const HOUSE_CATALOG_SAFEHOUSES = [[39.9,-43.6],[-379.5,-157.8],[340.2,271.5]];
 
 // ---------- building wall finishes (v0.5.1 colors, Oliver's pitched roofs) ----------
 // Shared grayscale detail maps multiply each building's existing wall color.
@@ -610,7 +612,8 @@ const BC = 40, bGrid = new Map(), bPolys = [];
     let model=null;
     // Only use a complete house model on suitably rectangular ordinary footprints.
     // Special buildings, odd shapes and steep lots keep the existing generator.
-    if(facade!=='bespoke' && b.g && area>=52){
+    if(HOUSE_CATALOG_ENABLED && BUILDING_HEIGHT_TRIAL && facade!=='bespoke' && b.g && area>=52 &&
+       !HOUSE_CATALOG_SAFEHOUSES.some(site=>inPoly(b.p,site[0],site[1]))){
       const fp=HOUSE_LIBRARY.footprintRect(b.p);
       if(fp && fp.fit>=.965 && fp.width>=6.5 && fp.length<=18.2 &&
          hi-lo<1.25 && inPoly(b.p,fp.cx,fp.cz)){
