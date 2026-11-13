@@ -61,9 +61,6 @@ export function footprintRect(p) {
       // Swap axes, preserving a right-handed local XZ basis.
       const oldU=ux,oldZ=uz;
       ux=vx;uz=vz;vx=-oldU;vz=-oldZ;
-      const um0=v0,um1=v1;
-      u0=um0;u1=um1;v0=-(u1-u0); // recomputed below for unambiguous centre
-      length=boxArea/width;width=boxArea/length;
       let nu0=Infinity,nu1=-Infinity,nv0=Infinity,nv1=-Infinity;
       for(const q of pts){const u=q[0]*ux+q[1]*uz,v=q[0]*vx+q[1]*vz;
         nu0=Math.min(nu0,u);nu1=Math.max(nu1,u);nv0=Math.min(nv0,v);nv1=Math.max(nv1,v);}
