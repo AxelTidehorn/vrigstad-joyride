@@ -718,13 +718,36 @@ function facadeKind(hex, b, area) {
   if(hex==='#778c80')return choice<70?'wood':'stucco';
   return choice<34?'mexi':choice<67?'stucco':'wood';
 }
-function roofParts(contour, g, top) {
+function roofParts(contour, g, top, roofRise) {
   if (!g) return { ring: contour, yAt: () => top, sides: [contour] };
-  const [ax, az, bx, bz, w] = g, l = Math.hypot(bx - ax, bz - az), nx = (az - bz) / l, nz = (bx - ax) / l, rise = Math.min(w * 0.7, 5);
+  const [ax, az, bx, bz, w] = g, l = Math.hypot(bx - ax, bz - az), nx = (az - bz) / l, nz = (bx - ax) / l, rise = roofRise === undefined ? Math.min(w * 0.7, 5) : roofRise;
   const off = v => (v.x - ax) * nx + (v.y - az) * nz, yAt = v => top + rise * Math.max(0, 1 - Math.abs(off(v)) / w), ring = [], o = [];
   contour.forEach((a, i) => { const d = contour[(i + 1) % contour.length], oa = off(a), od = off(d), t = oa / (oa - od); ring.push(a); o.push(oa);
     if (oa * od < 0) { ring.push(new THREE.Vector2(a.x + (d.x - a.x) * t, a.y + (d.y - a.y) * t)); o.push(0); } });
   return { ring, yAt, sides: [1, -1].map(s => ring.filter((v, i) => s * o[i] >= 0)).filter(h => h.length > 2) };
+}
+
+// Visual height study: tools/process.py currently infers wall height solely
+// from footprint area. That is too tall for most Swedish one/two-storey homes,
+// especially once the pitched roof adds its separate rise. No survey heights
+// are available in the map: these are provisional silhouette heuristics.
+// Use ?heights=original to compare the untouched game geometry, without a UI.
+const BUILDING_HEIGHT_TRIAL = new URLSearchParams(location.search).get('heights') !== 'original';
+function buildingWallHeight(b) {
+  if (!BUILDING_HEIGHT_TRIAL || b.k !== 0) return b.h;
+  if (b.h <= 2.8) return 2.75;   // minor garages / small sheds
+  if (b.h <= 5.5) return 3.15;   // ordinary one-storey residential scale
+  if (b.h <= 6.5) return 4.55;   // one-and-a-half / compact two storeys
+  if (b.h <= 8) return 5.95;    // two-storey / larger structures
+  return 7.90;                  // larger multi-storey / commercial buildings
+}
+function buildingRoofRise(b) {
+  if (!b.g) return 0;
+  const w = b.g[4];
+  if (!BUILDING_HEIGHT_TRIAL || b.k !== 0) return Math.min(w * 0.7, 5);
+  const pitch = b.h <= 5.5 ? 0.42 : b.h <= 6.5 ? 0.46 : 0.44;
+  const cap = b.h <= 5.5 ? 2.85 : b.h <= 6.5 ? 3.2 : b.h <= 8 ? 3.55 : 3.8;
+  return Math.min(w * pitch, cap);
 }
 
 const BC = 40, bGrid = new Map(), bPolys = [];
@@ -832,7 +855,7 @@ const BC = 40, bGrid = new Map(), bPolys = [];
     c2.set(b.k===2?'#94503d':b.k?'#3c4447':rnd()<.5?'#4b4d4c':'#715044');
     const facade=facadeKind(wallHex,b,area);
     const W=walls[facade];
-    const base=lo-1,top=hi+b.h,{ring,yAt,sides}=roofParts(contour,b.g,top),m=ring.length;
+    const base=lo-1,top=hi+buildingWallHeight(b),{ring,yAt,sides}=roofParts(contour,b.g,top,buildingRoofRise(b)),m=ring.length;
     for(let i=0;i<m;i++){
       const a=ring[i],d=ring[(i+1)%m],ta=yAt(a),td=yAt(d),u=Math.hypot(d.x-a.x,d.y-a.y)/(facade==='wood'?1.04:1.28);
       // The UVs use metres of actual facade length and height, not stretched house bounds.
@@ -930,7 +953,7 @@ const BC = 40, bGrid = new Map(), bPolys = [];
       if(b.g && facade==='wood'){
         const [ax,az,bx,bz,w]=b.g;
         const cx=ax+(bx-ax)*.34,cz=az+(bz-az)*.34;
-        const ridgeY=top+Math.min(w*.7,5);
+        const ridgeY=top+buildingRoofRise(b);
         if(inPoly(b.p,cx,cz))
           chimneyBlock(cx,cz,ridgeY-.50,ridgeY+.95,.56,oliverTrim.chimney);
       }
