@@ -56,8 +56,8 @@ function automaticForce(c,rawPedal,dt,spec){
     // High throttle holds a gear longer. Low throttle cruises early.
     // Choose reachable road-speed shift points, with generous hysteresis.
     // The former 5050 RPM WOT target kept the Volvo in 2/3 and Saab in 3.
-    const shiftUp=2250+850*request;
-    const shiftDown=1020+520*request;
+    const shiftUp=1750+650*request;
+    const shiftDown=900+400*request;
     let next=c.gear;
     if(c.gear<p.ratios.length && coupled>shiftUp)next=c.gear+1;
     else if(c.gear>1 && coupled<shiftDown)next=c.gear-1;
