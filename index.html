@@ -870,8 +870,10 @@ const BC = 40, bGrid = new Map(), bPolys = [];
         }
       }
     }
+    // The street-facing entrance was previously searched twice per house.
+    const entrance=facade==='bespoke'?null:doorFacingRoad(contour,orientation);
     if(facade!=='bespoke'){
-      const side=doorFacingRoad(contour,orientation);
+      const side=entrance;
       if(side){
         const a=contour[side.i],d=contour[(side.i+1)%n],L=Math.hypot(d.x-a.x,d.y-a.y);
         const midX=(a.x+d.x)/2,midZ=(a.y+d.y)/2;
@@ -894,7 +896,6 @@ const BC = 40, bGrid = new Map(), bPolys = [];
     // Oliver #116 architectural finish ported into the fork's existing
     // facade/bespoke generator. No generic overwrite of landmarks or doors.
     if(b.k!==1 && area>=40 && area<=1500 && facade!=='bespoke'){
-      const entrance=doorFacingRoad(contour,orientation);
       for(let i=0;i<n;i++){
         const a=contour[i],d=contour[(i+1)%n];
         const dx=d.x-a.x,dz=d.y-a.y,L=Math.hypot(dx,dz);
