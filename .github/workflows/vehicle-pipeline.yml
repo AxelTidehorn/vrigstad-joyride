@@ -1,0 +1,23 @@
+name: Vehicle pipeline tests
+on:
+  pull_request:
+    paths:
+      - 'tools/vehicle_pipeline/**'
+      - 'tests/test_vehicle_*.py'
+      - '.github/workflows/vehicle-pipeline.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/vehicle_pipeline/**'
+      - 'tests/test_vehicle_*.py'
+      - '.github/workflows/vehicle-pipeline.yml'
+jobs:
+  geometry-validation-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r tools/vehicle_pipeline/requirements.txt
+      - run: python -m unittest discover -s tests -p 'test_vehicle_*.py' -v
