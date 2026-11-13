@@ -75,7 +75,7 @@ def main():
                 browser.close()
         (OUT / "results.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
         fatal = ("WebGLProgram", "INVALID_OPERATION", "ReferenceError", "TypeError", "SyntaxError")
-    if any(r["webgl_error"] or any(word in err for err in r["console_errors"] for word in fatal) for r in results):
+        if any(r["webgl_error"] or any(word in err for err in r["console_errors"] for word in fatal) for r in results):
             raise RuntimeError("WebGL or JS errors; inspect visual-review/results.json")
     finally:
         server.terminate()
