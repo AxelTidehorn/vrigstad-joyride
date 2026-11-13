@@ -1,0 +1,17 @@
+name: Traffic asset import review
+on:
+  pull_request:
+    paths:
+      - 'media/vehicles/**'
+      - 'tools/vehicle_pipeline/inspect_traffic_candidates.py'
+      - '.github/workflows/traffic-asset-review.yml'
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=1.26,<3' 'trimesh>=4.5,<5' 'networkx>=3,<5'
+      - run: python tools/vehicle_pipeline/inspect_traffic_candidates.py

@@ -17,3 +17,8 @@ Third-party components keep their own licenses:
   ODbL, including its attribution and share-alike terms.
 - Elevation tiles: Mapzen terrarium terrain tiles on AWS Open Data.
   See the dataset's terms before reusing them.
+
+- Kenney Car Kit 3.1 GLB review candidates in `media/vehicles/traffic/`:
+  original models by Kenney, Creative Commons CC0 1.0 Universal,
+  https://kenney.nl/assets/car-kit ; unchanged copy from the public
+  https://github.com/Hidencod/tge-assets mirror on 2026-11-13.
