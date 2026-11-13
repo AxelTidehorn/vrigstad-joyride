@@ -38,3 +38,17 @@ film grain and mist stay intact.
 - Requires actual browser screenshots and GPU/mobile FPS review before merge.
 - Check that evening/cloudy scenes remain readable, highlight clipping is
   dramatic *only when intended*, and that shadow cascades stay stable.
+
+## Follow-up: strong time-of-day contrast
+
+An art-direction correction after the first test looked almost identical
+between 13:00 and 19:00. The sun arc now falls much faster in late afternoon;
+direct sunlight, ambient fill and scene exposure decline more sharply.
+
+**Important:** the custom sky is rendered with `toneMapped:false`, so scene
+exposure alone cannot darken it. `uSkyBrightness` explicitly fades the sky
+and clouds, while zenith, horizon and fog colours shift from blue through
+warm dusk to dark blue. This keeps dusk from looking like noon with orange tint.
+
+Test `?time=13`, `?time=17`, `?time=19`, `?time=20.5`, `?time=22`
+in one street view. Browser WebGL and screenshot tests are still needed.

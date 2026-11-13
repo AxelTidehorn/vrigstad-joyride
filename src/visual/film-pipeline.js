@@ -28,7 +28,8 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
     uHorizon: { value: filmHorizon },
     uSunDirection: { value: new THREE.Vector3(0, -1, 0) },
     uCloudTime: { value: 0 },
-    uCloudCoverage: { value: 0.4 }
+    uCloudCoverage: { value: 0.4 },
+    uSkyBrightness: { value: 1.0 }
   },
   side: THREE.BackSide,
   depthWrite: false,
@@ -50,6 +51,7 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
     uniform vec3 uSunDirection;
     uniform float uCloudTime;
     uniform float uCloudCoverage;
+    uniform float uSkyBrightness;
     varying float vElevation;
     varying vec3 vSkyDir;
     float cloudHash(vec2 p) {
@@ -76,7 +78,7 @@ const filmSky = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 18), new THREE
       float disc=smoothstep(.99965,.99994,towardSun)*step(0.01,uSunDirection.y);
       float halo=pow(towardSun,85.0)*step(0.01,uSunDirection.y);
       sky+=vec3(1.0,.88,.73)*(disc*1.35+halo*.30)*(1.0-cloud*.85);
-      gl_FragColor=vec4(sky,1.0);
+      gl_FragColor=vec4(sky*uSkyBrightness,1.0);
     }
   `
 }));
