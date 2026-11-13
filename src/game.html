@@ -184,7 +184,7 @@ function attachContactShadow(parent, w, l) { const m = new THREE.Mesh(blobGeo, b
 // Daylight experiment is isolated from the film grade and gameplay.
 /*DAYLIGHT_CONTROLLER*/
 const daylight = DAYLIGHT.createDaylightController(THREE, {
-  sun, hemi, renderer, camera, sky:filmSky, filmFrameMaterial, filmHorizon
+  sun, hemi, renderer, camera, scene, sky:filmSky, filmFrameMaterial, filmHorizon
 });
 
 // ---------- ground texture (also feeds the minimap) ----------
