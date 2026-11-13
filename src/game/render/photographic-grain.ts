@@ -13,7 +13,7 @@ export function createPhotographicGrain(
 			q === "off"
 				? 0
 				: q === "strong"
-					? 1.35
+					? 1.5
 					: q === "subtle" || q === null
 						? 0.62
 						: Number.isFinite(parsed)
