@@ -162,7 +162,8 @@ scene.background = new THREE.Color(SKY);
 scene.fog = new THREE.Fog(SKY, 390, 2000);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
 // Softer fill preserves natural daylight but lets the sun shape roofs, cars and trees.
-scene.add(new THREE.HemisphereLight(0xcddceb, 0x5e6857, 0.30));
+const hemi = new THREE.HemisphereLight(0xcddceb, 0x5e6857, 0.30);
+scene.add(hemi);
 // Lower sun angle and stronger direct/fill ratio create readable mid-day shadows.
 const sun = new THREE.DirectionalLight(0xffe2bd, 1.38);
 const SUN_DIR = new THREE.Vector3(-0.62, 0.57, 0.55).normalize();
@@ -180,6 +181,11 @@ function attachContactShadow(parent, w, l) { const m = new THREE.Mesh(blobGeo, b
 
 // Single display-referred film pass, embedded by tools/build.py.
 /*FILM_PIPELINE*/
+// Daylight experiment is isolated from the film grade and gameplay.
+/*DAYLIGHT_CONTROLLER*/
+const daylight = DAYLIGHT.createDaylightController(THREE, {
+  sun, hemi, renderer, camera, sky:filmSky, filmFrameMaterial, filmHorizon
+});
 
 // ---------- ground texture (also feeds the minimap) ----------
 const CW = (coarse || renderer.capabilities.maxTextureSize < 4096) ? 2048 : 4096, K = CW / S;
@@ -1518,7 +1524,9 @@ function frame(now) {
   const cp = Math.cos(camPitch), cx = T.x - Math.sin(camYaw) * dist * cp, cz = T.z + Math.cos(camYaw) * dist * cp;
   camera.position.set(cx, Math.max(ty + 1.5 + dist * Math.sin(camPitch), hAt(cx, cz) + 0.8), cz);
   camera.lookAt(T.x, ty + 1.5, T.z);
-  sun.target.position.set(T.x, ty, T.z); sun.position.copy(sun.target.position).addScaledVector(SUN_DIR, 400);
+  sun.target.position.set(T.x, ty, T.z);
+  if(daylight.enabled)daylight.update(dt);
+  else sun.position.copy(sun.target.position).addScaledVector(SUN_DIR,400);
 
   // HUD
   if (toastT > 0) { toastT -= dt; if (toastT <= 0.3) $('toast').style.opacity = 0; if (toastT <= 0) $('toast').hidden = true; }
