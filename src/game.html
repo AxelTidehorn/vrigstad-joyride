@@ -412,6 +412,9 @@ function inWater(x, z) {
   return false;
 }
 
+// ---------- reusable Swedish residential house catalogue ----------
+/*HOUSE_MODELS*/
+
 // ---------- building wall finishes (v0.5.1 colors, Oliver's pitched roofs) ----------
 // Shared grayscale detail maps multiply each building's existing wall color.
 // One repeatable material per finish: no random textures or extra draw calls per house.
@@ -481,6 +484,7 @@ const BC = 40, bGrid = new Map(), bPolys = [];
   const walls=Object.fromEntries(kinds.map(k=>[k,{pos:[],col:[],uv:[]}]));
   const roofPos=[],roofCol=[];
   const detailPos=[],detailCol=[];
+  const catalogInstances=new Map();
   const c=new THREE.Color(), c2=new THREE.Color(), wallBaseShade=new THREE.Color();
   const oliverTrim = {
     frame: new THREE.Color('#eeeae0'),
@@ -581,6 +585,40 @@ const BC = 40, bGrid = new Map(), bPolys = [];
     const facade=facadeKind(wallHex,b,area);
     const W=walls[facade];
     const base=lo-1,top=hi+b.h,{ring,yAt,sides}=roofParts(contour,b.g,top),m=ring.length;
+    let model=null;
+    // Only use a complete house model on suitably rectangular ordinary footprints.
+    // Special buildings, odd shapes and steep lots keep the existing generator.
+    if(facade!=='bespoke' && b.g && area>=52){
+      const fp=HOUSE_LIBRARY.footprintRect(b.p);
+      if(fp && fp.fit>=.965 && fp.width>=6.5 && fp.length<=18.2 &&
+         hi-lo<1.25 && inPoly(b.p,fp.cx,fp.cz)){
+        const options=[];
+        for(const [type,spec] of Object.entries(HOUSE_LIBRARY.HOUSE_TYPES)){
+          const sx=(fp.length-.22)/spec.length,sz=(fp.width-.22)/spec.width;
+          if(sx>=.82 && sx<=1.35 && sz>=.81 && sz<=1.34 && Math.abs(sx-sz)<=.19)
+            options.push({type,sx,sz});
+        }
+        const hash=(Math.imul(Math.round(b.p[0]*10),73856093)^
+          Math.imul(Math.round(b.p[1]*10),19349663)^Math.imul(bi+1,83492791))>>>0;
+        if(options.length && hash%5<=1){
+          const choice=options[Math.floor(hash/5)%options.length];
+          const entrance=doorFacingRoad(contour,orientation);
+          if(entrance){
+            const along=entrance.nx*fp.ux+entrance.nz*fp.uz;
+            const across=-entrance.nx*fp.uz+entrance.nz*fp.ux;
+            const face=Math.abs(along)>Math.abs(across)?(along>0?'+x':'-x'):(across>0?'+z':'-z');
+            const skin=HOUSE_LIBRARY.houseSkin(choice.type,wallHex,hash);
+            model={key:choice.type+'|'+skin+'|'+face,
+              cx:fp.cx,cz:fp.cz,y:lo-.15,yaw:fp.yaw,sx:choice.sx,sz:choice.sz};
+          }
+        }
+      }
+    }
+    if(model){
+      let batch=catalogInstances.get(model.key);
+      if(!batch)catalogInstances.set(model.key,batch=[]);
+      batch.push(model);
+    } else {
     for(let i=0;i<m;i++){
       const a=ring[i],d=ring[(i+1)%m],ta=yAt(a),td=yAt(d),u=Math.hypot(d.x-a.x,d.y-a.y)/(facade==='wood'?1.04:1.28);
       // The UVs use metres of actual facade length and height, not stretched house bounds.
@@ -683,11 +721,32 @@ const BC = 40, bGrid = new Map(), bPolys = [];
           chimneyBlock(cx,cz,ridgeY-.50,ridgeY+.95,.56,oliverTrim.chimney);
       }
     }
+    } // Existing mesh remains the fallback, including its doors and roofs.
     bPolys.push({p:b.p,x0,x1,z0,z1});
     for(let x=Math.floor(x0/BC);x<=Math.floor(x1/BC);x++)for(let z=Math.floor(z0/BC);z<=Math.floor(z1/BC);z++){
       const key=x+','+z;let l=bGrid.get(key);if(!l)bGrid.set(key,l=[]);l.push(bi);
     }
   });
+  // One instanced draw per style and entrance orientation, not per house.
+  const houseMat=new THREE.MeshLambertMaterial({vertexColors:true,side:THREE.DoubleSide});
+  const axis=new THREE.Vector3(0,1,0),quat=new THREE.Quaternion();
+  const pt=new THREE.Vector3(),scale=new THREE.Vector3(),transform=new THREE.Matrix4();
+  for(const [key,items] of catalogInstances){
+    const [type,skin,face]=key.split('|');
+    const geo=HOUSE_LIBRARY.createHouseGeometry(THREE,type,skin,face);
+    const mesh=new THREE.InstancedMesh(geo,houseMat,items.length);
+    mesh.frustumCulled=false; // Instances are scattered, not clustered at the origin.
+    mesh.castShadow=true;mesh.receiveShadow=true;
+    items.forEach((home,i)=>{
+      quat.setFromAxisAngle(axis,home.yaw);
+      pt.set(home.cx,home.y,home.cz);
+      scale.set(home.sx,1,home.sz);
+      transform.compose(pt,quat,scale);
+      mesh.setMatrixAt(i,transform);
+    });
+    mesh.instanceMatrix.needsUpdate=true;
+    scene.add(mesh);
+  }
   for(const kind of kinds){
     const W=walls[kind];if(!W.pos.length)continue;
     const geo=new THREE.BufferGeometry();
