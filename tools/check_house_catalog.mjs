@@ -67,6 +67,7 @@ data.b.forEach((b,i)=>{
   const f=footprintRect(b.p);
   if(!f||f.area<52||f.area>450||f.fit<.965||f.width<6.5||f.length>18.2)return;
   const options=Object.entries(HOUSE_TYPES).filter(([type,spec])=>{
+    if(type==='farmhouse' && (b.h<6.5||f.area<96))return false;
     const sx=(f.length-.22)/spec.length,sz=(f.width-.22)/spec.width;
     return sx>=.82&&sx<=1.35&&sz>=.81&&sz<=1.34&&Math.abs(sx-sz)<=.19;
   });
@@ -74,12 +75,11 @@ data.b.forEach((b,i)=>{
   eligible++;
   const hash=(Math.imul(Math.round(b.p[0]*10),73856093)^
     Math.imul(Math.round(b.p[1]*10),19349663)^Math.imul(i+1,83492791))>>>0;
-  if(hash%5<=1){
-    const taller=options.find(o=>o[0]==='farmhouse');
+  const taller=options.find(o=>o[0]==='farmhouse');
+  if(hash%5<=1 || (taller && hash%5<=3)){
     const regular=options.filter(o=>o[0]!=='farmhouse');
     let picked=regular[Math.floor(hash/5)%regular.length]||taller;
-    if(taller && b.h>=6.5 && f.area>=96 &&
-       ((hash>>>5)%10 < (b.h>=8?6:3)))picked=taller;
+    if(taller && ((hash>>>5)%10 < 8))picked=taller;
     types[picked[0]]++;
   }
 });
