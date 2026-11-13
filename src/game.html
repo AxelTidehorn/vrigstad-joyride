@@ -434,7 +434,14 @@ const BC = 40, bGrid = new Map(), bPolys = [];
   const walls=Object.fromEntries(kinds.map(k=>[k,{pos:[],col:[],uv:[]}]));
   const roofPos=[],roofCol=[];
   const detailPos=[],detailCol=[];
-  const c=new THREE.Color(), c2=new THREE.Color();
+  const c=new THREE.Color(), c2=new THREE.Color(), wallBaseShade=new THREE.Color();
+  const oliverTrim = {
+    frame: new THREE.Color('#eeeae0'),
+    glass: new THREE.Color('#2b3f49'),
+    mullion: new THREE.Color('#d9d8ce'),
+    plinth: new THREE.Color('#63645f'),
+    chimney: new THREE.Color('#9a5848')
+  };
   // Keep the user's v0.5.1 colors; add a realistic material response per facade.
   const house=['#843b30','#843b30','#934739','#d7d3c7','#c0c1b8','#b99550','#bdb5a4','#70867d'];
   const big=['#c0b6a3','#aaa79e','#c8c5ba','#98a6a5'];
@@ -453,6 +460,20 @@ const BC = 40, bGrid = new Map(), bPolys = [];
     const x1=a.x+(d.x-a.x)*t1+nx*depth,z1=a.y+(d.y-a.y)*t1+nz*depth;
     detailPos.push(x0,y0,z0,x1,y0,z1,x1,y1,z1,x0,y0,z0,x1,y1,z1,x0,y1,z0);
     for(let k=0;k<6;k++)detailCol.push(color.r,color.g,color.b);
+  }
+  // Shared low-poly-friendly cuboids: pitched-roof chimney faces are batched
+  // into the existing detail mesh rather than one new draw call per house.
+  function chimneyBlock(x,z,y0,y1,w,color){
+    const a=w/2;
+    const p=[[x-a,z-a],[x+a,z-a],[x+a,z+a],[x-a,z+a]];
+    const tri=(v)=>{detailPos.push(...v);for(let i=0;i<3;i++)detailCol.push(color.r,color.g,color.b);};
+    for(let i=0;i<4;i++){
+      const t=p[i],q=p[(i+1)%4];
+      tri([t[0],y0,t[1],q[0],y0,q[1],q[0],y1,q[1]]);
+      tri([t[0],y0,t[1],q[0],y1,q[1],t[0],y1,t[1]]);
+    }
+    tri([x-a,y1,z-a,x+a,y1,z-a,x+a,y1,z+a]);
+    tri([x-a,y1,z-a,x+a,y1,z+a,x-a,y1,z+a]);
   }
   function doorFacingRoad(contour,orientation) {
     let facing=null,fallback=null;
@@ -508,6 +529,7 @@ const BC = 40, bGrid = new Map(), bPolys = [];
     area=Math.abs(area)/2;
     const wallHex=b.k===2?'#843b30':b.k?'#e6e2d6':area>450?pick(big):pick(house);
     c.set(wallHex);
+    wallBaseShade.copy(c).multiplyScalar(0.72); // Oliver #116: shaded wall feet
     c2.set(b.k===2?'#94503d':b.k?'#3c4447':rnd()<.5?'#4b4d4c':'#715044');
     const facade=facadeKind(wallHex,b,area);
     const W=walls[facade];
@@ -517,7 +539,11 @@ const BC = 40, bGrid = new Map(), bPolys = [];
       // The UVs use metres of actual facade length and height, not stretched house bounds.
       const verts=[[a.x,base,a.y],[d.x,base,d.y],[d.x,td,d.y],[a.x,base,a.y],[d.x,td,d.y],[a.x,ta,a.y]];
       const coords=[[0,0],[u,0],[u,(td-base)/2.5],[0,0],[u,(td-base)/2.5],[0,(ta-base)/2.5]];
-      for(let t=0;t<6;t++){W.pos.push(...verts[t]);W.col.push(c.r,c.g,c.b);W.uv.push(...coords[t]);}
+      for(let t=0;t<6;t++){
+        W.pos.push(...verts[t]);
+        const shade=verts[t][1]<=base+0.015?wallBaseShade:c;
+        W.col.push(shade.r,shade.g,shade.b);W.uv.push(...coords[t]);
+      }
     }
     for(const part of sides)for(const f of THREE.ShapeUtils.triangulateShape(part,[]))for(const i of f){
       roofPos.push(part[i].x,yAt(part[i]),part[i].y);
@@ -569,6 +595,44 @@ const BC = 40, bGrid = new Map(), bPolys = [];
           detailQuad(a,d,side.nx,side.nz,x0,x1,low-.055,low,.096,detailColors.shade);
           detailQuad(a,d,side.nx,side.nz,x1-.15/L-knob,x1-.15/L+knob,low+1.0,low+1.08,.109,detailColors.knob);
         }
+      }
+    }
+    // Oliver #116 architectural finish ported into the fork's existing
+    // facade/bespoke generator. No generic overwrite of landmarks or doors.
+    if(b.k!==1 && area>=40 && area<=1500 && facade!=='bespoke'){
+      const entrance=doorFacingRoad(contour,orientation);
+      for(let i=0;i<n;i++){
+        const a=contour[i],d=contour[(i+1)%n];
+        const dx=d.x-a.x,dz=d.y-a.y,L=Math.hypot(dx,dz);
+        if(L<1.5)continue;
+        const nx=orientation*dz/L,nz=-orientation*dx/L;
+        const midX=(a.x+d.x)/2,midZ=(a.y+d.y)/2;
+        const foot=hAt(midX,midZ),roofY=Math.min(yAt(a),yAt(d));
+        // Mineral/dark plinth and understated white boards under the eaves.
+        if(foot+0.30>base)
+          detailQuad(a,d,nx,nz,0,1,base,foot+0.30,0.056,oliverTrim.plinth);
+        if(Math.abs(yAt(a)-yAt(d))<0.28 && roofY-0.20>foot)
+          detailQuad(a,d,nx,nz,0,1,roofY-0.23,roofY+0.035,0.064,oliverTrim.frame);
+        // Do not put a window over the existing road-facing front door.
+        const centers=entrance && entrance.i===i?(L>7.2?[0.23,0.77]:[]):(L>7.0?[0.27,0.73]:[0.5]);
+        for(const center of centers){
+          const half=0.59/L,t0=center-half,t1=center+half;
+          const baseY=foot+1.05,topY=baseY+1.15;
+          if(t0<0.05||t1>0.95||topY+0.35>roofY)continue;
+          detailQuad(a,d,nx,nz,t0,t1,baseY,topY,0.082,oliverTrim.frame);
+          const inset=.09/L;
+          detailQuad(a,d,nx,nz,t0+inset,t1-inset,baseY+.08,topY-.08,0.094,oliverTrim.glass);
+          detailQuad(a,d,nx,nz,center-.037/L,center+.037/L,baseY+.07,topY-.07,0.103,oliverTrim.mullion);
+          detailQuad(a,d,nx,nz,t0+.07/L,t1-.07/L,baseY+.53,baseY+.59,0.105,oliverTrim.mullion);
+        }
+      }
+      // A single chimney on gabled homes, derived from the original ridge.
+      if(b.g && facade==='wood'){
+        const [ax,az,bx,bz,w]=b.g;
+        const cx=ax+(bx-ax)*.34,cz=az+(bz-az)*.34;
+        const ridgeY=top+Math.min(w*.7,5);
+        if(inPoly(b.p,cx,cz))
+          chimneyBlock(cx,cz,ridgeY-.50,ridgeY+.95,.56,oliverTrim.chimney);
       }
     }
     bPolys.push({p:b.p,x0,x1,z0,z1});
