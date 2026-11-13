@@ -2064,7 +2064,8 @@ function createStreetLighting(THREE,{scene,camera,roads,widths,height,blocked,co
         if(d<distance){distance=d;best=i}
       }
       selected[k]=best;const light=pool[k];
-      light.intensity=best<0?0:level*5.1;
+      light.visible=best>=0&&level>.04;
+      light.intensity=light.visible?level*5.1:0;
       if(best>=0){const p=positions[best];light.position.set(p[0]+.35,height(p[0],p[1])+4.9,p[1])}
     }
     active=0;for(const light of pool)if(light.intensity>.01)active++;
@@ -2145,7 +2146,8 @@ function createWindowLighting(THREE,{scene,camera,buildings,hAt,nearestRoad,coar
         const d=(p.x-camera.position.x)**2+(p.z-camera.position.z)**2;
         if(d<dist){dist=d;best=p}
       }
-      light.intensity=best?level*.95:0;
+      light.visible=!!best&&level>.04;
+      light.intensity=light.visible?level*.95:0;
       if(best)light.position.set(best.x+best.nx*.7,best.y,best.z+best.nz*.7);
     }
   }
@@ -2186,7 +2188,8 @@ function createVehicleLighting(THREE,{scene,coarse}){
       -(b.x-camera.position.x)**2-(b.z-camera.position.z)**2));
     for(let i=0;i<pool.length;i++){
       const light=pool[i],c=active[i];
-      light.intensity=c?level*5.2:0;
+      light.visible=!!c&&level>.04;
+      light.intensity=light.visible?level*5.2:0;
       if(!c)continue;
       const fx=Math.sin(c.h),fz=-Math.cos(c.h);
       const tractor=c.type==='newHolland'||c.type==='johnDeere'||c.type==='traktor';
