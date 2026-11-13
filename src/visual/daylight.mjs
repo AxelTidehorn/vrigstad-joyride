@@ -1,14 +1,50 @@
-// Small experimental daylight controller. Pure solar state + renderer adapter.
-// Sunrise / sunset approximations are aesthetic, not an astronomical ephemeris.
-export function daylightState(hour, cloudTime=0, coverage=null) {
+// Approximate NOAA solar position for Vrigstad; azimuth clockwise from north.
+// World axes are X east, Z south, Y up; solar angles use radians.
+export const VRIGSTAD={latitude:57.3555,longitude:14.4756};
+export const DEFAULT_SOLAR_DATE='2026-08-15';
+function validSolarDate(value) {
+  if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return DEFAULT_SOLAR_DATE;
+  const [year,month,day]=value.split('-').map(Number);
+  const d=new Date(Date.UTC(year,month-1,day));
+  return d.getUTCFullYear()===year&&d.getUTCMonth()===month-1&&d.getUTCDate()===day?value:DEFAULT_SOLAR_DATE;
+}
+function euDst(year,month,day,hour) {
+  if(month<3||month>10)return false;
+  if(month>3&&month<10)return true;
+  const last=new Date(Date.UTC(year,month,0));
+  const lastSunday=last.getUTCDate()-last.getUTCDay();
+  return month===3?(day>lastSunday||(day===lastSunday&&hour>=3))
+    :(day<lastSunday||(day===lastSunday&&hour<3));
+}
+export function solarPosition(hour,date=DEFAULT_SOLAR_DATE) {
+  const valid=validSolarDate(date),[year,month,day]=valid.split('-').map(Number);
+  const dateUTC=Date.UTC(year,month-1,day);
+  const n=Math.floor((dateUTC-Date.UTC(year,0,1))/86400000)+1;
+  const timezone=euDst(year,month,day,hour)?2:1;
+  const gamma=2*Math.PI/365*(n-1+(hour-12)/24);
+  const eot=229.18*(.000075+.001868*Math.cos(gamma)-.032077*Math.sin(gamma)
+    -.014615*Math.cos(2*gamma)-.040849*Math.sin(2*gamma));
+  const decl=.006918-.399912*Math.cos(gamma)+.070257*Math.sin(gamma)
+    -.006758*Math.cos(2*gamma)+.000907*Math.sin(2*gamma)
+    -.002697*Math.cos(3*gamma)+.00148*Math.sin(3*gamma);
+  const hourAngle=(hour*60+eot+4*VRIGSTAD.longitude-60*timezone)/4*Math.PI/180-Math.PI;
+  const lat=VRIGSTAD.latitude*Math.PI/180;
+  const sine=Math.sin(lat)*Math.sin(decl)+Math.cos(lat)*Math.cos(decl)*Math.cos(hourAngle);
+  const altitude=Math.asin(Math.max(-1,Math.min(1,sine)));
+  const azimuth=(Math.atan2(Math.sin(hourAngle),
+    Math.cos(hourAngle)*Math.sin(lat)-Math.tan(decl)*Math.cos(lat))+3*Math.PI)%(2*Math.PI);
+  return {altitude,azimuth,dx:Math.sin(azimuth)*Math.cos(altitude),
+    dy:Math.sin(altitude),dz:-Math.cos(azimuth)*Math.cos(altitude),date:valid};
+}
+
+// Solar direction is geographic; exposure, clouds and tint are artistic.
+export function daylightState(hour, cloudTime=0, coverage=null, date=DEFAULT_SOLAR_DATE) {
   const h=((hour%24)+24)%24;
-  // Deliberately stylized Swedish summer arc, from 05:00 to 21:00.
-  const phase=(h-5)/16;
-  const raw=Math.sin(Math.PI*phase);
-  const altitude=phase>0&&phase<1?Math.pow(Math.max(0,raw),1.6)*.96:-.12;
-  const daytime=Math.max(0,Math.min(1,altitude/.22));
-  const warm=Math.max(0,Math.min(1,(.62-altitude)/.52));
-  const azimuth=Math.PI*(h-5)/16;
+  const solar=solarPosition(h,date);
+  const altitude=solar.altitude;
+  const elevation=altitude*180/Math.PI;
+  const daytime=Math.max(0,Math.min(1,(elevation+1.2)/16));
+  const warm=Math.max(0,Math.min(1,(35-elevation)/29));
   const cloudNoise=.5+.24*Math.sin(cloudTime*.19+1.7)+.14*Math.sin(cloudTime*.43-0.8);
   const cover=coverage===null?Math.max(0,Math.min(.82,cloudNoise)):Math.max(0,Math.min(1,coverage));
   // Broad cloud shadows: coherent across the entire scene; not a weather model.
@@ -16,12 +52,10 @@ export function daylightState(hour, cloudTime=0, coverage=null) {
   const shade=Math.max(.30,1-cover*.82);
   // Twilight keeps residual skylight after direct sun fades; actual night
   // still requires headlights and street lamps, not artificial daylight.
-  const twilight=Math.max(0,Math.min(1,(h>=12?21.7-h:h-4.3)/2.0));
+  const twilight=Math.max(0,Math.min(1,(elevation+9)/12));
   return {
-    hour:h,altitude,daytime,warm,cover,shade,
-    dx:Math.cos(azimuth)*Math.cos(Math.max(-.12,altitude)*1.12),
-    dy:Math.max(-.15,altitude),
-    dz:Math.sin(azimuth)*Math.cos(Math.max(-.12,altitude)*1.12),
+    hour:h,date:solar.date,altitude,azimuth:solar.azimuth,daytime,warm,cover,shade,
+    dx:solar.dx,dy:solar.dy,dz:solar.dz,
     strength:daytime*(1.44-.48*warm)*shade,
     exposure:.69+.30*daytime-.11*warm+.03*(1-shade),
     skyBrightness:Math.max(.15,(.25+.75*daytime)*(1-.27*warm)),
@@ -39,12 +73,13 @@ export function createDaylightController(THREE, config) {
   const speed=Number(params.get('daySpeed'));
   const daySpeed=Number.isFinite(speed)&&speed>0?Math.min(5,speed):1;
   let hour=fixedHour===null?15.5:fixedHour;
+  let solarDate=validSolarDate(params.get('date')||DEFAULT_SOLAR_DATE);
   const vector=new THREE.Vector3(),sunClip=new THREE.Vector3(),look=new THREE.Vector3(),skyCool=new THREE.Color(0x4c80b2),skyWarm=new THREE.Color(0xc86b73),skyNight=new THREE.Color(0x14243a);
   const ambientCold=new THREE.Color(0xc8d9ed),ambientWarm=new THREE.Color(0xffa776);
   const sunCold=new THREE.Color(0xfff2df),sunWarm=new THREE.Color(0xff8b36);
   const horizonDay=new THREE.Color(0x91b9d4),horizonDusk=new THREE.Color(0xf0a16e),horizonNight=new THREE.Color(0x1d3046);
   let clock=0,adapt=.95,coverage=null,glare=1,occlusion=1;
-  const initialHour=hour,initialCycle=cycle;
+  const initialHour=hour,initialCycle=cycle,initialDate=solarDate;
   function hash(x,z){return ((Math.sin(x*127.1+z*311.7)*43758.5453)%1+1)%1}
   function noise(x,z){const ix=Math.floor(x),iz=Math.floor(z);let a=x-ix,b=z-iz;a=a*a*(3-2*a);b=b*b*(3-2*b);return (hash(ix,iz)*(1-a)+hash(ix+1,iz)*a)*(1-b)+(hash(ix,iz+1)*(1-a)+hash(ix+1,iz+1)*a)*b}
   const smooth=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
@@ -52,7 +87,7 @@ export function createDaylightController(THREE, config) {
     if(!enabled)return;
     clock+=dt;
     if(cycle)hour=(hour+dt*daySpeed*24/720)%24;
-    const state=daylightState(hour,clock,coverage);
+    const state=daylightState(hour,clock,coverage,solarDate);
     vector.set(state.dx,state.dy,state.dz).normalize();
     sun.position.copy(sun.target.position).addScaledVector(vector,400);
     // Sample the same projected cloud field as the skydome at the sun.
@@ -91,9 +126,10 @@ export function createDaylightController(THREE, config) {
       Math.pow((facing-.35)/.65,1.4)*state.daytime*state.shade*occlusion*glare*(.38+1.40*state.warm):0;
     return state;
   }
-  return {update,get enabled(){return enabled},getHour:()=>hour,getCycle:()=>cycle,
-    setHour(value){enabled=true;hour=((value%24)+24)%24;cycle=false;adapt=daylightState(hour,clock,coverage).exposure;update(0)},
+  return {update,get enabled(){return enabled},getHour:()=>hour,getCycle:()=>cycle,getDate:()=>solarDate,
+    setHour(value){enabled=true;hour=((value%24)+24)%24;cycle=false;adapt=daylightState(hour,clock,coverage,solarDate).exposure;update(0)},
+    setDate(value){solarDate=validSolarDate(value);adapt=daylightState(hour,clock,coverage,solarDate).exposure;update(0)},
     setCycle(value){enabled=true;cycle=value},setCoverage(value){coverage=value;update(0)},setGlare(value){glare=value;update(0)},
-    reset(){enabled=initialEnabled;hour=initialHour;cycle=initialCycle;coverage=null;glare=1;adapt=daylightState(hour).exposure;update(0)}
+    reset(){enabled=initialEnabled;hour=initialHour;cycle=initialCycle;solarDate=initialDate;coverage=null;glare=1;adapt=daylightState(hour,clock,coverage,solarDate).exposure;update(0)}
   };
 }
