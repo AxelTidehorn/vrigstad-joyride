@@ -32,7 +32,7 @@ for file in ['index.html','preview.html']:
  if marker not in s:
   if file=='index.html':s=s.replace('<nav>','<nav><a href="proportion-review/index.html">Current profile · before / after</a>',1)
   else:s=s.replace('<summary>Filer, jämförelser och rapport</summary>','<summary>Filer, jämförelser och rapport</summary><p><a href="proportion-review/index.html">Current Saab profile · before / after</a></p>',1)
- s=s.replace('7 822','7 758');f.write_text(s)
+ s=s.replace('7 822','7 758').replace('experiments/volvo240/review-sheet.png','proportion-review/before-after.png').replace('Fixed three-quarter PNG of the Volvo 240 blockout','Fixed three-quarter PNG of the Saab 900');f.write_text(s)
 with zipfile.ZipFile(b/'saab900-delivery.zip','w',zipfile.ZIP_DEFLATED) as z:
  for name in ['model.py','parameters.json','vehicle.json','README.md','references.md','proportion_review.py','proportion_audit.py','proportion_package.py','build/model.blend','build/saab900-t16.glb','build/geometry.json','build/reimport.json','build/three-loader.json','build/report.json']:
   f=p/name;z.write(f,f.relative_to(root))
