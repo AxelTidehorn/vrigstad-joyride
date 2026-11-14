@@ -32,6 +32,15 @@ test.describe('game (index.html)', () => {
     await expect(page.locator('#intro')).toBeVisible();
     await expectWebGL(page);
     expect(await state(page)).toMatchObject({ started: false, inCar: false });
+    // Verify actual Blender assets, not just GLB HTTP requests or fallback boxes.
+    await expect.poll(async () => (await state(page)).showcase.length,
+      { timeout: 30000 }).toBe(4);
+    await expect.poll(async () => (await state(page)).showcase.every(c => c.loaded && c.wheels === 4),
+      { timeout: 30000 }).toBe(true);
+    const lineup = (await state(page)).showcase;
+    expect(lineup.map(c => c.type)).toEqual(['volvo','saab','xc70','polis']);
+    for (let i=0;i<lineup.length;i++) for (let j=i+1;j<lineup.length;j++)
+      expect(Math.hypot(lineup[i].x-lineup[j].x,lineup[i].z-lineup[j].z)).toBeGreaterThan(5.2);
     await page.screenshot({ path: testInfo.outputPath('game-intro.png') });
     expect(errors).toEqual([]);
   });
