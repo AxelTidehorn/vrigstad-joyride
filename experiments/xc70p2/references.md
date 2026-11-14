@@ -1,7 +1,7 @@
 # XC70 P2 MY2005: reference register
 
 Selected body: facelift P2 XC70, approximately MY2005–2006, European civilian
-silver/charcoal trim. Police: late-2005-on Swedish blue/yellow scheme, simplified.
+silver/charcoal trim. Police: current user-requested blue/white scheme; earlier blue/yellow references retained as historical research only.
 Not P3 and not the unclad V70. Photographed model years are not always exact.
 
 - Volvo Cars, 2005 Swedish press information:

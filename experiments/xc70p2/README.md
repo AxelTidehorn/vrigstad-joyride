@@ -16,7 +16,7 @@ wrap to the sides. Tall D-pillar lamps, grille/diagonal, rails, handles and whee
 are separate genuine components. Body/rim materials remain independently editable.
 
 `variants.py` changes only paint/livery and POLICE/POLICE_DECALS visibility.
-No duplicated base shell. The packed texture and ray-cast seated alpha vinyl
+No duplicated base shell. The body paint material and ray-cast seated alpha vinyl
 markings are authored originals; reference photographs are not used as textures.
 Blue light modules have distinct objects/material and emission strength zero,
 ready for later animation. No flashing or gameplay logic is added.
@@ -80,15 +80,43 @@ soft wheel-well shading, simplified rear lamp contours, six-spoke wheel graphics
 and flat opaque glazing without an interior. Fine door/tailgate shut lines are
 simplified; this is stylized game geometry, not an exact factory body model.
 
-Police decoration is an approximate late-2005-on scheme, supported by a later
-P2 service photograph, not a replica of one documented MY2005 unit. Sparse
-blue/yellow blocks and POLIS lettering are retained; crest, fleet numbers,
-window-edge reflective strips and optional auxiliary floodlights are omitted.
-The raised blue ramp is simplified. These omissions are explicit limits of the
-period-replica acceptance criterion. No claim of exact police-fleet authenticity.
+The current police paint is blue on white, as requested in the targeted correction.
+It supersedes the earlier blue/yellow experiment. Full front-fender and rear-quarter
+areas are blue; doors, hood centre and tailgate centre stay white for readable POLIS.
+Paint follows body point colours, avoiding projected texture streaks. The old
+police-livery.png is a blue/white palette/reference swatch, not the current body shader.
+Crest, fleet numbers and extra equipment remain omitted; lightbar geometry is unchanged.
 
 Polygon counts and mesh counts are in `build/variants.json` and both geometry
 reports. Draw-call cost remains material; no several-car FPS target, physical
 Safari performance or human visual approval is established by these checks.
 No model is installed in the game. Review the hosted PNGs and existing touch
 viewer before any integration.
+
+## Targeted detail correction
+
+See [before/after detail review](build/detail-review/index.html) and its audit.json.
+Front/rear reveal depth is reduced from 9 to 5 mm, upper/lower border 12 to 8 mm;
+rear side glass is extended 80 mm. The rear glass has a lateral painted frame to
+keep its sides clear of the thin tail lenses. The actual connected backing and
+reveal surfaces changed, not merely shading. The closed-body convention remains;
+"thinner tailgate" here means the visible opening/reveal, not a hollow stamped shell.
+Headlamps are rectangular 370×100 mm fronts with 55 mm depth. Rear lenses have
+28 mm total depth across the actual corner surface. Mounted seating overlaps
+with the body are intentional; no general bevel or body reshaping was introduced.
+
+The audit compares frozen previous-master geometry against the updated master;
+all preserved components, body bounds and protected central roof coordinates
+match exactly. Canonical filenames and export pipeline are unchanged.
+
+Paint boundaries use geometry-preserving support cuts and a shared point colour
+attribute. They do not create detached decals or separate body panels. The
+actual exported COLOR_0 palette and blue coverage over both axles are checked
+by detail_export_audit.py. Civilian point colours remain white.
+
+To rerun the preservation audit, restore the prior master from Git commit
+4812b85e8b75b1c788bee7824a45145692fa7152, then pass its absolute path and
+`experiments/xc70p2/build/detail-review` as arguments to `detail_audit.py` through
+Blender Modeler script mode. `detail_review.py` creates close-ups; run
+`detail_package.py` before `package_review.py` to refresh comparison sheets.
+The existing export.sh and verify_variants.py still apply without structural changes.

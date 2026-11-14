@@ -11,6 +11,6 @@ test_uniform_registration_rotation_and_flip (test_verify_silhouette.SilhouetteTe
 test_wheel_held_out (test_verify_silhouette.SilhouetteTests.test_wheel_held_out) ... ok
 
 ----------------------------------------------------------------------
-Ran 11 tests in 1.031s
+Ran 11 tests in 1.162s
 
 OK
