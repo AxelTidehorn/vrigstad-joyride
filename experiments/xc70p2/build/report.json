@@ -1,8 +1,8 @@
 {
   "objects": {
     "body": {
-      "verts": 2174,
-      "faces": 4344,
+      "verts": 3249,
+      "faces": 6494,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -10,7 +10,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 7.832815068,
+      "volume": 7.832836387,
       "scale": [
         1.0,
         1.0,
@@ -33,16 +33,16 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.00878417,
+      "volume": 0.00743352,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        1.6554,
-        3.0521,
-        0.4124
+        1.6579,
+        3.0599,
+        0.4121
       ],
       "islands": 8
     },
@@ -516,14 +516,14 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.019356001,
+      "volume": 0.014637001,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        0.25,
+        0.195,
         0.393,
         0.605
       ],
@@ -631,16 +631,62 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.019356001,
+      "volume": 0.014637001,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        0.25,
+        0.195,
         0.393,
         0.605
+      ],
+      "islands": 1
+    },
+    "lamp_head_frame": {
+      "verts": 16,
+      "faces": 32,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 9.3689e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.38,
+        0.014,
+        0.112
+      ],
+      "islands": 1
+    },
+    "lamp_head_frame.001": {
+      "verts": 16,
+      "faces": 32,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 9.3689e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.38,
+        0.014,
+        0.112
       ],
       "islands": 1
     },
@@ -852,8 +898,8 @@
       "islands": 1
     },
     "grille_slats": {
-      "verts": 24,
-      "faces": 44,
+      "verts": 168,
+      "faces": 308,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -861,156 +907,18 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 7.1228e-05,
+      "volume": 0.000498595,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        0.018,
+        0.498,
         0.025,
         0.17
       ],
-      "islands": 1
-    },
-    "grille_slats.001": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 7.1228e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.018,
-        0.025,
-        0.17
-      ],
-      "islands": 1
-    },
-    "grille_slats.002": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 7.1228e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.018,
-        0.025,
-        0.17
-      ],
-      "islands": 1
-    },
-    "grille_slats.003": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 7.1228e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.018,
-        0.025,
-        0.17
-      ],
-      "islands": 1
-    },
-    "grille_slats.004": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 7.1228e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.018,
-        0.025,
-        0.17
-      ],
-      "islands": 1
-    },
-    "grille_slats.005": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 7.1228e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.018,
-        0.025,
-        0.17
-      ],
-      "islands": 1
-    },
-    "grille_slats.006": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 7.1228e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.018,
-        0.025,
-        0.17
-      ],
-      "islands": 1
+      "islands": 7
     },
     "grille_diagonal": {
       "verts": 24,
@@ -1055,6 +963,29 @@
         0.075,
         0.03,
         0.07
+      ],
+      "islands": 1
+    },
+    "grille_frame": {
+      "verts": 16,
+      "faces": 32,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000341714,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.61,
+        0.018,
+        0.205
       ],
       "islands": 1
     },
@@ -1104,9 +1035,9 @@
       ],
       "islands": 1
     },
-    "trim_spoke": {
-      "verts": 24,
-      "faces": 44,
+    "trim_spokes_fl": {
+      "verts": 144,
+      "faces": 264,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -1114,7 +1045,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 9.3142e-05,
+      "volume": 0.000558849,
       "scale": [
         1.0,
         1.0,
@@ -1122,125 +1053,10 @@
       ],
       "dimensions": [
         0.024,
-        0.12,
-        0.035
+        0.35,
+        0.3158
       ],
-      "islands": 1
-    },
-    "trim_spoke.001": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.002": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.003": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.004": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.005": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
+      "islands": 6
     },
     "wheel_fr": {
       "verts": 242,
@@ -1288,9 +1104,9 @@
       ],
       "islands": 1
     },
-    "trim_spoke.006": {
-      "verts": 24,
-      "faces": 44,
+    "trim_spokes_fr": {
+      "verts": 144,
+      "faces": 264,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -1298,7 +1114,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 9.3142e-05,
+      "volume": 0.000558849,
       "scale": [
         1.0,
         1.0,
@@ -1306,125 +1122,10 @@
       ],
       "dimensions": [
         0.024,
-        0.12,
-        0.035
+        0.35,
+        0.3158
       ],
-      "islands": 1
-    },
-    "trim_spoke.007": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.008": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.009": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.010": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.011": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
+      "islands": 6
     },
     "wheel_rl": {
       "verts": 242,
@@ -1472,9 +1173,9 @@
       ],
       "islands": 1
     },
-    "trim_spoke.012": {
-      "verts": 24,
-      "faces": 44,
+    "trim_spokes_rl": {
+      "verts": 144,
+      "faces": 264,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -1482,7 +1183,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 9.3142e-05,
+      "volume": 0.000558849,
       "scale": [
         1.0,
         1.0,
@@ -1490,125 +1191,10 @@
       ],
       "dimensions": [
         0.024,
-        0.12,
-        0.035
+        0.35,
+        0.3158
       ],
-      "islands": 1
-    },
-    "trim_spoke.013": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.014": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.015": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.016": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.017": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
+      "islands": 6
     },
     "wheel_rr": {
       "verts": 242,
@@ -1656,9 +1242,9 @@
       ],
       "islands": 1
     },
-    "trim_spoke.018": {
-      "verts": 24,
-      "faces": 44,
+    "trim_spokes_rr": {
+      "verts": 144,
+      "faces": 264,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -1666,7 +1252,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 9.3142e-05,
+      "volume": 0.000558849,
       "scale": [
         1.0,
         1.0,
@@ -1674,131 +1260,16 @@
       ],
       "dimensions": [
         0.024,
-        0.12,
-        0.035
+        0.35,
+        0.3158
       ],
-      "islands": 1
-    },
-    "trim_spoke.019": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.020": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.021": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.022": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
-    },
-    "trim_spoke.023": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 9.3142e-05,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.024,
-        0.12,
-        0.035
-      ],
-      "islands": 1
+      "islands": 6
     }
   },
   "errors": [],
   "warnings": [],
   "info": [
-    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-trim_arch embedded 0.033 m; body-trim_arch.001 embedded 0.033 m; body-trim_sill embedded 0.042 m; body-mirror_housing flush; body-trim_rail_foot flush; body-trim_arch.002 embedded 0.033 m; body-trim_arch.003 embedded 0.033 m; body-trim_sill.001 embedded 0.042 m; body-mirror_housing.001 flush; body-trim_rail_foot.002 flush; body-bumper_front embedded 0.024 m; body-bumper_rear embedded 0.042 m; body-lamp_head embedded 0.045 m; body-lamp_indicator embedded 0.023 m; body-lamp_tail embedded 0.226 m; body-lamp_head.001 embedded 0.045 m; body-lamp_indicator.001 embedded 0.023 m; body-lamp_tail.001 embedded 0.226 m; body-trim_handle embedded 0.011 m; body-trim_handle.001 embedded 0.011 m; body-trim_handle.002 embedded 0.011 m; body-trim_handle.003 embedded 0.011 m; body-grille embedded 0.025 m; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; glass_envelope[island 0]-lamp_tail embedded 0.014 m; glass_envelope[island 0]-lamp_tail.001 embedded 0.014 m; trim_arch-trim_sill embedded 0.026 m; trim_arch.001-trim_sill embedded 0.026 m; trim_sill-bumper_front embedded 0.027 m; trim_sill-bumper_rear embedded 0.027 m; trim_sill-wheel_fl flush; trim_sill-wheel_rl flush; trim_rail_foot-trim_roof_rail flush; trim_rail_foot.001-trim_roof_rail flush; trim_arch.002-trim_sill.001 embedded 0.026 m; trim_arch.003-trim_sill.001 embedded 0.026 m; trim_sill.001-bumper_front embedded 0.027 m; trim_sill.001-bumper_rear embedded 0.027 m; trim_sill.001-wheel_fr flush; trim_sill.001-wheel_rr flush; trim_rail_foot.002-trim_roof_rail.001 flush; trim_rail_foot.003-trim_roof_rail.001 flush; bumper_front-lamp_head flush; bumper_front-lamp_head.001 flush; bumper_front-trim_skid_front embedded 0.043 m; bumper_front-plate_front embedded 0.024 m; bumper_front-grille embedded 0.033 m; bumper_front-grille_slats embedded 0.020 m; bumper_front-grille_slats.001 embedded 0.020 m; bumper_front-grille_slats.002 embedded 0.020 m; bumper_front-grille_slats.003 embedded 0.020 m; bumper_front-grille_slats.004 embedded 0.020 m; bumper_front-grille_slats.005 embedded 0.020 m; bumper_front-grille_slats.006 embedded 0.020 m; bumper_front-grille_diagonal embedded 0.037 m; bumper_rear-trim_skid_rear embedded 0.043 m; bumper_rear-plate_rear embedded 0.024 m; lamp_head-lamp_reflector flush; lamp_head-lamp_reflector.001 flush; lamp_head.001-lamp_reflector.002 flush; lamp_head.001-lamp_reflector.003 flush; plate_front-grille_diagonal flush; grille-grille_slats flush; grille-grille_slats.001 flush; grille-grille_slats.002 flush; grille-grille_slats.003 flush; grille-grille_slats.004 flush; grille-grille_slats.005 flush; grille-grille_slats.006 flush; grille_slats-grille_diagonal flush; grille_slats.001-grille_diagonal flush; grille_slats.002-grille_diagonal flush; grille_slats.003-grille_diagonal flush; grille_slats.004-grille_diagonal flush; grille_slats.005-grille_diagonal flush; grille_slats.006-grille_diagonal flush; grille_diagonal-badge_volvo flush; wheel_fl-trim_rim_fl flush; trim_rim_fl-trim_spoke flush; trim_rim_fl-trim_spoke.001 flush; trim_rim_fl-trim_spoke.002 flush; trim_rim_fl-trim_spoke.003 flush; trim_rim_fl-trim_spoke.004 flush; trim_rim_fl-trim_spoke.005 flush; wheel_fr-trim_rim_fr flush; trim_rim_fr-trim_spoke.006 flush; trim_rim_fr-trim_spoke.007 flush; trim_rim_fr-trim_spoke.008 flush; trim_rim_fr-trim_spoke.009 flush; trim_rim_fr-trim_spoke.010 flush; trim_rim_fr-trim_spoke.011 flush; wheel_rl-trim_rim_rl flush; trim_rim_rl-trim_spoke.012 flush; trim_rim_rl-trim_spoke.013 flush; trim_rim_rl-trim_spoke.014 flush; trim_rim_rl-trim_spoke.015 flush; trim_rim_rl-trim_spoke.016 flush; trim_rim_rl-trim_spoke.017 flush; wheel_rr-trim_rim_rr flush; trim_rim_rr-trim_spoke.018 flush; trim_rim_rr-trim_spoke.019 flush; trim_rim_rr-trim_spoke.020 flush; trim_rim_rr-trim_spoke.021 flush; trim_rim_rr-trim_spoke.022 flush; trim_rim_rr-trim_spoke.023 flush"
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-trim_arch embedded 0.033 m; body-trim_arch.001 embedded 0.033 m; body-trim_sill embedded 0.042 m; body-mirror_housing flush; body-trim_rail_foot flush; body-trim_arch.002 embedded 0.033 m; body-trim_arch.003 embedded 0.033 m; body-trim_sill.001 embedded 0.042 m; body-mirror_housing.001 flush; body-trim_rail_foot.002 flush; body-bumper_front embedded 0.024 m; body-bumper_rear embedded 0.042 m; body-lamp_head embedded 0.045 m; body-lamp_indicator embedded 0.023 m; body-lamp_tail embedded 0.168 m; body-lamp_head.001 embedded 0.045 m; body-lamp_indicator.001 embedded 0.023 m; body-lamp_tail.001 embedded 0.168 m; body-trim_handle embedded 0.011 m; body-trim_handle.001 embedded 0.011 m; body-trim_handle.002 embedded 0.011 m; body-trim_handle.003 embedded 0.011 m; body-grille embedded 0.025 m; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; trim_arch-trim_sill embedded 0.026 m; trim_arch.001-trim_sill embedded 0.026 m; trim_sill-bumper_front embedded 0.027 m; trim_sill-bumper_rear embedded 0.027 m; trim_sill-wheel_fl flush; trim_sill-wheel_rl flush; trim_rail_foot-trim_roof_rail flush; trim_rail_foot.001-trim_roof_rail flush; trim_arch.002-trim_sill.001 embedded 0.026 m; trim_arch.003-trim_sill.001 embedded 0.026 m; trim_sill.001-bumper_front embedded 0.027 m; trim_sill.001-bumper_rear embedded 0.027 m; trim_sill.001-wheel_fr flush; trim_sill.001-wheel_rr flush; trim_rail_foot.002-trim_roof_rail.001 flush; trim_rail_foot.003-trim_roof_rail.001 flush; bumper_front-lamp_head flush; bumper_front-lamp_head.001 flush; bumper_front-lamp_head_frame flush; bumper_front-lamp_head_frame.001 flush; bumper_front-trim_skid_front embedded 0.043 m; bumper_front-plate_front embedded 0.024 m; bumper_front-grille embedded 0.033 m; bumper_front-grille_slats[island 0] embedded 0.020 m; bumper_front-grille_slats[island 1] embedded 0.020 m; bumper_front-grille_slats[island 2] embedded 0.020 m; bumper_front-grille_slats[island 3] embedded 0.020 m; bumper_front-grille_slats[island 4] embedded 0.020 m; bumper_front-grille_slats[island 5] embedded 0.020 m; bumper_front-grille_slats[island 6] embedded 0.020 m; bumper_front-grille_diagonal embedded 0.037 m; bumper_front-grille_frame embedded 0.038 m; bumper_rear-trim_skid_rear embedded 0.043 m; bumper_rear-plate_rear embedded 0.024 m; lamp_head-lamp_reflector flush; lamp_head-lamp_reflector.001 flush; lamp_head-lamp_head_frame flush; lamp_reflector-lamp_head_frame flush; lamp_reflector.001-lamp_head_frame flush; lamp_head.001-lamp_reflector.002 flush; lamp_head.001-lamp_reflector.003 flush; lamp_head.001-lamp_head_frame.001 flush; lamp_reflector.002-lamp_head_frame.001 flush; lamp_reflector.003-lamp_head_frame.001 flush; plate_front-grille_diagonal flush; grille-grille_slats[island 0] flush; grille-grille_slats[island 1] flush; grille-grille_slats[island 2] flush; grille-grille_slats[island 3] flush; grille-grille_slats[island 4] flush; grille-grille_slats[island 5] flush; grille-grille_slats[island 6] flush; grille-grille_frame flush; grille_slats[island 0]-grille_diagonal flush; grille_slats[island 1]-grille_diagonal flush; grille_slats[island 2]-grille_diagonal flush; grille_slats[island 3]-grille_diagonal flush; grille_slats[island 4]-grille_diagonal flush; grille_slats[island 5]-grille_diagonal flush; grille_slats[island 6]-grille_diagonal flush; grille_diagonal-badge_volvo flush; grille_diagonal-grille_frame flush; wheel_fl-trim_rim_fl flush; trim_rim_fl-trim_spokes_fl[island 0] flush; trim_rim_fl-trim_spokes_fl[island 1] flush; trim_rim_fl-trim_spokes_fl[island 2] flush; trim_rim_fl-trim_spokes_fl[island 3] flush; trim_rim_fl-trim_spokes_fl[island 4] flush; trim_rim_fl-trim_spokes_fl[island 5] flush; wheel_fr-trim_rim_fr flush; trim_rim_fr-trim_spokes_fr[island 0] flush; trim_rim_fr-trim_spokes_fr[island 1] flush; trim_rim_fr-trim_spokes_fr[island 2] flush; trim_rim_fr-trim_spokes_fr[island 3] flush; trim_rim_fr-trim_spokes_fr[island 4] flush; trim_rim_fr-trim_spokes_fr[island 5] flush; wheel_rl-trim_rim_rl flush; trim_rim_rl-trim_spokes_rl[island 0] flush; trim_rim_rl-trim_spokes_rl[island 1] flush; trim_rim_rl-trim_spokes_rl[island 2] flush; trim_rim_rl-trim_spokes_rl[island 3] flush; trim_rim_rl-trim_spokes_rl[island 4] flush; trim_rim_rl-trim_spokes_rl[island 5] flush; wheel_rr-trim_rim_rr flush; trim_rim_rr-trim_spokes_rr[island 0] flush; trim_rim_rr-trim_spokes_rr[island 1] flush; trim_rim_rr-trim_spokes_rr[island 2] flush; trim_rim_rr-trim_spokes_rr[island 3] flush; trim_rim_rr-trim_spokes_rr[island 4] flush; trim_rim_rr-trim_spokes_rr[island 5] flush"
   ],
   "units": "m",
   "overall": {
@@ -1818,13 +1289,13 @@
       1.5625
     ],
     "contact_tolerance": 0.005386822451228853,
-    "parts": 85
+    "parts": 88
   },
   "contacts": [
     {
       "a": "body",
       "b": "glass_envelope[island 0]",
-      "depth": 0.0016182904364541173,
+      "depth": 0.002444917568936944,
       "expected": false
     },
     {
@@ -1854,19 +1325,19 @@
     {
       "a": "body",
       "b": "glass_envelope[island 5]",
-      "depth": 1.2839233249906101e-06,
+      "depth": 0.0,
       "expected": false
     },
     {
       "a": "body",
       "b": "glass_envelope[island 6]",
-      "depth": 1.2839233249906101e-06,
+      "depth": 0.0,
       "expected": false
     },
     {
       "a": "body",
       "b": "glass_envelope[island 7]",
-      "depth": 1.1920928955078125e-07,
+      "depth": 0.0,
       "expected": false
     },
     {
@@ -1956,7 +1427,7 @@
     {
       "a": "body",
       "b": "lamp_tail",
-      "depth": 0.22600007057189941,
+      "depth": 0.16827023029327393,
       "expected": false
     },
     {
@@ -1974,7 +1445,7 @@
     {
       "a": "body",
       "b": "lamp_tail.001",
-      "depth": 0.22600007057189941,
+      "depth": 0.16827023029327393,
       "expected": false
     },
     {
@@ -1998,7 +1469,7 @@
     {
       "a": "body",
       "b": "trim_handle.003",
-      "depth": 0.011191211640834808,
+      "depth": 0.011191313154995441,
       "expected": false
     },
     {
@@ -2029,18 +1500,6 @@
       "a": "body",
       "b": "wheel_rr",
       "depth": 0.020000040531158447,
-      "expected": false
-    },
-    {
-      "a": "glass_envelope[island 0]",
-      "b": "lamp_tail",
-      "depth": 0.014428393915295601,
-      "expected": false
-    },
-    {
-      "a": "glass_envelope[island 0]",
-      "b": "lamp_tail.001",
-      "depth": 0.014428393915295601,
       "expected": false
     },
     {
@@ -2153,6 +1612,18 @@
     },
     {
       "a": "bumper_front",
+      "b": "lamp_head_frame",
+      "depth": 0.0009999971371144056,
+      "expected": false
+    },
+    {
+      "a": "bumper_front",
+      "b": "lamp_head_frame.001",
+      "depth": 0.0009999906178563833,
+      "expected": false
+    },
+    {
+      "a": "bumper_front",
       "b": "trim_skid_front",
       "depth": 0.04299640655517578,
       "expected": false
@@ -2171,43 +1642,43 @@
     },
     {
       "a": "bumper_front",
-      "b": "grille_slats",
+      "b": "grille_slats[island 0]",
       "depth": 0.019999980926513672,
       "expected": false
     },
     {
       "a": "bumper_front",
-      "b": "grille_slats.001",
+      "b": "grille_slats[island 1]",
       "depth": 0.01999998465180397,
       "expected": false
     },
     {
       "a": "bumper_front",
-      "b": "grille_slats.002",
+      "b": "grille_slats[island 2]",
       "depth": 0.019999980926513672,
       "expected": false
     },
     {
       "a": "bumper_front",
-      "b": "grille_slats.003",
+      "b": "grille_slats[island 3]",
       "depth": 0.01999998278915882,
       "expected": false
     },
     {
       "a": "bumper_front",
-      "b": "grille_slats.004",
+      "b": "grille_slats[island 4]",
       "depth": 0.01999998278915882,
       "expected": false
     },
     {
       "a": "bumper_front",
-      "b": "grille_slats.005",
+      "b": "grille_slats[island 5]",
       "depth": 0.019999980926513672,
       "expected": false
     },
     {
       "a": "bumper_front",
-      "b": "grille_slats.006",
+      "b": "grille_slats[island 6]",
       "depth": 0.019999980926513672,
       "expected": false
     },
@@ -2215,6 +1686,12 @@
       "a": "bumper_front",
       "b": "grille_diagonal",
       "depth": 0.03748118877410889,
+      "expected": false
+    },
+    {
+      "a": "bumper_front",
+      "b": "grille_frame",
+      "depth": 0.03750002384185791,
       "expected": false
     },
     {
@@ -2232,7 +1709,7 @@
     {
       "a": "lamp_head",
       "b": "lamp_reflector",
-      "depth": 8.940696716308594e-08,
+      "depth": 2.9802322387695312e-08,
       "expected": false
     },
     {
@@ -2242,15 +1719,51 @@
       "expected": false
     },
     {
+      "a": "lamp_head",
+      "b": "lamp_head_frame",
+      "depth": 0.0022360659204423428,
+      "expected": false
+    },
+    {
+      "a": "lamp_reflector",
+      "b": "lamp_head_frame",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_reflector.001",
+      "b": "lamp_head_frame",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
       "a": "lamp_head.001",
       "b": "lamp_reflector.002",
-      "depth": 5.960464477539063e-08,
+      "depth": 1.0745380052412656e-07,
       "expected": false
     },
     {
       "a": "lamp_head.001",
       "b": "lamp_reflector.003",
       "depth": 5.960464477539063e-08,
+      "expected": false
+    },
+    {
+      "a": "lamp_head.001",
+      "b": "lamp_head_frame.001",
+      "depth": 0.0022360659204423428,
+      "expected": false
+    },
+    {
+      "a": "lamp_reflector.002",
+      "b": "lamp_head_frame.001",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_reflector.003",
+      "b": "lamp_head_frame.001",
+      "depth": 0.0,
       "expected": false
     },
     {
@@ -2261,84 +1774,90 @@
     },
     {
       "a": "grille",
-      "b": "grille_slats",
+      "b": "grille_slats[island 0]",
       "depth": 0.0065000057220458984,
       "expected": false
     },
     {
       "a": "grille",
-      "b": "grille_slats.001",
+      "b": "grille_slats[island 1]",
       "depth": 0.0065000057220458984,
       "expected": false
     },
     {
       "a": "grille",
-      "b": "grille_slats.002",
+      "b": "grille_slats[island 2]",
       "depth": 0.0065000057220458984,
       "expected": false
     },
     {
       "a": "grille",
-      "b": "grille_slats.003",
+      "b": "grille_slats[island 3]",
       "depth": 0.0065000057220458984,
       "expected": false
     },
     {
       "a": "grille",
-      "b": "grille_slats.004",
+      "b": "grille_slats[island 4]",
       "depth": 0.0065000057220458984,
       "expected": false
     },
     {
       "a": "grille",
-      "b": "grille_slats.005",
+      "b": "grille_slats[island 5]",
       "depth": 0.0065000057220458984,
       "expected": false
     },
     {
       "a": "grille",
-      "b": "grille_slats.006",
+      "b": "grille_slats[island 6]",
       "depth": 0.0065000057220458984,
       "expected": false
     },
     {
-      "a": "grille_slats",
+      "a": "grille",
+      "b": "grille_frame",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_slats[island 0]",
       "b": "grille_diagonal",
       "depth": 0.0060002803802490234,
       "expected": false
     },
     {
-      "a": "grille_slats.001",
+      "a": "grille_slats[island 1]",
       "b": "grille_diagonal",
       "depth": 0.0,
       "expected": false
     },
     {
-      "a": "grille_slats.002",
+      "a": "grille_slats[island 2]",
       "b": "grille_diagonal",
       "depth": 0.0,
       "expected": false
     },
     {
-      "a": "grille_slats.003",
+      "a": "grille_slats[island 3]",
       "b": "grille_diagonal",
       "depth": 0.0,
       "expected": false
     },
     {
-      "a": "grille_slats.004",
+      "a": "grille_slats[island 4]",
       "b": "grille_diagonal",
       "depth": 0.0,
       "expected": false
     },
     {
-      "a": "grille_slats.005",
+      "a": "grille_slats[island 5]",
       "b": "grille_diagonal",
       "depth": 0.0,
       "expected": false
     },
     {
-      "a": "grille_slats.006",
+      "a": "grille_slats[island 6]",
       "b": "grille_diagonal",
       "depth": 0.0060002803802490234,
       "expected": false
@@ -2350,6 +1869,12 @@
       "expected": false
     },
     {
+      "a": "grille_diagonal",
+      "b": "grille_frame",
+      "depth": 0.007020704448223114,
+      "expected": false
+    },
+    {
       "a": "wheel_fl",
       "b": "trim_rim_fl",
       "depth": 0.0004999637603759766,
@@ -2357,37 +1882,37 @@
     },
     {
       "a": "trim_rim_fl",
-      "b": "trim_spoke",
+      "b": "trim_spokes_fl[island 0]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fl",
-      "b": "trim_spoke.001",
+      "b": "trim_spokes_fl[island 1]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fl",
-      "b": "trim_spoke.002",
+      "b": "trim_spokes_fl[island 2]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fl",
-      "b": "trim_spoke.003",
+      "b": "trim_spokes_fl[island 3]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fl",
-      "b": "trim_spoke.004",
+      "b": "trim_spokes_fl[island 4]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fl",
-      "b": "trim_spoke.005",
+      "b": "trim_spokes_fl[island 5]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
@@ -2399,37 +1924,37 @@
     },
     {
       "a": "trim_rim_fr",
-      "b": "trim_spoke.006",
+      "b": "trim_spokes_fr[island 0]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fr",
-      "b": "trim_spoke.007",
+      "b": "trim_spokes_fr[island 1]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fr",
-      "b": "trim_spoke.008",
+      "b": "trim_spokes_fr[island 2]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fr",
-      "b": "trim_spoke.009",
+      "b": "trim_spokes_fr[island 3]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fr",
-      "b": "trim_spoke.010",
+      "b": "trim_spokes_fr[island 4]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_fr",
-      "b": "trim_spoke.011",
+      "b": "trim_spokes_fr[island 5]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
@@ -2441,37 +1966,37 @@
     },
     {
       "a": "trim_rim_rl",
-      "b": "trim_spoke.012",
+      "b": "trim_spokes_rl[island 0]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rl",
-      "b": "trim_spoke.013",
+      "b": "trim_spokes_rl[island 1]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rl",
-      "b": "trim_spoke.014",
+      "b": "trim_spokes_rl[island 2]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rl",
-      "b": "trim_spoke.015",
+      "b": "trim_spokes_rl[island 3]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rl",
-      "b": "trim_spoke.016",
+      "b": "trim_spokes_rl[island 4]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rl",
-      "b": "trim_spoke.017",
+      "b": "trim_spokes_rl[island 5]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
@@ -2483,37 +2008,37 @@
     },
     {
       "a": "trim_rim_rr",
-      "b": "trim_spoke.018",
+      "b": "trim_spokes_rr[island 0]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rr",
-      "b": "trim_spoke.019",
+      "b": "trim_spokes_rr[island 1]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rr",
-      "b": "trim_spoke.020",
+      "b": "trim_spokes_rr[island 2]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rr",
-      "b": "trim_spoke.021",
+      "b": "trim_spokes_rr[island 3]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rr",
-      "b": "trim_spoke.022",
+      "b": "trim_spokes_rr[island 4]",
       "depth": 0.0059999823570251465,
       "expected": false
     },
     {
       "a": "trim_rim_rr",
-      "b": "trim_spoke.023",
+      "b": "trim_spokes_rr[island 5]",
       "depth": 0.0059999823570251465,
       "expected": false
     }

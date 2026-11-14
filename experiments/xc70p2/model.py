@@ -14,7 +14,7 @@ rubber=T.material('charcoal plastic rubber',(.045,.052,.052));alloy=T.material('
 white=T.material('headlamp ivory',(.76,.77,.65));red=T.material('tail lamp red',(.40,.035,.025));amber=T.material('indicator amber',(.68,.28,.025))
 # Existing P2 longitudinal architecture is preserved during detail correction.
 profile=[(-2.29,1.05),(-2.26,1.23),(-2.15,1.49),(-2.03,1.515),(-1.80,1.53),(-1.2,1.54),(-.6,1.535),(-.1,1.52),(.20,1.49),(.39,1.38),(.65,1.19),(.82,1.06),(.84,1.06),(.90,1.055),(1.15,1.015),(1.5,.965),(1.90,.90),(2.15,.865),(2.29,.82)]
-ys=sorted(set([y for y,z in profile]+[-2.278,-2.17,-2.12,-2.11,-1.28,-1.20,-.31,-.23,.76,2.24,-2.24]))
+ys=sorted(set([y for y,z in profile]+[-2.286,-2.17,-2.12,-2.11,-1.28,-1.20,-.31,-.23,.76,2.24,-2.24]))
 vertices=[];faces=[];zones=[]
 # Thirteen half-section points create a bowed transverse roof rather than Volvo's flat roof.
 for y in ys:
@@ -39,7 +39,7 @@ for i in range(len(ys)-1):
   faces.append((i*N+j,i*N+(j+1)%N,(i+1)*N+(j+1)%N,(i+1)*N+j))
   side=j in (6,15) and -2.11<mid<.76 and not (-1.28<mid<-1.20 or -.31<mid<-.23)
   screen_front=.20<mid<.76 and 8<=j<=13
-  screen_rear=-2.278<mid<-2.12 and 8<=j<=13
+  screen_rear=-2.286<mid<-2.12 and 8<=j<=13
   zones.append(2 if screen_front else 3 if screen_rear else int(side))
 faces += [tuple(range(N-1,-1,-1)),tuple((len(ys)-1)*N+j for j in range(N))];zones += [0,0]
 body=T.group(mk.mesh_from_data('body',vertices,faces),'BODY',paint)
@@ -47,14 +47,18 @@ body=T.group(mk.mesh_from_data('body',vertices,faces),'BODY',paint)
 for f,zone in zip(body.data.polygons,zones):f.material_index=zone
 bm=bmesh.new();bm.from_mesh(body.data)
 # Preserve existing side reveals; thinner front/rear reveals are real body geometry.
-for zone,margin,depth in [(1,.012,-.009),(2,.008,-.005),(3,.008,-.005)]:
+for zone,margin,depth in [(1,.012,-.009),(2,.008,-.006),(3,.008,-.006)]:
  window_faces=[f for f in bm.faces if f.material_index==zone]
  result=bmesh.ops.inset_region(bm,faces=window_faces,thickness=margin,depth=depth,use_even_offset=True,use_boundary=True)
  for f in result['faces']:f.material_index=0
  if zone==3:
   # Narrow only the recessed opening; retain the roof/top outline and thin upper edge.
   inner_verts={v for f in bm.faces if f.material_index==3 for v in f.verts}
-  for v in inner_verts:v.co.x*=.89
+  for v in inner_verts:
+   v.co.x*=.89
+   # Clear aperture is narrower than the outer black surround in the photos.
+   # Keep a real painted land between glass and the block lamp housings.
+   v.co.x=max(-.635,min(.635,v.co.x))
 bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(body.data);bm.free()
 gv=[];gf=[]
 for f in body.data.polygons:
@@ -67,14 +71,25 @@ for f in body.data.polygons:
 glazing=T.group(mk.mesh_from_data('glass_envelope',gv,gf),'GLASS',glass)
 bm=bmesh.new();bm.from_mesh(glazing.data);bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.00001);bm.normal_update()
 from mathutils import Vector
-for f in bm.faces:
-    c=f.calc_center_median()
-    if f.normal.dot(Vector((c.x,c.y,c.z-.6)))<0:f.normal_flip()
-bm.normal_update()
-for v in bm.verts:v.co+=v.normal*.0015
+import numpy as np
+remaining=set(bm.verts)
+while remaining:
+ pane={remaining.pop()};todo=list(pane)
+ while todo:
+  v=todo.pop()
+  for e in v.link_edges:
+   other=e.other_vert(v)
+   if other in remaining:remaining.remove(other);pane.add(other);todo.append(other)
+ points=np.array([tuple(v.co) for v in pane]);center=points.mean(axis=0);_,vectors=np.linalg.eigh(np.cov(points.T));normal=Vector(vectors[:,0])
+ if normal.dot(Vector((center[0],center[1],center[2]-.7)))<0:normal=-normal
+ for face in {f for v in pane for f in v.link_faces}:
+  if face.normal.dot(normal)<0:face.normal_flip()
+ # Positive backing clearance, rather than a solidify back face coplanar with BODY.
+ # A pane-wise translation retains the source surface instead of warping its corners.
+ for v in pane:v.co+=normal*.0015
 bm.to_mesh(glazing.data);bm.free()
 bpy.context.view_layer.objects.active=glazing
-mod=glazing.modifiers.new('seated glass','SOLIDIFY');mod.thickness=.003;mod.offset=0;bpy.ops.object.modifier_apply(modifier=mod.name)
+mod=glazing.modifiers.new('seated glass','SOLIDIFY');mod.thickness=.0025;mod.offset=1;bpy.ops.object.modifier_apply(modifier=mod.name)
 for axle,y in [('f',P['front_axle_y']),('r',P['front_axle_y']-P['wheelbase'])]:
  for side,sign in [('l',-1),('r',1)]:
   inner=.65
@@ -129,7 +144,7 @@ for sign in [-1,1]:
   outer=T.interp(z,[(.80,.84),(.98,.81),(1.08,.79),(1.18,.775),(1.28,.77),(1.405,.735)])
   width=T.interp(z,[(.80,.16),(.98,.15),(1.18,.13),(1.28,.115),(1.405,.085)])
   front=T.interp(z,[(.80,-2.304),(.98,-2.304),(1.18,-2.276),(1.28,-2.232),(1.405,-2.151)])
-  for x,y in [(outer-width,front),(outer,front),(outer-.055,front+.24),(outer-width-.055,front+.24)]:vv.append((sign*x,y,z))
+  for x,y in [(outer-width,front),(outer,front),(outer-.055,front+.24),(outer-width+.010,front+.24)]:vv.append((sign*x,y,z))
  for j in range(len(zs)-1):
   zone=1 if 1.08<=(zs[j]+zs[j+1])/2<1.18 else 0
   for k in range(4):ff.append((j*4+k,j*4+(k+1)%4,(j+1)*4+(k+1)%4,(j+1)*4+k));mi.append(zone)
@@ -176,3 +191,9 @@ for col in ['POLICE','POLICE_DECALS']:
  for o in T.collections[col].objects:o.hide_render=True;o.hide_viewport=True
 body['shared_variants']='civilian and police use this identical single mesh'
 bpy.context.scene.unit_settings.system='METRIC'
+
+body['longitudinal_profile']=json.dumps(profile)
+# Refinement and both variants continue to use this one authoring source.
+sys.path.insert(0,str(HERE))
+from round2 import apply as apply_round2
+apply_round2()
