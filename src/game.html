@@ -1180,7 +1180,7 @@ function drive(c, thr, steer, brake, dt, handbrake=false) {
   c.braking=!!brake;
   const kind=DRIVE_CLASS[c.type]||'rwd';
   if(!c.driveState){
-    c.driveState=DRIVING_PHYSICS.newCar(kind,c.x,c.z,c.h);
+    c.driveState=DRIVING_PHYSICS.newCar(kind,c.x,c.z,c.h,c.type);
     c.driveState.u=c.v;
   }
   const dyn=c.driveState;
@@ -1203,10 +1203,9 @@ function drive(c, thr, steer, brake, dt, handbrake=false) {
   // changes rolling resistance and grip, not an instantaneous maximum speed.
   const limit=c.wet?2.5:c.T.max;
   const reference=DRIVING_PHYSICS.VEHICLE_PRESETS[kind];
-  // Retain each existing vehicle's gameplay acceleration and speed categories.
+  // V4 has per-model measured acceleration; V3 retains its former A/B behavior.
   const powerScale=DRIVE_MODE==='v3'
-    ?clamp(c.T.acc/reference.acceleration,.35,1.5)
-    :clamp(c.T.acc*.18,.55,1.45);
+    ?clamp(c.T.acc/reference.acceleration,.35,1.5):1;
   const count=Math.max(1,Math.ceil(dt/(1/120))),h=dt/count;
   for(let i=0;i<count;i++){
     DRIVING_PHYSICS.stepCar(dyn,{throttle:thr,steer,brake:brake?1:0,handbrake:handbrake?1:0},
