@@ -1177,6 +1177,7 @@ const DRIVE_CLASS = {volvo:'rwd',epa:'rwd',saab:'fwd',saab95Estate:'fwd',polis:'
 const DRIVE_MODE = new URLSearchParams(location.search).get('drivetrain')==='v3'?'v3':'v4';
 function drive(c, thr, steer, brake, dt, handbrake=false) {
   if(dt<=0)return;
+  c.braking=!!brake;
   const kind=DRIVE_CLASS[c.type]||'rwd';
   if(!c.driveState){
     c.driveState=DRIVING_PHYSICS.newCar(kind,c.x,c.z,c.h);

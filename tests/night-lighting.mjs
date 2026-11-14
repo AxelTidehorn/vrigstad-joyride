@@ -17,4 +17,5 @@ const night=daylightState(22,0,.3),day=daylightState(13,0,.3);
 assert.ok(night.exposure>.75&&night.exposure<day.exposure,'keep night readable without fake daylight');
 assert.ok(night.skyBrightness>=.19,'retain a minimum night sky');
 assert.ok(day.daytime>night.daytime,'day-to-night contrast preserved');
+assert.ok((await import('../src/visual/night-lighting.mjs')).createVehicleLighting,'vehicle lighting renderer is exported');
 console.log('Night lighting: window placement, schedules and ambient floor passed.');

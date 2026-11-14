@@ -73,7 +73,20 @@ export function createWindowLighting(THREE,{scene,camera,buildings,hAt,nearestRo
 export function createVehicleLighting(THREE,{scene,coarse}){
   const bulbMat=new THREE.MeshBasicMaterial({color:0xfff0ca,transparent:true,opacity:0,
     depthWrite:false,side:THREE.DoubleSide,toneMapped:false});
-  const geometries=new Map(),lamps=new Map();
+  const geometries=new Map(),lamps=new Map(),tails=new Map();
+  const rearMat=new THREE.MeshBasicMaterial({color:0xff301c,transparent:true,opacity:.82,
+    depthWrite:false,side:THREE.DoubleSide,toneMapped:false});
+  const brakeMat=new THREE.MeshBasicMaterial({color:0xff7260,transparent:true,opacity:.95,
+    depthWrite:false,side:THREE.DoubleSide,toneMapped:false});
+  const cv=document.createElement('canvas');cv.width=cv.height=64;
+  const ctx=cv.getContext('2d'),glow=ctx.createRadialGradient(32,32,2,32,32,31);
+  glow.addColorStop(0,'rgba(255,105,72,.85)');
+  glow.addColorStop(.27,'rgba(255,64,35,.30)');
+  glow.addColorStop(1,'rgba(255,45,20,0)');
+  ctx.fillStyle=glow;ctx.fillRect(0,0,64,64);
+  const glowTexture=new THREE.CanvasTexture(cv);
+  const tailHaloMat=new THREE.SpriteMaterial({map:glowTexture,color:0xff6550,
+    transparent:true,opacity:.38,depthWrite:false,depthTest:true});
   function geometryFor(type){
     const tractor=type==='traktor'||type==='newHolland'||type==='johnDeere';
     const key=tractor?'tractor':type==='saab'?'saab':'car';
@@ -88,8 +101,32 @@ export function createVehicleLighting(THREE,{scene,coarse}){
     const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
     geo.computeVertexNormals();geometries.set(key,geo);return geo;
   }
+  function tailGeometry(type){
+    const tractor=type==='traktor'||type==='newHolland'||type==='johnDeere';
+    const z=tractor?2.03:type==='saab'?2.30:2.39;
+    const y=tractor?1.28:.84,x=tractor?.53:.64,w=tractor?.16:.21,h=.16;
+    const pos=[];
+    for(const side of [-1,1]){
+      const a=side*x-w,b=side*x+w;
+      pos.push(a,y-h,z,b,y-h,z,b,y+h,z,a,y-h,z,b,y+h,z,a,y+h,z);
+    }
+    const geo=new THREE.BufferGeometry();
+    geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+    geo.computeVertexNormals();return {geo,x,y,z};
+  }
   function attach(body,type,car){
     const mesh=new THREE.Mesh(geometryFor(type),bulbMat);body.add(mesh);lamps.set(car,mesh);
+    const rear=tailGeometry(type);
+    const rearMesh=new THREE.Mesh(rear.geo,rearMat),brakeMesh=new THREE.Mesh(rear.geo,brakeMat);
+    brakeMesh.position.z=.012;brakeMesh.visible=false;
+    body.add(rearMesh,brakeMesh);
+    const halos=[];
+    for(const side of [-1,1]){
+      const sprite=new THREE.Sprite(tailHaloMat);
+      sprite.position.set(side*rear.x,rear.y,rear.z+.045);
+      sprite.scale.set(1.25,1.1,1);body.add(sprite);halos.push(sprite);
+    }
+    tails.set(car,{rearMesh,brakeMesh,halos});
   }
   const pool=Array.from({length:coarse?1:2},()=>{
     const lamp=new THREE.SpotLight(0xffe9c3,0,45,Math.PI/5,.65,1.5);
@@ -105,9 +142,32 @@ export function createVehicleLighting(THREE,{scene,coarse}){
     for(const [c,m] of lamps)if(!cars.includes(c)){
       if(m.parent)m.parent.remove(m);
       lamps.delete(c);
+      const rear=tails.get(c);
+      if(rear){
+        for(const part of [rear.rearMesh,rear.brakeMesh,...rear.halos])
+          if(part.parent)part.parent.remove(part);
+        rear.rearMesh.geometry.dispose();
+        tails.delete(c);
+      }
     }
     bulbMat.opacity=level*.98;
-    for(const [c,m] of lamps)m.visible=level>.03&&['ai','player','police'].includes(c.mode);
+    const lit=level>.03;
+    for(const [c,m] of lamps)m.visible=lit&&['ai','player','police'].includes(c.mode);
+    for(const [c,rear] of tails){
+      const active=['ai','player','police'].includes(c.mode);
+      const dist=(c.x-camera.position.x)**2+(c.z-camera.position.z)**2;
+      const close=dist<190*190;
+      rear.rearMesh.visible=active&&lit;
+      rear.brakeMesh.visible=active&&lit&&!!c.braking;
+      for(const halo of rear.halos){
+        halo.visible=active&&lit&&close;
+        if(halo.visible){
+          const fade=Math.max(0,Math.min(1,(190-Math.sqrt(dist))/45));
+          halo.scale.set(1.25*fade,1.1*fade,1);
+        }
+      }
+    }
+    tailHaloMat.opacity=level*.34;
     const active=cars.filter(c=>['player','police','ai'].includes(c.mode)
        &&(c.x-camera.position.x)**2+(c.z-camera.position.z)**2<135*135);
     active.sort((a,b)=>(a===playerCar?-1:b===playerCar?1:0)||

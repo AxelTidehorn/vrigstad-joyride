@@ -46,12 +46,19 @@ export function createStreetLighting(THREE,{scene,camera,roads,widths,height,blo
   const cv=document.createElement('canvas');cv.width=cv.height=64;
   const ctx=cv.getContext('2d'),g=ctx.createRadialGradient(32,32,0,32,32,32);
   g.addColorStop(0,'rgba(255,207,125,.65)');g.addColorStop(.18,'rgba(255,162,47,.24)');g.addColorStop(1,'rgba(255,125,20,0)');ctx.fillStyle=g;ctx.fillRect(0,0,64,64);
-  const haloMat=new THREE.SpriteMaterial({map:new THREE.CanvasTexture(cv),color:0xffb258,transparent:true,depthTest:true,depthWrite:false,opacity:0});
-  const halos=[];
+  const tex=new THREE.CanvasTexture(cv);
+  const haloMat=new THREE.SpriteMaterial({map:tex,color:0xffb258,transparent:true,
+    depthTest:true,depthWrite:false,opacity:0});
+  const hazeMat=new THREE.SpriteMaterial({map:tex,color:0xffa969,transparent:true,
+    depthTest:true,depthWrite:false,opacity:0});
+  const halos=[],haze=[];
   positions.forEach(([x,z],i)=>{
     const y=height(x,z);matrix.makeTranslation(x,y+2.65,z);pole.setMatrixAt(i,matrix);
     matrix.makeTranslation(x+.35,y+5.25,z);bulbs.setMatrixAt(i,matrix);
-    const sprite=new THREE.Sprite(haloMat);sprite.position.set(x+.35,y+5.25,z);sprite.scale.set(3.8,3.8,1);scene.add(sprite);halos.push(sprite);
+    const sprite=new THREE.Sprite(haloMat);sprite.position.set(x+.35,y+5.25,z);
+    sprite.scale.set(3.8,3.8,1);scene.add(sprite);halos.push(sprite);
+    const bloom=new THREE.Sprite(hazeMat);bloom.position.copy(sprite.position);
+    bloom.scale.set(12,12,1);scene.add(bloom);haze.push(bloom);
   });
   scene.add(pole,bulbs);
   // Fixed pool: no shader light-count changes while driving, no shadow maps.
@@ -61,6 +68,7 @@ export function createStreetLighting(THREE,{scene,camera,roads,widths,height,blo
     const target=mode==='on'?1:mode==='off'?0:streetlightLevel(hour,solarElevation);
     level+=(target-level)*(dt===0?1:1-Math.exp(-dt*4));
     bulbMat.emissiveIntensity=level*2.3;haloMat.opacity=level;
+    hazeMat.opacity=level*.23;
     for(let k=0;k<pool.length;k++){
       let best=-1,distance=85*85;
       for(let i=0;i<positions.length;i++){
@@ -75,7 +83,18 @@ export function createStreetLighting(THREE,{scene,camera,roads,widths,height,blo
       if(best>=0){const p=positions[best];light.position.set(p[0]+.35,height(p[0],p[1])+4.9,p[1])}
     }
     active=0;for(const light of pool)if(light.intensity>.01)active++;
-    for(let i=0;i<halos.length;i++){const p=positions[i];halos[i].visible=level>.005&&(p[0]-camera.position.x)**2+(p[1]-camera.position.z)**2<180**2}
+    // Keep distant fixture halos readable: fade their size over 380–520 m
+    // instead of abruptly popping in at 180 m.
+    for(let i=0;i<halos.length;i++){
+      const p=positions[i],d=Math.hypot(p[0]-camera.position.x,p[1]-camera.position.z);
+      const fade=Math.max(0,Math.min(1,(520-d)/140));
+      const visible=level>.005&&fade>.005;
+      halos[i].visible=visible;haze[i].visible=visible;
+      if(visible){
+        halos[i].scale.set(3.8*fade,3.8*fade,1);
+        haze[i].scale.set(12*fade,12*fade,1);
+      }
+    }
   }
   return {update,setMode(value){mode=value},getMode:()=>mode,stats:()=>({count:positions.length,budget:pool.length,active,level}),positions};
 }
