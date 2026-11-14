@@ -46,7 +46,7 @@ with zipfile.ZipFile(b/'xc70-delivery.zip','w',zipfile.ZIP_DEFLATED) as z:
  for f in (p/'references').glob('*'):
   if f.suffix=='.png':z.write(f,f.relative_to(root))
  for f in list((b/'detail-review').rglob('*'))+list((b/'block-review').rglob('*')):
-  if f.is_file() and f.suffix in ('.json','.png','.html') and not any(x in f.parts for x in ['before','glass_front','audit-log','close-log']):z.write(f,f.relative_to(root))
+  if f.is_file() and (f.suffix in ('.json','.html') or (f.suffix=='.png' and f.parent in [b/'detail-review',b/'block-review'])) and not any(x in f.parts for x in ['before','glass_front','audit-log','close-log']):z.write(f,f.relative_to(root))
  for f in (root/'tools/vehicle_pipeline').glob('*'):
   if f.is_file():z.write(f,f.relative_to(root))
  z.write(root/'LICENSE','LICENSE')
