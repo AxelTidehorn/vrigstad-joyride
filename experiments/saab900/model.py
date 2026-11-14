@@ -13,7 +13,7 @@ paint=T.material('Saab warm silver',(.40,.43,.42));glass=T.material('opaque smok
 rubber=T.material('charcoal plastic rubber',(.045,.052,.052));alloy=T.material('satin alloy',(.42,.45,.44))
 white=T.material('headlamp ivory',(.76,.77,.65));red=T.material('tail lamp red',(.40,.035,.025));amber=T.material('indicator amber',(.68,.28,.025))
 # Own Saab longitudinal architecture: low wedge nose, short bowed roof, long hatch.
-profile=[(-2.24,.78),(-2.10,.86),(-1.94,.94),(-1.70,1.04),(-1.42,1.16),(-1.10,1.36),(-.85,1.40),(-.65,1.414),(-.35,1.42),(-.05,1.415),(.24,1.355),(.39,1.25),(.57,1.12),(.73,.98),(.95,.89),(1.30,.85),(1.75,.80),(2.10,.75),(2.24,.72)]
+profile=[(-2.24,.78),(-2.10,.86),(-1.94,.94),(-1.70,1.04),(-1.42,1.16),(-1.10,1.36),(-.85,1.40),(-.65,1.414),(-.35,1.42),(-.05,1.415),(.24,1.355),(.39,1.25),(.57,1.12),(.66,1.065),(.70,1.035),(.759,1.0104),(.76,1.010),(.761,1.010),(.80,1.010),(.84,1.010),(.86,1.006),(.95,.986),(1.30,.910),(1.75,.810),(2.10,.75),(2.24,.72)]
 ys=sorted(set([y for y,z in profile]+[-.52,-.46,.66,.70,-1.57,-1.48,2.18,-2.18]))
 vertices=[];faces=[];zones=[]
 # Thirteen half-section points create a bowed transverse roof rather than Volvo's flat roof.
@@ -29,7 +29,8 @@ for y in ys:
  ring=half+[(-x,z) for x,z in half[-2:0:-1]]
  for x,z in ring:
   # Windshield's centre projects forward, making a subtle wraparound bow.
-  bow=.055*(1-(abs(x)/max(w,.01))**2) if .24<=y<=.73 else 0
+  bow_weight=1.0 if y<=.70 else max(0.,(.84-y)/.14)
+  bow=.055*(1-(abs(x)/max(w,.01))**2)*bow_weight if .24<=y<=.84 else 0
   vertices.append((x,y+bow,z))
 N=len(ring)
 for i in range(len(ys)-1):
@@ -128,9 +129,12 @@ for sign in [-1,1]:
 for o in [o for o in bpy.context.scene.objects if o.type=='MESH']:
  bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(o.data);bm.free()
  for f in o.data.polygons:f.use_smooth=o.name=='body' or o.name.startswith('wheel_')
- o['review_status']='Saab 900 T16 production candidate; human approval pending'
+ # Close cowl support sections preserve the physical slope break without faceting.
+ o['review_status']='Saab 900 T16 hood correction; reference uncertainty documented; human approval pending'
 body['construction']='Saab-specific bowed roof and continuous hatch loft; closed recessed wheel wells'
 body['parameters']=json.dumps(P)
+body['longitudinal_profile']=json.dumps(profile)
+body['cowl_construction']='Short planar cowl y .80-.84; defined hood crease; windshield bow tapers to zero before cowl, no bevel/subdivision'
 bpy.context.scene.unit_settings.system='METRIC'
 
 ink=T.material('emblem blue grey',(.035,.065,.09))

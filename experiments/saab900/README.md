@@ -69,7 +69,7 @@ remaining small for a web vehicle. The report lists actual triangles, nodes,
 file size and measured Blender import time. Mesh count is a draw-call cost;
 GPU FPS, several cars in-game and physical iPad Safari performance are not
 verified and must not be inferred from the polygon budget or CPU import time.
-No game integration, physics change, existing-model change or PR.
+No game integration, physics change or Volvo asset change. Work remains on an isolated experiment branch.
 
 ## Final limited geometry refinement
 
@@ -93,3 +93,10 @@ Scope remains limited. Glass is stylized opaque glazing over closed backing;
 this is not a manufactured hollow cabin or precise sheet-metal reconstruction.
 Very small low-poly shading changes remain. No broader styling iteration,
 physics/gameplay changes or game integration was performed.
+
+## Silhouette verification and hood correction
+
+The latest canonical Blender and GLB files now include the targeted hood/cowl
+correction (7,822 triangles). See [the before/after report](silhouette/README.md)
+and [static review page](silhouette/index.html) for metrics, images, source
+uncertainty and reproduction. Previous refinement reports above are historical.

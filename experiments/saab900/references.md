@@ -42,3 +42,34 @@ seating and alloy approximation. Tire choice, badge graphic and spoiler are
 stylized assumptions; there is no interior. Glass is opaque stylized geometry
 seated over the closed body envelope; this is not manufactured sheet-metal
 thickness or a hollow cabin reconstruction.
+
+## Hood correction / silhouette verification references
+
+- Saab workshop manual, **Technical Data / General 010-1**, 1979–1988 compilation:
+  <https://z90.pl/saab/pdf/SAAB%20900%2079-88/0%20-%20Technical%20Data.pdf>.
+  Inspected page lists wheelbase **2517 mm**, hatchback length **4687 mm**
+  (sedan 4680), body width **1690 mm**, nominal height **1419 mm**.
+  Its dimension illustration depicts a four-door sedan: **not used as the
+  hatchback silhouette**. Existing model length 4680 and height 1420 retained;
+  7 mm length discrepancy is documented, not silently stretched away.
+- Saab-Scania AB, Danish **Saab 900/900i**, copyright 1985, 1986 range:
+  <https://motorarkiv.dk/brochurer/SAAB_900_og_900i_1985.pdf>.
+  Rear cover has a genuine three-door Classic 900 illustration. Its small,
+  undimensioned pre-facelift side drawing is the manually traced silhouette
+  **proxy**, not an exact 1988 Turbo 16 engineering master. Nearby dimensioned
+  side figures are five-door; do not conflate them with this three-door image.
+  Crop in `silhouette/reference.png`: render PDF page 23 to width 4800 with
+  `pdftoppm`, crop `(2510,330,3130,620)`, resize 1240×580. Axle points and manual
+  contour/control curves are committed in `silhouette/saab900.json`.
+  Original illustration © Saab-Scania AB 1985, reproduced here solely as a
+  small technical review excerpt; no game-asset licence or public-domain claim.
+- Existing Alexander Migl front three-quarter photograph (`references/rear.png`,
+  filename inherited) reviewed again for facelift hood crown, cowl separation
+  and headlamp seating. CC BY-SA 4.0, source URLs above. Perspective photo is
+  qualitative evidence; exact year and millimetre geometry are unverified.
+
+The proxy has roughly 2–5 source-pixel tracing uncertainty plus unknown drawing
+stylization and facelift differences. Reports explicitly keep
+`metric_geometry_verified:false`; exact geometric millimetre errors cannot be
+certified. Millimetre **changes within the Blender model** are separately measured
+from real mesh coordinates and do not imply exact agreement with the real car.

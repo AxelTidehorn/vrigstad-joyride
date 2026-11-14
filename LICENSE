@@ -50,3 +50,11 @@ Third-party components keep their own licenses:
   no photo textures are included in the original procedural model. Sources:
   https://commons.wikimedia.org/wiki/File:Saab_900_(first_generation)_three-door_hatchback_Turbo_DSC_2936.jpg
   https://commons.wikimedia.org/wiki/File:Saab_900_(first_generation)_three-door_hatchback_Turbo_DSC_2938.jpg
+
+Saab silhouette review reference excerpt:
+experiments/saab900/silhouette/reference.png is a small crop from the Danish
+Saab 900/900i brochure, copyright Saab-Scania AB 1985, sourced at
+https://motorarkiv.dk/brochurer/SAAB_900_og_900i_1985.pdf . It is included only
+for technical comparison and criticism, not licensed as a reusable game asset.
+No rights to the original brochure are claimed. The generated vehicle itself
+and original pipeline code do not incorporate the image as textures or geometry.
