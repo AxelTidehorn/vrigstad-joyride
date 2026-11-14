@@ -70,7 +70,10 @@ function automaticForce(c,rawPedal,dt,spec){
   // RPM is calculated from actual vehicle speed after a converter slip allowance.
   const wheelTorque=p.torque*torqueFraction(c.rpm,p)*p.ratios[Math.max(0,c.gear-1)]*p.final*p.efficiency;
   const converterBoost=mix(1.20,1,clamp(travel/8,0,1));
-  let wheelForce=wheelTorque/p.radius*converterBoost*driveInput*clamp(1-.16*travel/25,.74,1);
+  // Stronger response up to ordinary road speeds; preserve the existing
+  // top-speed taper instead of making cars sit on the hard speed limiter.
+  const midrangeBoost=1+.32*(1-clamp((travel-12)/23,0,1));
+  let wheelForce=wheelTorque/p.radius*converterBoost*driveInput*midrangeBoost*clamp(1-.16*travel/25,.74,1);
   // Brief, visible but not violent power interruption during an automatic shift.
   if(c.shiftTime>0)wheelForce*=.33;
   // A gentle soft limiter, not an instantaneous velocity jump.
@@ -110,7 +113,10 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   const targetSteer=steerIn*steerMax;
   c.steer+=clamp(targetSteer-c.steer,-(balanced?1.55:3.0)*dt,(balanced?1.55:3.0)*dt);
   const steer=c.steer;
-  const mu=surface.mu*spec.grip;
+  // Grass is sampled at the wheels by the game, not by the car center.
+  // Grass changes traction immediately but does not act like a speed limiter.
+  const grass=clamp(settings.grassFraction??(settings.surface==='grass'?1:0),0,1);
+  const mu=(surface.mu*(1-grass)+SURFACES.grass.mu*grass)*spec.grip;
   const normalFront=m*g*(lr/L),normalRear=m*g*(lf/L);
   const forwardV=c.u;
   let engine;
@@ -161,7 +167,9 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   // Resolved front-wheel force in the car's body coordinates.
   const Fx=fxR+fxF*Math.cos(steer)-fyF*Math.sin(steer);
   const Fy=fyR+fxF*Math.sin(steer)+fyF*Math.cos(steer);
-  const rolling=surface.rolling*g;
+  // Rolling drag increases gradually when the whole car is off the road.
+  // A clipped corner (one wheel in grass) must not erase momentum.
+  const rolling=(surface.rolling*(1-grass)+.032*grass)*g;
   // Drag is gentle at city speed and grows with speed. Keep the V3 A/B baseline untouched.
   const aero=settings.powertrain==='v3'?.0036:.0006;
   const resistance=rolling*Math.tanh(forwardV*3)+aero*forwardV*Math.abs(forwardV);
@@ -194,7 +202,7 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   c.slip=Math.abs(c.u)<.5?0:Math.atan2(c.v,Math.abs(c.u));
   c.slipFront=alphaF;c.slipRear=alphaR;
   c.gripFront=f[2];c.gripRear=r[2];
-  c.surface=settings.surface||c.surface;
+  c.surface=grass>.5?'grass':settings.surface||c.surface;
   if(![c.u,c.v,c.r,c.h,c.x,c.z,c.rpm].every(Number.isFinite))throw Error('Non-finite car state');
   return c;
 }
