@@ -1,3 +1,12 @@
+# Current status: round 2
+
+Current master/export include the subsequent body-plane, grille/lamp and hierarchy
+refinements. See [round-2 assessment](../../round2/README.md) and
+[comparisons](../../round2/index.html#volvo240). The wheel-arch report below is
+archived first-round evidence; those approved opening profiles remain preserved.
+
+---
+
 # Volvo 240 — defined wheel arches, visual approval pending
 
 Continued directly from the latest `refinement/model.blend`, frozen from parent

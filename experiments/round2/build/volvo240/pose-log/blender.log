@@ -1,0 +1,37 @@
+19:02:02 | INFO: Data are loaded, start creating Blender stuff
+19:02:02 | INFO: Blender create Mesh node body
+19:02:02 | INFO: Blender create Mesh node bumper_front
+19:02:02 | INFO: Blender create Mesh node bumper_rear
+19:02:02 | INFO: Blender create Mesh node glass_envelope
+19:02:02 | INFO: Blender create Mesh node grille_frame
+19:02:02 | INFO: Blender create Mesh node grille_front
+19:02:02 | INFO: Blender create Mesh node grille_slats
+19:02:02 | INFO: Blender create Mesh node lamp_front_-1
+19:02:02 | INFO: Blender create Mesh node lamp_front_1
+19:02:02 | INFO: Blender create Mesh node lamp_front_lens
+19:02:02 | INFO: Blender create Mesh node lamp_front_lens.002
+19:02:02 | INFO: Blender create Mesh node lamp_rear_-1
+19:02:02 | INFO: Blender create Mesh node lamp_rear_1
+19:02:02 | INFO: Blender create Mesh node lamp_rear_reverse
+19:02:02 | INFO: Blender create Mesh node lamp_rear_reverse.001
+19:02:02 | INFO: Blender create Mesh node mirror_housing
+19:02:02 | INFO: Blender create Mesh node mirror_housing.001
+19:02:02 | INFO: Blender create Mesh node trim_handle
+19:02:02 | INFO: Blender create Mesh node trim_handle.001
+19:02:02 | INFO: Blender create Mesh node trim_handle.002
+19:02:02 | INFO: Blender create Mesh node trim_handle.003
+19:02:02 | INFO: Blender create Mesh node trim_side_-1
+19:02:02 | INFO: Blender create Mesh node trim_side_1
+19:02:02 | INFO: Blender create Mesh node wheel_fl
+19:02:02 | INFO: Blender create Mesh node trim_rim_wheel_fl
+19:02:02 | INFO: Blender create Mesh node wheel_fr
+19:02:02 | INFO: Blender create Mesh node trim_rim_wheel_fr
+19:02:02 | INFO: Blender create Mesh node wheel_rl
+19:02:02 | INFO: Blender create Mesh node trim_rim_wheel_rl
+19:02:02 | INFO: Blender create Mesh node wheel_rr
+19:02:02 | INFO: Blender create Mesh node trim_rim_wheel_rr
+19:02:02 | INFO: glTF import finished in 0.03s
+{"ok": true, "actual_glb": "review-only.glb", "body_mounted_meshes": 22, "body_motion_carries_fixtures": true, "wheel_geometry_independent_of_body_bob": true, "steering_carries_rim_and_spokes": true, "wheel_spin_carries_rim_and_spokes": true, "wheel_hub_position_preserved": true, "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim."}
+Blender 4.3.2
+
+Blender quit

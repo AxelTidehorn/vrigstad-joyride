@@ -73,3 +73,13 @@ stylization and facelift differences. Reports explicitly keep
 `metric_geometry_verified:false`; exact geometric millimetre errors cannot be
 certified. Millimetre **changes within the Blender model** are separately measured
 from real mesh coordinates and do not imply exact agreement with the real car.
+
+## Round-2 use
+
+The same Alexander Migl facelift three-door front photograph was reviewed for
+clamshell hood / fender volume, lamp tops and lower bumper. No cabin or wheel
+reproportioning was performed. The existing pre-facelift three-door illustration
+was rerun as a silhouette guardrail only: hood regional mean error 7.53 → 6.57
+canonical px, maximum still 20 px. This does not certify exact 1988 geometry.
+Actual centreline rises (20–35 mm at forward stations) are model changes, not
+measurements inferred as exact factory specifications from photographs.

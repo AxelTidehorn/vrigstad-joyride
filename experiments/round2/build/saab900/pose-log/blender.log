@@ -1,0 +1,45 @@
+19:01:50 | INFO: Data are loaded, start creating Blender stuff
+19:01:50 | INFO: Blender create Mesh node body
+19:01:50 | INFO: Blender create Mesh node badge_front
+19:01:50 | INFO: Blender create Mesh node bumper_front
+19:01:50 | INFO: Blender create Mesh node bumper_rear
+19:01:50 | INFO: Blender create Mesh node glass_envelope
+19:01:50 | INFO: Blender create Mesh node grille
+19:01:50 | INFO: Blender create Mesh node grille_bar
+19:01:50 | INFO: Blender create Mesh node grille_frame
+19:01:50 | INFO: Blender create Mesh node lamp_head
+19:01:50 | INFO: Blender create Mesh node lamp_head.001
+19:01:50 | INFO: Blender create Mesh node lamp_head_divider
+19:01:50 | INFO: Blender create Mesh node lamp_head_divider.001
+19:01:50 | INFO: Blender create Mesh node lamp_indicator
+19:01:50 | INFO: Blender create Mesh node lamp_indicator.001
+19:01:50 | INFO: Blender create Mesh node lamp_tail
+19:01:50 | INFO: Blender create Mesh node lamp_tail.001
+19:01:50 | INFO: Blender create Mesh node lamp_tail_indicator
+19:01:50 | INFO: Blender create Mesh node lamp_tail_indicator.001
+19:01:50 | INFO: Blender create Mesh node mirror_housing
+19:01:50 | INFO: Blender create Mesh node mirror_housing.001
+19:01:50 | INFO: Blender create Mesh node plate_rear
+19:01:50 | INFO: Blender create Mesh node trim_front_airdam
+19:01:50 | INFO: Blender create Mesh node trim_handle
+19:01:50 | INFO: Blender create Mesh node trim_handle.001
+19:01:50 | INFO: Blender create Mesh node trim_hatch_spoiler
+19:01:50 | INFO: Blender create Mesh node trim_side
+19:01:50 | INFO: Blender create Mesh node trim_side.001
+19:01:50 | INFO: Blender create Mesh node wheel_fl
+19:01:50 | INFO: Blender create Mesh node trim_rim_fl
+19:01:50 | INFO: Blender create Mesh node trim_spoke
+19:01:50 | INFO: Blender create Mesh node wheel_fr
+19:01:50 | INFO: Blender create Mesh node trim_rim_fr
+19:01:50 | INFO: Blender create Mesh node trim_spoke.003
+19:01:50 | INFO: Blender create Mesh node wheel_rl
+19:01:50 | INFO: Blender create Mesh node trim_rim_rl
+19:01:50 | INFO: Blender create Mesh node trim_spoke.006
+19:01:50 | INFO: Blender create Mesh node wheel_rr
+19:01:50 | INFO: Blender create Mesh node trim_rim_rr
+19:01:50 | INFO: Blender create Mesh node trim_spoke.009
+19:01:50 | INFO: glTF import finished in 0.04s
+{"ok": true, "actual_glb": "saab900-t16.glb", "body_mounted_meshes": 26, "body_motion_carries_fixtures": true, "wheel_geometry_independent_of_body_bob": true, "steering_carries_rim_and_spokes": true, "wheel_spin_carries_rim_and_spokes": true, "wheel_hub_position_preserved": true, "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim."}
+Blender 4.3.2
+
+Blender quit

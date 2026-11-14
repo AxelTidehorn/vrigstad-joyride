@@ -30,8 +30,8 @@ Not P3 and not the unclad V70. Photographed model years are not always exact.
 - Fifo, Swedish police XC70, photograph April 2006:
   https://commons.wikimedia.org/wiki/File:Polisbil_Volvo_V70.jpeg
   CC BY-SA 2.5 https://creativecommons.org/licenses/by-sa/2.5/ .
-  `police.jpg` unchanged; documents older blue/white scheme, **not the chosen
-  blue/yellow decoration**. Confirms period raised blue bar/fitment.
+  `police.jpg` unchanged; documents the older blue/white scheme used for the current
+  user-requested treatment. Later blue/yellow photos below are historical research. Confirms period raised blue bar/fitment.
 - Per Enström / Plrk, P2 Swedish police XC70 (caption MY2007), 30 April 2009:
   https://commons.wikimedia.org/wiki/File:Swedish_police_car_(Volvo_XC70)_outside_Ekonomikum,_Uppsala,_2009-04-30.jpg
   CC BY-SA 4.0 (selected licence), `police-new.jpg` unchanged. Reference for

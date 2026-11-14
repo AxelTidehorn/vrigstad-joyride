@@ -1,3 +1,16 @@
+# Current vehicle refinement — round 2
+
+Current shared fleet review: [round 2](../round2/index.html). Current technical
+report, preserved geometry, source reproduction and limitations are documented
+in [the round-2 report](../round2/README.md) and its summary.json. Canonical master
+and GLB filenames below now contain the round-2 geometry. Earlier renders and
+per-stage ZIPs remain historical checkpoints; the current source/model package
+is `../round2/vehicle-round2.zip`. Game integration is pending visual approval.
+
+The earlier stage descriptions below are historical.
+
+---
+
 # Volvo XC70 P2, MY2005 civilian / Swedish police
 
 One procedural authoring source and **one shared body**, with material/visibility

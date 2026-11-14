@@ -3,8 +3,8 @@
   "model": "volvo240SedanExperiment1990",
   "errors": [],
   "warnings": [],
-  "meshes": 25,
-  "triangles": 6162,
+  "meshes": 31,
+  "triangles": 10436,
   "dimensions_m": {
     "width": 1.71,
     "height": 1.4329,

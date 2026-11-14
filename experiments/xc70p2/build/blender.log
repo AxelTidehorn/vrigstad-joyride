@@ -1,9 +1,9 @@
 GEOMETRY CHECK: 0 errors, 0 warnings
-  overall size (m): (2.020, 4.743, 1.562)  parts: 85  contact tol: 0.0054
-  [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-trim_arch embedded 0.033 m; body-trim_arch.001 embedded 0.033 m; body-trim_sill embedded 0.042 m; body-mirror_housing flush; body-trim_rail_foot flush; body-trim_arch.002 embedded 0.033 m; body-trim_arch.003 embedded 0.033 m; body-trim_sill.001 embedded 0.042 m; body-mirror_housing.001 flush; body-trim_rail_foot.002 flush; body-bumper_front embedded 0.024 m; body-bumper_rear embedded 0.042 m; body-lamp_head embedded 0.045 m; body-lamp_indicator embedded 0.023 m; body-lamp_tail embedded 0.226 m; body-lamp_head.001 embedded 0.045 m; body-lamp_indicator.001 embedded 0.023 m; body-lamp_tail.001 embedded 0.226 m; body-trim_handle embedded 0.011 m; body-trim_handle.001 embedded 0.011 m; body-trim_handle.002 embedded 0.011 m; body-trim_handle.003 embedded 0.011 m; body-grille embedded 0.025 m; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; glass_envelope[island 0]-lamp_tail embedded 0.014 m; glass_envelope[island 0]-lamp_tail.001 embedded 0.014 m; trim_arch-trim_sill embedded 0.026 m; trim_arch.001-trim_sill embedded 0.026 m; trim_sill-bumper_front embedded 0.027 m; trim_sill-bumper_rear embedded 0.027 m; trim_sill-wheel_fl flush; trim_sill-wheel_rl flush; trim_rail_foot-trim_roof_rail flush; trim_rail_foot.001-trim_roof_rail flush; trim_arch.002-trim_sill.001 embedded 0.026 m; trim_arch.003-trim_sill.001 embedded 0.026 m; trim_sill.001-bumper_front embedded 0.027 m; trim_sill.001-bumper_rear embedded 0.027 m; trim_sill.001-wheel_fr flush; trim_sill.001-wheel_rr flush; trim_rail_foot.002-trim_roof_rail.001 flush; trim_rail_foot.003-trim_roof_rail.001 flush; bumper_front-lamp_head flush; bumper_front-lamp_head.001 flush; bumper_front-trim_skid_front embedded 0.043 m; bumper_front-plate_front embedded 0.024 m; bumper_front-grille embedded 0.033 m; bumper_front-grille_slats embedded 0.020 m; bumper_front-grille_slats.001 embedded 0.020 m; bumper_front-grille_slats.002 embedded 0.020 m; bumper_front-grille_slats.003 embedded 0.020 m; bumper_front-grille_slats.004 embedded 0.020 m; bumper_front-grille_slats.005 embedded 0.020 m; bumper_front-grille_slats.006 embedded 0.020 m; bumper_front-grille_diagonal embedded 0.037 m; bumper_rear-trim_skid_rear embedded 0.043 m; bumper_rear-plate_rear embedded 0.024 m; lamp_head-lamp_reflector flush; lamp_head-lamp_reflector.001 flush; lamp_head.001-lamp_reflector.002 flush; lamp_head.001-lamp_reflector.003 flush; plate_front-grille_diagonal flush; grille-grille_slats flush; grille-grille_slats.001 flush; grille-grille_slats.002 flush; grille-grille_slats.003 flush; grille-grille_slats.004 flush; grille-grille_slats.005 flush; grille-grille_slats.006 flush; grille_slats-grille_diagonal flush; grille_slats.001-grille_diagonal flush; grille_slats.002-grille_diagonal flush; grille_slats.003-grille_diagonal flush; grille_slats.004-grille_diagonal flush; grille_slats.005-grille_diagonal flush; grille_slats.006-grille_diagonal flush; grille_diagonal-badge_volvo flush; wheel_fl-trim_rim_fl flush; trim_rim_fl-trim_spoke flush; trim_rim_fl-trim_spoke.001 flush; trim_rim_fl-trim_spoke.002 flush; trim_rim_fl-trim_spoke.003 flush; trim_rim_fl-trim_spoke.004 flush; trim_rim_fl-trim_spoke.005 flush; wheel_fr-trim_rim_fr flush; trim_rim_fr-trim_spoke.006 flush; trim_rim_fr-trim_spoke.007 flush; trim_rim_fr-trim_spoke.008 flush; trim_rim_fr-trim_spoke.009 flush; trim_rim_fr-trim_spoke.010 flush; trim_rim_fr-trim_spoke.011 flush; wheel_rl-trim_rim_rl flush; trim_rim_rl-trim_spoke.012 flush; trim_rim_rl-trim_spoke.013 flush; trim_rim_rl-trim_spoke.014 flush; trim_rim_rl-trim_spoke.015 flush; trim_rim_rl-trim_spoke.016 flush; trim_rim_rl-trim_spoke.017 flush; wheel_rr-trim_rim_rr flush; trim_rim_rr-trim_spoke.018 flush; trim_rim_rr-trim_spoke.019 flush; trim_rim_rr-trim_spoke.020 flush; trim_rim_rr-trim_spoke.021 flush; trim_rim_rr-trim_spoke.022 flush; trim_rim_rr-trim_spoke.023 flush
+  overall size (m): (2.020, 4.743, 1.562)  parts: 88  contact tol: 0.0054
+  [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-trim_arch embedded 0.033 m; body-trim_arch.001 embedded 0.033 m; body-trim_sill embedded 0.042 m; body-mirror_housing flush; body-trim_rail_foot flush; body-trim_arch.002 embedded 0.033 m; body-trim_arch.003 embedded 0.033 m; body-trim_sill.001 embedded 0.042 m; body-mirror_housing.001 flush; body-trim_rail_foot.002 flush; body-bumper_front embedded 0.024 m; body-bumper_rear embedded 0.042 m; body-lamp_head embedded 0.045 m; body-lamp_indicator embedded 0.023 m; body-lamp_tail embedded 0.168 m; body-lamp_head.001 embedded 0.045 m; body-lamp_indicator.001 embedded 0.023 m; body-lamp_tail.001 embedded 0.168 m; body-trim_handle embedded 0.011 m; body-trim_handle.001 embedded 0.011 m; body-trim_handle.002 embedded 0.011 m; body-trim_handle.003 embedded 0.011 m; body-grille embedded 0.025 m; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; trim_arch-trim_sill embedded 0.026 m; trim_arch.001-trim_sill embedded 0.026 m; trim_sill-bumper_front embedded 0.027 m; trim_sill-bumper_rear embedded 0.027 m; trim_sill-wheel_fl flush; trim_sill-wheel_rl flush; trim_rail_foot-trim_roof_rail flush; trim_rail_foot.001-trim_roof_rail flush; trim_arch.002-trim_sill.001 embedded 0.026 m; trim_arch.003-trim_sill.001 embedded 0.026 m; trim_sill.001-bumper_front embedded 0.027 m; trim_sill.001-bumper_rear embedded 0.027 m; trim_sill.001-wheel_fr flush; trim_sill.001-wheel_rr flush; trim_rail_foot.002-trim_roof_rail.001 flush; trim_rail_foot.003-trim_roof_rail.001 flush; bumper_front-lamp_head flush; bumper_front-lamp_head.001 flush; bumper_front-lamp_head_frame flush; bumper_front-lamp_head_frame.001 flush; bumper_front-trim_skid_front embedded 0.043 m; bumper_front-plate_front embedded 0.024 m; bumper_front-grille embedded 0.033 m; bumper_front-grille_slats[island 0] embedded 0.020 m; bumper_front-grille_slats[island 1] embedded 0.020 m; bumper_front-grille_slats[island 2] embedded 0.020 m; bumper_front-grille_slats[island 3] embedded 0.020 m; bumper_front-grille_slats[island 4] embedded 0.020 m; bumper_front-grille_slats[island 5] embedded 0.020 m; bumper_front-grille_slats[island 6] embedded 0.020 m; bumper_front-grille_diagonal embedded 0.037 m; bumper_front-grille_frame embedded 0.038 m; bumper_rear-trim_skid_rear embedded 0.043 m; bumper_rear-plate_rear embedded 0.024 m; lamp_head-lamp_reflector flush; lamp_head-lamp_reflector.001 flush; lamp_head-lamp_head_frame flush; lamp_reflector-lamp_head_frame flush; lamp_reflector.001-lamp_head_frame flush; lamp_head.001-lamp_reflector.002 flush; lamp_head.001-lamp_reflector.003 flush; lamp_head.001-lamp_head_frame.001 flush; lamp_reflector.002-lamp_head_frame.001 flush; lamp_reflector.003-lamp_head_frame.001 flush; plate_front-grille_diagonal flush; grille-grille_slats[island 0] flush; grille-grille_slats[island 1] flush; grille-grille_slats[island 2] flush; grille-grille_slats[island 3] flush; grille-grille_slats[island 4] flush; grille-grille_slats[island 5] flush; grille-grille_slats[island 6] flush; grille-grille_frame flush; grille_slats[island 0]-grille_diagonal flush; grille_slats[island 1]-grille_diagonal flush; grille_slats[island 2]-grille_diagonal flush; grille_slats[island 3]-grille_diagonal flush; grille_slats[island 4]-grille_diagonal flush; grille_slats[island 5]-grille_diagonal flush; grille_slats[island 6]-grille_diagonal flush; grille_diagonal-badge_volvo flush; grille_diagonal-grille_frame flush; wheel_fl-trim_rim_fl flush; trim_rim_fl-trim_spokes_fl[island 0] flush; trim_rim_fl-trim_spokes_fl[island 1] flush; trim_rim_fl-trim_spokes_fl[island 2] flush; trim_rim_fl-trim_spokes_fl[island 3] flush; trim_rim_fl-trim_spokes_fl[island 4] flush; trim_rim_fl-trim_spokes_fl[island 5] flush; wheel_fr-trim_rim_fr flush; trim_rim_fr-trim_spokes_fr[island 0] flush; trim_rim_fr-trim_spokes_fr[island 1] flush; trim_rim_fr-trim_spokes_fr[island 2] flush; trim_rim_fr-trim_spokes_fr[island 3] flush; trim_rim_fr-trim_spokes_fr[island 4] flush; trim_rim_fr-trim_spokes_fr[island 5] flush; wheel_rl-trim_rim_rl flush; trim_rim_rl-trim_spokes_rl[island 0] flush; trim_rim_rl-trim_spokes_rl[island 1] flush; trim_rim_rl-trim_spokes_rl[island 2] flush; trim_rim_rl-trim_spokes_rl[island 3] flush; trim_rim_rl-trim_spokes_rl[island 4] flush; trim_rim_rl-trim_spokes_rl[island 5] flush; wheel_rr-trim_rim_rr flush; trim_rim_rr-trim_spokes_rr[island 0] flush; trim_rim_rr-trim_spokes_rr[island 1] flush; trim_rim_rr-trim_spokes_rr[island 2] flush; trim_rim_rr-trim_spokes_rr[island 3] flush; trim_rim_rr-trim_spokes_rr[island 4] flush; trim_rim_rr-trim_spokes_rr[island 5] flush
   objects:
-    body: dims (1.800, 4.580, 1.286) verts 2174 faces 4344 islands 1
-    glass_envelope: dims (1.655, 3.052, 0.412) verts 244 faces 456 islands 8
+    body: dims (1.800, 4.580, 1.286) verts 3249 faces 6494 islands 1
+    glass_envelope: dims (1.658, 3.060, 0.412) verts 244 faces 456 islands 8
     trim_arch: dims (0.064, 0.914, 0.457) verts 100 faces 196 islands 1
     trim_arch.001: dims (0.064, 0.914, 0.457) verts 100 faces 196 islands 1
     trim_sill: dims (0.070, 4.040, 0.200) verts 116 faces 228 islands 1
@@ -24,12 +24,14 @@ GEOMETRY CHECK: 0 errors, 0 warnings
     lamp_indicator: dims (0.065, 0.045, 0.085) verts 24 faces 44 islands 1
     lamp_reflector: dims (0.088, 0.088, 0.014) verts 24 faces 44 islands 1
     lamp_reflector.001: dims (0.088, 0.088, 0.014) verts 24 faces 44 islands 1
-    lamp_tail: dims (0.250, 0.393, 0.605) verts 24 faces 44 islands 1
+    lamp_tail: dims (0.195, 0.393, 0.605) verts 24 faces 44 islands 1
     lamp_head.001: dims (0.370, 0.055, 0.100) verts 8 faces 12 islands 1
     lamp_indicator.001: dims (0.065, 0.045, 0.085) verts 24 faces 44 islands 1
     lamp_reflector.002: dims (0.088, 0.088, 0.014) verts 24 faces 44 islands 1
     lamp_reflector.003: dims (0.088, 0.088, 0.014) verts 24 faces 44 islands 1
-    lamp_tail.001: dims (0.250, 0.393, 0.605) verts 24 faces 44 islands 1
+    lamp_tail.001: dims (0.195, 0.393, 0.605) verts 24 faces 44 islands 1
+    lamp_head_frame: dims (0.380, 0.014, 0.112) verts 16 faces 32 islands 1
+    lamp_head_frame.001: dims (0.380, 0.014, 0.112) verts 16 faces 32 islands 1
     trim_handle: dims (0.030, 0.170, 0.035) verts 24 faces 44 islands 1
     trim_handle.001: dims (0.030, 0.170, 0.035) verts 24 faces 44 islands 1
     trim_handle.002: dims (0.030, 0.170, 0.035) verts 24 faces 44 islands 1
@@ -39,47 +41,22 @@ GEOMETRY CHECK: 0 errors, 0 warnings
     trim_skid_rear: dims (0.980, 0.055, 0.105) verts 24 faces 44 islands 1
     plate_rear: dims (0.440, 0.024, 0.100) verts 24 faces 44 islands 1
     grille: dims (0.600, 0.050, 0.200) verts 24 faces 44 islands 1
-    grille_slats: dims (0.018, 0.025, 0.170) verts 24 faces 44 islands 1
-    grille_slats.001: dims (0.018, 0.025, 0.170) verts 24 faces 44 islands 1
-    grille_slats.002: dims (0.018, 0.025, 0.170) verts 24 faces 44 islands 1
-    grille_slats.003: dims (0.018, 0.025, 0.170) verts 24 faces 44 islands 1
-    grille_slats.004: dims (0.018, 0.025, 0.170) verts 24 faces 44 islands 1
-    grille_slats.005: dims (0.018, 0.025, 0.170) verts 24 faces 44 islands 1
-    grille_slats.006: dims (0.018, 0.025, 0.170) verts 24 faces 44 islands 1
+    grille_slats: dims (0.498, 0.025, 0.170) verts 168 faces 308 islands 7
     grille_diagonal: dims (0.630, 0.025, 0.023) verts 24 faces 44 islands 1
     badge_volvo: dims (0.075, 0.030, 0.070) verts 24 faces 44 islands 1
+    grille_frame: dims (0.610, 0.018, 0.205) verts 16 faces 32 islands 1
     wheel_fl: dims (0.295, 0.690, 0.690) verts 242 faces 480 islands 1
     trim_rim_fl: dims (0.430, 0.430, 0.020) verts 48 faces 92 islands 1
-    trim_spoke: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.001: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.002: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.003: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.004: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.005: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
+    trim_spokes_fl: dims (0.024, 0.350, 0.316) verts 144 faces 264 islands 6
     wheel_fr: dims (0.295, 0.690, 0.690) verts 242 faces 480 islands 1
     trim_rim_fr: dims (0.430, 0.430, 0.020) verts 48 faces 92 islands 1
-    trim_spoke.006: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.007: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.008: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.009: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.010: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.011: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
+    trim_spokes_fr: dims (0.024, 0.350, 0.316) verts 144 faces 264 islands 6
     wheel_rl: dims (0.295, 0.690, 0.690) verts 242 faces 480 islands 1
     trim_rim_rl: dims (0.430, 0.430, 0.020) verts 48 faces 92 islands 1
-    trim_spoke.012: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.013: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.014: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.015: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.016: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.017: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
+    trim_spokes_rl: dims (0.024, 0.350, 0.316) verts 144 faces 264 islands 6
     wheel_rr: dims (0.295, 0.690, 0.690) verts 242 faces 480 islands 1
     trim_rim_rr: dims (0.430, 0.430, 0.020) verts 48 faces 92 islands 1
-    trim_spoke.018: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.019: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.020: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.021: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.022: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
-    trim_spoke.023: dims (0.024, 0.120, 0.035) verts 24 faces 44 islands 1
+    trim_spokes_rr: dims (0.024, 0.350, 0.316) verts 144 faces 264 islands 6
 Info: Saved "model.blend"
 Blender 4.3.2
 

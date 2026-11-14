@@ -1,8 +1,8 @@
 {
   "objects": {
     "body": {
-      "verts": 1051,
-      "faces": 2098,
+      "verts": 1948,
+      "faces": 3892,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -10,7 +10,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 6.044109538,
+      "volume": 6.095245754,
       "scale": [
         1.0,
         1.0,
@@ -207,6 +207,29 @@
       ],
       "islands": 1
     },
+    "trim_front_airdam": {
+      "verts": 80,
+      "faces": 78,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.005484264,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.3373,
+        0.087,
+        0.072
+      ],
+      "islands": 1
+    },
     "lamp_head": {
       "verts": 8,
       "faces": 12,
@@ -217,7 +240,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.002047507,
+      "volume": 0.00283501,
       "scale": [
         1.0,
         1.0,
@@ -226,7 +249,7 @@
       "dimensions": [
         0.35,
         0.05,
-        0.145
+        0.175
       ],
       "islands": 1
     },
@@ -309,7 +332,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.002047507,
+      "volume": 0.00283501,
       "scale": [
         1.0,
         1.0,
@@ -318,7 +341,7 @@
       "dimensions": [
         0.35,
         0.05,
-        0.145
+        0.175
       ],
       "islands": 1
     },
@@ -391,6 +414,52 @@
       ],
       "islands": 1
     },
+    "lamp_head_divider": {
+      "verts": 24,
+      "faces": 26,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 8.541e-06,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.008,
+        0.01,
+        0.115
+      ],
+      "islands": 1
+    },
+    "lamp_head_divider.001": {
+      "verts": 24,
+      "faces": 26,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 8.541e-06,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.008,
+        0.01,
+        0.115
+      ],
+      "islands": 1
+    },
     "trim_handle": {
       "verts": 24,
       "faces": 44,
@@ -447,7 +516,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.003421211,
+      "volume": 0.003763332,
       "scale": [
         1.0,
         1.0,
@@ -456,13 +525,13 @@
       "dimensions": [
         0.52,
         0.045,
-        0.15
+        0.165
       ],
       "islands": 1
     },
-    "grille_bar": {
-      "verts": 24,
-      "faces": 44,
+    "grille_bars": {
+      "verts": 72,
+      "faces": 132,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -470,7 +539,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.000115412,
+      "volume": 0.000346236,
       "scale": [
         1.0,
         1.0,
@@ -479,55 +548,9 @@
       "dimensions": [
         0.49,
         0.018,
-        0.014
+        0.094
       ],
-      "islands": 1
-    },
-    "grille_bar.001": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000115412,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.49,
-        0.018,
-        0.014
-      ],
-      "islands": 1
-    },
-    "grille_bar.002": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000115412,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.49,
-        0.018,
-        0.014
-      ],
-      "islands": 1
+      "islands": 3
     },
     "plate_rear": {
       "verts": 24,
@@ -552,52 +575,6 @@
       ],
       "islands": 1
     },
-    "trim_door_seam": {
-      "verts": 56,
-      "faces": 108,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 1.146e-06,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.004,
-        0.001,
-        0.29
-      ],
-      "islands": 1
-    },
-    "trim_door_seam.001": {
-      "verts": 56,
-      "faces": 108,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 1.146e-06,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.004,
-        0.001,
-        0.29
-      ],
-      "islands": 1
-    },
     "badge_front": {
       "verts": 24,
       "faces": 14,
@@ -618,6 +595,29 @@
         0.046,
         0.046,
         0.008
+      ],
+      "islands": 1
+    },
+    "grille_frame": {
+      "verts": 16,
+      "faces": 32,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.00022421,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.535,
+        0.018,
+        0.175
       ],
       "islands": 1
     },
@@ -667,9 +667,9 @@
       ],
       "islands": 1
     },
-    "trim_spoke": {
-      "verts": 24,
-      "faces": 44,
+    "trim_spokes_fl": {
+      "verts": 72,
+      "faces": 132,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -677,7 +677,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.000138026,
+      "volume": 0.000414079,
       "scale": [
         1.0,
         1.0,
@@ -685,56 +685,10 @@
       ],
       "dimensions": [
         0.022,
-        0.12,
-        0.055
+        0.2541,
+        0.2916
       ],
-      "islands": 1
-    },
-    "trim_spoke.001": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000138026,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.022,
-        0.12,
-        0.055
-      ],
-      "islands": 1
-    },
-    "trim_spoke.002": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000138026,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.022,
-        0.12,
-        0.055
-      ],
-      "islands": 1
+      "islands": 3
     },
     "wheel_fr": {
       "verts": 242,
@@ -782,9 +736,9 @@
       ],
       "islands": 1
     },
-    "trim_spoke.003": {
-      "verts": 24,
-      "faces": 44,
+    "trim_spokes_fr": {
+      "verts": 72,
+      "faces": 132,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -792,7 +746,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.000138026,
+      "volume": 0.000414079,
       "scale": [
         1.0,
         1.0,
@@ -800,56 +754,10 @@
       ],
       "dimensions": [
         0.022,
-        0.12,
-        0.055
+        0.2541,
+        0.2916
       ],
-      "islands": 1
-    },
-    "trim_spoke.004": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000138026,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.022,
-        0.12,
-        0.055
-      ],
-      "islands": 1
-    },
-    "trim_spoke.005": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000138026,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.022,
-        0.12,
-        0.055
-      ],
-      "islands": 1
+      "islands": 3
     },
     "wheel_rl": {
       "verts": 242,
@@ -897,9 +805,9 @@
       ],
       "islands": 1
     },
-    "trim_spoke.006": {
-      "verts": 24,
-      "faces": 44,
+    "trim_spokes_rl": {
+      "verts": 72,
+      "faces": 132,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -907,7 +815,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.000138026,
+      "volume": 0.000414079,
       "scale": [
         1.0,
         1.0,
@@ -915,56 +823,10 @@
       ],
       "dimensions": [
         0.022,
-        0.12,
-        0.055
+        0.2541,
+        0.2916
       ],
-      "islands": 1
-    },
-    "trim_spoke.007": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000138026,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.022,
-        0.12,
-        0.055
-      ],
-      "islands": 1
-    },
-    "trim_spoke.008": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000138026,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.022,
-        0.12,
-        0.055
-      ],
-      "islands": 1
+      "islands": 3
     },
     "wheel_rr": {
       "verts": 242,
@@ -1012,9 +874,9 @@
       ],
       "islands": 1
     },
-    "trim_spoke.009": {
-      "verts": 24,
-      "faces": 44,
+    "trim_spokes_rr": {
+      "verts": 72,
+      "faces": 132,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -1022,7 +884,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.000138026,
+      "volume": 0.000414079,
       "scale": [
         1.0,
         1.0,
@@ -1030,63 +892,17 @@
       ],
       "dimensions": [
         0.022,
-        0.12,
-        0.055
+        0.2541,
+        0.2916
       ],
-      "islands": 1
-    },
-    "trim_spoke.010": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000138026,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.022,
-        0.12,
-        0.055
-      ],
-      "islands": 1
-    },
-    "trim_spoke.011": {
-      "verts": 24,
-      "faces": 44,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000138026,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.022,
-        0.12,
-        0.055
-      ],
-      "islands": 1
+      "islands": 3
     }
   },
   "errors": [],
   "warnings": [],
   "info": [
     "badge_front: 2 n-gons (matters only before subdivision).",
-    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-bumper_front embedded 0.030 m; body-bumper_rear embedded 0.034 m; body-trim_side embedded 0.019 m; body-mirror_housing embedded 0.015 m; body-trim_side.001 embedded 0.019 m; body-mirror_housing.001 embedded 0.015 m; body-trim_hatch_spoiler flush; body-lamp_head embedded 0.035 m; body-lamp_indicator embedded 0.036 m; body-lamp_tail embedded 0.028 m; body-lamp_tail_indicator embedded 0.040 m; body-lamp_head.001 embedded 0.035 m; body-lamp_indicator.001 embedded 0.036 m; body-lamp_tail.001 embedded 0.028 m; body-lamp_tail_indicator.001 embedded 0.040 m; body-trim_handle embedded 0.015 m; body-trim_handle.001 embedded 0.015 m; body-grille embedded 0.023 m; body-plate_rear flush; body-trim_door_seam flush; body-trim_door_seam.001 flush; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; glass_envelope[island 0]-trim_hatch_spoiler flush; glass_envelope[island 3]-mirror_housing.001 flush; glass_envelope[island 4]-mirror_housing flush; lamp_tail-lamp_tail_indicator embedded 0.016 m; lamp_tail.001-lamp_tail_indicator.001 embedded 0.016 m; grille-grille_bar flush; grille-grille_bar.001 flush; grille-grille_bar.002 flush; grille-badge_front flush; grille_bar.001-badge_front flush; grille_bar.002-badge_front flush; wheel_fl-trim_rim_fl embedded 0.016 m; wheel_fl-trim_spoke flush; wheel_fl-trim_spoke.001 flush; wheel_fl-trim_spoke.002 flush; trim_rim_fl-trim_spoke flush; trim_rim_fl-trim_spoke.001 flush; trim_rim_fl-trim_spoke.002 flush; wheel_fr-trim_rim_fr embedded 0.016 m; wheel_fr-trim_spoke.003 flush; wheel_fr-trim_spoke.004 flush; wheel_fr-trim_spoke.005 flush; trim_rim_fr-trim_spoke.003 flush; trim_rim_fr-trim_spoke.004 flush; trim_rim_fr-trim_spoke.005 flush; wheel_rl-trim_rim_rl embedded 0.016 m; wheel_rl-trim_spoke.006 flush; wheel_rl-trim_spoke.007 flush; wheel_rl-trim_spoke.008 flush; trim_rim_rl-trim_spoke.006 flush; trim_rim_rl-trim_spoke.007 flush; trim_rim_rl-trim_spoke.008 flush; wheel_rr-trim_rim_rr embedded 0.016 m; wheel_rr-trim_spoke.009 flush; wheel_rr-trim_spoke.010 flush; wheel_rr-trim_spoke.011 flush; trim_rim_rr-trim_spoke.009 flush; trim_rim_rr-trim_spoke.010 flush; trim_rim_rr-trim_spoke.011 flush"
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-bumper_front embedded 0.030 m; body-bumper_rear embedded 0.034 m; body-trim_side embedded 0.048 m; body-mirror_housing embedded 0.015 m; body-trim_side.001 embedded 0.048 m; body-mirror_housing.001 embedded 0.015 m; body-trim_hatch_spoiler flush; body-trim_front_airdam embedded 0.027 m; body-lamp_head embedded 0.035 m; body-lamp_indicator embedded 0.037 m; body-lamp_tail embedded 0.028 m; body-lamp_tail_indicator embedded 0.040 m; body-lamp_head.001 embedded 0.035 m; body-lamp_indicator.001 embedded 0.037 m; body-lamp_tail.001 embedded 0.028 m; body-lamp_tail_indicator.001 embedded 0.040 m; body-trim_handle embedded 0.015 m; body-trim_handle.001 embedded 0.015 m; body-grille embedded 0.023 m; body-plate_rear flush; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; glass_envelope[island 0]-trim_hatch_spoiler flush; glass_envelope[island 3]-mirror_housing.001 flush; glass_envelope[island 4]-mirror_housing flush; bumper_front-trim_front_airdam flush; lamp_head-lamp_head_divider flush; lamp_tail-lamp_tail_indicator embedded 0.016 m; lamp_head.001-lamp_head_divider.001 flush; lamp_tail.001-lamp_tail_indicator.001 embedded 0.016 m; grille-grille_bars[island 0] flush; grille-grille_bars[island 1] flush; grille-grille_bars[island 2] flush; grille-badge_front flush; grille-grille_frame flush; grille_bars[island 1]-badge_front flush; grille_bars[island 2]-badge_front flush; wheel_fl-trim_rim_fl embedded 0.016 m; wheel_fl-trim_spokes_fl[island 0] flush; wheel_fl-trim_spokes_fl[island 1] flush; wheel_fl-trim_spokes_fl[island 2] flush; trim_rim_fl-trim_spokes_fl[island 0] flush; trim_rim_fl-trim_spokes_fl[island 1] flush; trim_rim_fl-trim_spokes_fl[island 2] flush; wheel_fr-trim_rim_fr embedded 0.016 m; wheel_fr-trim_spokes_fr[island 0] flush; wheel_fr-trim_spokes_fr[island 1] flush; wheel_fr-trim_spokes_fr[island 2] flush; trim_rim_fr-trim_spokes_fr[island 0] flush; trim_rim_fr-trim_spokes_fr[island 1] flush; trim_rim_fr-trim_spokes_fr[island 2] flush; wheel_rl-trim_rim_rl embedded 0.016 m; wheel_rl-trim_spokes_rl[island 0] flush; wheel_rl-trim_spokes_rl[island 1] flush; wheel_rl-trim_spokes_rl[island 2] flush; trim_rim_rl-trim_spokes_rl[island 0] flush; trim_rim_rl-trim_spokes_rl[island 1] flush; trim_rim_rl-trim_spokes_rl[island 2] flush; wheel_rr-trim_rim_rr embedded 0.016 m; wheel_rr-trim_spokes_rr[island 0] flush; wheel_rr-trim_spokes_rr[island 1] flush; wheel_rr-trim_spokes_rr[island 2] flush; trim_rim_rr-trim_spokes_rr[island 0] flush; trim_rim_rr-trim_spokes_rr[island 1] flush; trim_rim_rr-trim_spokes_rr[island 2] flush"
   ],
   "units": "m",
   "overall": {
@@ -1106,7 +922,7 @@
       1.4199999570846558
     ],
     "contact_tolerance": 0.005194315512083243,
-    "parts": 52
+    "parts": 54
   },
   "contacts": [
     {
@@ -1160,7 +976,7 @@
     {
       "a": "body",
       "b": "trim_side",
-      "depth": 0.019115228205919266,
+      "depth": 0.047938697040081024,
       "expected": false
     },
     {
@@ -1172,7 +988,7 @@
     {
       "a": "body",
       "b": "trim_side.001",
-      "depth": 0.019115224480628967,
+      "depth": 0.0479387529194355,
       "expected": false
     },
     {
@@ -1189,6 +1005,12 @@
     },
     {
       "a": "body",
+      "b": "trim_front_airdam",
+      "depth": 0.026984691619873047,
+      "expected": false
+    },
+    {
+      "a": "body",
       "b": "lamp_head",
       "depth": 0.03500008583068848,
       "expected": false
@@ -1196,7 +1018,7 @@
     {
       "a": "body",
       "b": "lamp_indicator",
-      "depth": 0.03633403778076172,
+      "depth": 0.03702376410365105,
       "expected": false
     },
     {
@@ -1220,7 +1042,7 @@
     {
       "a": "body",
       "b": "lamp_indicator.001",
-      "depth": 0.03633403778076172,
+      "depth": 0.03702381253242493,
       "expected": false
     },
     {
@@ -1238,13 +1060,13 @@
     {
       "a": "body",
       "b": "trim_handle",
-      "depth": 0.014930155128240585,
+      "depth": 0.014930138364434242,
       "expected": false
     },
     {
       "a": "body",
       "b": "trim_handle.001",
-      "depth": 0.014930211938917637,
+      "depth": 0.014930138364434242,
       "expected": false
     },
     {
@@ -1257,18 +1079,6 @@
       "a": "body",
       "b": "plate_rear",
       "depth": 0.0,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "trim_door_seam",
-      "depth": 0.00016543467063456774,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "trim_door_seam.001",
-      "depth": 0.00016543467063456774,
       "expected": false
     },
     {
@@ -1314,9 +1124,27 @@
       "expected": false
     },
     {
+      "a": "bumper_front",
+      "b": "trim_front_airdam",
+      "depth": 0.0034999847412109375,
+      "expected": false
+    },
+    {
+      "a": "lamp_head",
+      "b": "lamp_head_divider",
+      "depth": 2.4027400513659813e-07,
+      "expected": false
+    },
+    {
       "a": "lamp_tail",
       "b": "lamp_tail_indicator",
       "depth": 0.015500068664550781,
+      "expected": false
+    },
+    {
+      "a": "lamp_head.001",
+      "b": "lamp_head_divider.001",
+      "depth": 2.4027400513659813e-07,
       "expected": false
     },
     {
@@ -1327,19 +1155,19 @@
     },
     {
       "a": "grille",
-      "b": "grille_bar",
+      "b": "grille_bars[island 0]",
       "depth": 0.005500078201293945,
       "expected": false
     },
     {
       "a": "grille",
-      "b": "grille_bar.001",
+      "b": "grille_bars[island 1]",
       "depth": 0.005500078201293945,
       "expected": false
     },
     {
       "a": "grille",
-      "b": "grille_bar.002",
+      "b": "grille_bars[island 2]",
       "depth": 0.005500078201293945,
       "expected": false
     },
@@ -1350,13 +1178,19 @@
       "expected": false
     },
     {
-      "a": "grille_bar.001",
+      "a": "grille",
+      "b": "grille_frame",
+      "depth": 0.0037999749183654785,
+      "expected": false
+    },
+    {
+      "a": "grille_bars[island 1]",
       "b": "badge_front",
       "depth": 0.0,
       "expected": false
     },
     {
-      "a": "grille_bar.002",
+      "a": "grille_bars[island 2]",
       "b": "badge_front",
       "depth": 0.0020000410731881857,
       "expected": false
@@ -1369,37 +1203,37 @@
     },
     {
       "a": "wheel_fl",
-      "b": "trim_spoke",
+      "b": "trim_spokes_fl[island 0]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "wheel_fl",
-      "b": "trim_spoke.001",
+      "b": "trim_spokes_fl[island 1]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "wheel_fl",
-      "b": "trim_spoke.002",
+      "b": "trim_spokes_fl[island 2]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "trim_rim_fl",
-      "b": "trim_spoke",
+      "b": "trim_spokes_fl[island 0]",
       "depth": 0.007999956607818604,
       "expected": false
     },
     {
       "a": "trim_rim_fl",
-      "b": "trim_spoke.001",
+      "b": "trim_spokes_fl[island 1]",
       "depth": 0.007999956607818604,
       "expected": false
     },
     {
       "a": "trim_rim_fl",
-      "b": "trim_spoke.002",
+      "b": "trim_spokes_fl[island 2]",
       "depth": 0.007999956607818604,
       "expected": false
     },
@@ -1411,37 +1245,37 @@
     },
     {
       "a": "wheel_fr",
-      "b": "trim_spoke.003",
+      "b": "trim_spokes_fr[island 0]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "wheel_fr",
-      "b": "trim_spoke.004",
+      "b": "trim_spokes_fr[island 1]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "wheel_fr",
-      "b": "trim_spoke.005",
+      "b": "trim_spokes_fr[island 2]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "trim_rim_fr",
-      "b": "trim_spoke.003",
+      "b": "trim_spokes_fr[island 0]",
       "depth": 0.007999956607818604,
       "expected": false
     },
     {
       "a": "trim_rim_fr",
-      "b": "trim_spoke.004",
+      "b": "trim_spokes_fr[island 1]",
       "depth": 0.007999956607818604,
       "expected": false
     },
     {
       "a": "trim_rim_fr",
-      "b": "trim_spoke.005",
+      "b": "trim_spokes_fr[island 2]",
       "depth": 0.007999956607818604,
       "expected": false
     },
@@ -1453,37 +1287,37 @@
     },
     {
       "a": "wheel_rl",
-      "b": "trim_spoke.006",
+      "b": "trim_spokes_rl[island 0]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "wheel_rl",
-      "b": "trim_spoke.007",
+      "b": "trim_spokes_rl[island 1]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "wheel_rl",
-      "b": "trim_spoke.008",
+      "b": "trim_spokes_rl[island 2]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "trim_rim_rl",
-      "b": "trim_spoke.006",
+      "b": "trim_spokes_rl[island 0]",
       "depth": 0.007999956607818604,
       "expected": false
     },
     {
       "a": "trim_rim_rl",
-      "b": "trim_spoke.007",
+      "b": "trim_spokes_rl[island 1]",
       "depth": 0.007999956607818604,
       "expected": false
     },
     {
       "a": "trim_rim_rl",
-      "b": "trim_spoke.008",
+      "b": "trim_spokes_rl[island 2]",
       "depth": 0.007999956607818604,
       "expected": false
     },
@@ -1495,37 +1329,37 @@
     },
     {
       "a": "wheel_rr",
-      "b": "trim_spoke.009",
+      "b": "trim_spokes_rr[island 0]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "wheel_rr",
-      "b": "trim_spoke.010",
+      "b": "trim_spokes_rr[island 1]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "wheel_rr",
-      "b": "trim_spoke.011",
+      "b": "trim_spokes_rr[island 2]",
       "depth": 0.004499971866607666,
       "expected": false
     },
     {
       "a": "trim_rim_rr",
-      "b": "trim_spoke.009",
+      "b": "trim_spokes_rr[island 0]",
       "depth": 0.007999956607818604,
       "expected": false
     },
     {
       "a": "trim_rim_rr",
-      "b": "trim_spoke.010",
+      "b": "trim_spokes_rr[island 1]",
       "depth": 0.007999956607818604,
       "expected": false
     },
     {
       "a": "trim_rim_rr",
-      "b": "trim_spoke.011",
+      "b": "trim_spokes_rr[island 2]",
       "depth": 0.007999956607818604,
       "expected": false
     }
