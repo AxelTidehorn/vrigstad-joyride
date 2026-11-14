@@ -4,6 +4,7 @@ An import gate, not a certification of perfect body geometry or style.
 """
 from __future__ import annotations
 import sys
+import argparse
 from pathlib import Path
 import numpy as np
 import trimesh
@@ -13,7 +14,12 @@ MODELS = ("sedan", "van", "tractor", "police")
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--expect-rejected', action='store_true',
+                        help='Require all known rejected review candidates to remain rejected')
+    args = parser.parse_args()
     failed = False
+    rejected = set()
     for name in MODELS:
         path = ROOT / "media" / "vehicles" / "traffic" / f"{name}.glb"
         scene = trimesh.load(path, force="scene", process=False)
@@ -56,7 +62,16 @@ def main():
                   "body_components", components, "meshes", len(nodes))
             if not is_closed or components != 1:
                 print("REJECT", name, "body still open, inconsistent, or disconnected after diagnostic welding")
-                failed = True
+                rejected.add(name)
+                if not args.expect_rejected:
+                    failed = True
+    if args.expect_rejected:
+        unexpected = set(MODELS) - rejected
+        if unexpected:
+            print('ERROR: review candidates changed rejection status:', sorted(unexpected))
+            failed = True
+        if not failed:
+            print('PASS: known non-production traffic candidates remain rejected:', ', '.join(MODELS))
     return int(failed)
 
 
