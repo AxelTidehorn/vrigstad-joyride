@@ -76,7 +76,10 @@ export function createVehicleAssets(THREE, Loader) {
       });
       visual.position.y = -0.72; // Cancel current body's +0.72m rig pivot.
       car.bodyRig.add(visual);
-      car.bodyRig.remove(fallback);
+      car.assetFallback = fallback;
+      visual.visible = !!car.assetDetailed;
+      fallback.visible = !car.assetDetailed;
+      for (const wheel of wheels) wheel.steer.visible = !!car.assetDetailed;
       car.assetType = type;
       car.visual = visual;
       car.assetWheels = wheels;
@@ -88,6 +91,14 @@ export function createVehicleAssets(THREE, Loader) {
       }
     });
   }
+  function setDetailed(car, enabled) {
+    car.assetDetailed = !!enabled;
+    if (!car.visual) return;
+    car.visual.visible = !!enabled;
+    car.assetFallback.visible = !enabled;
+    for (const wheel of car.assetWheels || []) wheel.steer.visible = !!enabled;
+  }
+  function has(type) { return !!VEHICLE_ASSETS[type]; }
   function update(car) {
     if (!car.assetWheels) return;
     const steerAngle = car.driveState?.steer || 0;
@@ -106,5 +117,5 @@ export function createVehicleAssets(THREE, Loader) {
     car.assetWheels = null;
     car.assetBeacons = null;
   }
-  return { preload, install, update, setEmergencyLights, dispose };
+  return { has, preload, install, setDetailed, update, setEmergencyLights, dispose };
 }
