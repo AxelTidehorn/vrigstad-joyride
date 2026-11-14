@@ -1,0 +1,282 @@
+{
+  "vehicle": "Volvo XC70 P2 MY2005, civilian base",
+  "dimensions": {
+    "length_m": {
+      "value": 4.733,
+      "status": "Volvo technical specification 2003; corroborated MY2005 press release"
+    },
+    "width_m": {
+      "value": 1.86,
+      "status": "Volvo technical specification 2003; corroborated MY2005 press release"
+    },
+    "height_m": {
+      "value": 1.562,
+      "status": "Volvo technical specification 2003; corroborated MY2005 press release"
+    },
+    "wheelbase_m": {
+      "value": 2.763,
+      "status": "Volvo technical specification 2003; corroborated MY2005 press release"
+    }
+  },
+  "reference": {
+    "image": "references/side.png",
+    "source": "Volvo UK XC70 technical specification April 2003, page 8 side photograph",
+    "url": "https://www.volvoclub.org.uk/tech/XC70_Tech_Spec_Apr2003.pdf",
+    "variant": "P2 pre-facelift side proxy; MY2005 facelift checked in photos",
+    "orthographic": false,
+    "metric_reliable": false,
+    "front_wheel": [
+      270,
+      384
+    ],
+    "rear_wheel": [
+      1070,
+      384
+    ],
+    "ground": [
+      270,
+      484
+    ],
+    "mask": {
+      "mode": "manual_polygon",
+      "reviewed": true,
+      "polygon": [
+        [
+          40,
+          270
+        ],
+        [
+          65,
+          236
+        ],
+        [
+          140,
+          216
+        ],
+        [
+          250,
+          195
+        ],
+        [
+          390,
+          174
+        ],
+        [
+          485,
+          111
+        ],
+        [
+          600,
+          64
+        ],
+        [
+          740,
+          53
+        ],
+        [
+          1170,
+          52
+        ],
+        [
+          1255,
+          63
+        ],
+        [
+          1290,
+          108
+        ],
+        [
+          1310,
+          245
+        ],
+        [
+          1350,
+          285
+        ],
+        [
+          1348,
+          360
+        ],
+        [
+          1175,
+          417
+        ],
+        [
+          1160,
+          451
+        ],
+        [
+          1125,
+          477
+        ],
+        [
+          1070,
+          485
+        ],
+        [
+          1025,
+          474
+        ],
+        [
+          990,
+          442
+        ],
+        [
+          976,
+          407
+        ],
+        [
+          377,
+          417
+        ],
+        [
+          365,
+          449
+        ],
+        [
+          325,
+          478
+        ],
+        [
+          270,
+          485
+        ],
+        [
+          225,
+          474
+        ],
+        [
+          190,
+          440
+        ],
+        [
+          175,
+          399
+        ],
+        [
+          80,
+          384
+        ],
+        [
+          36,
+          354
+        ]
+      ]
+    },
+    "curves": {
+      "hood": [
+        [
+          65,
+          236
+        ],
+        [
+          250,
+          195
+        ],
+        [
+          390,
+          174
+        ]
+      ],
+      "windscreen": [
+        [
+          390,
+          174
+        ],
+        [
+          600,
+          64
+        ]
+      ]
+    }
+  },
+  "mask_scope": "Main vehicle hull and tyres; roof rails, mirrors, shadows, dimension arrows excluded. Bumpers approximate hull envelope; no exact metric approval.",
+  "uncertainties": [
+    "Photographic manufacturer side view has small perspective; pre-facelift fascia differs from MY2005.",
+    "Manual contour uncertainty 3-6 source px; no exact mm error claim."
+  ],
+  "regions": {
+    "hood": [
+      2.15,
+      3.65,
+      0.65,
+      1.12
+    ],
+    "windscreen": [
+      1.55,
+      2.25,
+      0.95,
+      1.5
+    ],
+    "roof": [
+      -0.6,
+      1.6,
+      1.25,
+      1.65
+    ],
+    "rear": [
+      -1.1,
+      -0.5,
+      0.6,
+      1.6
+    ],
+    "wheel_arches": [
+      -0.4,
+      3.2,
+      0.2,
+      0.9
+    ],
+    "underbody": [
+      -1.1,
+      3.7,
+      0,
+      0.55
+    ]
+  },
+  "blender": {
+    "body_object": "body",
+    "quality_focus": [
+      [
+        -1.05,
+        -2.42,
+        0
+      ],
+      [
+        1.05,
+        2.42,
+        1.78
+      ]
+    ],
+    "cowl_focus": [
+      [
+        -0.9,
+        0.3,
+        0.8
+      ],
+      [
+        0.9,
+        1.6,
+        1.5
+      ]
+    ],
+    "point_stations_y": {
+      "hood_rear": 0.9,
+      "windscreen_base": 0.845
+    },
+    "curve_stations_y": {
+      "hood": [
+        2.15,
+        1.9,
+        1.5,
+        1.15,
+        0.9
+      ],
+      "windscreen": [
+        0.845,
+        0.675,
+        0.415
+      ]
+    },
+    "arch_curves": {}
+  }
+}

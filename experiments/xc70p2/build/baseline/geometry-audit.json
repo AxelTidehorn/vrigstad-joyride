@@ -1,0 +1,247 @@
+{
+  "nonmanifold_edges": 0,
+  "inconsistent_edges": 0,
+  "degenerate_faces": 0,
+  "signed_volume_m3": 8.008956013000281,
+  "self_intersection_candidates": [],
+  "triangles": 9964,
+  "dimensions_m": [
+    2.0199999809265137,
+    4.784000396728516,
+    1.6474999710917473
+  ],
+  "component_sha256": {
+    "trim_arch": "08d9af4de80fa990bd100fc1f427433ec7126b37b1a747636e1a776a46dc204e",
+    "trim_arch.001": "f312f66027554f629e2e60245b621fbae0c81203472f0bc2744f00cc9ba6c702",
+    "trim_sill": "5b103cc3fd05df742288029678ee6d0aa8effe01228c9de249a8aaf3fe7b8d3b",
+    "mirror_housing": "7451c1ecc66febc5e2ffaf4d697a5e98fe3a7a3c65305276db9cf7ea90ea9086",
+    "trim_rail_foot": "4b55f2c2cc60deaccb0f58011c2a000383cbac16c9fdfeb4f396a035dfbb649f",
+    "trim_rail_foot.001": "b534c92d66e7a2ca8f667a0de17920dfb60226ed97872c5b34c8e8dd3b300ca3",
+    "trim_roof_rail": "e2ce334fc957429620817bd1a011dc1427ecf3a029d0fddbedf61d538caa3c80",
+    "trim_arch.002": "ad2ebba1a4d7c99ec5edaad7b3c880aee20c05c60d7d3ebfd12c32fc7d701be9",
+    "trim_arch.003": "8617a4b7869339ed035d82b0fa6baf15c5bf54965ab9ba8076302d4bae6e0ee3",
+    "trim_sill.001": "64213c3c14d25f53c5dc8b911bbdd3a789494f0ad3a553b0d00e35478e373cdd",
+    "mirror_housing.001": "4ac7f76f18b70f58ba66879d705abb778c0e31b17910379b9a1ed4a89a09fcb4",
+    "trim_rail_foot.002": "2b28ef596f2fa5aa4432bd5fa4844284a158059d2ac837bbc4392a0f1cc596a5",
+    "trim_rail_foot.003": "5ef51636cea23a00c7fec92b930572da8c64f6ff3b49f6b97a7577379fdda080",
+    "trim_roof_rail.001": "9456d3f0d5f557c5f83a6849e887ac91367b792d757a0ac7c4faef01ead2c68c",
+    "bumper_front": "0af1abf4b44e5d670597a3ba32981e893428b7897be637e25e2a4dcbb21f642f",
+    "bumper_rear": "52dab4d89ac8d216552e3e3917a6c87caa1f4ce919457ff78a9c4dcde09ef5d6",
+    "lamp_head": "dad6e38b23ab1f38ea5513f36a61e3fbfd6df02a628b0f0b6e946c843896495c",
+    "lamp_indicator": "b56c344c164ae6f76804c219172d27a208d787bb6a60fdf01be048e32632822f",
+    "lamp_reflector": "51783352e26dc1d20884f4b814bd7656b86fd1eb3da790bc06634e53a6ce936c",
+    "lamp_reflector.001": "610b54d241566a2f4c6abf9ed7676059ec688f51991705821fa248f596bdf103",
+    "lamp_tail": "10b9ae2f0cb3e0a1e5b60687a6183dc2df50b89e7b419b46da9de8a9c1ce8b82",
+    "lamp_tail.001": "6657b87dd909cf593397ba54f876e2d72fc4ba41285a02e79e5175bf0da6f669",
+    "lamp_tail.002": "e5162b1453657952703646add6a55e9b7eabea2563e1b089aa88b111b57dad95",
+    "lamp_tail.003": "b1ff76f2fba4406218ce6b0fe7919fae57a73baa3e9e4ab95624ca54cfef1647",
+    "lamp_head.001": "6bc278cdaa5af036fd47216f66cfe09cc1fea07711e4609763e14675d65f43b2",
+    "lamp_indicator.001": "98faa15e639ec45f676ddd9dee692b6304f6ca32b8fd33aeb54584ec4004f159",
+    "lamp_reflector.002": "b977ff01892097f5a7ccd5a4692473b41f07c826b257cad0432c83946eb88c33",
+    "lamp_reflector.003": "5a53398085b1870a39a141c3af5c23176320a3fb286dc4b2426f9fbafafddbad",
+    "lamp_tail.004": "6c49962a47784d03c93387ccd15045013dbceee97e690de99841327704152a74",
+    "lamp_tail.005": "7af327ea5018a53bd4cdecbdd7660ddbfae27bab05eb54dd66fce7267f311fe9",
+    "lamp_tail.006": "21433f58499dd1f81404b77816a6d4c0a686fde846d54f9b54d552ad08afafd7",
+    "lamp_tail.007": "b2bb8e59309b53c9fa94f6dfbb5d0a84f9bec360fafbe03a62314237f7472479",
+    "trim_handle": "2d9ca1b15834b48a50cd988497ad11721e06c48aa0e950d375743d94b19be6f2",
+    "trim_handle.001": "29b91d204ceec7ca4b8a696ec5f27fd73fcecd2ee855cd7022b182488c90d812",
+    "trim_handle.002": "9851afb01af21ab2cd8ede4695b2725108ca1fd647f7c577a01682d0e82f337e",
+    "trim_handle.003": "01c2dc6bd1b863d5704960b8474710feb012c4ab1362a5de3872e2b33b3d0612",
+    "trim_skid_front": "502cbf047d3d3c96d73ea0df8c782cd5d694846e7d28a671a8cf2d5a49cd6902",
+    "plate_front": "ddaf48450de28587e7e681633f28c4b1375466d0fcf3e787c9a53fcb38dcea1e",
+    "trim_skid_rear": "0bb8d566d1309605c76a82742d3130922f11173fe2f142c926f59a6850128519",
+    "plate_rear": "d62cda9038b11ca8b5c2d274e1fa0d969f432bea6c80e66ff524a2d57fb0ad27",
+    "grille": "67ce356cac1a8113407e77d0bc65ee2f0aca2ee0b72c1bb1b10ae8946231858e",
+    "grille_slats": "f7ffeae3e0b3ba50cadb15f8879299933dc1e19f5402f37def6f76f0794ac7a9",
+    "grille_slats.001": "c7edb658055823eab49958ef109d89754d9b6de12002a0527cc22bd8667d0a1d",
+    "grille_slats.002": "f97df28da8094486be60879d415f37954a8724ac908451df504b67517a9f91b3",
+    "grille_slats.003": "6ea871d284d8a4efaa01a4eb0a0e94ed670309527fb8ecdebeeaa0258c79cf96",
+    "grille_slats.004": "93bcfaf7b1b3022dc5c29c62302705b976ac944c8bdac81d3fed242a0358286f",
+    "grille_slats.005": "3645c5b0c1bc9d0140dc38fc9a52c4c79a646815c42455b00061e07c83d2df86",
+    "grille_slats.006": "8f2fce8b8fd2ee988891dbefb0ea7c4fea1568e876832d8e122d1da364187e9b",
+    "grille_diagonal": "9f89720dc09ffe1813dba77b273c83bbf1895ead49e72bf4a5503cf352024423",
+    "badge_volvo": "ad9c2d883ffc4a1ac314c20a8eb28847f346f91df39ba8fc741e4d948b5c34f4",
+    "wheel_fl": "6ff108f11826100f0f6154c707ee33b03fc68784e608aeb68d7144758602cbb9",
+    "trim_rim_fl": "b0809bfb59aa4d4230766cd2cc47af26ae0fbf04aef003679990915edb484173",
+    "trim_spoke": "eaec603b9ef01f1cda6bdf2f7d89ea810b21af3cc85e48d9e22350d1c94c5ed6",
+    "trim_spoke.001": "3913bfce2a3c7a6dae5f959319ef69802921ca7475495783f97c886b77270b50",
+    "trim_spoke.002": "3260eafb3e2d450729c0ad93dc678a96f01d3d2f0aabe74b3f40756ca3c1e05d",
+    "trim_spoke.003": "b49092f88f9c445185f6e6c569da4183d2f78954298a00b595b24ae3d93a0799",
+    "trim_spoke.004": "d4eb228664b6cfbe91db5baf136e8785da96f3235325845cce1cd6660bcb6674",
+    "trim_spoke.005": "70d3d6639f218eb1b838b0a898a3461d3f7a7c88863d28f9146b18a6cfb59e4c",
+    "wheel_fr": "5b1f228061cc6495ef4369e11579970456b1dcdae028bd7d1023118f2c2b1389",
+    "trim_rim_fr": "e135f3bb65aaecf743082924f905e62c685d2d115037e71fafd379fd24ae71db",
+    "trim_spoke.006": "5024a95b88a5795b429e4e8490a357cb30541f45b982316e6eb115586da57b5a",
+    "trim_spoke.007": "19ac364f8171a919887f05e14e1498408c6fffe632e00021f33ebace642d7cee",
+    "trim_spoke.008": "6f30e68c515132086963dad635246a9121ffb2a5fab427a04efdd68715f6486a",
+    "trim_spoke.009": "d1e147de5ea91d55193395d0fc5dc9154ac4b0c7083a45acac30fff52e03137e",
+    "trim_spoke.010": "5b6a383bdd10683081f8310cc55f736a2b4e475354564248be8c7f9ea1b47d36",
+    "trim_spoke.011": "3a0576cea69061966e44d1a28a410b16ea6d29af1a6f1107aec790b2e13f498f",
+    "wheel_rl": "b527d9ffdefc4d722492b4adb4ca78c93e61d2f68bbf2d490c8c5b853639d417",
+    "trim_rim_rl": "8ff7ac8a6e0c75ccef601a72a3e5a77cadfbfadd0b08dae6118fbf891ed884a1",
+    "trim_spoke.012": "bfd9fe67d0bd28b713ef5f77d2b912feb28e82cc532f37f3eb16af66629080ad",
+    "trim_spoke.013": "968abbd3210d2332663149dc0420327f754fc3b0b18248a5c48c8fb2dadcfb21",
+    "trim_spoke.014": "d96ac83fecd122a90c216a1e22a8ea52ddf43c008f90a97001b55f198fb4b825",
+    "trim_spoke.015": "2dc80ce211a948ccb304177973e9ca8ab5a64875b2568ed434169b740d7026c3",
+    "trim_spoke.016": "1055ae55337b94ffa4d0dfbbcee1a56a84417420ddd1bbe9b088fbb3b9cfcc9e",
+    "trim_spoke.017": "625af28092302c4035ce7ccf85182c4eca90fcae1c93f29472cb8aa63d9ffdaa",
+    "wheel_rr": "6cd0d065c8cd05234247217efa002ead759740f1fbd4711c3ad4bffbc8caac55",
+    "trim_rim_rr": "c1c047f10818c8511708c38d49a8452e7312c81385a422ae4b995879f9f134c3",
+    "trim_spoke.018": "c87181932e572dff04d8462abbb662044b50efdfe97f07f680e806d723cda6e4",
+    "trim_spoke.019": "3810abf685dc5da45dbfd088bdf7e6562802419465b49b0f8a253d6f681beb57",
+    "trim_spoke.020": "a38009795b32233586f67c6cbcd1afb142620238e09c4a3a7508fbb4018e61cf",
+    "trim_spoke.021": "6815df00b7be091a5494aed0e58bc4e153c359ca0345c1d4938fab50f819392f",
+    "trim_spoke.022": "9bec7e8a515acc78547f3c5563ca7ae888cd335afc3e0b3d34ce5a272b959255",
+    "trim_spoke.023": "18b5e61480037b4bade9f88bf1f3bae40773b142e558cd847264cedf081da3a2",
+    "trim_police_mount": "4d8b9ec94d86197c058985d44f8fb99a46c4ea24d77d1fda65f4b607b908233e",
+    "trim_police_mount.001": "4d8b9ec94d86197c058985d44f8fb99a46c4ea24d77d1fda65f4b607b908233e",
+    "trim_lightbar_base": "f613f5d97e1354d4ce7949fe745ae7fe33a3b370f25f3af546826833e6b62841",
+    "lamp_blue_module": "e02e1ca484e38ba6f2b1bd7adf347ab1b815c5598ee14b936681ad1b6138a7c6",
+    "lamp_blue_module.001": "e02e1ca484e38ba6f2b1bd7adf347ab1b815c5598ee14b936681ad1b6138a7c6",
+    "lamp_blue_module.002": "e02e1ca484e38ba6f2b1bd7adf347ab1b815c5598ee14b936681ad1b6138a7c6",
+    "lamp_police_grille": "df68598105870d715683b6f5f0ab8c70c468b7a221a5298e4dfea53288015bb2",
+    "lamp_police_grille.001": "df68598105870d715683b6f5f0ab8c70c468b7a221a5298e4dfea53288015bb2",
+    "trim_POLIS": "07d23c60eae83ee3048cd9a5004b5d707f1118901a7b2ea60c8f1469ed71c586",
+    "trim_POLIS.001": "9dc4e40864cbfc941de4a2ad5d233c281f1f26485fcecd18a050d1dde42fa8ba"
+  },
+  "centreline_y_z_m": [
+    [
+      -2.29,
+      1.05
+    ],
+    [
+      -2.26,
+      1.23
+    ],
+    [
+      -2.247034,
+      1.237545
+    ],
+    [
+      -2.231711,
+      1.273766
+    ],
+    [
+      -2.143569,
+      1.482133
+    ],
+    [
+      -2.039912,
+      1.503741
+    ],
+    [
+      -2.03,
+      1.515
+    ],
+    [
+      -1.8,
+      1.53
+    ],
+    [
+      -1.28,
+      1.538667
+    ],
+    [
+      -1.2,
+      1.54
+    ],
+    [
+      -0.6,
+      1.535
+    ],
+    [
+      -0.31,
+      1.5263
+    ],
+    [
+      -0.23,
+      1.5239
+    ],
+    [
+      -0.1,
+      1.52
+    ],
+    [
+      0.2,
+      1.49
+    ],
+    [
+      0.415,
+      1.38
+    ],
+    [
+      0.41938,
+      1.365653
+    ],
+    [
+      0.669611,
+      1.18279
+    ],
+    [
+      0.77,
+      1.10602
+    ],
+    [
+      0.785,
+      1.105882
+    ],
+    [
+      0.82,
+      1.06
+    ],
+    [
+      0.84,
+      1.06
+    ],
+    [
+      0.9,
+      1.055
+    ],
+    [
+      1.15,
+      1.015
+    ],
+    [
+      1.5,
+      0.965
+    ],
+    [
+      1.9,
+      0.9
+    ],
+    [
+      2.15,
+      0.865
+    ],
+    [
+      2.24,
+      0.836071
+    ],
+    [
+      2.29,
+      0.82
+    ]
+  ],
+  "wheel_centres_world_m": {
+    "wheel_fl": [
+      -0.8054999709129333,
+      1.3700000047683716,
+      0.3449999988079071
+    ],
+    "wheel_fr": [
+      0.8054999709129333,
+      1.3700000047683716,
+      0.3449999988079071
+    ],
+    "wheel_rl": [
+      -0.8054999709129333,
+      -1.3930000066757202,
+      0.3449999988079071
+    ],
+    "wheel_rr": [
+      0.8054999709129333,
+      -1.3930000066757202,
+      0.3449999988079071
+    ]
+  }
+}

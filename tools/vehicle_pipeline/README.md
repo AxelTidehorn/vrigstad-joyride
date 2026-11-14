@@ -79,3 +79,14 @@ verification, internal control curves and automated numerical tests.
 See [SILHOUETTE.md](SILHOUETTE.md) for commands, configuration and quality rules,
 and [the Saab before/after report](../../experiments/saab900/silhouette/README.md).
 No existing game vehicle is replaced.
+
+## Shared-body variants (XC70 P2 experiment)
+
+`experiments/xc70p2/model.py` builds one closed base and separate police collections.
+`variants.py` switches paint and equipment visibility on that same body. The
+master Blender file retains both; the existing exporter consumes temporary
+visible-variant snapshots. `verify_variants.py` independently compares the two
+actual GLBs' common geometry. No game assets are replaced.
+The CPU `check_preview_glb.mjs` adapter now supports embedded PNGs by exposing
+header dimensions to the real pinned loader. It does not simulate GPU texture
+upload; PNG decoding is checked independently with Pillow and Blender reimport.

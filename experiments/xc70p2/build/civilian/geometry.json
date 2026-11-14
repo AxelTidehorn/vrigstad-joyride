@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "model": "xc70p2-civilian",
+  "errors": [],
+  "warnings": [],
+  "meshes": 84,
+  "triangles": 9300,
+  "dimensions_m": {
+    "width": 1.8,
+    "height": 1.5625,
+    "length": 4.743
+  },
+  "wheelbase_m": 2.763
+}
