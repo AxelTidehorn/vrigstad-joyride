@@ -1,0 +1,11 @@
+test_changed_glass_fails (test_shared_geometry.SharedGeometryTests.test_changed_glass_fails) ... ok
+test_changed_multimaterial_lamp_fails (test_shared_geometry.SharedGeometryTests.test_changed_multimaterial_lamp_fails) ... ok
+test_material_change_and_multimaterial_lamp_pass (test_shared_geometry.SharedGeometryTests.test_material_change_and_multimaterial_lamp_pass) ... ok
+test_missing_lamp_fails (test_shared_geometry.SharedGeometryTests.test_missing_lamp_fails) ... ok
+test_rim_parent_regression_fails (test_shared_geometry.SharedGeometryTests.test_rim_parent_regression_fails) ... ok
+test_unexpected_independent_variant_mesh_fails (test_shared_geometry.SharedGeometryTests.test_unexpected_independent_variant_mesh_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.071s
+
+OK

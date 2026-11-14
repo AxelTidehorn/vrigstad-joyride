@@ -1,0 +1,766 @@
+{
+  "vehicle": "1970 Chevrolet Impala 16439 four-door hardtop",
+  "branch": "experiment/impala-1970-hardtop",
+  "base": "ff6a0f1",
+  "sha256": {
+    "model.py": "9107fc064f2e0541d33a495bdc8b520c0b491f6ddc2c6f267efbaee7a34ec106",
+    "parameters.json": "09ef7af36bf494d8fe33889013fba963b5aa3c8af16e59d8255ac9709a042220",
+    "build/model.blend": "fdbe6c4cfb411819f685b833f27f00c5ee042826ec8c1a8ba46860ce86daa6e8",
+    "build/impala1970-hardtop.glb": "1c413e6529d62091cf8161c5a8aae5411866e6592b752e6a944e027ada5b9a70"
+  },
+  "verified": {
+    "source-audit": {
+      "source": "build/model.blend",
+      "body": {
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "signed_volume_m3": 8.562632329802023,
+        "connected_components": 1,
+        "self_intersection_candidates": 0,
+        "sample_pairs": [],
+        "triangles": 7160
+      },
+      "meshes": 27,
+      "triangles": 19604,
+      "materials": [
+        "Impala configurable body paint",
+        "amber parking lamps",
+        "clear reverse lenses",
+        "narrow ivory whitewall",
+        "period wheel covers",
+        "red tail lenses",
+        "registration ivory",
+        "restrained satin chrome",
+        "sealed beam ivory",
+        "smoky blue grey glass",
+        "tire charcoal",
+        "weatherstrip rubber"
+      ],
+      "components": {
+        "glass_envelope": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.007530591763011626,
+          "connected_components": 6,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 576
+        },
+        "trim_body_chrome": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.00902960307333617,
+          "connected_components": 162,
+          "self_intersection_candidates": 3259,
+          "sample_pairs": [
+            [
+              0,
+              6
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              0,
+              2364
+            ],
+            [
+              2,
+              42
+            ],
+            [
+              2,
+              43
+            ],
+            [
+              2,
+              46
+            ],
+            [
+              2,
+              2400
+            ],
+            [
+              2,
+              2405
+            ]
+          ],
+          "triangles": 4548
+        },
+        "bumper_front": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.03434807898010074,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 424
+        },
+        "bumper_rear": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.04330372493213687,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 456
+        },
+        "lamp_taillights": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.005341091255204034,
+          "connected_components": 18,
+          "self_intersection_candidates": 168,
+          "sample_pairs": [
+            [
+              52,
+              79
+            ],
+            [
+              52,
+              81
+            ],
+            [
+              52,
+              91
+            ],
+            [
+              52,
+              98
+            ],
+            [
+              52,
+              105
+            ],
+            [
+              52,
+              107
+            ],
+            [
+              52,
+              117
+            ],
+            [
+              52,
+              124
+            ]
+          ],
+          "triangles": 792
+        },
+        "lamp_parking": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0015239623016123072,
+          "connected_components": 4,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 176
+        },
+        "lamp_reverse_units": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0026025515571193843,
+          "connected_components": 8,
+          "self_intersection_candidates": 84,
+          "sample_pairs": [
+            [
+              0,
+              27
+            ],
+            [
+              0,
+              29
+            ],
+            [
+              0,
+              39
+            ],
+            [
+              0,
+              46
+            ],
+            [
+              0,
+              53
+            ],
+            [
+              0,
+              55
+            ],
+            [
+              0,
+              65
+            ],
+            [
+              0,
+              72
+            ]
+          ],
+          "triangles": 352
+        },
+        "lamp_headlights": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.002088367455852074,
+          "connected_components": 4,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 368
+        },
+        "trim_seals_and_recesses": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.02077159910650617,
+          "connected_components": 10,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 440
+        },
+        "plate_registration": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0007992551341321072,
+          "connected_components": 2,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 88
+        },
+        "wheel_fl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.082195244545655,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 432
+        },
+        "trim_rim_fl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.001152352078515113,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 336
+        },
+        "trim_rim_whitewall_fl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 5.422819937477119e-05,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 192
+        },
+        "trim_spokes_fl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 2.304008672979044e-05,
+          "connected_components": 8,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 96
+        },
+        "wheel_fr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.08219524458975686,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 432
+        },
+        "trim_rim_fr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0011523520785151214,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 336
+        },
+        "trim_rim_whitewall_fr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 5.4228199374774905e-05,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 192
+        },
+        "trim_spokes_fr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 2.3040086729789952e-05,
+          "connected_components": 8,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 96
+        },
+        "wheel_rl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.08215554815844654,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 432
+        },
+        "trim_rim_rl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0011523520785150956,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 336
+        },
+        "trim_rim_whitewall_rl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 5.4228138398968104e-05,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 192
+        },
+        "trim_spokes_rl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 2.3040072568415825e-05,
+          "connected_components": 8,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 96
+        },
+        "wheel_rr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.08215554814498198,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 432
+        },
+        "trim_rim_rr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.001152352078515089,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 336
+        },
+        "trim_rim_whitewall_rr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 5.4228138398969114e-05,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 192
+        },
+        "trim_spokes_rr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 2.3040072568416675e-05,
+          "connected_components": 8,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 96
+        }
+      },
+      "shoulder_moulding_fit": {
+        "radius_m": 0.006,
+        "maximum_centreline_to_steel_m": 0.003340827999636531,
+        "all_sampled_sections_seated": true,
+        "samples": 160,
+        "criterion": "3.5 mm maximum axis/steel distance, less than 4.24 mm inscribed radius of four-sided 6 mm trim"
+      },
+      "glass_body_surface_intersection_candidates": 0,
+      "glass_signed_backing_clearance_m": {
+        "minimum": 0.0010949864554277156,
+        "maximum": 0.003999906316209945,
+        "nonpositive_samples": 0
+      },
+      "wheels": {
+        "wheel_fl": {
+          "hub_world_m": [
+            -0.805180013179779,
+            1.793239951133728,
+            0.3499999940395355
+          ],
+          "parent": null,
+          "tire_body_intersection_candidates": 0,
+          "fixtures": [
+            "trim_rim_fl",
+            "trim_rim_whitewall_fl",
+            "trim_spokes_fl"
+          ]
+        },
+        "wheel_fr": {
+          "hub_world_m": [
+            0.805180013179779,
+            1.793239951133728,
+            0.3499999940395355
+          ],
+          "parent": null,
+          "tire_body_intersection_candidates": 0,
+          "fixtures": [
+            "trim_rim_fr",
+            "trim_rim_whitewall_fr",
+            "trim_spokes_fr"
+          ]
+        },
+        "wheel_rl": {
+          "hub_world_m": [
+            -0.8039100170135498,
+            -1.2293599843978882,
+            0.3499999940395355
+          ],
+          "parent": null,
+          "tire_body_intersection_candidates": 0,
+          "fixtures": [
+            "trim_rim_rl",
+            "trim_rim_whitewall_rl",
+            "trim_spokes_rl"
+          ]
+        },
+        "wheel_rr": {
+          "hub_world_m": [
+            0.8039100170135498,
+            -1.2293599843978882,
+            0.3499999940395355
+          ],
+          "parent": null,
+          "tire_body_intersection_candidates": 0,
+          "fixtures": [
+            "trim_rim_rr",
+            "trim_rim_whitewall_rr",
+            "trim_spokes_rr"
+          ]
+        }
+      },
+      "overall_xyz_m": [
+        2.209999918937683,
+        5.486400127410889,
+        1.3969999849796295
+      ],
+      "axle_distance_m": 3.022599935531616,
+      "body_paint_material_count": 1,
+      "wheel_fixtures_own_hub": true,
+      "all_fixed_fixtures_follow_body": true,
+      "lamp_tops_z_m": 0.7420000433921814,
+      "ok": true
+    },
+    "geometry": {
+      "ok": true,
+      "model": "chevroletImpala1970SportSedan",
+      "errors": [],
+      "warnings": [],
+      "meshes": 27,
+      "triangles": 19604,
+      "dimensions_m": {
+        "width": 2.0256,
+        "height": 1.397,
+        "length": 5.4864
+      },
+      "wheelbase_m": 3.0226
+    },
+    "reimport": {
+      "ok": true,
+      "blender_version": "4.3.2",
+      "mesh_objects": 27,
+      "materials": 12,
+      "file_bytes": 693820,
+      "import_seconds": 0.20549165999545949,
+      "checks": "Reimported actual GLB and ran unchanged Blender body/wheel gate. This is not a browser FPS benchmark."
+    },
+    "three-loader": {
+      "ok": true,
+      "loader": "existing Three r128 GLTFLoader",
+      "meshes": 27,
+      "triangles": 19604,
+      "dimensions_glb_xyz_m": [
+        2.209999844431877,
+        1.3969999849796295,
+        5.486400127410889
+      ],
+      "browser_gpu_or_safari_tested": false,
+      "texture_check": "PNG dimensions supplied for CPU scene parsing only; no GPU upload/decoding claim"
+    },
+    "pose": {
+      "ok": true,
+      "actual_glb": "impala1970-hardtop.glb",
+      "body_mounted_meshes": 10,
+      "body_motion_carries_fixtures": true,
+      "wheel_geometry_independent_of_body_bob": true,
+      "steering_carries_rim_and_spokes": true,
+      "wheel_spin_carries_rim_and_spokes": true,
+      "wheel_hub_position_preserved": true,
+      "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.",
+      "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"
+    },
+    "paint-test": {
+      "ok": true,
+      "actual_glb": true,
+      "independent_instance_materials": true,
+      "unpainted_source_preserved": true,
+      "chrome_glass_lights_and_wheels_preserved": true,
+      "repaint_reuses_instance_material": true,
+      "scope": "CPU Three r128 test; no GPU/Safari test"
+    },
+    "reproduction": {
+      "ok": true,
+      "differences": {},
+      "meshes_compared": 27,
+      "missing_in_source": [],
+      "extra_in_source": [],
+      "world_position_tolerance_m": 1e-06,
+      "transform_method": "Compose saved local transforms and parent inverse for both scenes, including hidden police equipment; no reliance on unevaluated hidden matrix_world caches"
+    },
+    "existing-pose-regression": {
+      "ok": true,
+      "unchanged_existing_glbs": {
+        "saab900": {
+          "ok": true,
+          "actual_glb": "saab900-t16.glb",
+          "body_mounted_meshes": 26,
+          "body_motion_carries_fixtures": true,
+          "wheel_geometry_independent_of_body_bob": true,
+          "steering_carries_rim_and_spokes": true,
+          "wheel_spin_carries_rim_and_spokes": true,
+          "wheel_hub_position_preserved": true,
+          "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.",
+          "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"
+        },
+        "volvo240": {
+          "ok": true,
+          "actual_glb": "review-only.glb",
+          "body_mounted_meshes": 22,
+          "body_motion_carries_fixtures": true,
+          "wheel_geometry_independent_of_body_bob": true,
+          "steering_carries_rim_and_spokes": true,
+          "wheel_spin_carries_rim_and_spokes": true,
+          "wheel_hub_position_preserved": true,
+          "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.",
+          "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"
+        },
+        "xc70civil": {
+          "ok": true,
+          "actual_glb": "xc70-civilian.glb",
+          "body_mounted_meshes": 42,
+          "body_motion_carries_fixtures": true,
+          "wheel_geometry_independent_of_body_bob": true,
+          "steering_carries_rim_and_spokes": true,
+          "wheel_spin_carries_rim_and_spokes": true,
+          "wheel_hub_position_preserved": true,
+          "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.",
+          "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"
+        },
+        "xc70police": {
+          "ok": true,
+          "actual_glb": "xc70-police.glb",
+          "body_mounted_meshes": 50,
+          "body_motion_carries_fixtures": true,
+          "wheel_geometry_independent_of_body_bob": true,
+          "steering_carries_rim_and_spokes": true,
+          "wheel_spin_carries_rim_and_spokes": true,
+          "wheel_hub_position_preserved": true,
+          "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.",
+          "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"
+        }
+      }
+    }
+  },
+  "reference_comparison": {
+    "vehicle": "1970 Chevrolet Impala 16439 Sport Sedan",
+    "reference": {
+      "image": "references/hardtop-side.jpg",
+      "source": "DanTD, 1970 Chevy Impala at York and Bridge Streets-2, CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:1970_Chevy_Impala_at_York_and_Bridge_Streets-2.jpg",
+      "variant": "1970 four-door Sports Sedan, source description and pillarless greenhouse",
+      "orthographic": false,
+      "metric_reliable": false,
+      "front_wheel": [
+        827,
+        470
+      ],
+      "rear_wheel": [
+        212,
+        470
+      ],
+      "ground": [
+        827,
+        522
+      ],
+      "mask": {
+        "mode": "manual_polygon",
+        "reviewed": true,
+        "polygon": [
+          [
+            298,
+            317
+          ],
+          [
+            350,
+            259
+          ],
+          [
+            472,
+            260
+          ],
+          [
+            600,
+            268
+          ],
+          [
+            681,
+            349
+          ],
+          [
+            482,
+            339
+          ]
+        ]
+      }
+    },
+    "mask_scope": "VISIBLE SIDE GLASS APERTURE ONLY. Manual polygon follows the bright frame, excludes snow, painted C/A pillars, mirror and 4 mm glass meeting sash. This is not the vehicle's outer silhouette.",
+    "uncertainties": [
+      "Reference is elevated perspective, not orthographic; rear axle and front axle are both manual anchors.",
+      "Both car ends are cropped and roof/hood covered in snow: full-car IoU, overhang and roof-error metrics are deliberately unavailable.",
+      "Manual glass trace estimated 3\u20138 source pixels; snow obscures portions of the lower seal. No exact millimetre result is allowed.",
+      "The front wheel has an aftermarket Mercury cover; it is not used as a Chevrolet wheel-detail reference."
+    ],
+    "method": "Existing verify_silhouette.extract / registration / normalize / compare. Uniform axle / ground registration; no overlap fitting.",
+    "units": "canonical pixels at 280 px/m; estimates only",
+    "full_car_silhouette": {
+      "verified": false,
+      "iou": null,
+      "reason": "No trustworthy complete orthographic 16439 reference was obtained; cropped snowy photograph cannot establish global body proportions."
+    },
+    "stages": {
+      "blockout": {
+        "side_glass_aperture_only": {
+          "iou": 0.5143000501756146,
+          "mean_contour_distance_px": 31.344853029550542,
+          "max_contour_distance_px": 191.1674658512792
+        },
+        "regions": {
+          "front_glass": {
+            "samples": 333,
+            "signed_height_mean_px": 11.67867867867868,
+            "absolute_height_mean_px": 11.91891891891892,
+            "max_absolute_height_px": 36.0,
+            "mean_contour_distance_px": 19.264708570855657,
+            "max_contour_distance_px": 37.64306044943742
+          },
+          "rear_glass": {
+            "samples": 184,
+            "signed_height_mean_px": 24.717391304347824,
+            "absolute_height_mean_px": 24.717391304347824,
+            "max_absolute_height_px": 83.0,
+            "mean_contour_distance_px": 22.197639635629304,
+            "max_contour_distance_px": 104.62313319720452
+          }
+        },
+        "independent_render_wheelbase_m": 3.0226001143455505
+      },
+      "final": {
+        "side_glass_aperture_only": {
+          "iou": 0.7050939423388403,
+          "mean_contour_distance_px": 13.787725735935231,
+          "max_contour_distance_px": 50.0
+        },
+        "regions": {
+          "front_glass": {
+            "samples": 326,
+            "signed_height_mean_px": 6.398773006134969,
+            "absolute_height_mean_px": 7.938650306748467,
+            "max_absolute_height_px": 14.0,
+            "mean_contour_distance_px": 15.301113466759213,
+            "max_contour_distance_px": 50.0
+          },
+          "rear_glass": {
+            "samples": 184,
+            "signed_height_mean_px": 12.690217391304348,
+            "absolute_height_mean_px": 12.690217391304348,
+            "max_absolute_height_px": 25.0,
+            "mean_contour_distance_px": 10.826190302271389,
+            "max_contour_distance_px": 19.924858845171276
+          }
+        },
+        "independent_render_wheelbase_m": 3.0226001143455505
+      }
+    }
+  },
+  "protected_files": {
+    "experiments/saab900/build/model.blend": {
+      "unchanged": true,
+      "sha256": "a027affdb7dbc5112cfd2fff53ee90d5e681a0273bf7a070262d1661f7c41303"
+    },
+    "experiments/saab900/build/saab900-t16.glb": {
+      "unchanged": true,
+      "sha256": "15d155084df404338281478cc11422141c7e8b092a26ab08d6e13cde46b71894"
+    },
+    "experiments/volvo240/refinement/model.blend": {
+      "unchanged": true,
+      "sha256": "2fedf41439e326daaf1f726c54d1c9d45690ded49b0c4674f94e730642fad0bc"
+    },
+    "experiments/volvo240/refinement/review-only.glb": {
+      "unchanged": true,
+      "sha256": "3f1ce4cc1d0f787451340abb28cd0037599bd0204946e23cc21320db883d0c58"
+    },
+    "experiments/xc70p2/build/model.blend": {
+      "unchanged": true,
+      "sha256": "26662fcaca84c45b0dd0f012e00300dd6b2b5eef34a0bced7c1a774356f05beb"
+    },
+    "experiments/xc70p2/build/xc70-civilian.glb": {
+      "unchanged": true,
+      "sha256": "e1e27434bf113dfb5e70dc13778c92fbf216c56aa509a028874c039509b5940c"
+    },
+    "experiments/xc70p2/build/xc70-police.glb": {
+      "unchanged": true,
+      "sha256": "28f35453d4e1797b8ae79cb514a75226dc3542f36348ce200612efb052f52913"
+    },
+    "src/vehicles/vehicle-library.mjs": {
+      "unchanged": true,
+      "sha256": "b3ff37d039e88f0fb36e64954f993c18526a6b789693f86e0beae1d1e732cac6"
+    },
+    "src/game.html": {
+      "unchanged": true,
+      "sha256": "7cf7cb35c9d3e9df47d31500138d56b59198855abe1a77265c7a61ccf9af4918"
+    }
+  },
+  "human_visual_approval": "pending",
+  "physical_ipad_safari_tested": false,
+  "game_integration": false
+}

@@ -1,0 +1,38 @@
+{
+  "experiments/saab900/build/model.blend": {
+    "unchanged": true,
+    "sha256": "a027affdb7dbc5112cfd2fff53ee90d5e681a0273bf7a070262d1661f7c41303"
+  },
+  "experiments/saab900/build/saab900-t16.glb": {
+    "unchanged": true,
+    "sha256": "15d155084df404338281478cc11422141c7e8b092a26ab08d6e13cde46b71894"
+  },
+  "experiments/volvo240/refinement/model.blend": {
+    "unchanged": true,
+    "sha256": "2fedf41439e326daaf1f726c54d1c9d45690ded49b0c4674f94e730642fad0bc"
+  },
+  "experiments/volvo240/refinement/review-only.glb": {
+    "unchanged": true,
+    "sha256": "3f1ce4cc1d0f787451340abb28cd0037599bd0204946e23cc21320db883d0c58"
+  },
+  "experiments/xc70p2/build/model.blend": {
+    "unchanged": true,
+    "sha256": "26662fcaca84c45b0dd0f012e00300dd6b2b5eef34a0bced7c1a774356f05beb"
+  },
+  "experiments/xc70p2/build/xc70-civilian.glb": {
+    "unchanged": true,
+    "sha256": "e1e27434bf113dfb5e70dc13778c92fbf216c56aa509a028874c039509b5940c"
+  },
+  "experiments/xc70p2/build/xc70-police.glb": {
+    "unchanged": true,
+    "sha256": "28f35453d4e1797b8ae79cb514a75226dc3542f36348ce200612efb052f52913"
+  },
+  "src/vehicles/vehicle-library.mjs": {
+    "unchanged": true,
+    "sha256": "b3ff37d039e88f0fb36e64954f993c18526a6b789693f86e0beae1d1e732cac6"
+  },
+  "src/game.html": {
+    "unchanged": true,
+    "sha256": "7cf7cb35c9d3e9df47d31500138d56b59198855abe1a77265c7a61ccf9af4918"
+  }
+}

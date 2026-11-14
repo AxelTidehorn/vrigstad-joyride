@@ -1,0 +1,82 @@
+[
+  {
+    "file": "front.jpg",
+    "title": "File:1970 Chevrolet Impala pic-001.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:1970_Chevrolet_Impala_pic-001.JPG",
+    "artist": "AlfvanBeem",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "scope": "Shared 1970 fascia only; four-door Sedan roof is not hardtop reference",
+    "modification": "resized JPEG reference only; no image pixels in vehicle"
+  },
+  {
+    "file": "sedan-side-details.jpg",
+    "title": "File:1970 Chevrolet Impala pic-004.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:1970_Chevrolet_Impala_pic-004.JPG",
+    "artist": "AlfvanBeem",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "scope": "Lower body trim and wheel opening only; pillar/roof variant excluded",
+    "modification": "resized JPEG reference only; no image pixels in vehicle"
+  },
+  {
+    "file": "front-three-quarter.jpg",
+    "title": "File:1970 Chevrolet Impala pic-005.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:1970_Chevrolet_Impala_pic-005.JPG",
+    "artist": "AlfvanBeem",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "scope": "Shared front, hood relief and grill only",
+    "modification": "resized JPEG reference only; no image pixels in vehicle"
+  },
+  {
+    "file": "rear-three-quarter.jpg",
+    "title": "File:1970 Chevrolet Impala pic-006.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:1970_Chevrolet_Impala_pic-006.JPG",
+    "artist": "AlfvanBeem",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "scope": "Shared six vertical bumper lamps; roof variant excluded",
+    "modification": "resized JPEG reference only; no image pixels in vehicle"
+  },
+  {
+    "file": "rear.jpg",
+    "title": "File:1970 Chevrolet Impala pic-007.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:1970_Chevrolet_Impala_pic-007.JPG",
+    "artist": "AlfvanBeem",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "scope": "Shared bumper/tail lights; perspective, not exact rear orthographic",
+    "modification": "resized JPEG reference only; no image pixels in vehicle"
+  },
+  {
+    "file": "hardtop-front.jpg",
+    "title": "File:1970 Chevy Impala at York and Bridge Streets-1.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:1970_Chevy_Impala_at_York_and_Bridge_Streets-1.jpg",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:DanTD\" title=\"User:DanTD\">DanTD</a>",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "scope": "16439 cabin identification; snow and broken headlamp alignment excluded",
+    "modification": "resized JPEG reference only; no image pixels in vehicle"
+  },
+  {
+    "file": "hardtop-side.jpg",
+    "title": "File:1970 Chevy Impala at York and Bridge Streets-2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:1970_Chevy_Impala_at_York_and_Bridge_Streets-2.jpg",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:DanTD\" title=\"User:DanTD\">DanTD</a>",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "scope": "16439 window proportions only; cropped nose/tail and snow exclude global silhouette verdict",
+    "modification": "resized JPEG reference only; no image pixels in vehicle"
+  },
+  {
+    "file": "hardtop-rear.jpg",
+    "title": "File:1970 Chevy Impala at York and Bridge Streets-3.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:1970_Chevy_Impala_at_York_and_Bridge_Streets-3.jpg",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:DanTD\" title=\"User:DanTD\">DanTD</a>",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "scope": "16439 C pillar and backlight context; snow masks roof",
+    "modification": "resized JPEG reference only; no image pixels in vehicle"
+  }
+]

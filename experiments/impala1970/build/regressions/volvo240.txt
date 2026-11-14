@@ -1,0 +1,28 @@
+20:36:04 | INFO: Blender create Mesh node lamp_front_1
+20:36:04 | INFO: Blender create Mesh node lamp_front_lens
+20:36:04 | INFO: Blender create Mesh node lamp_front_lens.002
+20:36:04 | INFO: Blender create Mesh node lamp_rear_-1
+20:36:04 | INFO: Blender create Mesh node lamp_rear_1
+20:36:04 | INFO: Blender create Mesh node lamp_rear_reverse
+20:36:04 | INFO: Blender create Mesh node lamp_rear_reverse.001
+20:36:04 | INFO: Blender create Mesh node mirror_housing
+20:36:04 | INFO: Blender create Mesh node mirror_housing.001
+20:36:04 | INFO: Blender create Mesh node trim_handle
+20:36:04 | INFO: Blender create Mesh node trim_handle.001
+20:36:04 | INFO: Blender create Mesh node trim_handle.002
+20:36:04 | INFO: Blender create Mesh node trim_handle.003
+20:36:04 | INFO: Blender create Mesh node trim_side_-1
+20:36:04 | INFO: Blender create Mesh node trim_side_1
+20:36:04 | INFO: Blender create Mesh node wheel_fl
+20:36:04 | INFO: Blender create Mesh node trim_rim_wheel_fl
+20:36:04 | INFO: Blender create Mesh node wheel_fr
+20:36:04 | INFO: Blender create Mesh node trim_rim_wheel_fr
+20:36:04 | INFO: Blender create Mesh node wheel_rl
+20:36:04 | INFO: Blender create Mesh node trim_rim_wheel_rl
+20:36:04 | INFO: Blender create Mesh node wheel_rr
+20:36:04 | INFO: Blender create Mesh node trim_rim_wheel_rr
+20:36:04 | INFO: glTF import finished in 0.03s
+{"ok": true, "actual_glb": "review-only.glb", "body_mounted_meshes": 22, "body_motion_carries_fixtures": true, "wheel_geometry_independent_of_body_bob": true, "steering_carries_rim_and_spokes": true, "wheel_spin_carries_rim_and_spokes": true, "wheel_hub_position_preserved": true, "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.", "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"}
+SCRIPT OK
+
+LOG: /workspace/work/vrigstad-joyride/experiments/impala1970/build/regressions/volvo240-log/blender.log

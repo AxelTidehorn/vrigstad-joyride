@@ -1,0 +1,5 @@
+{"ok": true, "differences": {}, "meshes_compared": 27, "missing_in_source": [], "extra_in_source": [], "world_position_tolerance_m": 1e-06, "transform_method": "Compose saved local transforms and parent inverse for both scenes, including hidden police equipment; no reliance on unevaluated hidden matrix_world caches"}
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/impala1970/build/model.blend"
+
+Blender quit

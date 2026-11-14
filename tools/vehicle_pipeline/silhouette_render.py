@@ -28,12 +28,13 @@ quality['centreline_y_z_m']=spine
 (out/'geometry-audit.json').write_text(json.dumps(quality,indent=2)+'\n')
 # Standard quality views share explicit bounds across before/after.
 focus=tuple(tuple(v) for v in spec['quality_focus'])
-render_views.run(str(out/'quality'),mode='clay',res=1200,color_by='material',views=[('side',90,0,True),('front_three_quarter',135,22,False)],focus=focus)
-render_views.run(str(out/'cowl'),mode='clay',res=1400,color_by='material',views=[('hood_windscreen',130,18,True)],focus=tuple(tuple(v) for v in spec['cowl_focus']))
+if not spec.get('skip_quality',False):
+ render_views.run(str(out/'quality'),mode='clay',res=1200,color_by='material',views=[('side',90,0,True),('front_three_quarter',135,22,False)],focus=focus)
+ render_views.run(str(out/'cowl'),mode='clay',res=1400,color_by='material',views=[('hood_windscreen',130,18,True)],focus=tuple(tuple(v) for v in spec['cowl_focus']))
 # Silhouette excludes mirrors, lights, trims and bumpers on both sides of comparison.
 for o in objects:o.hide_render=not (o.name==spec['body_object'] or o.name.startswith('wheel_'))
 cam_data=bpy.data.cameras.new('silhouette_exact_ortho');cam=bpy.data.objects.new('silhouette_exact_ortho',cam_data);scene.collection.objects.link(cam)
-cam.location=(10,0,.75);cam.rotation_euler=(Vector((0,0,.75))-cam.location).to_track_quat('-Z','Y').to_euler();cam_data.type='ORTHO';cam_data.ortho_scale=5.4
+cam.location=(10,0,.75);cam.rotation_euler=(Vector((0,0,.75))-cam.location).to_track_quat('-Z','Y').to_euler();cam_data.type='ORTHO';cam_data.ortho_scale=spec.get('orthographic_scale_m',5.4)
 scene.camera=cam;scene.render.engine='BLENDER_WORKBENCH';scene.render.resolution_x=1800;scene.render.resolution_y=800;scene.render.resolution_percentage=100
 scene.render.film_transparent=True;scene.render.image_settings.file_format='PNG';scene.render.image_settings.color_mode='RGBA'
 scene.display.shading.light='FLAT';scene.display.shading.show_shadows=False;scene.display.shading.show_cavity=False;scene.display.shading.show_object_outline=False
@@ -63,6 +64,6 @@ for name,arch in spec.get('arch_curves',{}).items():
  curves[name]=[project((0,y,z)) for y,z in selected]
 frame=dict(image='silhouette.png',mask=dict(mode='alpha',reviewed=True),orthographic=True,metric_reliable=True,
  front_wheel=project((bpy.data.objects['wheel_fl'].location+bpy.data.objects['wheel_fr'].location)/2),rear_wheel=project((bpy.data.objects['wheel_rl'].location+bpy.data.objects['wheel_rr'].location)/2),ground=project((0,0,0)),
- pixels_per_metre=1800/5.4,points=points,curves=curves,projection='camera +X, front +Y is image right, Z up; body plus four tyres only')
+ pixels_per_metre=1800/cam_data.ortho_scale,points=points,curves=curves,projection='camera +X, front +Y is image right, Z up; body plus four tyres only')
 (out/'frame.json').write_text(json.dumps(frame,indent=2)+'\n')
 print(json.dumps({'output':str(out),'geometry':quality|{'component_sha256':'see file','centreline_y_z_m':'see file'}}))

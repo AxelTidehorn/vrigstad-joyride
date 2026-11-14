@@ -1,0 +1,13 @@
+{
+  "name": "1970 Chevrolet Impala 16439 four-door hardtop",
+  "overall": {"dims": [2.21,5.4864,1.397], "tol": 0.016},
+  "parts": {
+    "body": {"dims": [2.02692,5.34,1.197], "tol": 0.015},
+    "glass_envelope": {"attached_to": ["body"]},
+    "wheel_fl": {"dims": [null,0.70,0.70],"attached_to": ["body"]},
+    "wheel_fr": {"dims": [null,0.70,0.70],"attached_to": ["body"]},
+    "wheel_rl": {"dims": [null,0.70,0.70],"attached_to": ["body"]},
+    "wheel_rr": {"dims": [null,0.70,0.70],"attached_to": ["body"]}
+  },
+  "expect_embedded": [["wheel_*","body"],["bumper_*","body"]]
+}

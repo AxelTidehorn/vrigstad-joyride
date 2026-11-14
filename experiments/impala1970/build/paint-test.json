@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "actual_glb": true,
+  "independent_instance_materials": true,
+  "unpainted_source_preserved": true,
+  "chrome_glass_lights_and_wheels_preserved": true,
+  "repaint_reuses_instance_material": true,
+  "scope": "CPU Three r128 test; no GPU/Safari test"
+}

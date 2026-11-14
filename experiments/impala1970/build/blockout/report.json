@@ -1,0 +1,457 @@
+{
+  "objects": {
+    "body": {
+      "verts": 1484,
+      "faces": 2964,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 8.56162124,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0269,
+        5.34,
+        1.197
+      ],
+      "islands": 1
+    },
+    "glass_envelope": {
+      "verts": 352,
+      "faces": 688,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.008449818,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.8653,
+        2.6134,
+        0.354
+      ],
+      "islands": 4
+    },
+    "wheel_fl": {
+      "verts": 218,
+      "faces": 432,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.082195246,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.3182,
+        0.7,
+        0.7
+      ],
+      "islands": 1
+    },
+    "trim_rim_fl": {
+      "verts": 130,
+      "faces": 256,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001269513,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.382,
+        0.382,
+        0.017
+      ],
+      "islands": 1
+    },
+    "trim_rim_whitewall_fl": {
+      "verts": 180,
+      "faces": 288,
+      "open_boundary_edges": 72,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": false,
+      "volume": null,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.592,
+        0.592,
+        0.003
+      ],
+      "islands": 1
+    },
+    "wheel_fr": {
+      "verts": 218,
+      "faces": 432,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.082195246,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.3182,
+        0.7,
+        0.7
+      ],
+      "islands": 1
+    },
+    "trim_rim_fr": {
+      "verts": 130,
+      "faces": 256,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001269513,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.382,
+        0.382,
+        0.017
+      ],
+      "islands": 1
+    },
+    "trim_rim_whitewall_fr": {
+      "verts": 180,
+      "faces": 288,
+      "open_boundary_edges": 72,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": false,
+      "volume": null,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.592,
+        0.592,
+        0.003
+      ],
+      "islands": 1
+    },
+    "wheel_rl": {
+      "verts": 218,
+      "faces": 432,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.08215555,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.3169,
+        0.7,
+        0.7
+      ],
+      "islands": 1
+    },
+    "trim_rim_rl": {
+      "verts": 130,
+      "faces": 256,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001269513,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.382,
+        0.382,
+        0.017
+      ],
+      "islands": 1
+    },
+    "trim_rim_whitewall_rl": {
+      "verts": 180,
+      "faces": 288,
+      "open_boundary_edges": 72,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": false,
+      "volume": null,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.592,
+        0.592,
+        0.003
+      ],
+      "islands": 1
+    },
+    "wheel_rr": {
+      "verts": 218,
+      "faces": 432,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.08215555,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.3169,
+        0.7,
+        0.7
+      ],
+      "islands": 1
+    },
+    "trim_rim_rr": {
+      "verts": 130,
+      "faces": 256,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001269513,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.382,
+        0.382,
+        0.017
+      ],
+      "islands": 1
+    },
+    "trim_rim_whitewall_rr": {
+      "verts": 180,
+      "faces": 288,
+      "open_boundary_edges": 72,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": false,
+      "volume": null,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.592,
+        0.592,
+        0.003
+      ],
+      "islands": 1
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "info": [
+    "trim_rim_whitewall_fl: open mesh (72 boundary edges); fine for planes/cloth, bad for solids and 3D printing.",
+    "trim_rim_whitewall_fr: open mesh (72 boundary edges); fine for planes/cloth, bad for solids and 3D printing.",
+    "trim_rim_whitewall_rl: open mesh (72 boundary edges); fine for planes/cloth, bad for solids and 3D printing.",
+    "trim_rim_whitewall_rr: open mesh (72 boundary edges); fine for planes/cloth, bad for solids and 3D printing.",
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-wheel_fl embedded 0.018 m; body-wheel_fr embedded 0.018 m; body-wheel_rl embedded 0.018 m; body-wheel_rr embedded 0.018 m; wheel_fl-trim_rim_fl flush; wheel_fl-trim_rim_whitewall_fl flush; wheel_fr-trim_rim_fr flush; wheel_fr-trim_rim_whitewall_fr flush; wheel_rl-trim_rim_rl flush; wheel_rl-trim_rim_whitewall_rl flush; wheel_rr-trim_rim_rr flush; wheel_rr-trim_rim_whitewall_rr flush"
+  ],
+  "units": "m",
+  "overall": {
+    "min": [
+      -1.0134600400924683,
+      -2.6700000762939453,
+      -2.9802322387695312e-08
+    ],
+    "max": [
+      1.0134600400924683,
+      2.6700000762939453,
+      1.3969999551773071
+    ],
+    "size": [
+      2.0269200801849365,
+      5.340000152587891,
+      1.3969999551773071
+    ],
+    "contact_tolerance": 0.005880103410765164,
+    "parts": 17
+  },
+  "contacts": [
+    {
+      "a": "body",
+      "b": "glass_envelope[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 2]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 3]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "wheel_fl",
+      "depth": 0.018000006675720215,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "wheel_fr",
+      "depth": 0.018000006675720215,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "wheel_rl",
+      "depth": 0.018000006675720215,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "wheel_rr",
+      "depth": 0.018000006675720215,
+      "expected": false
+    },
+    {
+      "a": "wheel_fl",
+      "b": "trim_rim_fl",
+      "depth": 5.960464477539063e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_fl",
+      "b": "trim_rim_whitewall_fl",
+      "depth": 0.0009999871253967285,
+      "expected": false
+    },
+    {
+      "a": "wheel_fr",
+      "b": "trim_rim_fr",
+      "depth": 1.1920928955078125e-07,
+      "expected": false
+    },
+    {
+      "a": "wheel_fr",
+      "b": "trim_rim_whitewall_fr",
+      "depth": 0.0009999871253967285,
+      "expected": false
+    },
+    {
+      "a": "wheel_rl",
+      "b": "trim_rim_rl",
+      "depth": 5.960464477539063e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_rl",
+      "b": "trim_rim_whitewall_rl",
+      "depth": 0.0009999871253967285,
+      "expected": false
+    },
+    {
+      "a": "wheel_rr",
+      "b": "trim_rim_rr",
+      "depth": 5.960464477539063e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_rr",
+      "b": "trim_rim_whitewall_rr",
+      "depth": 0.0009999871253967285,
+      "expected": false
+    }
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 0
+  }
+}

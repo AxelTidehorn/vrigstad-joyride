@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "model": "chevroletImpala1970SportSedan",
+  "errors": [],
+  "warnings": [],
+  "meshes": 27,
+  "triangles": 19604,
+  "dimensions_m": {
+    "width": 2.0256,
+    "height": 1.397,
+    "length": 5.4864
+  },
+  "wheelbase_m": 3.0226
+}

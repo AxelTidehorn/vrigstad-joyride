@@ -1,0 +1,26 @@
+GEOMETRY CHECK: 0 errors, 0 warnings
+  overall size (m): (2.027, 5.340, 1.397)  parts: 17  contact tol: 0.0059
+  [INFO] trim_rim_whitewall_fl: open mesh (72 boundary edges); fine for planes/cloth, bad for solids and 3D printing.
+  [INFO] trim_rim_whitewall_fr: open mesh (72 boundary edges); fine for planes/cloth, bad for solids and 3D printing.
+  [INFO] trim_rim_whitewall_rl: open mesh (72 boundary edges); fine for planes/cloth, bad for solids and 3D printing.
+  [INFO] trim_rim_whitewall_rr: open mesh (72 boundary edges); fine for planes/cloth, bad for solids and 3D printing.
+  [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-wheel_fl embedded 0.018 m; body-wheel_fr embedded 0.018 m; body-wheel_rl embedded 0.018 m; body-wheel_rr embedded 0.018 m; wheel_fl-trim_rim_fl flush; wheel_fl-trim_rim_whitewall_fl flush; wheel_fr-trim_rim_fr flush; wheel_fr-trim_rim_whitewall_fr flush; wheel_rl-trim_rim_rl flush; wheel_rl-trim_rim_whitewall_rl flush; wheel_rr-trim_rim_rr flush; wheel_rr-trim_rim_whitewall_rr flush
+  objects:
+    body: dims (2.027, 5.340, 1.197) verts 1484 faces 2964 islands 1
+    glass_envelope: dims (1.865, 2.613, 0.354) verts 352 faces 688 islands 4
+    wheel_fl: dims (0.318, 0.700, 0.700) verts 218 faces 432 islands 1
+    trim_rim_fl: dims (0.382, 0.382, 0.017) verts 130 faces 256 islands 1
+    trim_rim_whitewall_fl: dims (0.592, 0.592, 0.003) verts 180 faces 288 islands 1
+    wheel_fr: dims (0.318, 0.700, 0.700) verts 218 faces 432 islands 1
+    trim_rim_fr: dims (0.382, 0.382, 0.017) verts 130 faces 256 islands 1
+    trim_rim_whitewall_fr: dims (0.592, 0.592, 0.003) verts 180 faces 288 islands 1
+    wheel_rl: dims (0.317, 0.700, 0.700) verts 218 faces 432 islands 1
+    trim_rim_rl: dims (0.382, 0.382, 0.017) verts 130 faces 256 islands 1
+    trim_rim_whitewall_rl: dims (0.592, 0.592, 0.003) verts 180 faces 288 islands 1
+    wheel_rr: dims (0.317, 0.700, 0.700) verts 218 faces 432 islands 1
+    trim_rim_rr: dims (0.382, 0.382, 0.017) verts 130 faces 256 islands 1
+    trim_rim_whitewall_rr: dims (0.592, 0.592, 0.003) verts 180 faces 288 islands 1
+Info: Saved "model.blend"
+Blender 4.3.2
+
+Blender quit
