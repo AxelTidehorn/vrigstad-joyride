@@ -1,0 +1,29 @@
+{
+  "game_ready": false,
+  "appearance_approved": false,
+  "correction_cycles_completed": 2,
+  "body_source_closed": true,
+  "body_source_components": 1,
+  "body_source_boundary_edges": 0,
+  "body_source_winding_errors": 0,
+  "body_source_degenerate_triangles": 0,
+  "supplemental_nonadjacent_overlap_candidates": 7,
+  "actual_glb_validator_ok": false,
+  "actual_glb_errors": [
+    "body: has open/non-manifold edges",
+    "body: disconnected shells/panels"
+  ],
+  "dimensions_m": {
+    "length": 4.82,
+    "width": 1.71,
+    "height": 1.43
+  },
+  "wheelbase_m": 2.65,
+  "triangles": 3748,
+  "existing_vehicle_tests": {
+    "passed": 5,
+    "failed": 0
+  },
+  "next_iteration_justified": true,
+  "next_iteration_started": false
+}

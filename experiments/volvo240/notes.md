@@ -187,3 +187,24 @@ The final repository front/side/rear/three-quarter PNGs were also opened. They
 show a uniformly colored body because that preview's Workbench material setting
 does not evaluate the vertex-color shader. The Modeler adapter's vertex-color
 clay views display the glazing regions for the silhouette review.
+
+## Follow-up: cloud-only, touch-friendly review (no further modeling cycle)
+
+Headless Blender 4.3.2 was verified again in Codex. The existing actual GLB was
+revalidated and its rejection preserved. The source/model/export were not
+regenerated or repaired. Art direction is now recorded in `art-direction.md`.
+
+Extended `media/vehicles/preview.html` and published an isolated owner-private
+static review at https://vrigstad-240-review-179ef06.plushpangolin8.chatgpt.site .
+It offers touch orbit, pinch, zoom buttons, orthographic front/side/rear/top and
+perspective three-quarter views. Volvo authored scale/orientation is preserved.
+The shared game film shader is reused unchanged with matte preview materials
+and restrained grain/mist. PNG sheets and editable files are accessible in-page.
+
+The deployment's first captured screenshot showed the loading scene rather
+than the car. Startup was hardened so optional film loading cannot block the
+GLB, and the reviewed PNG remains as a loading poster until a model frame is
+rendered. Additional logic tests verify actual GLB parsing, exact scale,
+film compatibility, gestures, film failure/pending behavior and poster removal.
+There is no claim of a physical iPad or GPU/browser test: the managed browser
+control tool is unavailable. See `media/vehicles/README.md` for verification.

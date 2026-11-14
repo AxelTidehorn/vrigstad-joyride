@@ -1,0 +1,45 @@
+All rights reserved.
+
+Copyright (c) 2026 OliverRomhagen
+
+The source code, game design, art, and other original content in this
+repository belong to the copyright holder. You may view the code and play
+the game in your own browser. You may not copy, modify, redistribute,
+host, sell, or use any part of it, commercially or otherwise, without
+prior written permission from the copyright holder.
+
+Third-party components keep their own licenses:
+
+- three.js (MIT License), loaded from cdnjs at runtime.
+- Map data © OpenStreetMap contributors, licensed under the Open Database
+  License (ODbL) 1.0: https://opendatacommons.org/licenses/odbl/
+  Any redistribution of the extracted OpenStreetMap data must follow the
+  ODbL, including its attribution and share-alike terms.
+- Elevation tiles: Mapzen terrarium terrain tiles on AWS Open Data.
+  See the dataset's terms before reusing them.
+
+- Kenney Car Kit 3.1 GLB review candidates in `media/vehicles/traffic/`:
+  original models by Kenney, Creative Commons CC0 1.0 Universal,
+  https://kenney.nl/assets/car-kit ; unchanged copy from the public
+  https://github.com/Hidencod/tge-assets mirror on 2026-11-13.
+
+- Volvo 240 experiment reference images only (not game textures):
+  `experiments/volvo240/references/{side,front,rear}_review.png` are resized
+  copies of photographs by Vauxford, CC BY-SA 4.0,
+  https://creativecommons.org/licenses/by-sa/4.0/ . Source file pages:
+  https://commons.wikimedia.org/wiki/File:1990_Volvo_240_GL_2.3_Side.jpg
+  https://commons.wikimedia.org/wiki/File:1990_Volvo_240_GL_2.3_Front.jpg
+  https://commons.wikimedia.org/wiki/File:1990_Volvo_240_GL_2.3_Rear.jpg
+  The side comparison crops/flips/resizes that photo; its photograph portion
+  retains this licence. No endorsement is implied.
+- `experiments/volvo240/references/three_quarter_review.png`: resized photograph
+  by OSX, public domain. Source:
+  https://commons.wikimedia.org/wiki/File:1990_Volvo_240_GL_sedan_(2015-06-03)_01.jpg
+- Experiment uses external Blender Modeler helpers by calebrisc (MIT):
+  https://github.com/calebrisc/blender-modeler . Its source is not vendored into
+  this repository; its licence remains in its external checkout. The vehicle
+  geometry is newly authored and contains no imported third-party 3D mesh.
+- Vehicle preview libraries vendored in `media/vehicles/vendor/`: Three.js r128
+  and its matching GLTFLoader, MIT License. Full licence text is included as
+  `media/vehicles/vendor/THREE-LICENSE.txt`. These are the same versions previously
+  loaded by the preview from CDNs; local copies avoid extra third-party requests.

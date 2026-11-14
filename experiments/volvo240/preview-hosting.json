@@ -1,0 +1,17 @@
+{
+  "url": "https://vrigstad-240-review-179ef06.plushpangolin8.chatgpt.site",
+  "project_id": "appgprj_6af78a873394819183fda0e3b4b28c5a",
+  "source_commit_sha": "08f19cb9edc33706ac37e5c5ac40a74dfc80ab67",
+  "version_id": "appgprj_6af78a873394819183fda0e3b4b28c5a~appgver_4880d0c2353c8191b6333a858c334a8b",
+  "deployment_id": "appgdep_6af816ef0ab08191961cd774f9aac396",
+  "deployment_status": "succeeded",
+  "audience": "owner-private",
+  "game_integrated": false,
+  "additional_model_correction_cycles": 0,
+  "preview_logic_tests_passed": 11,
+  "existing_vehicle_validator_tests_passed": 5,
+  "physical_ipad_safari_verified": false,
+  "browser_gpu_suite_executed": false,
+  "deployment_capture_reviewed": "First publication capture showed the loading scene; startup was hardened before the second publication.",
+  "notes": "PNG sheets and editable checkpoint files are available in-page. GLB geometry rejection remains visible."
+}

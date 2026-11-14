@@ -1,5 +1,13 @@
 # Volvo 240 clay experiment — review required, NOT game ready
 
+Open the hosted review in Safari (no local setup):
+https://vrigstad-240-review-179ef06.plushpangolin8.chatgpt.site
+
+The page provides touch rotation, pinch/zoom buttons, five fixed views, film or
+neutral clay treatment, PNG sheets, reference comparison and downloadable source.
+It uses private access for the owner account. All Blender work runs in Codex.
+See `art-direction.md` for the stylized-realism brief.
+
 Isolated branch: `experiment/volvo-240-clay-blockout`.
 Base: `AxelTidehorn/vrigstad-joyride` commit
 `8d7198c3f81361c964cf3e0f988e84584dcd761e`.
@@ -36,6 +44,7 @@ final source is expected to produce a rejected GLB and return a nonzero status**
 `run.py` preserves stage logs, checks supplemental findings and invokes the
 repository exporter/validator without repairing the result.
 
+The commands below are for Codex/maintainers, not setup required from viewers.
 The exact commands used for the saved runs are in `notes.md`. Existing regression
 checks: `python -m unittest discover -s tests -p 'test_vehicle_*.py' -v` (5 passed).
 The orchestration wrapper was syntax/help checked; the saved iterations were
@@ -57,8 +66,10 @@ the correction limit.
   All four wheel names follow the repository requirement.
 - `media/vehicles/preview.html` was inspected. It assumes Kenney +Z-forward
   sources, rotates them and normalizes length to 4.35 m; loading this experiment
-  there unchanged would misrepresent scale/orientation. It remains untouched.
-  Existing exporter previews supply the repository's review path instead.
+  there unchanged would misrepresent scale/orientation. The follow-up viewer
+  task now extends it with per-asset conventions: Volvo keeps authored metres
+  and -Z forward; Kenney candidates retain their previous review transforms.
+  Existing exporter and Modeler PNGs remain available unchanged.
 - Repository front/side/rear previews are slightly elevated. Additional Modeler
   front/side/rear/top views are true orthographic; three-quarter views use a
   fixed 50 mm perspective camera. Cameras/framing are identical across revisions.

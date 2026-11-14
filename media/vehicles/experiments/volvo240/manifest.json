@@ -1,0 +1,30 @@
+{
+  "source_checkpoint": "experiments/volvo240/renders/iter_02",
+  "correction_cycles": 2,
+  "game_ready": false,
+  "art_direction": "stylized realism; matte clay; simplified materials; restrained reflections",
+  "source_glb_sha256": "81599a7dd5b9fe1e0e32cf39207394cc2420a34c5a8c07f4342ad6d929efbe2d",
+  "published_glb_sha256": "81599a7dd5b9fe1e0e32cf39207394cc2420a34c5a8c07f4342ad6d929efbe2d",
+  "files": {
+    "volvo240.glb": "81599a7dd5b9fe1e0e32cf39207394cc2420a34c5a8c07f4342ad6d929efbe2d",
+    "model.blend": "ef8983fa0f06b21b45c26585bb908b66b0988ba5122f80980f2d5d5403aa4d59",
+    "review-sheet.png": "18efedaf305fc13160a6bb11b47e0fe0e263aaba8403a55f572690b567c4ce57",
+    "geometry.json": "34e8433b62e031de52f9088624ac92c8f5b53d32cc5aa97d111ef51b0211e388",
+    "supplemental.json": "ded4fce94a084da8d81d0b5848fd28f849f2713c8762c60f0c4bcab34fee76dc",
+    "export-diagnostic.json": "2617d467027d812944aa9c633441c609e9731ecf90e2278bce84ae86ac8bb560",
+    "side-comparison.png": "b1a8384ca063c43d10bdb000b70cd39314e88751aa96d726bb4504a7c7549ba1",
+    "references.md": "a9271e3f7ce2f3c9f30c2f54d8143581a24acce02bf53e0083b750ba159ce4e6",
+    "notes.md": "0ba8403ca2fee9fde09b559feb8f308a5e818fd7aac2fe369b1ec31ae8903579",
+    "model.py": "2acb2405232baa319cd3294ddb8e1013f8eabd903669a464e9f242e1780c3b6a",
+    "parameters.json": "09cda4a3d0e8f1b1517579910c52f11ac790e36f4452e07115a3ab112adb45ec",
+    "assessment.json": "4136cc7aac2daa0ec7787ec512b385a93be900fd9ce5a9033a60e920ed9d6d6f",
+    "spec.json": "a09b0f96f5b4c43715b200fd54b86bd36399bdd435457fe8dd977262cb9f7183",
+    "vehicle.json": "fa5d682fdb9e2d3720dd89dfbf38c64fba8a012897914b6e7711bdb440a3633e",
+    "LICENSE.txt": "522cf03d0ad97a7aa9da4ca613cfe5d6e9657343d7f05f2b9c49a2abfe291c08",
+    "front.png": "61d3e8ce179e65e561c17c59b50a5a8e4552298ebaf5b622e841984cb3ee72d5",
+    "side.png": "daf6ffca0396b87dbf6ca26e83a06509ff92bd43e13e804603817abb6a34e52d",
+    "rear.png": "a75e9fe86cabf59935b3ffa463e9bc494e6878e19daf8c8c2d896b76f1e3d910",
+    "top.png": "23420469f7270eeb7c1abe1efbb287fefd67aaae8244424558d749a33bbbe875",
+    "three_quarter.png": "c27883b714a9795794a5612e98c92e837e6b7b063d12caf45cf40d3698254b4b"
+  }
+}

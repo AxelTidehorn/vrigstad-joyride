@@ -39,3 +39,7 @@ Third-party components keep their own licenses:
   https://github.com/calebrisc/blender-modeler . Its source is not vendored into
   this repository; its licence remains in its external checkout. The vehicle
   geometry is newly authored and contains no imported third-party 3D mesh.
+- Vehicle preview libraries vendored in `media/vehicles/vendor/`: Three.js r128
+  and its matching GLTFLoader, MIT License. Full licence text is included as
+  `media/vehicles/vendor/THREE-LICENSE.txt`. These are the same versions previously
+  loaded by the preview from CDNs; local copies avoid extra third-party requests.
