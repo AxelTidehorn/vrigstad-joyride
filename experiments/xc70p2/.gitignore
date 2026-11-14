@@ -1,0 +1,4 @@
+build/civilian.blend
+build/police.blend
+*.blend1
+__pycache__/

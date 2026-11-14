@@ -1,0 +1,18 @@
+{
+  "id": "xc70p2-civilian",
+  "dimensions_m": {
+    "length": 4.733,
+    "width": 1.8,
+    "height": 1.5625
+  },
+  "tolerance_m": {
+    "length": 0.015,
+    "width": 0.01,
+    "height": 0.03
+  },
+  "wheelbase_m": 2.763,
+  "wheelbase_tolerance_m": 0.005,
+  "triangle_budget": 16000,
+  "detail_clearance_m": 0.5,
+  "dimension_note": "Validator measures steel body width; XC-specific cladding envelope separately 1.860 m. Police height includes lightbar."
+}

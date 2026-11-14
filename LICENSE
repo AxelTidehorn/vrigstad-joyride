@@ -58,3 +58,15 @@ https://motorarkiv.dk/brochurer/SAAB_900_og_900i_1985.pdf . It is included only
 for technical comparison and criticism, not licensed as a reusable game asset.
 No rights to the original brochure are claimed. The generated vehicle itself
 and original pipeline code do not incorporate the image as textures or geometry.
+
+XC70 reference images (experiments/xc70p2/references), technical study only:
+front.jpg, front-2.jpg: Bull-Doser, public-domain dedication, source links in
+experiments/xc70p2/references.md; front-detail.jpg is a resized crop.
+rear-three-quarter.jpg: Ethan Llamas, CC BY-SA 4.0, resized.
+police.jpg: Fifo, CC BY-SA 2.5, unchanged.
+police-new.jpg: Per Enström / Plrk, CC BY-SA 4.0, unchanged.
+side.png / rear.png and spec.pdf: Volvo UK XC70 Technical Specification April
+2003, copyright Volvo. Technical-comparison excerpts, no game-asset licence
+claimed. Author/source/licence URLs and modifications: experiments/xc70p2/references.md.
+Generated body, original livery raster and POLIS lettering contain no reference
+photograph pixels. No endorsement by Volvo or the Swedish Police is implied.

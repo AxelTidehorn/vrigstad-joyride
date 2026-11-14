@@ -1,0 +1,253 @@
+{
+  "vehicle": "Volvo XC70 P2 MY2005, civilian base",
+  "reference_information": {
+    "image": "references/side.png",
+    "source": "Volvo UK XC70 technical specification April 2003, page 8 side photograph",
+    "url": "https://www.volvoclub.org.uk/tech/XC70_Tech_Spec_Apr2003.pdf",
+    "variant": "P2 pre-facelift side proxy; MY2005 facelift checked in photos",
+    "orthographic": false,
+    "metric_reliable": false,
+    "front_wheel": [
+      270,
+      384
+    ],
+    "rear_wheel": [
+      1070,
+      384
+    ],
+    "ground": [
+      270,
+      484
+    ]
+  },
+  "dimensions": {
+    "length_m": {
+      "value": 4.733,
+      "status": "Volvo technical specification 2003; corroborated MY2005 press release"
+    },
+    "width_m": {
+      "value": 1.86,
+      "status": "Volvo technical specification 2003; corroborated MY2005 press release"
+    },
+    "height_m": {
+      "value": 1.562,
+      "status": "Volvo technical specification 2003; corroborated MY2005 press release"
+    },
+    "wheelbase_m": {
+      "value": 2.763,
+      "status": "Volvo technical specification 2003; corroborated MY2005 press release"
+    }
+  },
+  "normalization": {
+    "method": "uniform similarity from rear/front wheel centres; ground fixes vertical position; no overlap fitting",
+    "canonical_pixels_per_metre": 280.0,
+    "reference_source_pixels_per_metre": 289.5403546869345,
+    "model_source_pixels_per_metre": 333.33331637739747,
+    "independent_calibration": {
+      "model": {
+        "independent_wheelbase_m": 2.762999859452248,
+        "error_m": -1.4054775210325943e-07,
+        "scale_error_fraction": -5.086780752172615e-08
+      }
+    }
+  },
+  "global_metrics": {
+    "iou": 0.9141680525077984,
+    "mean_contour_distance_px": 11.211183462757942,
+    "max_contour_distance_px": 71.84705978674423,
+    "length_difference_px": 10,
+    "height_difference_px": -2,
+    "front_overhang_difference_px": 31,
+    "rear_overhang_difference_px": -21,
+    "reference_bbox": [
+      198,
+      147,
+      1469,
+      566
+    ],
+    "model_bbox": [
+      219,
+      147,
+      1500,
+      564
+    ]
+  },
+  "local_metrics": {
+    "hood": {
+      "samples": 363,
+      "signed_height_mean_px": -2.8980716253443526,
+      "absolute_height_mean_px": 6.5013774104683195,
+      "max_absolute_height_px": 45.0,
+      "mean_contour_distance_px": 8.081336734885836,
+      "max_contour_distance_px": 36.05551275463989
+    },
+    "windscreen": {
+      "samples": 196,
+      "signed_height_mean_px": -12.729591836734693,
+      "absolute_height_mean_px": 12.729591836734693,
+      "max_absolute_height_px": 28.0,
+      "mean_contour_distance_px": 10.57268953320454,
+      "max_contour_distance_px": 22.20360331117452
+    },
+    "roof": {
+      "samples": 616,
+      "signed_height_mean_px": 0.04383116883116883,
+      "absolute_height_mean_px": 0.7613636363636364,
+      "max_absolute_height_px": 4.0,
+      "mean_contour_distance_px": 0.7501735792535896,
+      "max_contour_distance_px": 4.0
+    },
+    "rear": {
+      "samples": 111,
+      "signed_height_mean_px": 40.207207207207205,
+      "absolute_height_mean_px": 40.207207207207205,
+      "max_absolute_height_px": 129.0,
+      "mean_contour_distance_px": 16.548781716610794,
+      "max_contour_distance_px": 27.459060435491963
+    },
+    "wheel_arches": {
+      "samples": 0,
+      "signed_height_mean_px": null,
+      "absolute_height_mean_px": null,
+      "max_absolute_height_px": null,
+      "mean_contour_distance_px": 10.521163987606812,
+      "max_contour_distance_px": 27.0
+    },
+    "underbody": {
+      "samples": 0,
+      "signed_height_mean_px": null,
+      "absolute_height_mean_px": null,
+      "max_absolute_height_px": null,
+      "mean_contour_distance_px": 14.445284131469402,
+      "max_contour_distance_px": 71.84705978674423,
+      "lower_edge_signed_mean_px": -11.151878497202238
+    }
+  },
+  "internal_annotations": {
+    "points": {},
+    "curves": {
+      "hood": {
+        "signed_height_mean_px": -3.658069304251148,
+        "absolute_height_mean_px": 4.7699668543821305,
+        "max_absolute_height_px": 7.4138358705803284,
+        "reference_segment_angles_deg": [
+          -8.530765609948128,
+          -12.496011044437497
+        ],
+        "model_segment_angles_deg": [
+          -9.090267970184604,
+          -8.130095797173373,
+          -9.22988568225695,
+          -7.969586439087208
+        ],
+        "reference_turn_angles_deg": [
+          -3.9652454344893684
+        ],
+        "model_turn_angles_deg": [
+          0.9601721730112303,
+          -1.0997898850835774,
+          1.2602992431697428
+        ]
+      },
+      "windscreen": {
+        "signed_height_mean_px": -8.576975612705624,
+        "absolute_height_mean_px": 8.83906196989621,
+        "max_absolute_height_px": 19.31616925655652,
+        "reference_segment_angles_deg": [
+          -27.64597536373868
+        ],
+        "model_segment_angles_deg": [
+          -35.18844673869767,
+          -35.01130411523851
+        ],
+        "reference_turn_angles_deg": [],
+        "model_turn_angles_deg": [
+          0.17714262345916154
+        ]
+      }
+    },
+    "provenance": "Reference annotations are manual; model annotations are projected geometry"
+  },
+  "derived_extents": {
+    "reference": {
+      "length_wheelbase_scaled_m": 4.539285714285715,
+      "height_wheelbase_scaled_m": 1.4964285714285714,
+      "front_overhang_wheelbase_scaled_m": 0.8048571428571429,
+      "rear_overhang_wheelbase_scaled_m": 0.9714285714285714,
+      "roof_highest_x_from_rear_axle_m": [
+        -0.42857142857142855,
+        1.2214285714285715
+      ]
+    },
+    "model": {
+      "length_wheelbase_scaled_m": 4.575,
+      "height_wheelbase_scaled_m": 1.4892857142857143,
+      "front_overhang_wheelbase_scaled_m": 0.9155714285714286,
+      "rear_overhang_wheelbase_scaled_m": 0.8964285714285715,
+      "roof_highest_x_from_rear_axle_m": [
+        -0.475,
+        1.1071428571428572
+      ]
+    }
+  },
+  "data_quality": {
+    "metric_geometry_verified": false,
+    "reference_mask_reviewed": true,
+    "units": "canonical pixels; divide by 280 for wheelbase-scaled metres (estimates unless metric_geometry_verified)",
+    "warnings": [
+      "Photographic manufacturer side view has small perspective; pre-facelift fascia differs from MY2005.",
+      "Manual contour uncertainty 3-6 source px; no exact mm error claim.",
+      "REFERENCE NOT METRIC-VERIFIED: no exact millimetre geometric verdict is permitted"
+    ],
+    "included": "Main vehicle hull and tyres; roof rails, mirrors, shadows, dimension arrows excluded. Bumpers approximate hull envelope; no exact metric approval.",
+    "anchor_caveat": "Registration forces axle anchors to agree. Only independent calibration or held-out points can verify axle placement."
+  },
+  "largest_local_deviations": [
+    {
+      "region": "rear",
+      "samples": 111,
+      "signed_height_mean_px": 40.207207207207205,
+      "absolute_height_mean_px": 40.207207207207205,
+      "max_absolute_height_px": 129.0,
+      "mean_contour_distance_px": 16.548781716610794,
+      "max_contour_distance_px": 27.459060435491963
+    },
+    {
+      "region": "hood",
+      "samples": 363,
+      "signed_height_mean_px": -2.8980716253443526,
+      "absolute_height_mean_px": 6.5013774104683195,
+      "max_absolute_height_px": 45.0,
+      "mean_contour_distance_px": 8.081336734885836,
+      "max_contour_distance_px": 36.05551275463989
+    },
+    {
+      "region": "windscreen",
+      "samples": 196,
+      "signed_height_mean_px": -12.729591836734693,
+      "absolute_height_mean_px": 12.729591836734693,
+      "max_absolute_height_px": 28.0,
+      "mean_contour_distance_px": 10.57268953320454,
+      "max_contour_distance_px": 22.20360331117452
+    },
+    {
+      "region": "roof",
+      "samples": 616,
+      "signed_height_mean_px": 0.04383116883116883,
+      "absolute_height_mean_px": 0.7613636363636364,
+      "max_absolute_height_px": 4.0,
+      "mean_contour_distance_px": 0.7501735792535896,
+      "max_contour_distance_px": 4.0
+    }
+  ],
+  "before_after": {
+    "before_iou": 0.8968124504543143,
+    "after_iou": 0.9141680525077984,
+    "local_absolute_height_change_px": {
+      "hood": 0.0,
+      "windscreen": -0.295918367346939,
+      "roof": -11.943181818181818,
+      "rear": -9.24324324324325
+    }
+  }
+}

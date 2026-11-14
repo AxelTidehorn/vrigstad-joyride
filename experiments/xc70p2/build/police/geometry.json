@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "model": "xc70p2-police",
+  "errors": [],
+  "warnings": [],
+  "meshes": 96,
+  "triangles": 10932,
+  "dimensions_m": {
+    "width": 1.8,
+    "height": 1.745,
+    "length": 4.743
+  },
+  "wheelbase_m": 2.763
+}
