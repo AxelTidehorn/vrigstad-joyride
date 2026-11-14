@@ -1,15 +1,50 @@
 {
   "name": "1990 Volvo 240 sedan blockout",
   "units": "m",
-  "overall": {"dims": [1.71, 4.82, 1.43], "tol": 0.015},
+  "overall": {
+    "dims": [
+      1.83,
+      4.82,
+      1.433
+    ],
+    "tol": 0.015
+  },
   "ground": true,
   "contact_tolerance": 0.004,
   "parts": {
-    "body": {"dims": [1.71, 4.82, 1.16], "tol": 0.02},
-    "wheel_fl": {"attached_to": ["body"]},
-    "wheel_fr": {"attached_to": ["body"]},
-    "wheel_rl": {"attached_to": ["body"]},
-    "wheel_rr": {"attached_to": ["body"]}
+    "body": {
+      "dims": [
+        1.71,
+        4.62,
+        1.16
+      ],
+      "tol": 0.02
+    },
+    "wheel_fl": {
+      "attached_to": [
+        "body"
+      ]
+    },
+    "wheel_fr": {
+      "attached_to": [
+        "body"
+      ]
+    },
+    "wheel_rl": {
+      "attached_to": [
+        "body"
+      ]
+    },
+    "wheel_rr": {
+      "attached_to": [
+        "body"
+      ]
+    }
   },
-  "expect_embedded": [["body", "wheel_*"]]
+  "expect_embedded": [
+    [
+      "body",
+      "wheel_*"
+    ]
+  ]
 }

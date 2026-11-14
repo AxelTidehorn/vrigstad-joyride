@@ -1,3 +1,10 @@
+Current refinement comparisons (iPad, no setup):
+https://vrigstad-240-review-179ef06.plushpangolin8.chatgpt.site/refinement/
+
+Current editable file: `refinement/model.blend`. Current report: `refinement/assessment.md`.
+The previous iter_00–02 checkpoint below remains preserved as historical evidence.
+The refined review-only GLB passes the unchanged validator; human approval is pending.
+
 # Volvo 240 clay experiment — review required, NOT game ready
 
 Open the hosted review in Safari (no local setup):

@@ -30,7 +30,7 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     bmod = [sys.executable, str(modeler/'scripts/bmod.py'), '--blender', args.blender]
     # Save the exact source and parameters that produced this run.
-    for file in ('model.py', 'parameters.json', 'spec.json', 'vehicle.json', 'review.py'):
+    for file in ('model.py', 'parameters.json', 'spec.json', 'vehicle.json', 'review.py', 'stages.py'):
         shutil.copy2(HERE/file, out/file)
     stages = []
 
@@ -44,7 +44,7 @@ def main():
     if run('build', bmod+['--model', str(HERE/'model.py'), '--spec', str(HERE/'spec.json'),
                          '--out', str(out), '--mode', 'none']):
         return 1
-    if run('review', bmod+['--script', str(HERE/'review.py'), '--blend', str(out/'model.blend'),
+    if run('review', bmod+['--script', str(HERE/'stages.py'), '--blend', str(out/'model.blend'),
                           '--out', str(out/'review_log'), '--', str(out)]):
         return 1
     if run('export', [args.blender, '-b', '--python-exit-code', '1', '--python',
