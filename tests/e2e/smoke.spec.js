@@ -78,7 +78,16 @@ test.describe('game (index.html)', () => {
 
     await expect(page.locator('#speed')).toBeVisible();
     await expect(page.locator('#carname')).toHaveText('Volvo 240');
-    expect(await state(page)).toMatchObject({ inCar: true, car: 'volvo', stars: 0 });
+    const entered = await state(page);
+    expect(entered).toMatchObject({ inCar:true, car:'volvo', drivetrain:'v4' });
+    expect([0,1]).toContain(entered.stars);
+    await expect.poll(async () => (await state(page)).gear).toBe('1');
+    await expect(page.locator('#gear')).toHaveText('AUTO 1');
+    await page.keyboard.down('KeyW');
+    try {
+      await expect.poll(async () => Number(await page.locator('#kmh').textContent()),
+        {timeout:20000, intervals:[100]}).toBeGreaterThan(2);
+    } finally { await page.keyboard.up('KeyW'); }
     await page.screenshot({ path: testInfo.outputPath('game-in-volvo.png') });
     expect(errors).toEqual([]);
   });
