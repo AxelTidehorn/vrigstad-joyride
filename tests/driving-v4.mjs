@@ -66,4 +66,46 @@ console.log('Volvo 0–100:',zeroToHundred===null?'not reached':zeroToHundred.to
             '25s gear',launch.gear);
 assert.ok(zeroToHundred!==null&&zeroToHundred<17.5,
   'Volvo 0–100 should be playable and measurable, without instant max speed');
-console.log('Driving V4: automatic gearboxes, launch, partial grass and speed continuity passed.');
+
+// Calibrated production variants: launch is measured in the same physical
+// 120 Hz stepping path used by the game, not an imposed speed-over-time spline.
+import {VEHICLE_VARIANTS} from '../src/physics/driving-v4.mjs';
+function launchVariant(id) {
+  const v=VEHICLE_VARIANTS[id], car=newCar(v.type,0,0,0,id);
+  for(let i=0;i<Math.round(28/dt);i++){
+    stepCar(car,{throttle:1},dt,{feel:'balanced',powertrain:'v4',surface:'asphalt',hardCap:38});
+    if(car.u*3.6>=100)return (i+1)*dt;
+  }
+  throw Error(id+' does not reach 100 km/h');
+}
+for(const [id,v] of Object.entries(VEHICLE_VARIANTS)) {
+  const measured=launchVariant(id);
+  console.log(id+' 0–100: '+measured.toFixed(2)+' s; reference '+v.target0to100+' s');
+  assert.ok(Math.abs(measured/v.target0to100-1)<=.05,id+' launch differs >5% from reference');
+}
+// Compare braking from the same speed on each fully covered surface.
+function stopOn(surface){
+ const c=newCar('rwd',0,0,0,'volvo');c.u=22;
+ let distance=0;
+ for(let i=0;i<2400;i++){
+   const before=c.u;
+   stepCar(c,{brake:1},dt,{feel:'balanced',powertrain:'v4',surface,
+     grassFraction:surface==='grass'?1:0,hardCap:38});
+   distance+=(before+c.u)*dt*.5;
+   if(c.u<.5)return distance;
+ }
+ throw Error('Unable to brake on '+surface);
+}
+const asphaltStop=stopOn('asphalt'),gravelStop=stopOn('gravel'),grassStop=stopOn('grass');
+console.log('Braking 79.2→1.8 km/h (m):', {asphaltStop,gravelStop,grassStop});
+assert.ok(gravelStop>asphaltStop*1.15,'gravel should take longer to stop than asphalt');
+assert.ok(grassStop>gravelStop*1.15,'grass should take longer to stop than gravel');
+// Sustained steering remains finite and avoids the former 50-degree+ spin
+// at 2.5 seconds with full throttle. Human drift feel still needs playtesting.
+const drifting=newCar('rwd',0,0,0,'volvo');drifting.u=15;
+for(let i=0;i<300;i++)stepCar(drifting,{throttle:1,steer:.65},dt,
+ {feel:'balanced',powertrain:'v4',surface:'asphalt',hardCap:38});
+assert.ok(drifting.u>9,'drift should retain usable forward speed');
+assert.ok(Math.abs(drifting.slip)<.75,'drift should avoid uncontrolled overrotation');
+
+console.log('Driving V4: automatic gearboxes, calibrated launches, drift and terrain checks passed.');
