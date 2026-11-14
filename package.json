@@ -4,7 +4,9 @@
   "description": "Open-world driving game set in Vrigstad, Sweden",
   "type": "module",
   "scripts": {
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:vehicles": "node tests/vehicle-glb-integration.mjs",
+    "test:driving": "node tests/driving-v4.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.0"

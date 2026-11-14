@@ -12,9 +12,9 @@ export const VEHICLE_PRESETS = Object.freeze({
   awd: { name: 'AWD · Polis', drive: 'awd', mass: 1570, wheelbase: 2.68, width: 1.78, maxSpeed: 42, acceleration: 5.1, grip: 1.10, yawInertia: 1.10 },
 });
 export const SURFACES = Object.freeze({
-  asphalt: { name: 'Asfalt', mu: 1.05, lateral: 1.05, rolling: .020 },
-  gravel:  { name: 'Grus', mu: .70, lateral: .61, rolling: .035 },
-  grass:   { name: 'Gräs', mu: .46, lateral: .35, rolling: .060 },
+  asphalt: { name: 'Asfalt', mu: 1.05, lateral: 1.18, rolling: .020 },
+  gravel:  { name: 'Grus', mu: .70, lateral: .69, rolling: .035 },
+  grass:   { name: 'Gräs', mu: .46, lateral: .39, rolling: .060 },
 });
 // The game keeps an automatic gearbox. These are reference *variants*, not
 // implied specifications for every engine/trim sharing the same body shell.
@@ -123,7 +123,7 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   const brake=clamp(input.brake||0,0,1),handbrake=clamp(input.handbrake||0,0,1);
   const steerMax=.49/(1+Math.abs(c.u)/12);
   const targetSteer=steerIn*steerMax;
-  c.steer+=clamp(targetSteer-c.steer,-(balanced?1.55:3.0)*dt,(balanced?1.55:3.0)*dt);
+  c.steer+=clamp(targetSteer-c.steer,-(balanced?2.15:3.0)*dt,(balanced?2.15:3.0)*dt);
   const steer=c.steer;
   // Grass is sampled at the wheels by the game, not by the car center.
   // Grass changes traction immediately but does not act like a speed limiter.
@@ -163,10 +163,10 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   const alphaR=Math.atan2(c.v-lr*c.r,denom);
   const moving=clamp(Math.abs(c.u)/1.8,0,1);
   let fyF=-normalFront*9.0*alphaF*moving,fyR=-normalRear*10.5*alphaR*moving;
-  // Mild arcade power-oversteer: driven rear tires give up lateral grip sooner.
+  // Progressive arcade power-oversteer: rear grip fades modestly only under deliberate throttle and steering.
   const powerSlide=clamp((Math.abs(c.u)-4)/8,0,1)*clamp((Math.abs(steer)-.055)/.18,0,1)*clamp(throttle,0,1);
   c.slideResponse=balanced ? c.slideResponse+(powerSlide-c.slideResponse)*(1-Math.exp(-dt/(powerSlide>c.slideResponse?.22:.18))) : powerSlide;
-  const rearSlide=spec.drive==='rwd'?((balanced?.38:.43)*c.slideResponse):spec.drive==='awd'?(.15*c.slideResponse):0;
+  const rearSlide=spec.drive==='rwd'?((balanced?.20:.24)*c.slideResponse):spec.drive==='awd'?(.09*c.slideResponse):0;
   // Friction-circle limit: accelerating through the driven tires takes away cornering grip.
   function axle(x,y,normal,hand=0){
     const mx=normal*mu, my=normal*lateralMu;
@@ -192,20 +192,20 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   // Arcade yaw stabiliser: limit unrecoverable spins while preserving slip.
   const steerYaw=(Math.abs(c.u)>0.25?c.u/L*Math.tan(steer):0);
   const slipMagnitude=Math.abs(Math.atan2(c.v,Math.max(4,Math.abs(c.u))));
-  // Avoid the stabiliser snapping an established slide straight against the
-  // player's countersteer. A weaker stabiliser remains to prevent endless spins.
-  const driftBlend=clamp((slipMagnitude-.065)/.19,0,1)*clamp((Math.abs(c.u)-5)/9,0,1);
-  const baseYawAssist=spec.drive==='rwd'?(balanced?1.6:1.5):spec.drive==='fwd'?1.8:2.3;
-  const yawAssist=baseYawAssist*(1-.68*driftBlend);
+  // Keep steering authority during a slide: do not turn the yaw assist off when
+  // slip grows. Otherwise countersteer arrives too late and the car feels floaty.
+  const driftBlend=clamp((slipMagnitude-.10)/.22,0,1)*clamp((Math.abs(c.u)-6)/10,0,1);
+  const baseYawAssist=spec.drive==='rwd'?(balanced?2.45:2.1):spec.drive==='fwd'?2.6:2.75;
+  const yawAssist=baseYawAssist*(1-.38*driftBlend);
   // The yaw target is also bounded by the tire/road lateral grip budget.
   const allowedYaw=lateralMu*g/Math.max(4,Math.abs(c.u));
   const targetYaw=clamp(steerYaw,-allowedYaw,allowedYaw);
   rdot+=(targetYaw-c.r)*yawAssist;
-  // Rate-limit an excessive spin, not the slide angle itself: the driver can
+  // Dampen excessive spin without instantaneously resetting the slide: the driver can
   // still countersteer into a drift without an abrupt snap-to-straight reset.
   const yawCeiling=Math.max(.40,Math.abs(targetYaw)*1.25);
   const overspin=Math.max(0,Math.abs(c.r)-yawCeiling);
-  rdot-=Math.sign(c.r)*overspin*(2+7*driftBlend);
+  rdot-=Math.sign(c.r)*overspin*(3+8*driftBlend);
   if(Math.abs(c.u)<1&&Math.abs(c.v)<.5){vdot-=c.v*4;rdot-=c.r*5}
   const prevU=c.u;
   c.u=clamp(c.u+udot*dt,-8,settings.hardCap??spec.maxSpeed*1.17);
@@ -214,7 +214,7 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   c.r=clamp(c.r+rdot*dt,-1.65,1.65);
   // Suppress unrealistically endless pirouettes; lower factor at speed.
   c.r*=Math.exp(-dt*(.32+.15*Math.abs(c.u)/20));
-  c.v*=Math.exp(-dt*(balanced?.48:.40)*(1-.45*driftBlend));
+  c.v*=Math.exp(-dt*(balanced?.72:.58)*(1-.20*driftBlend));
   c.h+=c.r*dt;
   if(c.h>Math.PI)c.h-=2*Math.PI;if(c.h< -Math.PI)c.h+=2*Math.PI;
   const wx=Math.sin(c.h)*c.u+Math.cos(c.h)*c.v;
