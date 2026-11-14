@@ -26,7 +26,7 @@ export function createVehicleAssets(THREE, Loader) {
     }
     return cache.get(type);
   }
-  function install(car, type, fallback) {
+  function install(car, type, fallback, paint) {
     const spec = VEHICLE_ASSETS[type];
     if (!spec) return;
     if (!Loader) {
@@ -39,6 +39,20 @@ export function createVehicleAssets(THREE, Loader) {
     task.then(template => {
       if (!template || !car.mesh.parent || car.assetType) return;
       const visual = template.clone(true);
+      // One paint colour per car, not per shared GLB. Only recolour civilian
+      // body paint: leave glass, trim, wheels, lamps and police livery intact.
+      if (type !== 'polis' && paint) {
+        visual.traverse(node => {
+          if (node.name !== 'body' || !node.isMesh) return;
+          const recolour = material => {
+            const instance = material.clone();
+            instance.color.set(paint);
+            return instance;
+          };
+          node.material = Array.isArray(node.material)
+            ? node.material.map(recolour) : recolour(node.material);
+        });
+      }
       // Separate wheels from the body rig so body roll and pitch do not tilt
       // their contact patches. Their GLB mesh origins are the hub centres.
       visual.updateMatrixWorld(true);
