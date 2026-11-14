@@ -5,6 +5,7 @@
  * the Vite/Three r187 application later.
  */
 export const VEHICLE_ASSETS = Object.freeze({
+  volvo: { url: 'media/vehicles/volvo240.glb', radius: 0.35 },
   saab: { url: 'media/vehicles/saab900-t16.glb', radius: 0.35 },
   xc70: { url: 'media/vehicles/xc70-civilian.glb', radius: 0.345 },
   polis: { url: 'media/vehicles/xc70-police.glb', radius: 0.345 }
