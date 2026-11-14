@@ -1,3 +1,16 @@
+# Current vehicle refinement — round 2
+
+Current shared fleet review: [round 2](../round2/index.html). Current technical
+report, preserved geometry, source reproduction and limitations are documented
+in [the round-2 report](../round2/README.md) and its summary.json. Canonical master
+and GLB filenames below now contain the round-2 geometry. Earlier renders and
+per-stage ZIPs remain historical checkpoints; the current source/model package
+is `../round2/vehicle-round2.zip`. Game integration is pending visual approval.
+
+The earlier stage descriptions below are historical.
+
+---
+
 # Saab 900 Turbo 16 Classic, three-door, approximately 1988
 
 Complete stylized production candidate. All Blender work runs in Codex; viewers

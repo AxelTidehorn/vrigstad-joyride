@@ -159,3 +159,8 @@ while remaining:
     if volume<0:
         for f in faces:f.normal_flip()
 bm.to_mesh(glazing.data);bm.free()
+
+# Same bounded refinement for source regeneration and the edited authoring master.
+sys.path.insert(0,str(HERE))
+from round2 import apply as apply_round2
+apply_round2()
