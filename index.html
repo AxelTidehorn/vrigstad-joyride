@@ -2862,7 +2862,10 @@ function automaticForce(c,rawPedal,dt,spec){
   // RPM is calculated from actual vehicle speed after a converter slip allowance.
   const wheelTorque=p.torque*torqueFraction(c.rpm,p)*p.ratios[Math.max(0,c.gear-1)]*p.final*p.efficiency;
   const converterBoost=mix(1.20,1,clamp(travel/8,0,1));
-  let wheelForce=wheelTorque/p.radius*converterBoost*driveInput*clamp(1-.16*travel/25,.74,1);
+  // Stronger response up to ordinary road speeds; preserve the existing
+  // top-speed taper instead of making cars sit on the hard speed limiter.
+  const midrangeBoost=1+.48*(1-clamp((travel-16)/18,0,1));
+  let wheelForce=wheelTorque/p.radius*converterBoost*driveInput*midrangeBoost*clamp(1-.16*travel/25,.74,1);
   // Brief, visible but not violent power interruption during an automatic shift.
   if(c.shiftTime>0)wheelForce*=.33;
   // A gentle soft limiter, not an instantaneous velocity jump.
@@ -2902,7 +2905,10 @@ function stepCar(c,input={},dt=1/120,settings={}){
   const targetSteer=steerIn*steerMax;
   c.steer+=clamp(targetSteer-c.steer,-(balanced?1.55:3.0)*dt,(balanced?1.55:3.0)*dt);
   const steer=c.steer;
-  const mu=surface.mu*spec.grip;
+  // Grass is sampled at the wheels by the game, not by the car center.
+  // Grass changes traction immediately but does not act like a speed limiter.
+  const grass=clamp(settings.grassFraction??(settings.surface==='grass'?1:0),0,1);
+  const mu=(surface.mu*(1-grass)+SURFACES.grass.mu*grass)*spec.grip;
   const normalFront=m*g*(lr/L),normalRear=m*g*(lf/L);
   const forwardV=c.u;
   let engine;
@@ -2953,7 +2959,9 @@ function stepCar(c,input={},dt=1/120,settings={}){
   // Resolved front-wheel force in the car's body coordinates.
   const Fx=fxR+fxF*Math.cos(steer)-fyF*Math.sin(steer);
   const Fy=fyR+fxF*Math.sin(steer)+fyF*Math.cos(steer);
-  const rolling=surface.rolling*g;
+  // Rolling drag increases gradually when the whole car is off the road.
+  // A clipped corner (one wheel in grass) must not erase momentum.
+  const rolling=(surface.rolling*(1-grass)+.032*grass)*g;
   // Drag is gentle at city speed and grows with speed. Keep the V3 A/B baseline untouched.
   const aero=settings.powertrain==='v3'?.0036:.0006;
   const resistance=rolling*Math.tanh(forwardV*3)+aero*forwardV*Math.abs(forwardV);
@@ -2986,7 +2994,7 @@ function stepCar(c,input={},dt=1/120,settings={}){
   c.slip=Math.abs(c.u)<.5?0:Math.atan2(c.v,Math.abs(c.u));
   c.slipFront=alphaF;c.slipRear=alphaR;
   c.gripFront=f[2];c.gripRear=r[2];
-  c.surface=settings.surface||c.surface;
+  c.surface=grass>.5?'grass':settings.surface||c.surface;
   if(![c.u,c.v,c.r,c.h,c.x,c.z,c.rpm].every(Number.isFinite))throw Error('Non-finite car state');
   return c;
 }
@@ -3151,11 +3159,23 @@ function drive(c, thr, steer, brake, dt, handbrake=false) {
   }
   const dyn=c.driveState;
   const initialU=dyn.u,initialV=dyn.v;
-  const near=nearestRoad(c.x,c.z);
-  const onRoad=near.ri>=0&&near.d<.6;
-  const surface=onRoad?(R[near.ri].c>=3?'gravel':'asphalt'):'grass';
+  const near=nearestRoad(c.x,c.z),roadIndex=near.ri,edge=near.d;
+  const onRoad=roadIndex>=0&&edge<.6;
+  const surface=roadIndex>=0&&R[roadIndex].c>=3?'gravel':'asphalt';
+  // Sample four footprint corners, so clipping a verge doesn't make the
+  // entire vehicle suddenly switch to grass physics or lose its speed cap.
+  const fX=Math.sin(c.h),fZ=-Math.cos(c.h),rX=Math.cos(c.h),rZ=Math.sin(c.h);
+  let grassWheels=0;
+  for(const longitudinal of [-1.15,1.15])for(const lateral of [-.78,.78]){
+    const sample=nearestRoad(c.x+fX*longitudinal+rX*lateral,
+                             c.z+fZ*longitudinal+rZ*lateral);
+    if(sample.ri<0||sample.d>.55)grassWheels++;
+  }
+  const grassFraction=grassWheels*.25;
   c.wet=inWater(c.x,c.z);
-  const limit=c.wet?2.5:c.T.max*(onRoad?1:c.T.off);
+  // Only water imposes an immediate lower speed cap. Roadside terrain
+  // changes rolling resistance and grip, not an instantaneous maximum speed.
+  const limit=c.wet?2.5:c.T.max;
   const reference=DRIVING_PHYSICS.VEHICLE_PRESETS[kind];
   // Retain each existing vehicle's gameplay acceleration and speed categories.
   const powerScale=DRIVE_MODE==='v3'
@@ -3164,7 +3184,8 @@ function drive(c, thr, steer, brake, dt, handbrake=false) {
   const count=Math.max(1,Math.ceil(dt/(1/120))),h=dt/count;
   for(let i=0;i<count;i++){
     DRIVING_PHYSICS.stepCar(dyn,{throttle:thr,steer,brake:brake?1:0,handbrake:handbrake?1:0},
-      h,{feel:'balanced',powertrain:DRIVE_MODE,surface,speedLimit:limit,hardCap:limit,powerScale});
+      h,{feel:'balanced',powertrain:DRIVE_MODE,surface,grassFraction,
+         speedLimit:limit,hardCap:limit,powerScale});
   }
   c.x=clamp(dyn.x,-HALF+4,HALF-4);
   c.z=clamp(dyn.z,-HALF+4,HALF-4);
@@ -3200,7 +3221,7 @@ function drive(c, thr, steer, brake, dt, handbrake=false) {
   const terrainOffset=(hAt(c.x+hx,c.z+hz)+hAt(c.x-hx,c.z-hz))*.5-hAt(c.x,c.z);
   BODY_MOTION.stepBodyMotion(c.bodyMotion,{
     forwardAcceleration:forwardAccel,lateralAcceleration:lateralAccel,
-    speed:dyn.speed,distance:dyn.distance,terrainOffset,surface
+    speed:dyn.speed,distance:dyn.distance,terrainOffset,surface:grassFraction>.5?'grass':surface
   },dt);
   placeCar(c);
 }
