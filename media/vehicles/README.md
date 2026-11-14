@@ -62,3 +62,41 @@ neutral/film switching and film-failure fallback. They do **not** exercise a GPU
 Safari or actual touch hardware. The environment did not expose its browser
 control tool, so no physical iPad/Safari or browser screenshot suite is claimed.
 The hosting service's automatically captured screenshot was opened separately.
+
+## Existing traffic candidates and provenance
+
+These are generic, unbranded **candidate assets**, not approved replacements for
+Volvo 240, Saab 900, Saab 9-5, New Holland or John Deere. They demonstrate that
+our project can consume separately authored GLBs. The viewer change does not
+replace or spawn any of them in the game.
+
+| File | Description | Status |
+| --- | --- | --- |
+| traffic/sedan.glb | Generic sedan | Candidate — no identity approval |
+| traffic/van.glb | Generic van | Candidate — no identity approval |
+| traffic/tractor.glb | Generic tractor | Candidate — no identity approval |
+| traffic/police.glb | Generic police vehicle | Candidate — no identity approval |
+
+All four are original **Kenney Car Kit 3.1**, **CC0 1.0 Universal** assets:
+https://kenney.nl/assets/car-kit . They were obtained unchanged from the public
+mirror https://github.com/Hidencod/tge-assets/tree/main/packs/car-kit on
+2026-11-13; its README identifies the pack as Kenney CC0. The source models use
++Z forward; the viewer rotates them 180° around Y and scales uniformly for
+comparison, without nonuniform stretching.
+
+The traffic inspector's body topology findings are diagnostic, not approval.
+The separate vehicle pipeline validator is the acceptance gate for finished hero
+models, together with human silhouette review.
+
+### Earlier hero-model research (no imports)
+
+The previous candidate record named `Volvo 240 styled sedan car downloadable`
+by Libau Media (reported CC BY, ~63.4k triangles, authorized download required):
+https://sketchfab.com/3d-models/volvo-240-styled-sedan-car-downloadable-66697669831b47cea7874fc8c4544e74 .
+This asset was not downloaded, incorporated into, or used to generate the new
+parametric blockout. Its listing/licence would need re-verification before use.
+
+No approved licensed Saab 900 Classic or 2002–2005 Saab 9-5 SportCombi mesh has
+been imported. Do not substitute a 2011 NG 9-5 or a generic hatchback. Before
+shipping any third-party CC BY asset, record its artist, source, licence and
+changes in the repository's `LICENSE`.
