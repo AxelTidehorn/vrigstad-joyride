@@ -23,6 +23,11 @@ for src, out in (('game.html', 'index.html'), ('map.html', 'map.html')):
         models = re.sub(r'(?m)^export\s+', '', models)
         models = 'const VEHICLE_MODELS = (() => {\n' + models + '\nreturn {createVehicleGeometry};\n})();\n'
         page = page.replace('/*VEHICLE_MODELS*/', models)
+        assert page.count('/*GLB_VEHICLE_ASSETS*/') == 1
+        asset_loader = open(os.path.join(root, 'src', 'vehicles', 'vehicle-assets.mjs'), encoding='utf-8').read()
+        asset_loader = re.sub(r'(?m)^export\\s+', '', asset_loader)
+        asset_loader = 'const VEHICLE_ASSETS = (() => {\\n' + asset_loader + '\\nreturn {createVehicleAssets};\\n})();\\n'
+        page = page.replace('/*GLB_VEHICLE_ASSETS*/', asset_loader)
         assert page.count('/*DRIVING_PHYSICS*/') == 1
         physics = open(os.path.join(root, 'src', 'physics', 'driving-v4.mjs'), encoding='utf-8').read()
         physics = re.sub(r'(?m)^export\s+', '', physics)
