@@ -1,0 +1,21 @@
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/saab900/build/model.blend"
+Saved: '/workspace/work/vrigstad-joyride/experiments/round2/build/saab900/silhouette/after/quality/clay_side.png'
+Time: 00:01.22 (Saving: 00:00.23)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/round2/build/saab900/silhouette/after/quality/clay_front_three_quarter.png'
+Time: 00:00.82 (Saving: 00:00.13)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/round2/build/saab900/silhouette/after/cowl/clay_hood_windscreen.png'
+Time: 00:02.09 (Saving: 00:00.20)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/round2/build/saab900/silhouette/after/silhouette.png'
+Time: 00:00.73 (Saving: 00:00.14)
+
+RENDER: 2 views -> /workspace/work/vrigstad-joyride/experiments/round2/build/saab900/silhouette/after/quality/clay_sheet.png
+RENDER: 1 views -> /workspace/work/vrigstad-joyride/experiments/round2/build/saab900/silhouette/after/cowl/clay_sheet.png
+{"output": "/workspace/work/vrigstad-joyride/experiments/round2/build/saab900/silhouette/after", "geometry": {"nonmanifold_edges": 0, "inconsistent_edges": 0, "degenerate_faces": 0, "signed_volume_m3": 6.09524575408287, "self_intersection_candidates": [], "triangles": 9612, "dimensions_m": [1.75, 4.679958820343018, 1.4199999868869781], "component_sha256": "see file", "centreline_y_z_m": "see file", "wheel_centres_world_m": {"wheel_fl": [-0.7149999737739563, 1.2599999904632568, 0.3050000071525574], "wheel_fr": [0.7149999737739563, 1.2599999904632568, 0.3050000071525574], "wheel_rl": [-0.7149999737739563, -1.2569999694824219, 0.3050000071525574], "wheel_rr": [0.7149999737739563, -1.2569999694824219, 0.3050000071525574]}}}
+
+Blender quit
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).

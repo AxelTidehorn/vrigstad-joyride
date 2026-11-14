@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "mutated_body_and_rear_glass_vertices": 172,
+  "test_rear_aperture_x_scale": 1.002,
+  "unmodified_geometry_sha256": "e5b31b8b3d1aa5f4a7d48a8929fae5e9b6ca648fe8e07a8ceb7f50919fd0383d",
+  "civilian_mutated_sha256": "5ed7c1011867b0285845f59542b7a099b0644d75d824ae957c3ff88089e23d92",
+  "police_mutated_sha256": "5ed7c1011867b0285845f59542b7a099b0644d75d824ae957c3ff88089e23d92",
+  "canonical_master_unchanged_on_disk": true,
+  "source": "One scene from model.py + round2.py; variants.apply changes only material/visibility. Temporary width perturbation is a test, not a delivered model correction."
+}

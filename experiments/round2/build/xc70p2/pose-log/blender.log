@@ -1,0 +1,61 @@
+19:02:17 | INFO: Data are loaded, start creating Blender stuff
+19:02:17 | INFO: Blender create Mesh node body
+19:02:17 | INFO: Blender create Mesh node badge_volvo
+19:02:17 | INFO: Blender create Mesh node bumper_front
+19:02:17 | INFO: Blender create Mesh node bumper_rear
+19:02:17 | INFO: Blender create Mesh node glass_envelope
+19:02:17 | INFO: Blender create Mesh node grille
+19:02:17 | INFO: Blender create Mesh node grille_diagonal
+19:02:17 | INFO: Blender create Mesh node grille_frame
+19:02:17 | INFO: Blender create Mesh node grille_slats
+19:02:17 | INFO: Blender create Mesh node lamp_head
+19:02:17 | INFO: Blender create Mesh node lamp_head.001
+19:02:17 | INFO: Blender create Mesh node lamp_head_frame
+19:02:17 | INFO: Blender create Mesh node lamp_head_frame.001
+19:02:17 | INFO: Blender create Mesh node lamp_indicator
+19:02:17 | INFO: Blender create Mesh node lamp_indicator.001
+19:02:17 | INFO: Blender create Mesh node lamp_reflector
+19:02:17 | INFO: Blender create Mesh node lamp_reflector.001
+19:02:17 | INFO: Blender create Mesh node lamp_reflector.002
+19:02:17 | INFO: Blender create Mesh node lamp_reflector.003
+19:02:17 | INFO: Blender create Mesh node lamp_tail
+19:02:17 | INFO: Blender create Mesh node lamp_tail.001
+19:02:17 | INFO: Blender create Mesh node mirror_housing
+19:02:17 | INFO: Blender create Mesh node mirror_housing.001
+19:02:17 | INFO: Blender create Mesh node plate_front
+19:02:17 | INFO: Blender create Mesh node plate_rear
+19:02:17 | INFO: Blender create Mesh node trim_arch
+19:02:17 | INFO: Blender create Mesh node trim_arch.001
+19:02:17 | INFO: Blender create Mesh node trim_arch.002
+19:02:17 | INFO: Blender create Mesh node trim_arch.003
+19:02:17 | INFO: Blender create Mesh node trim_handle
+19:02:17 | INFO: Blender create Mesh node trim_handle.001
+19:02:17 | INFO: Blender create Mesh node trim_handle.002
+19:02:17 | INFO: Blender create Mesh node trim_handle.003
+19:02:17 | INFO: Blender create Mesh node trim_rail_foot
+19:02:17 | INFO: Blender create Mesh node trim_rail_foot.001
+19:02:17 | INFO: Blender create Mesh node trim_rail_foot.002
+19:02:17 | INFO: Blender create Mesh node trim_rail_foot.003
+19:02:17 | INFO: Blender create Mesh node trim_roof_rail
+19:02:17 | INFO: Blender create Mesh node trim_roof_rail.001
+19:02:17 | INFO: Blender create Mesh node trim_sill
+19:02:17 | INFO: Blender create Mesh node trim_sill.001
+19:02:17 | INFO: Blender create Mesh node trim_skid_front
+19:02:17 | INFO: Blender create Mesh node trim_skid_rear
+19:02:17 | INFO: Blender create Mesh node wheel_fl
+19:02:17 | INFO: Blender create Mesh node trim_rim_fl
+19:02:17 | INFO: Blender create Mesh node trim_spoke
+19:02:17 | INFO: Blender create Mesh node wheel_fr
+19:02:17 | INFO: Blender create Mesh node trim_rim_fr
+19:02:17 | INFO: Blender create Mesh node trim_spoke.006
+19:02:17 | INFO: Blender create Mesh node wheel_rl
+19:02:17 | INFO: Blender create Mesh node trim_rim_rl
+19:02:17 | INFO: Blender create Mesh node trim_spoke.012
+19:02:17 | INFO: Blender create Mesh node wheel_rr
+19:02:17 | INFO: Blender create Mesh node trim_rim_rr
+19:02:17 | INFO: Blender create Mesh node trim_spoke.018
+19:02:17 | INFO: glTF import finished in 0.05s
+{"ok": true, "actual_glb": "xc70-civilian.glb", "body_mounted_meshes": 42, "body_motion_carries_fixtures": true, "wheel_geometry_independent_of_body_bob": true, "steering_carries_rim_and_spokes": true, "wheel_spin_carries_rim_and_spokes": true, "wheel_hub_position_preserved": true, "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim."}
+Blender 4.3.2
+
+Blender quit

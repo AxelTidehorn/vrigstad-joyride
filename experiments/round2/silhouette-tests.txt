@@ -1,0 +1,16 @@
+test_bad_mask (test_verify_silhouette.SilhouetteTests.test_bad_mask) ... ok
+test_high_hood (test_verify_silhouette.SilhouetteTests.test_high_hood) ... ok
+test_hood_and_roof_independent (test_verify_silhouette.SilhouetteTests.test_hood_and_roof_independent) ... ok
+test_identical (test_verify_silhouette.SilhouetteTests.test_identical) ... ok
+test_independent_scale (test_verify_silhouette.SilhouetteTests.test_independent_scale) ... ok
+test_low_hood (test_verify_silhouette.SilhouetteTests.test_low_hood) ... ok
+test_missing_reference (test_verify_silhouette.SilhouetteTests.test_missing_reference) ... ok
+test_pipeline_warns_about_bad_scale_and_unreviewed_reference (test_verify_silhouette.SilhouetteTests.test_pipeline_warns_about_bad_scale_and_unreviewed_reference) ... ok
+test_reproducible (test_verify_silhouette.SilhouetteTests.test_reproducible) ... ok
+test_uniform_registration_rotation_and_flip (test_verify_silhouette.SilhouetteTests.test_uniform_registration_rotation_and_flip) ... ok
+test_wheel_held_out (test_verify_silhouette.SilhouetteTests.test_wheel_held_out) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.990s
+
+OK

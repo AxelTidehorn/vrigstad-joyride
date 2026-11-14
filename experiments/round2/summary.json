@@ -1,0 +1,1812 @@
+{
+  "base_commit": "744a986",
+  "repository": "AxelTidehorn/vrigstad-joyride",
+  "branch": "experiment/vehicle-refinement-round2",
+  "game_integrated": false,
+  "physical_ipad_or_browser_gpu_tested": false,
+  "models": {
+    "saab900": {
+      "name": "Saab 900 Classic T16",
+      "blend": "experiments/saab900/build/model.blend",
+      "glb": "experiments/saab900/build/saab900-t16.glb",
+      "validation": {
+        "ok": true,
+        "model": "saab900Turbo16_1988",
+        "errors": [],
+        "warnings": [],
+        "meshes": 39,
+        "triangles": 9612,
+        "dimensions_m": {
+          "width": 1.69,
+          "height": 1.42,
+          "length": 4.68
+        },
+        "wheelbase_m": 2.517
+      },
+      "source_quality": {
+        "vehicle": "saab900",
+        "baseline_sha256": "0ca8704e2ea76e6ceddad983823541c99d543482ff77c58415fe66df5235c6c3",
+        "body_health": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "bvh_self_intersection_candidates": 0,
+          "positive_volume": true,
+          "triangles": 3892,
+          "worst_pairs": []
+        },
+        "source_geometry_changed": true,
+        "protected_original_vertices": 195,
+        "missing_protected_vertices": [],
+        "wheels": {
+          "wheel_fl": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              -0.7149999737739563,
+              1.2599999904632568,
+              0.3050000071525574
+            ]
+          },
+          "wheel_fr": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              0.7149999737739563,
+              1.2599999904632568,
+              0.3050000071525574
+            ]
+          },
+          "wheel_rl": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              -0.7149999737739563,
+              -1.2569999694824219,
+              0.3050000071525574
+            ]
+          },
+          "wheel_rr": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              0.7149999737739563,
+              -1.2569999694824219,
+              0.3050000071525574
+            ]
+          }
+        },
+        "wheel_fixtures_parented": true,
+        "fixture_max_world_difference_m": 5.960464477539063e-08,
+        "fixture_world_geometry_preserved": true,
+        "glass_world_geometry_preserved": true,
+        "old_body_bounds_m": [
+          [
+            -0.845,
+            0.845
+          ],
+          [
+            -2.24,
+            2.24
+          ],
+          [
+            0.235,
+            1.42
+          ]
+        ],
+        "body_bounds_m": [
+          [
+            -0.845,
+            0.845
+          ],
+          [
+            -2.24,
+            2.24
+          ],
+          [
+            0.235,
+            1.42
+          ]
+        ],
+        "mesh_objects": 39,
+        "triangles": 9612,
+        "ok": true
+      },
+      "pose_test": {
+        "ok": true,
+        "actual_glb": "saab900-t16.glb",
+        "body_mounted_meshes": 26,
+        "body_motion_carries_fixtures": true,
+        "wheel_geometry_independent_of_body_bob": true,
+        "steering_carries_rim_and_spokes": true,
+        "wheel_spin_carries_rim_and_spokes": true,
+        "wheel_hub_position_preserved": true,
+        "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim."
+      },
+      "reproduction": {
+        "ok": true,
+        "differences": {},
+        "meshes_compared": 39,
+        "missing_in_source": [],
+        "extra_in_source": [],
+        "world_position_tolerance_m": 1e-06
+      },
+      "gltf_materials": 8,
+      "gltf_mesh_nodes": 39,
+      "gltf_primitives": 39,
+      "body_material": "Saab warm silver",
+      "body_colour_independently_editable": true,
+      "texture_images": 0,
+      "sha256_glb": "15d155084df404338281478cc11422141c7e8b092a26ab08d6e13cde46b71894"
+    },
+    "volvo240": {
+      "name": "Volvo 240",
+      "blend": "experiments/volvo240/refinement/model.blend",
+      "glb": "experiments/volvo240/refinement/review-only.glb",
+      "validation": {
+        "ok": true,
+        "model": "volvo240SedanExperiment1990",
+        "errors": [],
+        "warnings": [],
+        "meshes": 31,
+        "triangles": 10436,
+        "dimensions_m": {
+          "width": 1.71,
+          "height": 1.4329,
+          "length": 4.82
+        },
+        "wheelbase_m": 2.65
+      },
+      "source_quality": {
+        "vehicle": "volvo240",
+        "baseline_sha256": "56c2e2e58b5db1c21759c4af51fe3d941045342d5e7422411165edb8887c4f68",
+        "body_health": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "bvh_self_intersection_candidates": 0,
+          "positive_volume": true,
+          "triangles": 5400,
+          "worst_pairs": []
+        },
+        "source_geometry_changed": true,
+        "protected_original_vertices": 473,
+        "missing_protected_vertices": [],
+        "wheels": {
+          "wheel_fl": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              -0.7149999737739563,
+              1.4199999570846558,
+              0.3149999976158142
+            ]
+          },
+          "wheel_fr": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              0.7149999737739563,
+              1.4199999570846558,
+              0.3149999976158142
+            ]
+          },
+          "wheel_rl": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              -0.6800000071525574,
+              -1.2300000190734863,
+              0.3149999976158142
+            ]
+          },
+          "wheel_rr": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              0.6800000071525574,
+              -1.2300000190734863,
+              0.3149999976158142
+            ]
+          }
+        },
+        "wheel_fixtures_parented": true,
+        "fixture_max_world_difference_m": 5.960464477539063e-08,
+        "fixture_world_geometry_preserved": true,
+        "glass_world_geometry_preserved": true,
+        "old_body_bounds_m": [
+          [
+            -0.855,
+            0.855
+          ],
+          [
+            -2.31,
+            2.31
+          ],
+          [
+            0.27,
+            1.43
+          ]
+        ],
+        "body_bounds_m": [
+          [
+            -0.855,
+            0.855
+          ],
+          [
+            -2.31,
+            2.31
+          ],
+          [
+            0.27,
+            1.43
+          ]
+        ],
+        "mesh_objects": 31,
+        "triangles": 10436,
+        "ok": true
+      },
+      "pose_test": {
+        "ok": true,
+        "actual_glb": "review-only.glb",
+        "body_mounted_meshes": 22,
+        "body_motion_carries_fixtures": true,
+        "wheel_geometry_independent_of_body_bob": true,
+        "steering_carries_rim_and_spokes": true,
+        "wheel_spin_carries_rim_and_spokes": true,
+        "wheel_hub_position_preserved": true,
+        "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim."
+      },
+      "reproduction": {
+        "ok": true,
+        "differences": {},
+        "meshes_compared": 31,
+        "missing_in_source": [],
+        "extra_in_source": [],
+        "world_position_tolerance_m": 1e-06
+      },
+      "gltf_materials": 6,
+      "gltf_mesh_nodes": 31,
+      "gltf_primitives": 31,
+      "body_material": "body clay",
+      "body_colour_independently_editable": true,
+      "texture_images": 0,
+      "sha256_glb": "3f1ce4cc1d0f787451340abb28cd0037599bd0204946e23cc21320db883d0c58"
+    },
+    "xc70p2": {
+      "name": "Volvo XC70 P2 civilian",
+      "blend": "experiments/xc70p2/build/model.blend",
+      "glb": "experiments/xc70p2/build/xc70-civilian.glb",
+      "validation": {
+        "ok": true,
+        "model": "xc70p2-civilian",
+        "errors": [],
+        "warnings": [],
+        "meshes": 57,
+        "triangles": 14134,
+        "dimensions_m": {
+          "width": 1.8,
+          "height": 1.5625,
+          "length": 4.743
+        },
+        "wheelbase_m": 2.763
+      },
+      "source_quality": {
+        "vehicle": "xc70p2",
+        "baseline_sha256": "f22dad23f71636bbca44dcaa5ca7d27403e316d59aa30332be840c058887d0fd",
+        "body_health": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "bvh_self_intersection_candidates": 0,
+          "positive_volume": true,
+          "triangles": 6494,
+          "worst_pairs": []
+        },
+        "source_geometry_changed": true,
+        "protected_original_vertices": 47,
+        "missing_protected_vertices": [],
+        "wheels": {
+          "wheel_fl": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              -0.8054999709129333,
+              1.3700000047683716,
+              0.3449999988079071
+            ]
+          },
+          "wheel_fr": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              0.8054999709129333,
+              1.3700000047683716,
+              0.3449999988079071
+            ]
+          },
+          "wheel_rl": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              -0.8054999709129333,
+              -1.3930000066757202,
+              0.3449999988079071
+            ]
+          },
+          "wheel_rr": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              0.8054999709129333,
+              -1.3930000066757202,
+              0.3449999988079071
+            ]
+          }
+        },
+        "wheel_fixtures_parented": true,
+        "fixture_max_world_difference_m": 1.228781230931777e-07,
+        "fixture_world_geometry_preserved": true,
+        "glass_world_geometry_preserved": false,
+        "old_body_bounds_m": [
+          [
+            -0.9,
+            0.9
+          ],
+          [
+            -2.29,
+            2.29
+          ],
+          [
+            0.209,
+            1.495
+          ]
+        ],
+        "body_bounds_m": [
+          [
+            -0.9,
+            0.9
+          ],
+          [
+            -2.29,
+            2.29
+          ],
+          [
+            0.209,
+            1.495
+          ]
+        ],
+        "mesh_objects": 63,
+        "triangles": 14134,
+        "ok": true
+      },
+      "pose_test": {
+        "ok": true,
+        "actual_glb": "xc70-civilian.glb",
+        "body_mounted_meshes": 42,
+        "body_motion_carries_fixtures": true,
+        "wheel_geometry_independent_of_body_bob": true,
+        "steering_carries_rim_and_spokes": true,
+        "wheel_spin_carries_rim_and_spokes": true,
+        "wheel_hub_position_preserved": true,
+        "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim."
+      },
+      "reproduction": {
+        "ok": true,
+        "differences": {},
+        "meshes_compared": 63,
+        "missing_in_source": [],
+        "extra_in_source": [],
+        "world_position_tolerance_m": 1e-06,
+        "transform_method": "Compose saved local transforms and parent inverse for both scenes, including hidden police equipment; no reliance on unevaluated hidden matrix_world caches"
+      },
+      "gltf_materials": 7,
+      "gltf_mesh_nodes": 55,
+      "gltf_primitives": 57,
+      "body_material": "XC70 configurable silver",
+      "body_colour_independently_editable": true,
+      "texture_images": 0,
+      "sha256_glb": "e1e27434bf113dfb5e70dc13778c92fbf216c56aa509a028874c039509b5940c"
+    },
+    "xc70police": {
+      "name": "Volvo XC70 P2 police",
+      "blend": "experiments/xc70p2/build/model.blend",
+      "glb": "experiments/xc70p2/build/xc70-police.glb",
+      "validation": {
+        "ok": true,
+        "model": "xc70p2-police",
+        "errors": [],
+        "warnings": [],
+        "meshes": 65,
+        "triangles": 14486,
+        "dimensions_m": {
+          "width": 1.8,
+          "height": 1.745,
+          "length": 4.743
+        },
+        "wheelbase_m": 2.763
+      },
+      "source_quality": {
+        "vehicle": "xc70p2",
+        "baseline_sha256": "f22dad23f71636bbca44dcaa5ca7d27403e316d59aa30332be840c058887d0fd",
+        "body_health": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "bvh_self_intersection_candidates": 0,
+          "positive_volume": true,
+          "triangles": 6494,
+          "worst_pairs": []
+        },
+        "source_geometry_changed": true,
+        "protected_original_vertices": 47,
+        "missing_protected_vertices": [],
+        "wheels": {
+          "wheel_fl": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              -0.8054999709129333,
+              1.3700000047683716,
+              0.3449999988079071
+            ]
+          },
+          "wheel_fr": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              0.8054999709129333,
+              1.3700000047683716,
+              0.3449999988079071
+            ]
+          },
+          "wheel_rl": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              -0.8054999709129333,
+              -1.3930000066757202,
+              0.3449999988079071
+            ]
+          },
+          "wheel_rr": {
+            "world_geometry_preserved": true,
+            "hub_location": [
+              0.8054999709129333,
+              -1.3930000066757202,
+              0.3449999988079071
+            ]
+          }
+        },
+        "wheel_fixtures_parented": true,
+        "fixture_max_world_difference_m": 1.228781230931777e-07,
+        "fixture_world_geometry_preserved": true,
+        "glass_world_geometry_preserved": false,
+        "old_body_bounds_m": [
+          [
+            -0.9,
+            0.9
+          ],
+          [
+            -2.29,
+            2.29
+          ],
+          [
+            0.209,
+            1.495
+          ]
+        ],
+        "body_bounds_m": [
+          [
+            -0.9,
+            0.9
+          ],
+          [
+            -2.29,
+            2.29
+          ],
+          [
+            0.209,
+            1.495
+          ]
+        ],
+        "mesh_objects": 63,
+        "triangles": 14134,
+        "ok": true
+      },
+      "pose_test": {
+        "ok": true,
+        "actual_glb": "xc70-police.glb",
+        "body_mounted_meshes": 50,
+        "body_motion_carries_fixtures": true,
+        "wheel_geometry_independent_of_body_bob": true,
+        "steering_carries_rim_and_spokes": true,
+        "wheel_spin_carries_rim_and_spokes": true,
+        "wheel_hub_position_preserved": true,
+        "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim."
+      },
+      "reproduction": {
+        "ok": true,
+        "differences": {},
+        "meshes_compared": 63,
+        "missing_in_source": [],
+        "extra_in_source": [],
+        "world_position_tolerance_m": 1e-06,
+        "transform_method": "Compose saved local transforms and parent inverse for both scenes, including hidden police equipment; no reliance on unevaluated hidden matrix_world caches"
+      },
+      "gltf_materials": 8,
+      "gltf_mesh_nodes": 63,
+      "gltf_primitives": 65,
+      "body_material": "XC70 police white livery",
+      "body_colour_independently_editable": false,
+      "texture_images": 0,
+      "sha256_glb": "28f35453d4e1797b8ae79cb514a75226dc3542f36348ce200612efb052f52913"
+    }
+  },
+  "tests": {
+    "validator": {
+      "passed": 5,
+      "ok": true
+    },
+    "silhouette": {
+      "passed": 11,
+      "ok": true
+    },
+    "shared-geometry": {
+      "passed": 6,
+      "ok": true
+    }
+  },
+  "inventory": {
+    "saab900": {
+      "selected_blend_sha256": "0ca8704e2ea76e6ceddad983823541c99d543482ff77c58415fe66df5235c6c3",
+      "body_triangles_before": 2098,
+      "source_branches": "Saab profile c130ae6 / Volvo arches 744a986 / XC70 block lamps f064b57; older contrib branches were inspected and not used"
+    },
+    "volvo240": {
+      "selected_blend_sha256": "56c2e2e58b5db1c21759c4af51fe3d941045342d5e7422411165edb8887c4f68",
+      "body_triangles_before": 1862,
+      "source_branches": "Saab profile c130ae6 / Volvo arches 744a986 / XC70 block lamps f064b57; older contrib branches were inspected and not used"
+    },
+    "xc70p2": {
+      "selected_blend_sha256": "f22dad23f71636bbca44dcaa5ca7d27403e316d59aa30332be840c058887d0fd",
+      "body_triangles_before": 4344,
+      "source_branches": "Saab profile c130ae6 / Volvo arches 744a986 / XC70 block lamps f064b57; older contrib branches were inspected and not used"
+    }
+  },
+  "shared_xc70": {
+    "ok": true,
+    "common_meshes": 55,
+    "identical_geometry": [
+      "badge_volvo",
+      "body",
+      "bumper_front",
+      "bumper_rear",
+      "glass_envelope",
+      "grille",
+      "grille_diagonal",
+      "grille_frame",
+      "grille_slats",
+      "lamp_head",
+      "lamp_head.001",
+      "lamp_head_frame",
+      "lamp_head_frame.001",
+      "lamp_indicator",
+      "lamp_indicator.001",
+      "lamp_reflector",
+      "lamp_reflector.001",
+      "lamp_reflector.002",
+      "lamp_reflector.003",
+      "lamp_tail",
+      "lamp_tail.001",
+      "mirror_housing",
+      "mirror_housing.001",
+      "plate_front",
+      "plate_rear",
+      "trim_arch",
+      "trim_arch.001",
+      "trim_arch.002",
+      "trim_arch.003",
+      "trim_handle",
+      "trim_handle.001",
+      "trim_handle.002",
+      "trim_handle.003",
+      "trim_rail_foot",
+      "trim_rail_foot.001",
+      "trim_rail_foot.002",
+      "trim_rail_foot.003",
+      "trim_rim_fl",
+      "trim_rim_fr",
+      "trim_rim_rl",
+      "trim_rim_rr",
+      "trim_roof_rail",
+      "trim_roof_rail.001",
+      "trim_sill",
+      "trim_sill.001",
+      "trim_skid_front",
+      "trim_skid_rear",
+      "trim_spokes_fl",
+      "trim_spokes_fr",
+      "trim_spokes_rl",
+      "trim_spokes_rr",
+      "wheel_fl",
+      "wheel_fr",
+      "wheel_rl",
+      "wheel_rr"
+    ],
+    "differences": [],
+    "missing_in_police": [],
+    "missing_required": [],
+    "police_only": [
+      "lamp_blue_module",
+      "lamp_blue_module.001",
+      "lamp_blue_module.002",
+      "lamp_police_grille",
+      "lamp_police_grille.001",
+      "trim_lightbar_base",
+      "trim_police_mount",
+      "trim_police_mount.001"
+    ],
+    "unexpected_variant_geometry": [],
+    "wheel_fixtures_without_wheel_parent": [],
+    "cladding_width_m": 1.86,
+    "body_sha256": "071f52df4de073c8d39fbc7a998a094c94ccfaa11145376e359dfdbac51f1316",
+    "method": "Original glTF node names; every primitive triangle in world metres, cyclic winding retained; parent hierarchy compared. Materials/colour attributes intentionally excluded."
+  },
+  "source_mutation_test": {
+    "ok": true,
+    "mutated_body_and_rear_glass_vertices": 172,
+    "test_rear_aperture_x_scale": 1.002,
+    "unmodified_geometry_sha256": "e5b31b8b3d1aa5f4a7d48a8929fae5e9b6ca648fe8e07a8ceb7f50919fd0383d",
+    "civilian_mutated_sha256": "5ed7c1011867b0285845f59542b7a099b0644d75d824ae957c3ff88089e23d92",
+    "police_mutated_sha256": "5ed7c1011867b0285845f59542b7a099b0644d75d824ae957c3ff88089e23d92",
+    "canonical_master_unchanged_on_disk": true,
+    "source": "One scene from model.py + round2.py; variants.apply changes only material/visibility. Temporary width perturbation is a test, not a delivered model correction."
+  },
+  "mutation_export_test": {
+    "ok": true,
+    "common_meshes": 55,
+    "identical_geometry": [
+      "badge_volvo",
+      "body",
+      "bumper_front",
+      "bumper_rear",
+      "glass_envelope",
+      "grille",
+      "grille_diagonal",
+      "grille_frame",
+      "grille_slats",
+      "lamp_head",
+      "lamp_head.001",
+      "lamp_head_frame",
+      "lamp_head_frame.001",
+      "lamp_indicator",
+      "lamp_indicator.001",
+      "lamp_reflector",
+      "lamp_reflector.001",
+      "lamp_reflector.002",
+      "lamp_reflector.003",
+      "lamp_tail",
+      "lamp_tail.001",
+      "mirror_housing",
+      "mirror_housing.001",
+      "plate_front",
+      "plate_rear",
+      "trim_arch",
+      "trim_arch.001",
+      "trim_arch.002",
+      "trim_arch.003",
+      "trim_handle",
+      "trim_handle.001",
+      "trim_handle.002",
+      "trim_handle.003",
+      "trim_rail_foot",
+      "trim_rail_foot.001",
+      "trim_rail_foot.002",
+      "trim_rail_foot.003",
+      "trim_rim_fl",
+      "trim_rim_fr",
+      "trim_rim_rl",
+      "trim_rim_rr",
+      "trim_roof_rail",
+      "trim_roof_rail.001",
+      "trim_sill",
+      "trim_sill.001",
+      "trim_skid_front",
+      "trim_skid_rear",
+      "trim_spokes_fl",
+      "trim_spokes_fr",
+      "trim_spokes_rl",
+      "trim_spokes_rr",
+      "wheel_fl",
+      "wheel_fr",
+      "wheel_rl",
+      "wheel_rr"
+    ],
+    "differences": [],
+    "missing_in_police": [],
+    "missing_required": [],
+    "police_only": [
+      "lamp_blue_module",
+      "lamp_blue_module.001",
+      "lamp_blue_module.002",
+      "lamp_police_grille",
+      "lamp_police_grille.001",
+      "trim_lightbar_base",
+      "trim_police_mount",
+      "trim_police_mount.001"
+    ],
+    "unexpected_variant_geometry": [],
+    "wheel_fixtures_without_wheel_parent": [],
+    "cladding_width_m": 1.86,
+    "body_sha256": "440762be7e8d6edb6de6413df81fa20a2db2263915a396eaefc56b6bfacee6f5",
+    "method": "Original glTF node names; every primitive triangle in world metres, cyclic winding retained; parent hierarchy compared. Materials/colour attributes intentionally excluded."
+  },
+  "glass_before": {
+    "back_surface_samples": 536,
+    "minimum_backing_clearance_mm": -0.0010415911674555023,
+    "back_surface_coincident_or_occluded_samples": 488,
+    "outer_glass_samples": 496,
+    "glass_occluded_by_body_samples": 0,
+    "coincident_or_occluded_samples": 0,
+    "minimum_clearance_mm": 1.7102599143981878,
+    "lamp_glass_intersection_candidates": {
+      "lamp_tail": 34,
+      "lamp_tail.001": 34
+    },
+    "worst_samples": [
+      {
+        "glass_face": 287,
+        "point": [
+          0.8267607688903809,
+          0.7316927313804626,
+          1.0404844284057617
+        ],
+        "body_clearance_mm": 1.7102599143981878
+      },
+      {
+        "glass_face": 455,
+        "point": [
+          -0.8267607688903809,
+          0.7316927313804626,
+          1.0404844284057617
+        ],
+        "body_clearance_mm": 1.7102599143981878
+      },
+      {
+        "glass_face": 87,
+        "point": [
+          0.387735515832901,
+          -2.152477264404297,
+          1.4274497032165527
+        ],
+        "body_clearance_mm": 2.7534827589988655
+      },
+      {
+        "glass_face": 90,
+        "point": [
+          -0.387735515832901,
+          -2.152477264404297,
+          1.4274497032165527
+        ],
+        "body_clearance_mm": 2.7534827589988655
+      },
+      {
+        "glass_face": 90,
+        "point": [
+          -0.2957831621170044,
+          -2.152470350265503,
+          1.4318523406982422
+        ],
+        "body_clearance_mm": 2.7592420578002876
+      },
+      {
+        "glass_face": 87,
+        "point": [
+          0.2957831621170044,
+          -2.152470350265503,
+          1.4318523406982422
+        ],
+        "body_clearance_mm": 2.7592495083808846
+      },
+      {
+        "glass_face": 88,
+        "point": [
+          0.14978988468647003,
+          -2.1524670124053955,
+          1.4356536865234375
+        ],
+        "body_clearance_mm": 2.760873734951014
+      },
+      {
+        "glass_face": 89,
+        "point": [
+          -0.14978988468647003,
+          -2.1524670124053955,
+          1.4356536865234375
+        ],
+        "body_clearance_mm": 2.760873734951014
+      },
+      {
+        "glass_face": 89,
+        "point": [
+          -0.04992995783686638,
+          -2.1524667739868164,
+          1.4372533559799194
+        ],
+        "body_clearance_mm": 2.76105254888534
+      },
+      {
+        "glass_face": 88,
+        "point": [
+          0.04992995783686638,
+          -2.1524667739868164,
+          1.437253475189209
+        ],
+        "body_clearance_mm": 2.7610972523689217
+      },
+      {
+        "glass_face": 86,
+        "point": [
+          0.5138806700706482,
+          -2.1525988578796387,
+          1.4167518615722656
+        ],
+        "body_clearance_mm": 2.7842164039611763
+      },
+      {
+        "glass_face": 91,
+        "point": [
+          -0.5138806700706482,
+          -2.1525990962982178,
+          1.4167518615722656
+        ],
+        "body_clearance_mm": 2.784439921379084
+      }
+    ],
+    "scope": "Outer faces selected by each connected pane PCA normal (dot > .75), excluding shell side walls; triangle-interior rays. Intended glass backing remains a closed body, not an interior reconstruction. BVH intersections are candidates.",
+    "police_equipment_glass_intersection_candidates": {
+      "trim_police_mount": 0,
+      "trim_police_mount.001": 0,
+      "trim_lightbar_base": 0,
+      "lamp_blue_module": 0,
+      "lamp_blue_module.001": 0,
+      "lamp_blue_module.002": 0,
+      "lamp_police_grille": 0,
+      "lamp_police_grille.001": 0
+    }
+  },
+  "glass_after": {
+    "back_surface_samples": 536,
+    "minimum_backing_clearance_mm": 1.4998778700828497,
+    "back_surface_coincident_or_occluded_samples": 0,
+    "outer_glass_samples": 496,
+    "glass_occluded_by_body_samples": 0,
+    "coincident_or_occluded_samples": 0,
+    "minimum_clearance_mm": 2.9254570603370613,
+    "lamp_glass_intersection_candidates": {
+      "lamp_tail": 0,
+      "lamp_tail.001": 0
+    },
+    "worst_samples": [
+      {
+        "glass_face": 455,
+        "point": [
+          -0.8280807733535767,
+          0.7316887378692627,
+          1.0407350063323975
+        ],
+        "body_clearance_mm": 2.9254570603370613
+      },
+      {
+        "glass_face": 288,
+        "point": [
+          0.8280807733535767,
+          0.7316887378692627,
+          1.040735125541687
+        ],
+        "body_clearance_mm": 2.9256209731101936
+      },
+      {
+        "glass_face": 87,
+        "point": [
+          0.38765791058540344,
+          -2.1528589725494385,
+          1.4268282651901245
+        ],
+        "body_clearance_mm": 3.7986874580383247
+      },
+      {
+        "glass_face": 90,
+        "point": [
+          -0.38765788078308105,
+          -2.1528592109680176,
+          1.426828145980835
+        ],
+        "body_clearance_mm": 3.79884392023086
+      },
+      {
+        "glass_face": 90,
+        "point": [
+          -0.29573553800582886,
+          -2.152848720550537,
+          1.4312317371368408
+        ],
+        "body_clearance_mm": 3.8045957684516853
+      },
+      {
+        "glass_face": 87,
+        "point": [
+          0.29573553800582886,
+          -2.152848720550537,
+          1.4312318563461304
+        ],
+        "body_clearance_mm": 3.8046777248382515
+      },
+      {
+        "glass_face": 88,
+        "point": [
+          0.14976835250854492,
+          -2.1528432369232178,
+          1.4350334405899048
+        ],
+        "body_clearance_mm": 3.8061678409576363
+      },
+      {
+        "glass_face": 89,
+        "point": [
+          -0.14976835250854492,
+          -2.1528432369232178,
+          1.4350334405899048
+        ],
+        "body_clearance_mm": 3.806175291538233
+      },
+      {
+        "glass_face": 88,
+        "point": [
+          0.04992278292775154,
+          -2.1528427600860596,
+          1.4366331100463867
+        ],
+        "body_clearance_mm": 3.8062199950218147
+      },
+      {
+        "glass_face": 89,
+        "point": [
+          -0.04992278292775154,
+          -2.1528429985046387,
+          1.4366329908370972
+        ],
+        "body_clearance_mm": 3.80637645721435
+      },
+      {
+        "glass_face": 91,
+        "point": [
+          -0.5109328031539917,
+          -2.1529767513275146,
+          1.4161360263824463
+        ],
+        "body_clearance_mm": 3.8270741701126045
+      },
+      {
+        "glass_face": 86,
+        "point": [
+          0.5109327435493469,
+          -2.1529769897460938,
+          1.4161360263824463
+        ],
+        "body_clearance_mm": 3.8272678852081246
+      }
+    ],
+    "scope": "Outer faces selected by each connected pane PCA normal (dot > .75), excluding shell side walls; triangle-interior rays. Intended glass backing remains a closed body, not an interior reconstruction. BVH intersections are candidates.",
+    "police_equipment_glass_intersection_candidates": {
+      "trim_police_mount": 0,
+      "trim_police_mount.001": 0,
+      "trim_lightbar_base": 0,
+      "lamp_blue_module": 0,
+      "lamp_blue_module.001": 0,
+      "lamp_blue_module.002": 0,
+      "lamp_police_grille": 0,
+      "lamp_police_grille.001": 0
+    }
+  },
+  "rear_aperture": {
+    "before": {
+      "width_m": 1.3147478103637695,
+      "height_m": 0.365384578704834,
+      "aspect_ratio_width_height": 3.5982575264235575,
+      "lower_z_m": 1.0834572315216064,
+      "upper_z_m": 1.4488418102264404
+    },
+    "after": {
+      "width_m": 1.2709652185440063,
+      "height_m": 0.41207456588745117,
+      "aspect_ratio_width_height": 3.084308821164036,
+      "lower_z_m": 1.0358644723892212,
+      "upper_z_m": 1.4479390382766724
+    },
+    "reference": "Volvo April 2003 near-rear manufacturer view plus Ethan Llamas 2006 facelift rear-three-quarter photo; existing licensed reference register",
+    "reference_outer_glazed_assembly_approx_bounds_px": [
+      128,
+      100,
+      774,
+      323
+    ],
+    "reference_image_size_px": [
+      900,
+      795
+    ],
+    "reference_scope_uncertainty": "Approximate manual outer black-surround extent (~10px boundary uncertainty), includes frit/seal scope. Not a calibrated clear-aperture dimension; 2006 photo is perspective. No exact mm accuracy claim. Existing pane was too letterbox-like; increased height and an actual painted land beside the lamp are justified by both references."
+  },
+  "saab_silhouette": {
+    "before": {
+      "vehicle": "Saab 900 Classic Turbo 16, three-door, circa 1988",
+      "reference_information": {
+        "image": "../saab900/silhouette/reference.png",
+        "source": "Saab-Scania AB, Danish Saab 900/900i brochure, copyright 1985, rear cover Saab 900 three-door illustration",
+        "url": "https://motorarkiv.dk/brochurer/SAAB_900_og_900i_1985.pdf",
+        "variant": "Classic three-door combi coupe, pre-facelift 1986 range; proxy for circa-1988 T16 sheetmetal, NOT exact facelift front",
+        "orthographic": false,
+        "metric_reliable": false,
+        "front_wheel": [
+          318,
+          405
+        ],
+        "rear_wheel": [
+          941,
+          404
+        ],
+        "ground": [
+          941,
+          488
+        ]
+      },
+      "dimensions": {
+        "wheelbase_m": {
+          "value": 2.517,
+          "status": "documented",
+          "source": "Saab workshop Technical Data 010-1"
+        },
+        "length_m": {
+          "value": 4.687,
+          "status": "documented hatchback, market/bumper dependent; model preserved at 4.680"
+        },
+        "width_m": {
+          "value": 1.69,
+          "status": "documented body excluding mirrors"
+        },
+        "height_m": {
+          "value": 1.419,
+          "status": "documented unloaded nominal"
+        },
+        "front_overhang_m": {
+          "value": 1.08,
+          "status": "estimate from illustration; facelift uncertain"
+        },
+        "rear_overhang_m": {
+          "value": 1.09,
+          "status": "estimate from illustration; facelift uncertain"
+        },
+        "wheel_diameter_m": {
+          "value": 0.61,
+          "status": "existing model estimate; tyre variant not established"
+        }
+      },
+      "normalization": {
+        "method": "uniform similarity from rear/front wheel centres; ground fixes vertical position; no overlap fitting",
+        "canonical_pixels_per_metre": 280.0,
+        "reference_source_pixels_per_metre": 247.51720403961122,
+        "model_source_pixels_per_metre": 333.3333209245793,
+        "independent_calibration": {
+          "model": {
+            "independent_wheelbase_m": 2.5169999063014985,
+            "error_m": -9.369850140217295e-08,
+            "scale_error_fraction": -3.722626196189793e-08
+          }
+        }
+      },
+      "global_metrics": {
+        "iou": 0.9146886237765366,
+        "mean_contour_distance_px": 9.739548896846719,
+        "max_contour_distance_px": 43.93176527297759,
+        "length_difference_px": 6,
+        "height_difference_px": -8,
+        "front_overhang_difference_px": 24,
+        "rear_overhang_difference_px": -18,
+        "reference_bbox": [
+          176,
+          161,
+          1424,
+          565
+        ],
+        "model_bbox": [
+          194,
+          168,
+          1448,
+          564
+        ]
+      },
+      "local_metrics": {
+        "hood": {
+          "samples": 322,
+          "signed_height_mean_px": -0.9937888198757764,
+          "absolute_height_mean_px": 7.53416149068323,
+          "max_absolute_height_px": 20.0,
+          "mean_contour_distance_px": 7.092755691979939,
+          "max_contour_distance_px": 19.4164878389476
+        },
+        "windscreen": {
+          "samples": 229,
+          "signed_height_mean_px": 9.799126637554584,
+          "absolute_height_mean_px": 10.34061135371179,
+          "max_absolute_height_px": 20.0,
+          "mean_contour_distance_px": 8.276333281279404,
+          "max_contour_distance_px": 19.4164878389476
+        },
+        "roof": {
+          "samples": 462,
+          "signed_height_mean_px": -3.346320346320346,
+          "absolute_height_mean_px": 4.337662337662338,
+          "max_absolute_height_px": 11.0,
+          "mean_contour_distance_px": 4.125027303791348,
+          "max_contour_distance_px": 8.54400374531753
+        },
+        "rear": {
+          "samples": 332,
+          "signed_height_mean_px": -1.466867469879518,
+          "absolute_height_mean_px": 2.1957831325301207,
+          "max_absolute_height_px": 11.0,
+          "mean_contour_distance_px": 4.357269619120874,
+          "max_contour_distance_px": 18.0
+        },
+        "wheel_arches": {
+          "samples": 0,
+          "signed_height_mean_px": null,
+          "absolute_height_mean_px": null,
+          "max_absolute_height_px": null,
+          "mean_contour_distance_px": 15.377012443417053,
+          "max_contour_distance_px": 19.0
+        },
+        "underbody": {
+          "samples": 0,
+          "signed_height_mean_px": null,
+          "absolute_height_mean_px": null,
+          "max_absolute_height_px": null,
+          "mean_contour_distance_px": 12.816858219094364,
+          "max_contour_distance_px": 43.93176527297759,
+          "lower_edge_signed_mean_px": -11.894394800974817
+        }
+      },
+      "internal_annotations": {
+        "points": {
+          "hood_rear": {
+            "dx_px": 12.314832150217399,
+            "height_difference_px": 18.227663476611383,
+            "distance_px": 21.997790950561846
+          },
+          "windscreen_base": {
+            "dx_px": 8.561211623285317,
+            "height_difference_px": 17.909724614989614,
+            "distance_px": 19.85075767429144
+          },
+          "windscreen_top": {
+            "dx_px": 0.5854690013201207,
+            "height_difference_px": 15.963896277750507,
+            "distance_px": 15.974628581544025
+          }
+        },
+        "curves": {
+          "hood": {
+            "signed_height_mean_px": 0.014939502724475346,
+            "absolute_height_mean_px": 6.5202382544636635,
+            "max_absolute_height_px": 19.849527002546722,
+            "reference_segment_angles_deg": [
+              -7.502675904215401,
+              -6.553310745898259,
+              -8.291281016553215,
+              -18.595384040834983
+            ],
+            "model_segment_angles_deg": [
+              -11.309893069180406,
+              -18.92464815793583,
+              -12.528816387511316,
+              -9.72757075166014
+            ],
+            "reference_turn_angles_deg": [
+              0.9493651583171419,
+              -1.737970270654956,
+              -10.304103024281767
+            ],
+            "model_turn_angles_deg": [
+              -7.614755088755425,
+              6.395831770424515,
+              2.801245635851176
+            ]
+          },
+          "windscreen": {
+            "signed_height_mean_px": 22.101356438222346,
+            "absolute_height_mean_px": 22.101356438222346,
+            "max_absolute_height_px": 26.59070992841754,
+            "reference_segment_angles_deg": [
+              -42.47138428881368
+            ],
+            "model_segment_angles_deg": [
+              -39.39934482401928,
+              -38.08557225639649,
+              -43.37658142273692
+            ],
+            "reference_turn_angles_deg": [],
+            "model_turn_angles_deg": [
+              1.3137725676227916,
+              -5.29100916634043
+            ]
+          },
+          "cowl": {
+            "signed_height_mean_px": 17.928258126773713,
+            "absolute_height_mean_px": 17.928258126773713,
+            "max_absolute_height_px": 18.227663476611383,
+            "reference_segment_angles_deg": [
+              -19.561856593677316
+            ],
+            "model_segment_angles_deg": [
+              -0.0
+            ],
+            "reference_turn_angles_deg": [],
+            "model_turn_angles_deg": []
+          },
+          "hood_cowl_windscreen": {
+            "signed_height_mean_px": 12.070757457565229,
+            "absolute_height_mean_px": 12.070757457565229,
+            "max_absolute_height_px": 26.608704444452997,
+            "reference_segment_angles_deg": [
+              -42.47138428881368,
+              -19.561856593677316,
+              -10.194934820976231
+            ],
+            "model_segment_angles_deg": [
+              -39.39934482401928,
+              -38.08557225639649,
+              -43.37658142273692,
+              -43.492867029144925,
+              -0.0,
+              -18.434948822921942,
+              -11.30993395170566
+            ],
+            "reference_turn_angles_deg": [
+              22.909527695136365,
+              9.366921772701085
+            ],
+            "model_turn_angles_deg": [
+              1.3137725676227916,
+              -5.29100916634043,
+              -0.116285606408006,
+              43.492867029144925,
+              -18.434948822921942,
+              7.125014871216283
+            ]
+          },
+          "front_wheel_arch": {
+            "signed_height_mean_px": -17.062845562558273,
+            "absolute_height_mean_px": 17.062845562558273,
+            "max_absolute_height_px": 24.371958241051686,
+            "reference_segment_angles_deg": [
+              68.52066027312159,
+              45.09196746437613,
+              13.41649872626693,
+              -13.232563797514604,
+              -40.008940081836165,
+              -73.08662264558308
+            ],
+            "model_segment_angles_deg": [
+              86.25036926168296,
+              78.74960460166461,
+              71.25003590329102,
+              63.75023766985885,
+              56.250498198317715,
+              48.74857003785008,
+              41.25065440971366,
+              33.750024310679485,
+              26.25000262493045,
+              18.74992171475837,
+              11.250237515064454,
+              3.7497229874330085,
+              -3.7497229874328757,
+              -11.250237515064454,
+              -18.74992171475837,
+              -26.25000262493045,
+              -33.750024310679485,
+              -41.250388819595074,
+              -48.74887288172621,
+              -56.25049819831687,
+              -63.74987640261413,
+              -71.25041734160698,
+              -78.74960460166461
+            ],
+            "reference_turn_angles_deg": [
+              -23.42869280874546,
+              -31.675468738109203,
+              -26.649062523781534,
+              -26.77637628432156,
+              -33.07768256374691
+            ],
+            "model_turn_angles_deg": [
+              -7.500764660018348,
+              -7.499568698373594,
+              -7.499798233432173,
+              -7.499739471541133,
+              -7.501928160467635,
+              -7.497915628136418,
+              -7.500630099034176,
+              -7.5000216857490365,
+              -7.5000809101720805,
+              -7.499684199693915,
+              -7.500514527631445,
+              -7.499445974865884,
+              -7.500514527631578,
+              -7.499684199693915,
+              -7.5000809101720805,
+              -7.5000216857490365,
+              -7.500364508915588,
+              -7.4984840621311335,
+              -7.501625316590662,
+              -7.499378204297258,
+              -7.500540938992849,
+              -7.499187260057639
+            ]
+          }
+        },
+        "provenance": "Reference annotations are manual; model annotations are projected geometry"
+      },
+      "derived_extents": {
+        "reference": {
+          "length_wheelbase_scaled_m": 4.457142857142857,
+          "height_wheelbase_scaled_m": 1.4428571428571428,
+          "front_overhang_wheelbase_scaled_m": 0.8901428571428571,
+          "rear_overhang_wheelbase_scaled_m": 1.05,
+          "roof_highest_x_from_rear_axle_m": [
+            0.46785714285714286,
+            1.3071428571428572
+          ]
+        },
+        "model": {
+          "length_wheelbase_scaled_m": 4.478571428571429,
+          "height_wheelbase_scaled_m": 1.4142857142857144,
+          "front_overhang_wheelbase_scaled_m": 0.9758571428571429,
+          "rear_overhang_wheelbase_scaled_m": 0.9857142857142858,
+          "roof_highest_x_from_rear_axle_m": [
+            0.3142857142857143,
+            1.6178571428571429
+          ]
+        }
+      },
+      "data_quality": {
+        "metric_geometry_verified": false,
+        "reference_mask_reviewed": true,
+        "units": "canonical pixels; divide by 280 for wheelbase-scaled metres (estimates unless metric_geometry_verified)",
+        "warnings": [
+          "Illustration is a small stylized manufacturer drawing, not a dimensioned orthographic master.",
+          "Pre-facelift body proxy: front bumper/nose and T16 trim differ. Do not certify exact 1988 geometry or absolute mm error.",
+          "Manual trace about 2-5 pixels uncertain, plus illustration distortion. Roof/rear preserved rather than optimized to this proxy.",
+          "REFERENCE NOT METRIC-VERIFIED: no exact millimetre geometric verdict is permitted"
+        ],
+        "included": "Main painted hull and tyre silhouette only. Excludes mirrors, bumpers protrusions, spoiler and tiny underbody detail. Manual trace fills arches where tyres occupy the side projection; no ground shadow.",
+        "anchor_caveat": "Registration forces axle anchors to agree. Only independent calibration or held-out points can verify axle placement."
+      },
+      "largest_local_deviations": [
+        {
+          "region": "hood",
+          "samples": 322,
+          "signed_height_mean_px": -0.9937888198757764,
+          "absolute_height_mean_px": 7.53416149068323,
+          "max_absolute_height_px": 20.0,
+          "mean_contour_distance_px": 7.092755691979939,
+          "max_contour_distance_px": 19.4164878389476
+        },
+        {
+          "region": "windscreen",
+          "samples": 229,
+          "signed_height_mean_px": 9.799126637554584,
+          "absolute_height_mean_px": 10.34061135371179,
+          "max_absolute_height_px": 20.0,
+          "mean_contour_distance_px": 8.276333281279404,
+          "max_contour_distance_px": 19.4164878389476
+        },
+        {
+          "region": "roof",
+          "samples": 462,
+          "signed_height_mean_px": -3.346320346320346,
+          "absolute_height_mean_px": 4.337662337662338,
+          "max_absolute_height_px": 11.0,
+          "mean_contour_distance_px": 4.125027303791348,
+          "max_contour_distance_px": 8.54400374531753
+        },
+        {
+          "region": "rear",
+          "samples": 332,
+          "signed_height_mean_px": -1.466867469879518,
+          "absolute_height_mean_px": 2.1957831325301207,
+          "max_absolute_height_px": 11.0,
+          "mean_contour_distance_px": 4.357269619120874,
+          "max_contour_distance_px": 18.0
+        }
+      ]
+    },
+    "after": {
+      "vehicle": "Saab 900 Classic Turbo 16, three-door, circa 1988",
+      "reference_information": {
+        "image": "../saab900/silhouette/reference.png",
+        "source": "Saab-Scania AB, Danish Saab 900/900i brochure, copyright 1985, rear cover Saab 900 three-door illustration",
+        "url": "https://motorarkiv.dk/brochurer/SAAB_900_og_900i_1985.pdf",
+        "variant": "Classic three-door combi coupe, pre-facelift 1986 range; proxy for circa-1988 T16 sheetmetal, NOT exact facelift front",
+        "orthographic": false,
+        "metric_reliable": false,
+        "front_wheel": [
+          318,
+          405
+        ],
+        "rear_wheel": [
+          941,
+          404
+        ],
+        "ground": [
+          941,
+          488
+        ]
+      },
+      "dimensions": {
+        "wheelbase_m": {
+          "value": 2.517,
+          "status": "documented",
+          "source": "Saab workshop Technical Data 010-1"
+        },
+        "length_m": {
+          "value": 4.687,
+          "status": "documented hatchback, market/bumper dependent; model preserved at 4.680"
+        },
+        "width_m": {
+          "value": 1.69,
+          "status": "documented body excluding mirrors"
+        },
+        "height_m": {
+          "value": 1.419,
+          "status": "documented unloaded nominal"
+        },
+        "front_overhang_m": {
+          "value": 1.08,
+          "status": "estimate from illustration; facelift uncertain"
+        },
+        "rear_overhang_m": {
+          "value": 1.09,
+          "status": "estimate from illustration; facelift uncertain"
+        },
+        "wheel_diameter_m": {
+          "value": 0.61,
+          "status": "existing model estimate; tyre variant not established"
+        }
+      },
+      "normalization": {
+        "method": "uniform similarity from rear/front wheel centres; ground fixes vertical position; no overlap fitting",
+        "canonical_pixels_per_metre": 280.0,
+        "reference_source_pixels_per_metre": 247.51720403961122,
+        "model_source_pixels_per_metre": 333.3333209245793,
+        "independent_calibration": {
+          "model": {
+            "independent_wheelbase_m": 2.5169999063014985,
+            "error_m": -9.369850140217295e-08,
+            "scale_error_fraction": -3.722626196189793e-08
+          }
+        }
+      },
+      "global_metrics": {
+        "iou": 0.9154184066062966,
+        "mean_contour_distance_px": 9.68892083838943,
+        "max_contour_distance_px": 43.93176527297759,
+        "length_difference_px": 6,
+        "height_difference_px": -8,
+        "front_overhang_difference_px": 24,
+        "rear_overhang_difference_px": -18,
+        "reference_bbox": [
+          176,
+          161,
+          1424,
+          565
+        ],
+        "model_bbox": [
+          194,
+          168,
+          1448,
+          564
+        ]
+      },
+      "local_metrics": {
+        "hood": {
+          "samples": 322,
+          "signed_height_mean_px": 6.375776397515528,
+          "absolute_height_mean_px": 6.574534161490683,
+          "max_absolute_height_px": 20.0,
+          "mean_contour_distance_px": 6.245282514298203,
+          "max_contour_distance_px": 20.0
+        },
+        "windscreen": {
+          "samples": 229,
+          "signed_height_mean_px": 9.83406113537118,
+          "absolute_height_mean_px": 10.375545851528384,
+          "max_absolute_height_px": 20.0,
+          "mean_contour_distance_px": 8.325459992912236,
+          "max_contour_distance_px": 20.0
+        },
+        "roof": {
+          "samples": 462,
+          "signed_height_mean_px": -3.346320346320346,
+          "absolute_height_mean_px": 4.337662337662338,
+          "max_absolute_height_px": 11.0,
+          "mean_contour_distance_px": 4.125027303791348,
+          "max_contour_distance_px": 8.54400374531753
+        },
+        "rear": {
+          "samples": 332,
+          "signed_height_mean_px": -1.466867469879518,
+          "absolute_height_mean_px": 2.1957831325301207,
+          "max_absolute_height_px": 11.0,
+          "mean_contour_distance_px": 4.357269619120874,
+          "max_contour_distance_px": 18.0
+        },
+        "wheel_arches": {
+          "samples": 0,
+          "signed_height_mean_px": null,
+          "absolute_height_mean_px": null,
+          "max_absolute_height_px": null,
+          "mean_contour_distance_px": 15.377012443417053,
+          "max_contour_distance_px": 19.0
+        },
+        "underbody": {
+          "samples": 0,
+          "signed_height_mean_px": null,
+          "absolute_height_mean_px": null,
+          "max_absolute_height_px": null,
+          "mean_contour_distance_px": 12.816858219094364,
+          "max_contour_distance_px": 43.93176527297759,
+          "lower_edge_signed_mean_px": -11.894394800974817
+        }
+      },
+      "internal_annotations": {
+        "points": {
+          "hood_rear": {
+            "dx_px": 12.314832150217399,
+            "height_difference_px": 18.227663476611383,
+            "distance_px": 21.997790950561846
+          },
+          "windscreen_base": {
+            "dx_px": 8.561211623285317,
+            "height_difference_px": 17.909724614989614,
+            "distance_px": 19.85075767429144
+          },
+          "windscreen_top": {
+            "dx_px": 0.5854690013201207,
+            "height_difference_px": 15.963896277750507,
+            "distance_px": 15.974628581544025
+          }
+        },
+        "curves": {
+          "hood": {
+            "signed_height_mean_px": 7.443448494217387,
+            "absolute_height_mean_px": 7.458638843494629,
+            "max_absolute_height_px": 19.849527002546722,
+            "reference_segment_angles_deg": [
+              -7.502675904215401,
+              -6.553310745898259,
+              -8.291281016553215,
+              -18.595384040834983
+            ],
+            "model_segment_angles_deg": [
+              -11.309893069180406,
+              -13.263340133103178,
+              -11.920738975840436,
+              -11.309923467175832
+            ],
+            "reference_turn_angles_deg": [
+              0.9493651583171419,
+              -1.737970270654956,
+              -10.304103024281767
+            ],
+            "model_turn_angles_deg": [
+              -1.9534470639227717,
+              1.3426011572627417,
+              0.6108155086646043
+            ]
+          },
+          "windscreen": {
+            "signed_height_mean_px": 22.101356438222346,
+            "absolute_height_mean_px": 22.101356438222346,
+            "max_absolute_height_px": 26.59070992841754,
+            "reference_segment_angles_deg": [
+              -42.47138428881368
+            ],
+            "model_segment_angles_deg": [
+              -39.39934482401928,
+              -38.08557225639649,
+              -43.37658142273692
+            ],
+            "reference_turn_angles_deg": [],
+            "model_turn_angles_deg": [
+              1.3137725676227916,
+              -5.29100916634043
+            ]
+          },
+          "cowl": {
+            "signed_height_mean_px": 17.928258126773713,
+            "absolute_height_mean_px": 17.928258126773713,
+            "max_absolute_height_px": 18.227663476611383,
+            "reference_segment_angles_deg": [
+              -19.561856593677316
+            ],
+            "model_segment_angles_deg": [
+              -0.0
+            ],
+            "reference_turn_angles_deg": [],
+            "model_turn_angles_deg": []
+          },
+          "hood_cowl_windscreen": {
+            "signed_height_mean_px": 16.698693292540028,
+            "absolute_height_mean_px": 16.698693292540028,
+            "max_absolute_height_px": 26.608704444452997,
+            "reference_segment_angles_deg": [
+              -42.47138428881368,
+              -19.561856593677316,
+              -10.194934820976231
+            ],
+            "model_segment_angles_deg": [
+              -39.39934482401928,
+              -38.08557225639649,
+              -43.37658142273692,
+              -43.492867029144925,
+              -0.0,
+              -13.134030079421088,
+              -11.653836885262733
+            ],
+            "reference_turn_angles_deg": [
+              22.909527695136365,
+              9.366921772701085
+            ],
+            "model_turn_angles_deg": [
+              1.3137725676227916,
+              -5.29100916634043,
+              -0.116285606408006,
+              43.492867029144925,
+              -13.134030079421088,
+              1.480193194158355
+            ]
+          },
+          "front_wheel_arch": {
+            "signed_height_mean_px": -17.062845562558273,
+            "absolute_height_mean_px": 17.062845562558273,
+            "max_absolute_height_px": 24.371958241051686,
+            "reference_segment_angles_deg": [
+              68.52066027312159,
+              45.09196746437613,
+              13.41649872626693,
+              -13.232563797514604,
+              -40.008940081836165,
+              -73.08662264558308
+            ],
+            "model_segment_angles_deg": [
+              86.25036926168296,
+              78.74960460166461,
+              71.25003590329102,
+              63.75023766985885,
+              56.250498198317715,
+              48.74857003785008,
+              41.25065440971366,
+              33.750024310679485,
+              26.25000262493045,
+              18.74992171475837,
+              11.250237515064454,
+              3.7497229874330085,
+              -3.7497229874328757,
+              -11.250237515064454,
+              -18.74992171475837,
+              -26.25000262493045,
+              -33.750024310679485,
+              -41.250388819595074,
+              -48.74887288172621,
+              -56.25049819831687,
+              -63.74987640261413,
+              -71.25041734160698,
+              -78.74960460166461
+            ],
+            "reference_turn_angles_deg": [
+              -23.42869280874546,
+              -31.675468738109203,
+              -26.649062523781534,
+              -26.77637628432156,
+              -33.07768256374691
+            ],
+            "model_turn_angles_deg": [
+              -7.500764660018348,
+              -7.499568698373594,
+              -7.499798233432173,
+              -7.499739471541133,
+              -7.501928160467635,
+              -7.497915628136418,
+              -7.500630099034176,
+              -7.5000216857490365,
+              -7.5000809101720805,
+              -7.499684199693915,
+              -7.500514527631445,
+              -7.499445974865884,
+              -7.500514527631578,
+              -7.499684199693915,
+              -7.5000809101720805,
+              -7.5000216857490365,
+              -7.500364508915588,
+              -7.4984840621311335,
+              -7.501625316590662,
+              -7.499378204297258,
+              -7.500540938992849,
+              -7.499187260057639
+            ]
+          }
+        },
+        "provenance": "Reference annotations are manual; model annotations are projected geometry"
+      },
+      "derived_extents": {
+        "reference": {
+          "length_wheelbase_scaled_m": 4.457142857142857,
+          "height_wheelbase_scaled_m": 1.4428571428571428,
+          "front_overhang_wheelbase_scaled_m": 0.8901428571428571,
+          "rear_overhang_wheelbase_scaled_m": 1.05,
+          "roof_highest_x_from_rear_axle_m": [
+            0.46785714285714286,
+            1.3071428571428572
+          ]
+        },
+        "model": {
+          "length_wheelbase_scaled_m": 4.478571428571429,
+          "height_wheelbase_scaled_m": 1.4142857142857144,
+          "front_overhang_wheelbase_scaled_m": 0.9758571428571429,
+          "rear_overhang_wheelbase_scaled_m": 0.9857142857142858,
+          "roof_highest_x_from_rear_axle_m": [
+            0.3142857142857143,
+            1.6178571428571429
+          ]
+        }
+      },
+      "data_quality": {
+        "metric_geometry_verified": false,
+        "reference_mask_reviewed": true,
+        "units": "canonical pixels; divide by 280 for wheelbase-scaled metres (estimates unless metric_geometry_verified)",
+        "warnings": [
+          "Illustration is a small stylized manufacturer drawing, not a dimensioned orthographic master.",
+          "Pre-facelift body proxy: front bumper/nose and T16 trim differ. Do not certify exact 1988 geometry or absolute mm error.",
+          "Manual trace about 2-5 pixels uncertain, plus illustration distortion. Roof/rear preserved rather than optimized to this proxy.",
+          "REFERENCE NOT METRIC-VERIFIED: no exact millimetre geometric verdict is permitted"
+        ],
+        "included": "Main painted hull and tyre silhouette only. Excludes mirrors, bumpers protrusions, spoiler and tiny underbody detail. Manual trace fills arches where tyres occupy the side projection; no ground shadow.",
+        "anchor_caveat": "Registration forces axle anchors to agree. Only independent calibration or held-out points can verify axle placement."
+      },
+      "largest_local_deviations": [
+        {
+          "region": "hood",
+          "samples": 322,
+          "signed_height_mean_px": 6.375776397515528,
+          "absolute_height_mean_px": 6.574534161490683,
+          "max_absolute_height_px": 20.0,
+          "mean_contour_distance_px": 6.245282514298203,
+          "max_contour_distance_px": 20.0
+        },
+        {
+          "region": "windscreen",
+          "samples": 229,
+          "signed_height_mean_px": 9.83406113537118,
+          "absolute_height_mean_px": 10.375545851528384,
+          "max_absolute_height_px": 20.0,
+          "mean_contour_distance_px": 8.325459992912236,
+          "max_contour_distance_px": 20.0
+        },
+        {
+          "region": "roof",
+          "samples": 462,
+          "signed_height_mean_px": -3.346320346320346,
+          "absolute_height_mean_px": 4.337662337662338,
+          "max_absolute_height_px": 11.0,
+          "mean_contour_distance_px": 4.125027303791348,
+          "max_contour_distance_px": 8.54400374531753
+        },
+        {
+          "region": "rear",
+          "samples": 332,
+          "signed_height_mean_px": -1.466867469879518,
+          "absolute_height_mean_px": 2.1957831325301207,
+          "max_absolute_height_px": 11.0,
+          "mean_contour_distance_px": 4.357269619120874,
+          "max_contour_distance_px": 18.0
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{"ok": true, "differences": {}, "meshes_compared": 31, "missing_in_source": [], "extra_in_source": [], "world_position_tolerance_m": 1e-06}
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/model.blend"
+
+Blender quit

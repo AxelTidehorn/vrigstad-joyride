@@ -1,0 +1,103 @@
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/saab900/build/model.blend"
+Saved: 'experiments/round2/build/saab900/after/views/clay_side.png'
+Time: 00:01.07 (Saving: 00:00.27)
+
+Saved: 'experiments/round2/build/saab900/after/views/clay_front_three_quarter.png'
+Time: 00:00.72 (Saving: 00:00.12)
+
+Saved: 'experiments/round2/build/saab900/after/views/clay_rear_three_quarter.png'
+Time: 00:00.83 (Saving: 00:00.12)
+
+Saved: 'experiments/round2/build/saab900/after/close/clay_detail.png'
+Time: 00:01.32 (Saving: 00:00.17)
+
+Fra:1 Mem:20.46M (Peak 20.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | body
+Fra:1 Mem:20.46M (Peak 20.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | glass_envelope
+Fra:1 Mem:22.51M (Peak 22.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | bumper_front
+Fra:1 Mem:22.53M (Peak 22.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | bumper_rear
+Fra:1 Mem:22.55M (Peak 22.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_side
+Fra:1 Mem:22.57M (Peak 22.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | mirror_housing
+Fra:1 Mem:22.57M (Peak 22.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_side.001
+Fra:1 Mem:22.59M (Peak 22.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | mirror_housing.001
+Fra:1 Mem:22.59M (Peak 22.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_hatch_spoiler
+Fra:1 Mem:22.60M (Peak 22.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_spokes_rr
+Fra:1 Mem:22.61M (Peak 22.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_rim_rr
+Fra:1 Mem:22.62M (Peak 22.62M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | wheel_rr
+Fra:1 Mem:22.64M (Peak 22.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_spokes_rl
+Fra:1 Mem:22.65M (Peak 22.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_rim_rl
+Fra:1 Mem:22.65M (Peak 22.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | wheel_rl
+Fra:1 Mem:22.67M (Peak 22.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_spokes_fr
+Fra:1 Mem:22.68M (Peak 22.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_rim_fr
+Fra:1 Mem:22.69M (Peak 22.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | wheel_fr
+Fra:1 Mem:22.71M (Peak 22.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_spokes_fl
+Fra:1 Mem:22.72M (Peak 22.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_rim_fl
+Fra:1 Mem:22.72M (Peak 22.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | wheel_fl
+Fra:1 Mem:22.74M (Peak 22.74M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | grille_frame
+Fra:1 Mem:22.75M (Peak 22.75M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | badge_front
+Fra:1 Mem:22.75M (Peak 22.75M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | plate_rear
+Fra:1 Mem:22.75M (Peak 22.75M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | grille_bars
+Fra:1 Mem:22.76M (Peak 22.76M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | grille
+Fra:1 Mem:22.76M (Peak 22.76M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_handle.001
+Fra:1 Mem:22.77M (Peak 22.77M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_handle
+Fra:1 Mem:22.77M (Peak 22.77M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_head_divider.001
+Fra:1 Mem:22.77M (Peak 22.77M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_head_divider
+Fra:1 Mem:22.77M (Peak 22.77M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_tail_indicator.001
+Fra:1 Mem:22.78M (Peak 22.78M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_tail.001
+Fra:1 Mem:22.78M (Peak 22.78M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_indicator.001
+Fra:1 Mem:22.78M (Peak 22.78M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_head.001
+Fra:1 Mem:22.78M (Peak 22.78M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_tail_indicator
+Fra:1 Mem:22.79M (Peak 22.79M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_tail
+Fra:1 Mem:22.79M (Peak 22.79M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_indicator
+Fra:1 Mem:22.79M (Peak 22.79M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | lamp_head
+Fra:1 Mem:22.79M (Peak 22.79M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | trim_front_airdam
+Fra:1 Mem:22.96M (Peak 22.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:21.24M (Peak 22.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:21.24M (Peak 22.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:21.24M (Peak 22.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:21.24M (Peak 22.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:21.32M (Peak 22.96M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:21.32M (Peak 22.96M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:21.32M (Peak 22.96M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:21.32M (Peak 22.96M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:21.32M (Peak 22.96M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:21.32M (Peak 22.96M) | Time:00:00.00 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:21.33M (Peak 22.96M) | Time:00:00.00 | Mem:0.02M, Peak:0.02M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:21.33M (Peak 22.96M) | Time:00:00.00 | Mem:0.02M, Peak:0.02M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:21.33M (Peak 22.96M) | Time:00:00.00 | Mem:0.02M, Peak:0.02M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:21.33M (Peak 22.96M) | Time:00:00.00 | Mem:0.02M, Peak:0.02M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:21.48M (Peak 22.96M) | Time:00:00.00 | Mem:0.02M, Peak:0.02M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:21.55M (Peak 22.96M) | Time:00:00.00 | Mem:0.02M, Peak:0.02M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:21.54M (Peak 22.96M) | Time:00:00.00 | Mem:0.07M, Peak:0.07M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:21.54M (Peak 22.96M) | Time:00:00.00 | Mem:0.07M, Peak:0.07M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:21.54M (Peak 22.96M) | Time:00:00.00 | Mem:0.37M, Peak:0.37M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:21.54M (Peak 22.96M) | Time:00:00.01 | Mem:0.72M, Peak:1.01M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:21.54M (Peak 22.96M) | Time:00:00.01 | Mem:0.72M, Peak:1.01M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:0.72M, Peak:1.01M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:1.05M, Peak:1.05M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:1.05M, Peak:1.05M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:1.05M, Peak:1.05M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:1.05M, Peak:1.05M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:1.05M, Peak:1.05M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:1.13M, Peak:1.13M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:1.14M, Peak:1.14M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:1.14M, Peak:1.14M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:21.87M (Peak 22.96M) | Time:00:00.01 | Mem:1.14M, Peak:1.14M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:21.88M (Peak 22.96M) | Time:00:00.01 | Mem:1.06M, Peak:1.14M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:21.88M (Peak 22.96M) | Time:00:00.01 | Mem:1.14M, Peak:1.14M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:21.88M (Peak 22.96M) | Time:00:00.01 | Mem:1.14M, Peak:1.14M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:21.88M (Peak 22.96M) | Time:00:00.01 | Mem:1.14M, Peak:1.14M | Scene, ViewLayer | Sample 0/16
+Fra:1 Mem:63.44M (Peak 63.44M) | Time:00:00.41 | Remaining:00:05.99 | Mem:42.68M, Peak:42.68M | Scene, ViewLayer | Sample 1/16
+Fra:1 Mem:81.90M (Peak 118.83M) | Time:00:04.81 | Mem:42.68M, Peak:42.68M | Scene, ViewLayer | Sample 16/16
+Fra:1 Mem:81.90M (Peak 118.83M) | Time:00:04.81 | Mem:42.68M, Peak:42.68M | Scene, ViewLayer | Finished
+Saved: 'experiments/round2/build/saab900/after/fleet/shaded_common.png'
+Time: 00:04.94 (Saving: 00:00.11)
+
+RENDER: 3 views -> experiments/round2/build/saab900/after/views/clay_sheet.png
+RENDER: 1 views -> experiments/round2/build/saab900/after/close/clay_sheet.png
+RENDER: 1 views -> experiments/round2/build/saab900/after/fleet/shaded_sheet.png
+{"vehicle": "saab900", "fixed_focus": [[-1.09, -2.6, 0], [1.09, 2.6, 1.8]], "side_orthographic": true, "mode": "clay", "fleet_renderer": "Cycles16, common fixed orthographic camera and light rig"}
+
+Blender quit
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).

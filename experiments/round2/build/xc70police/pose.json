@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "actual_glb": "xc70-police.glb",
+  "body_mounted_meshes": 50,
+  "body_motion_carries_fixtures": true,
+  "wheel_geometry_independent_of_body_bob": true,
+  "steering_carries_rim_and_spokes": true,
+  "wheel_spin_carries_rim_and_spokes": true,
+  "wheel_hub_position_preserved": true,
+  "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim."
+}

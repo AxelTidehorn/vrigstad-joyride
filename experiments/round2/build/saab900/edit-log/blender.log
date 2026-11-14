@@ -1,0 +1,49 @@
+Info: Saved "model.blend"
+GEOMETRY CHECK: 0 errors, 0 warnings
+  overall size (m): (1.750, 4.680, 1.420)  parts: 54  contact tol: 0.0052
+  [INFO] badge_front: 2 n-gons (matters only before subdivision).
+  [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-bumper_front embedded 0.030 m; body-bumper_rear embedded 0.034 m; body-trim_side embedded 0.048 m; body-mirror_housing embedded 0.015 m; body-trim_side.001 embedded 0.048 m; body-mirror_housing.001 embedded 0.015 m; body-trim_hatch_spoiler flush; body-trim_front_airdam embedded 0.027 m; body-lamp_head embedded 0.035 m; body-lamp_indicator embedded 0.037 m; body-lamp_tail embedded 0.028 m; body-lamp_tail_indicator embedded 0.040 m; body-lamp_head.001 embedded 0.035 m; body-lamp_indicator.001 embedded 0.037 m; body-lamp_tail.001 embedded 0.028 m; body-lamp_tail_indicator.001 embedded 0.040 m; body-trim_handle embedded 0.015 m; body-trim_handle.001 embedded 0.015 m; body-grille embedded 0.023 m; body-plate_rear flush; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; glass_envelope[island 0]-trim_hatch_spoiler flush; glass_envelope[island 3]-mirror_housing.001 flush; glass_envelope[island 4]-mirror_housing flush; bumper_front-trim_front_airdam flush; lamp_head-lamp_head_divider flush; lamp_tail-lamp_tail_indicator embedded 0.016 m; lamp_head.001-lamp_head_divider.001 flush; lamp_tail.001-lamp_tail_indicator.001 embedded 0.016 m; grille-grille_bars[island 0] flush; grille-grille_bars[island 1] flush; grille-grille_bars[island 2] flush; grille-badge_front flush; grille-grille_frame flush; grille_bars[island 1]-badge_front flush; grille_bars[island 2]-badge_front flush; wheel_fl-trim_rim_fl embedded 0.016 m; wheel_fl-trim_spokes_fl[island 0] flush; wheel_fl-trim_spokes_fl[island 1] flush; wheel_fl-trim_spokes_fl[island 2] flush; trim_rim_fl-trim_spokes_fl[island 0] flush; trim_rim_fl-trim_spokes_fl[island 1] flush; trim_rim_fl-trim_spokes_fl[island 2] flush; wheel_fr-trim_rim_fr embedded 0.016 m; wheel_fr-trim_spokes_fr[island 0] flush; wheel_fr-trim_spokes_fr[island 1] flush; wheel_fr-trim_spokes_fr[island 2] flush; trim_rim_fr-trim_spokes_fr[island 0] flush; trim_rim_fr-trim_spokes_fr[island 1] flush; trim_rim_fr-trim_spokes_fr[island 2] flush; wheel_rl-trim_rim_rl embedded 0.016 m; wheel_rl-trim_spokes_rl[island 0] flush; wheel_rl-trim_spokes_rl[island 1] flush; wheel_rl-trim_spokes_rl[island 2] flush; trim_rim_rl-trim_spokes_rl[island 0] flush; trim_rim_rl-trim_spokes_rl[island 1] flush; trim_rim_rl-trim_spokes_rl[island 2] flush; wheel_rr-trim_rim_rr embedded 0.016 m; wheel_rr-trim_spokes_rr[island 0] flush; wheel_rr-trim_spokes_rr[island 1] flush; wheel_rr-trim_spokes_rr[island 2] flush; trim_rim_rr-trim_spokes_rr[island 0] flush; trim_rim_rr-trim_spokes_rr[island 1] flush; trim_rim_rr-trim_spokes_rr[island 2] flush
+  objects:
+    body: dims (1.690, 4.480, 1.185) verts 1948 faces 3892 islands 1
+    glass_envelope: dims (1.554, 2.830, 0.484) verts 280 faces 536 islands 6
+    bumper_front: dims (1.700, 0.410, 0.145) verts 160 faces 316 islands 1
+    bumper_rear: dims (1.700, 0.410, 0.145) verts 160 faces 316 islands 1
+    trim_side: dims (0.263, 3.922, 0.012) verts 152 faces 300 islands 1
+    mirror_housing: dims (0.130, 0.230, 0.105) verts 24 faces 44 islands 1
+    trim_side.001: dims (0.263, 3.922, 0.012) verts 152 faces 300 islands 1
+    mirror_housing.001: dims (0.130, 0.230, 0.105) verts 24 faces 44 islands 1
+    trim_hatch_spoiler: dims (1.425, 0.134, 0.055) verts 68 faces 132 islands 1
+    trim_front_airdam: dims (1.337, 0.087, 0.072) verts 80 faces 78 islands 1
+    lamp_head: dims (0.350, 0.050, 0.175) verts 8 faces 12 islands 1
+    lamp_indicator: dims (0.110, 0.060, 0.100) verts 24 faces 44 islands 1
+    lamp_tail: dims (0.285, 0.045, 0.190) verts 24 faces 44 islands 1
+    lamp_tail_indicator: dims (0.100, 0.050, 0.090) verts 24 faces 44 islands 1
+    lamp_head.001: dims (0.350, 0.050, 0.175) verts 8 faces 12 islands 1
+    lamp_indicator.001: dims (0.110, 0.060, 0.100) verts 24 faces 44 islands 1
+    lamp_tail.001: dims (0.285, 0.045, 0.190) verts 24 faces 44 islands 1
+    lamp_tail_indicator.001: dims (0.100, 0.050, 0.090) verts 24 faces 44 islands 1
+    lamp_head_divider: dims (0.008, 0.010, 0.115) verts 24 faces 26 islands 1
+    lamp_head_divider.001: dims (0.008, 0.010, 0.115) verts 24 faces 26 islands 1
+    trim_handle: dims (0.028, 0.150, 0.035) verts 24 faces 44 islands 1
+    trim_handle.001: dims (0.028, 0.150, 0.035) verts 24 faces 44 islands 1
+    grille: dims (0.520, 0.045, 0.165) verts 24 faces 44 islands 1
+    grille_bars: dims (0.490, 0.018, 0.094) verts 72 faces 132 islands 3
+    plate_rear: dims (0.350, 0.030, 0.095) verts 24 faces 44 islands 1
+    badge_front: dims (0.046, 0.046, 0.008) verts 24 faces 14 islands 1
+    grille_frame: dims (0.535, 0.018, 0.175) verts 16 faces 32 islands 1
+    wheel_fl: dims (0.268, 0.610, 0.610) verts 242 faces 480 islands 1
+    trim_rim_fl: dims (0.412, 0.412, 0.020) verts 48 faces 92 islands 1
+    trim_spokes_fl: dims (0.022, 0.254, 0.292) verts 72 faces 132 islands 3
+    wheel_fr: dims (0.268, 0.610, 0.610) verts 242 faces 480 islands 1
+    trim_rim_fr: dims (0.412, 0.412, 0.020) verts 48 faces 92 islands 1
+    trim_spokes_fr: dims (0.022, 0.254, 0.292) verts 72 faces 132 islands 3
+    wheel_rl: dims (0.268, 0.610, 0.610) verts 242 faces 480 islands 1
+    trim_rim_rl: dims (0.412, 0.412, 0.020) verts 48 faces 92 islands 1
+    trim_spokes_rl: dims (0.022, 0.254, 0.292) verts 72 faces 132 islands 3
+    wheel_rr: dims (0.268, 0.610, 0.610) verts 242 faces 480 islands 1
+    trim_rim_rr: dims (0.412, 0.412, 0.020) verts 48 faces 92 islands 1
+    trim_spokes_rr: dims (0.022, 0.254, 0.292) verts 72 faces 132 islands 3
+Blender 4.3.2
+Read blend: "/workspace/work/round2-before/saab900.blend"
+
+Blender quit

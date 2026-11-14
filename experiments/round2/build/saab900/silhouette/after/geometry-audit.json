@@ -1,0 +1,212 @@
+{
+  "nonmanifold_edges": 0,
+  "inconsistent_edges": 0,
+  "degenerate_faces": 0,
+  "signed_volume_m3": 6.09524575408287,
+  "self_intersection_candidates": [],
+  "triangles": 9612,
+  "dimensions_m": [
+    1.75,
+    4.679958820343018,
+    1.4199999868869781
+  ],
+  "component_sha256": {
+    "bumper_front": "a616d391c7ac2adfec94bbd1876a8ffc4b444d07d0c49cc98515fd8a293210c1",
+    "bumper_rear": "84d6f7879230c5747887acc771d100ffddd5513dfdb129abc35ef9807c1ff7c1",
+    "trim_side": "211d7d4d5d703e966afba837803c86ea61cfc82062ea73fd0c96e64d26f6f40b",
+    "mirror_housing": "1bb5877ffd5ebf70ef4b2fbf368fd12ad892c7c13d2b78a83d569b95d6d13ebb",
+    "trim_side.001": "26c7fc47f12522286154f12530d3a2e0c424254193939cd3f14059a302249529",
+    "mirror_housing.001": "779032d7ac6df5c4ae99d967ed23c7d1e80742bc9c98a83914518b28ebe61f41",
+    "trim_hatch_spoiler": "1d38163eb68b4e67f72fec83b0938adc339b20294a7a5325395d3bd6a4ede3af",
+    "trim_front_airdam": "6d13e91e0c2a4eb70bbf1ac1ac59382fba7dcaa7711d1723af39ede812e8d6f5",
+    "lamp_head": "159d1174746c952666e4394b22328ed6978090c242465cb84e0c55faecfa5ce5",
+    "lamp_indicator": "7047b53587aeefc2522aebf8857ebe64bc82e6a1b4481c9b0019bf5ad387c151",
+    "lamp_tail": "b7c372048914bef6811ccb78a9c4d64b86e2b175b045f88e00d12a75e99bfd7c",
+    "lamp_tail_indicator": "ebbaa516b01c1900c57b8cd497a4b40de1b6626cdca80babb4237fa31cb5d14c",
+    "lamp_head.001": "76d2d50fcf602fdc56c57b3715f893e3b67bd55bd4ab10a082ec048cf2da9b35",
+    "lamp_indicator.001": "c17896bd1101075f610f430cc32b2020b3e44c9fd4f7b83562f521a3e61e6b8a",
+    "lamp_tail.001": "350b02af3486951fb146c7db77070bc2a5e01e91d2f6e7870d5ade021802ca16",
+    "lamp_tail_indicator.001": "809b7ecc077243e6c2b36bbfc3cdb62dfc6c9433cbf7d3b3112fab0cc1b7c2fb",
+    "lamp_head_divider": "5f8e822543e941363a82d97b9412911f503ea90089da80a88d79eab468c28ac1",
+    "lamp_head_divider.001": "a0dd424d19401762cb4b6939b532a231d52fd9a08b0797fd46a6defb01e4ce4c",
+    "trim_handle": "0e809beae98bd1fb625b6a9301ca37fa721fc22c3c0f1b642ca66baaf17019db",
+    "trim_handle.001": "6784068554061848bbd840fe29442b58b6f05a1b03dedd69017cc26638b4896b",
+    "grille": "30f3654f2a61024f77aefdf244522f57ad61bb364476f3a418e173410afe0063",
+    "grille_bars": "109f79fcd31bbb176e208df4572601494de225dd88d13997f38b165ca2292e33",
+    "plate_rear": "33d12fae01c721876493e4ca60ef7283e77786b83bcb0b770e8bf8b1d54c94b1",
+    "badge_front": "9540ab9ab31aae9ece90b5a6ad0bdadac59ea4f76c8b8f176e6a0f06c7a0c3b5",
+    "grille_frame": "5c91e940552a35c55da8bf253f77d97cc29882a2df529ccc18921cb7627f9d5d",
+    "wheel_fl": "f9ac42429f81b607e816ee958d6570b8f77582d1682ba8eb73e0603db710e4f2",
+    "trim_rim_fl": "11e8eea76777204af610a4b97a60835152a01a5a451014d7c774fdfd8f0ae38d",
+    "trim_spokes_fl": "36202d470fc4cd43e141a4fe6d1d5bd312563695fcc6ec058a667d52ae3b05cb",
+    "wheel_fr": "8ea0a87b898385890a6aff46eb6a10a6bc2720556581f2b09b8c603337d0b9b2",
+    "trim_rim_fr": "7fc09fbc4ebfc9282c85bfc697b6735062ee012b7078fa8ae20a5c97a1a02aad",
+    "trim_spokes_fr": "f8f8ee7cd6ddd38fc8e8a62b972f249d33b7ef6eb301eaa59c512acf73022ad6",
+    "wheel_rl": "5c70b3e55b90e9d0ab684e6c615967f37cfc1fc32b838045f049477413440f59",
+    "trim_rim_rl": "99184e55928fbf1aa33d9315a635aa45efab5cd24c958b64602adc2d7eb4c9da",
+    "trim_spokes_rl": "02599a0ded587c56bbd860591074d8ddfe7311be42ac5ae1f4740badc8be73b9",
+    "wheel_rr": "81488b6abff3d49a768c5c58d19a3971495d738b5c9778265e0cce335f42dc9d",
+    "trim_rim_rr": "b187ab0b3fc0ea3908f0a4a1542e5bcaabcf555ab52754d3ffa23f9cf31a3fe3",
+    "trim_spokes_rr": "db884611892078a5fcce95d5f67ab333f7ac7163a28da4ecfef7fb3883a40100"
+  },
+  "centreline_y_z_m": [
+    [
+      -2.24,
+      0.78
+    ],
+    [
+      -2.18,
+      0.814286
+    ],
+    [
+      -2.1,
+      0.86
+    ],
+    [
+      -1.94,
+      0.94
+    ],
+    [
+      -1.925341,
+      0.936815
+    ],
+    [
+      -1.696231,
+      1.041827
+    ],
+    [
+      -1.416195,
+      1.171843
+    ],
+    [
+      -1.27618,
+      1.237475
+    ],
+    [
+      -1.17618,
+      1.28435
+    ],
+    [
+      -1.096076,
+      1.321899
+    ],
+    [
+      -0.956708,
+      1.391584
+    ],
+    [
+      -0.95,
+      1.405
+    ],
+    [
+      -0.75,
+      1.416
+    ],
+    [
+      -0.43,
+      1.4192
+    ],
+    [
+      -0.37,
+      1.4198
+    ],
+    [
+      -0.35,
+      1.42
+    ],
+    [
+      0.1,
+      1.42
+    ],
+    [
+      0.32,
+      1.412
+    ],
+    [
+      0.505,
+      1.385
+    ],
+    [
+      0.509201,
+      1.3706
+    ],
+    [
+      0.659529,
+      1.257852
+    ],
+    [
+      0.819313,
+      1.133021
+    ],
+    [
+      0.878651,
+      1.082583
+    ],
+    [
+      0.899224,
+      1.05816
+    ],
+    [
+      0.913889,
+      1.055
+    ],
+    [
+      0.935556,
+      1.02
+    ],
+    [
+      0.95,
+      1.01
+    ],
+    [
+      1.0,
+      1.01
+    ],
+    [
+      1.02,
+      1.006
+    ],
+    [
+      1.3,
+      0.94
+    ],
+    [
+      1.75,
+      0.845
+    ],
+    [
+      2.1,
+      0.775
+    ],
+    [
+      2.18,
+      0.755
+    ],
+    [
+      2.24,
+      0.74
+    ]
+  ],
+  "wheel_centres_world_m": {
+    "wheel_fl": [
+      -0.7149999737739563,
+      1.2599999904632568,
+      0.3050000071525574
+    ],
+    "wheel_fr": [
+      0.7149999737739563,
+      1.2599999904632568,
+      0.3050000071525574
+    ],
+    "wheel_rl": [
+      -0.7149999737739563,
+      -1.2569999694824219,
+      0.3050000071525574
+    ],
+    "wheel_rr": [
+      0.7149999737739563,
+      -1.2569999694824219,
+      0.3050000071525574
+    ]
+  }
+}

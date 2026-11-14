@@ -1,0 +1,440 @@
+{
+  "vehicle": "Saab 900 Classic Turbo 16, three-door, circa 1988",
+  "dimensions": {
+    "wheelbase_m": {
+      "value": 2.517,
+      "status": "documented",
+      "source": "Saab workshop Technical Data 010-1"
+    },
+    "length_m": {
+      "value": 4.687,
+      "status": "documented hatchback, market/bumper dependent; model preserved at 4.680"
+    },
+    "width_m": {
+      "value": 1.69,
+      "status": "documented body excluding mirrors"
+    },
+    "height_m": {
+      "value": 1.419,
+      "status": "documented unloaded nominal"
+    },
+    "front_overhang_m": {
+      "value": 1.08,
+      "status": "estimate from illustration; facelift uncertain"
+    },
+    "rear_overhang_m": {
+      "value": 1.09,
+      "status": "estimate from illustration; facelift uncertain"
+    },
+    "wheel_diameter_m": {
+      "value": 0.61,
+      "status": "existing model estimate; tyre variant not established"
+    }
+  },
+  "reference": {
+    "image": "../saab900/silhouette/reference.png",
+    "source": "Saab-Scania AB, Danish Saab 900/900i brochure, copyright 1985, rear cover Saab 900 three-door illustration",
+    "url": "https://motorarkiv.dk/brochurer/SAAB_900_og_900i_1985.pdf",
+    "variant": "Classic three-door combi coupe, pre-facelift 1986 range; proxy for circa-1988 T16 sheetmetal, NOT exact facelift front",
+    "orthographic": false,
+    "metric_reliable": false,
+    "front_wheel": [
+      318,
+      405
+    ],
+    "rear_wheel": [
+      941,
+      404
+    ],
+    "ground": [
+      941,
+      488
+    ],
+    "mask": {
+      "mode": "manual_polygon",
+      "reviewed": true,
+      "polygon": [
+        [
+          98,
+          311
+        ],
+        [
+          110,
+          298
+        ],
+        [
+          180,
+          282
+        ],
+        [
+          275,
+          269
+        ],
+        [
+          378,
+          257
+        ],
+        [
+          399,
+          248
+        ],
+        [
+          487,
+          170
+        ],
+        [
+          511,
+          145
+        ],
+        [
+          560,
+          136
+        ],
+        [
+          700,
+          131
+        ],
+        [
+          865,
+          135
+        ],
+        [
+          886,
+          154
+        ],
+        [
+          1030,
+          222
+        ],
+        [
+          1155,
+          272
+        ],
+        [
+          1197,
+          291
+        ],
+        [
+          1200,
+          355
+        ],
+        [
+          1150,
+          407
+        ],
+        [
+          1028,
+          414
+        ],
+        [
+          1015,
+          448
+        ],
+        [
+          995,
+          470
+        ],
+        [
+          967,
+          483
+        ],
+        [
+          936,
+          488
+        ],
+        [
+          904,
+          478
+        ],
+        [
+          878,
+          457
+        ],
+        [
+          860,
+          430
+        ],
+        [
+          850,
+          412
+        ],
+        [
+          405,
+          414
+        ],
+        [
+          398,
+          445
+        ],
+        [
+          376,
+          470
+        ],
+        [
+          348,
+          484
+        ],
+        [
+          318,
+          488
+        ],
+        [
+          285,
+          480
+        ],
+        [
+          260,
+          459
+        ],
+        [
+          244,
+          434
+        ],
+        [
+          235,
+          414
+        ],
+        [
+          179,
+          420
+        ],
+        [
+          97,
+          431
+        ],
+        [
+          98,
+          311
+        ]
+      ]
+    },
+    "points": {
+      "hood_rear": [
+        393,
+        255
+      ],
+      "windscreen_base": [
+        407,
+        250
+      ],
+      "windscreen_top": [
+        505,
+        160
+      ]
+    },
+    "curves": {
+      "hood": [
+        [
+          112,
+          306
+        ],
+        [
+          180,
+          283
+        ],
+        [
+          275,
+          269
+        ],
+        [
+          378,
+          257
+        ],
+        [
+          393,
+          255
+        ]
+      ],
+      "windscreen": [
+        [
+          407,
+          250
+        ],
+        [
+          505,
+          160
+        ]
+      ],
+      "cowl": [
+        [
+          393,
+          255
+        ],
+        [
+          407,
+          250
+        ]
+      ],
+      "hood_cowl_windscreen": [
+        [
+          112,
+          306
+        ],
+        [
+          393,
+          255
+        ],
+        [
+          407,
+          250
+        ],
+        [
+          505,
+          160
+        ]
+      ],
+      "front_wheel_arch": [
+        [
+          229,
+          393
+        ],
+        [
+          242,
+          350
+        ],
+        [
+          280,
+          318
+        ],
+        [
+          318,
+          309
+        ],
+        [
+          356,
+          318
+        ],
+        [
+          388,
+          350
+        ],
+        [
+          405,
+          393
+        ]
+      ]
+    }
+  },
+  "mask_scope": "Main painted hull and tyre silhouette only. Excludes mirrors, bumpers protrusions, spoiler and tiny underbody detail. Manual trace fills arches where tyres occupy the side projection; no ground shadow.",
+  "uncertainties": [
+    "Illustration is a small stylized manufacturer drawing, not a dimensioned orthographic master.",
+    "Pre-facelift body proxy: front bumper/nose and T16 trim differ. Do not certify exact 1988 geometry or absolute mm error.",
+    "Manual trace about 2-5 pixels uncertain, plus illustration distortion. Roof/rear preserved rather than optimized to this proxy."
+  ],
+  "regions": {
+    "hood": [
+      2.25,
+      3.4,
+      0.65,
+      1.12
+    ],
+    "windscreen": [
+      1.5,
+      2.32,
+      0.9,
+      1.45
+    ],
+    "roof": [
+      0.2,
+      1.85,
+      1.25,
+      1.52
+    ],
+    "rear": [
+      -1.1,
+      0.2,
+      0.55,
+      1.43
+    ],
+    "wheel_arches": [
+      -0.4,
+      2.9,
+      0.15,
+      0.75
+    ],
+    "underbody": [
+      -1.1,
+      3.5,
+      0,
+      0.45
+    ]
+  },
+  "blender": {
+    "body_object": "body",
+    "front_wheel_world": [
+      0,
+      1.26,
+      0.305
+    ],
+    "rear_wheel_world": [
+      0,
+      -1.257,
+      0.305
+    ],
+    "quality_focus": [
+      [
+        -0.9,
+        -2.35,
+        0
+      ],
+      [
+        0.9,
+        2.35,
+        1.5
+      ]
+    ],
+    "cowl_focus": [
+      [
+        -0.86,
+        0.35,
+        0.75
+      ],
+      [
+        0.86,
+        1.45,
+        1.42
+      ]
+    ],
+    "point_stations_y": {
+      "hood_rear": 1.0,
+      "windscreen_base": 0.93,
+      "windscreen_top": 0.505
+    },
+    "curve_stations_y": {
+      "hood": [
+        2.1,
+        1.75,
+        1.3,
+        1.02,
+        1.0
+      ],
+      "cowl": [
+        1.0,
+        0.95
+      ],
+      "windscreen": [
+        0.93,
+        0.825,
+        0.665,
+        0.505
+      ],
+      "hood_cowl_windscreen": [
+        2.1,
+        1.3,
+        1.0,
+        0.95,
+        0.93,
+        0.825,
+        0.665,
+        0.505
+      ]
+    },
+    "arch_curves": {
+      "front_wheel_arch": {
+        "wheel_object": "wheel_fr",
+        "radius_m": 0.35,
+        "minimum_abs_x": 0.79
+      }
+    }
+  }
+}
