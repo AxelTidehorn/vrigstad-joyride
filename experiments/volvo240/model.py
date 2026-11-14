@@ -239,3 +239,9 @@ for o in [o for o in bpy.context.scene.objects if o.type=='MESH']:
 
 
 for f in glazing.data.polygons:f.use_smooth=False
+
+# Apply the same bounded wheel-well edit used on the existing Blender master.
+import sys
+sys.path.insert(0,str(HERE))
+from refine_forms import refine
+refine(body,P)

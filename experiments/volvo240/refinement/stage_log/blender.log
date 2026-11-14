@@ -1,67 +1,67 @@
 Blender 4.3.2
 Read blend: "/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/model.blend"
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/clay_front.png'
-Time: 00:00.71 (Saving: 00:00.17)
+Time: 00:00.71 (Saving: 00:00.15)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/clay_side.png'
-Time: 00:00.29 (Saving: 00:00.04)
+Time: 00:00.25 (Saving: 00:00.04)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/clay_rear.png'
-Time: 00:00.37 (Saving: 00:00.04)
+Time: 00:00.40 (Saving: 00:00.05)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/clay_top.png'
 Time: 00:00.28 (Saving: 00:00.04)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/clay_three_quarter.png'
-Time: 00:00.28 (Saving: 00:00.04)
+Time: 00:00.28 (Saving: 00:00.06)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/clay_three_quarter_left.png'
-Time: 00:00.26 (Saving: 00:00.04)
+Time: 00:00.29 (Saving: 00:00.06)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/clay_three_quarter_rear.png'
-Time: 00:00.33 (Saving: 00:00.07)
+Time: 00:00.29 (Saving: 00:00.04)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/clay_low_front.png'
-Time: 00:00.30 (Saving: 00:00.04)
+Time: 00:00.28 (Saving: 00:00.04)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/body/clay_front.png'
-Time: 00:00.36 (Saving: 00:00.07)
+Time: 00:00.38 (Saving: 00:00.05)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/body/clay_side.png'
-Time: 00:00.22 (Saving: 00:00.04)
+Time: 00:00.25 (Saving: 00:00.05)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/body/clay_rear.png'
-Time: 00:00.35 (Saving: 00:00.04)
-
-Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/body/clay_three_quarter.png'
-Time: 00:00.28 (Saving: 00:00.05)
-
-Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/glass/clay_front.png'
 Time: 00:00.39 (Saving: 00:00.06)
 
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/body/clay_three_quarter.png'
+Time: 00:00.29 (Saving: 00:00.07)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/glass/clay_front.png'
+Time: 00:00.35 (Saving: 00:00.07)
+
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/glass/clay_side.png'
-Time: 00:00.28 (Saving: 00:00.07)
+Time: 00:00.22 (Saving: 00:00.04)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/glass/clay_rear.png'
-Time: 00:00.31 (Saving: 00:00.04)
+Time: 00:00.43 (Saving: 00:00.06)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/glass/clay_three_quarter.png'
-Time: 00:00.27 (Saving: 00:00.04)
+Time: 00:00.30 (Saving: 00:00.04)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/complete/clay_front.png'
-Time: 00:00.42 (Saving: 00:00.07)
+Time: 00:00.53 (Saving: 00:00.07)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/complete/clay_side.png'
-Time: 00:00.27 (Saving: 00:00.06)
+Time: 00:00.29 (Saving: 00:00.04)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/complete/clay_rear.png'
-Time: 00:00.35 (Saving: 00:00.05)
+Time: 00:00.39 (Saving: 00:00.04)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/volvo240/refinement/complete/clay_three_quarter.png'
-Time: 00:00.25 (Saving: 00:00.04)
+Time: 00:00.29 (Saving: 00:00.04)
 
 RENDER: 8 views -> /workspace/work/vrigstad-joyride/experiments/volvo240/refinement/clay_sheet.png
-SUPPLEMENTAL {"body_vertices": 766, "body_triangles": 1528, "boundary_or_nonmanifold_edges": 0, "inconsistent_winding_edges": 0, "degenerate_triangles": 0, "signed_volume_m3": 6.247121387421, "nonadjacent_bvh_overlap_pairs": 0, "overlap_pairs": [], "max_mirror_vertex_distance_m": 0.12153255939483643, "caveat": "BVH screening is not an exhaustive solid/solid self-intersection proof."}
+SUPPLEMENTAL {"body_vertices": 933, "body_triangles": 1862, "boundary_or_nonmanifold_edges": 0, "inconsistent_winding_edges": 0, "degenerate_triangles": 0, "signed_volume_m3": 6.256958998262019, "nonadjacent_bvh_overlap_pairs": 0, "overlap_pairs": [], "max_mirror_vertex_distance_m": 0.1260455846786499, "caveat": "BVH screening is not an exhaustive solid/solid self-intersection proof."}
 RENDER: 4 views -> /workspace/work/vrigstad-joyride/experiments/volvo240/refinement/body/clay_sheet.png
 RENDER: 4 views -> /workspace/work/vrigstad-joyride/experiments/volvo240/refinement/glass/clay_sheet.png
 RENDER: 4 views -> /workspace/work/vrigstad-joyride/experiments/volvo240/refinement/complete/clay_sheet.png

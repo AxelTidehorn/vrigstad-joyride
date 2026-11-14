@@ -1,8 +1,9 @@
+SCRIPT OK
 GEOMETRY CHECK: 0 errors, 0 warnings
   overall size (m): (1.830, 4.820, 1.433)  parts: 32  contact tol: 0.0054
   [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-bumper_front embedded 0.084 m; body-bumper_rear embedded 0.090 m; body-trim_side_-1 embedded 0.011 m; body-trim_side_1 embedded 0.011 m; body-trim_handle embedded 0.012 m; body-trim_handle.001 embedded 0.012 m; body-mirror_housing flush; body-trim_handle.002 embedded 0.012 m; body-trim_handle.003 embedded 0.012 m; body-mirror_housing.001 flush; body-grille_front embedded 0.012 m; body-lamp_front_-1 embedded 0.015 m; body-lamp_rear_-1 embedded 0.015 m; body-lamp_front_1 embedded 0.015 m; body-lamp_rear_1 embedded 0.015 m; body-wheel_fl embedded 0.025 m; body-wheel_fr embedded 0.025 m; body-wheel_rl embedded 0.025 m; body-wheel_rr embedded 0.025 m; glass_envelope[island 5]-mirror_housing.001 flush; glass_envelope[island 6]-mirror_housing flush; wheel_fl-trim_rim_wheel_fl flush; wheel_fr-trim_rim_wheel_fr flush; wheel_rl-trim_rim_wheel_rl flush; wheel_rr-trim_rim_wheel_rr flush
   objects:
-    body: dims (1.710, 4.620, 1.160) verts 766 faces 1528 islands 1
+    body: dims (1.710, 4.620, 1.160) verts 933 faces 1862 islands 1
     glass_envelope: dims (1.610, 2.213, 0.489) verts 148 faces 264 islands 8
     bumper_front: dims (1.730, 0.450, 0.145) verts 160 faces 316 islands 1
     bumper_rear: dims (1.730, 0.450, 0.145) verts 160 faces 316 islands 1

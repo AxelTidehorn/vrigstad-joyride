@@ -13,5 +13,7 @@
   "physical_ipad_safari_verified": false,
   "browser_gpu_suite_executed": false,
   "deployment_capture_reviewed": "First publication capture showed the loading scene; startup was hardened before the second publication.",
-  "notes": "PNG sheets and editable checkpoint files are available in-page. GLB geometry rejection remains visible."
+  "notes": "Original deployment/checkpoint evidence; current geometry status is in refinement/assessment.md and refinement/glb_geometry.json.",
+  "historical_checkpoint": "iter_02; original hosting metadata below",
+  "current_review_path": "/experiments/volvo240/refinement/arch-review/index.html"
 }

@@ -1,36 +1,50 @@
-# Volvo 240 refinement — visual approval pending
+# Volvo 240 — defined wheel arches, visual approval pending
 
-Only one original Blender vehicle exists: the parametric Volvo 240. The four
-Kenney traffic GLBs are imported candidates and were not remodeled. Continued
-editing the existing model.py and parameters.json; preserved all original iter_00
-through iter_02 files and references. No game source or current traffic asset changed.
+Continued directly from the latest `refinement/model.blend`, frozen from parent
+commit `f064b57`, rather than the original clay checkpoints or game geometry.
+All Blender editing, rendering, validation and export ran headlessly in Codex.
 
-Preserved wheelbase, track, cabin/hood proportions and real dimension envelope.
-Repaired re-entrant sheet-metal end sections and separated the bumper envelope
-from the painted body. Added BODY, GLASS, PLASTIC & RUBBER, DETAILS and WHEELS
-collections while retaining pipeline-compatible body/wheel names. Glass is an
-opaque stylized seated envelope over a closed body backing, not a hollow interior
-or manufactured sheet-metal thickness reconstruction. Bumpers are continuous
-closed sweeps with wraparound corners; no overlapping body boxes. Trim, basic
-lamp/grille masses, mirrors, handles and low-sided wheel discs are separate.
-Wheel origins now lie at their hubs.
+The existing circular well boundaries now follow short flat crowns, angular
+shoulders and straighter lower legs. Front crown is 355 mm above the axle, rear
+350 mm, compared with the original 365 mm circular radius. Polygon half-width is
+355 mm and flat crown half-span 85 mm. These are documented stylized choices,
+not verified factory wheel-arch dimensions. Existing reference photographs remain
+in `references/` with attribution in `references.md`; no new image source is used.
 
-Body topology and BVH screening show no boundary, winding, degenerate-face or
-nonadjacent overlap findings. The existing unmodified GLB validator passes.
-No exhaustive all-component intersection proof is claimed. Intended mounted
-component/body overlaps remain. Nearest mirrored-vertex distance is sensitive
-to asymmetric Boolean triangulation and is not a surface-symmetry measurement.
+312 existing local body vertices move; redundant coplanar circular subdivisions
+are dissolved and connected support loops are added at X ±0.84 m inside the wells.
+These create a short, controlled reveal. No detached fender lip, floating panel,
+replacement body, general bevel or subdivision is introduced. One normal per
+shared vertex, weighted by exterior corner angles, controls the side-panel
+shading while retaining the existing validator's indexed watertight GLB contract.
+Normals are supplementary: the opening outline and support geometry actually change.
 
-Three fixed-framing sheets show body only, body+glass and complete vehicle:
-front | side | rear | three-quarter. Opened the sheets and compared with the
-existing Vauxford side/front/rear reference photographs. Long hood, upright cabin,
-narrow wheels, broad bumpers and simple rectangular lighting improve recognition.
-Remaining shortcomings: broad/soft shoulder shading, angular roof corners,
-rear arches still circular, simplistic mirror housings and grille, and glazing
-edge/shading treatment needs human review. Body end forms remain simplified.
-Do not add further cosmetics before deciding on these primary forms.
+All 24 separate components retain identical coordinates, topology and transforms:
+glass, wheels, rims, bumpers, lamps, mirrors, handles, grille and side trim. All
+454 protected body vertices outside the local well region remain. Body bounds
+are exactly unchanged: 1710 mm steel width, 4620 mm painted-shell length and
+270–1430 mm body Z range. Overall fitted length stays 4820 mm; wheelbase 2650 mm,
+track and wheel pivots remain unchanged. Materials retain the established matte style.
 
-The GLB is review-only, not a final approved game asset. Human visual approval
-and actual iPad Safari hardware testing remain pending. Existing raw topology
-checks passing do not establish Volvo identity. PNGs provide device-independent
-comparison. All Blender generation, rendering and checking ran in Codex.
+Final side, front-three-quarter, rear-three-quarter and complete/bare-body arch
+close-ups were rendered from identical before/after cameras. The new opening reads
+more deliberately polygonal and the side is less inflated around it. Roof and
+hood remain the established 240 architecture. Remaining simplifications: opaque
+glass and its existing edge artifacts, generic grille/mirror masses, simple wheel
+discs and approximate nose/tail forms. No new cosmetic parts were added.
+
+Verification: Blender Modeler 0 errors / 0 warnings; connected body with 0
+nonmanifold edges, 0 inconsistent edges, 0 degenerates, positive volume and 0
+nonadjacent BVH self-intersection candidates. Body has 1862 triangles; entire GLB
+6162 triangles / 25 mesh objects, versus 5828 before (+334). Unchanged GLB
+validator, actual Blender reimport and existing Three r128 loader pass. Source
+regeneration reproduces positions/transforms for all 25 meshes. BVH is a screening
+check, not exhaustive all-component collision proof. Steering/suspension travel,
+physical iPad Safari performance and human appearance approval are not claimed.
+
+Canonical editable master and export names are preserved. Historical iter_00–02
+files are untouched; Git retains the preceding working master. No Saab, XC70,
+game physics, runtime source or installed vehicle asset was changed.
+
+Current same-camera comparisons and downloads:
+https://vrigstad-240-review-179ef06.plushpangolin8.chatgpt.site/refinement/
