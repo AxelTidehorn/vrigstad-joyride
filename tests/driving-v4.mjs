@@ -55,7 +55,15 @@ assert.ok(road.u-verge.u<1.8,'one wheel on grass should not produce a dramatic s
 const allGrass=newCar('rwd');allGrass.u=23;
 for(let i=0;i<120;i++)stepCar(allGrass,{throttle:.3},dt,{feel:'balanced',powertrain:'v4',surface:'asphalt',powerScale:1.2,hardCap:38,grassFraction:1});
 assert.ok(allGrass.u>18,'grass should not instantly erase momentum');
-const launch=simulate('rwd',18,{throttle:1},{powerScale:1.26,hardCap:38});
-console.log('Volvo 18s:',(launch.u*3.6).toFixed(1),'km/h','gear',launch.gear,'rpm',Math.round(launch.rpm));
-assert.ok(launch.u>27.78,'Volvo should eventually reach 100 km/h under continuous power');
+const launch=newCar('rwd');
+let zeroToHundred=null;
+for(let i=0;i<Math.round(25/dt);i++){
+  stepCar(launch,{throttle:1},dt,{feel:'balanced',powertrain:'v4',surface:'asphalt',
+    powerScale:1.26,hardCap:38});
+  if(zeroToHundred===null&&launch.u*3.6>=100)zeroToHundred=(i+1)*dt;
+}
+console.log('Volvo 0–100:',zeroToHundred===null?'not reached':zeroToHundred.toFixed(2)+' s',
+            '25s gear',launch.gear);
+assert.ok(zeroToHundred!==null&&zeroToHundred<17.5,
+  'Volvo 0–100 should be playable and measurable, without instant max speed');
 console.log('Driving V4: automatic gearboxes, launch, partial grass and speed continuity passed.');
