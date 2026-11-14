@@ -3636,8 +3636,11 @@ collide(player, 0.6); scene.add(player.mesh);
     for(let i=0;i<lineup.length;i++){
       const x=cx+(i-1.5)*spacing*sideX,z=cz+(i-1.5)*spacing*sideZ;
       const o={x,z};
-      if(Math.hypot(x-player.x,z-player.z)<3.7 || inWater(x,z) || collide(o,2.35) ||
-         Math.hypot(o.x-x,o.z-z)>.15 || nearestRoad(x,z).d>14 ||
+      const roadEdge=nearestRoad(x,z).d;
+      if(Math.hypot(x-player.x,z-player.z)<3.7 ||
+         Math.hypot(x+13,z-25.5)<4.2 || // Torget kiosk is added after the cars.
+         inWater(x,z) || collide(o,2.35) ||
+         Math.hypot(o.x-x,o.z-z)>.15 || roadEdge<.6 || roadEdge>14 ||
          cars.some(c=>c.mode!=='parked'&&Math.hypot(c.x-x,c.z-z)<5.7)){
         valid=false;break;
       }
