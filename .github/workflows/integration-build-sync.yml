@@ -2,7 +2,7 @@ name: Temporary V4 physics build sync
 on:
   push:
     branches: [contrib/oliver-r187-v4-powertrains]
-    paths: ['src/**', 'tools/**', 'package*.json', '.github/workflows/integration-build-sync.yml']
+    paths: ['src/**', 'tests/**', 'tools/**', 'package*.json', '.github/workflows/integration-build-sync.yml']
 permissions:
   contents: write
 jobs:
