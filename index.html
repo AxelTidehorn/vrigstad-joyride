@@ -2864,7 +2864,7 @@ function automaticForce(c,rawPedal,dt,spec){
   const converterBoost=mix(1.20,1,clamp(travel/8,0,1));
   // Stronger response up to ordinary road speeds; preserve the existing
   // top-speed taper instead of making cars sit on the hard speed limiter.
-  const midrangeBoost=1+.32*(1-clamp((travel-12)/23,0,1));
+  const midrangeBoost=1+.48*(1-clamp((travel-16)/18,0,1));
   let wheelForce=wheelTorque/p.radius*converterBoost*driveInput*midrangeBoost*clamp(1-.16*travel/25,.74,1);
   // Brief, visible but not violent power interruption during an automatic shift.
   if(c.shiftTime>0)wheelForce*=.33;
