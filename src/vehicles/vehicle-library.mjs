@@ -13,17 +13,17 @@ export const VEHICLES = Object.freeze({
 const COLORS={tyre:"#202426",glass:"#263c47",black:"#1a2224",silver:"#b1b8b6",rear:"#ac3432",amber:"#d99b48",lamp:"#dce0d8"};
 const rgb=h=>{const x=h.replace("#","");return [0,2,4].map(i=>parseInt(x.slice(i,i+2),16)/255)};
 class Builder{
- constructor(){this.position=[];this.normal=[];this.color=[];this.layer='body';this.layers=new Map()}
+ constructor(collectLayers=false){this.position=[];this.normal=[];this.color=[];this.layer='body';this.layers=collectLayers?new Map():null}
  setLayer(layer){this.layer=layer;return this}
 
  tri(a,b,c,color){
   let u=b.map((v,i)=>v-a[i]),v=c.map((x,i)=>x-a[i]);
   let n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]];
   const len=Math.hypot(...n);if(len<1e-8)return;n=n.map(x=>x/len);
-  const layer=this.layers.get(this.layer)||{positions:[],normals:[],colors:[]};
-  if(!this.layers.has(this.layer))this.layers.set(this.layer,layer);
   const tint=rgb(color);
-  for(const p of [a,b,c]){this.position.push(...p);this.normal.push(...n);this.color.push(...tint);layer.positions.push(...p);layer.normals.push(...n);layer.colors.push(...tint)}
+  let layer=null;
+  if(this.layers){layer=this.layers.get(this.layer)||{positions:[],normals:[],colors:[]};if(!this.layers.has(this.layer))this.layers.set(this.layer,layer)}
+  for(const p of [a,b,c]){this.position.push(...p);this.normal.push(...n);this.color.push(...tint);if(layer){layer.positions.push(...p);layer.normals.push(...n);layer.colors.push(...tint)}}
  }
  quad(a,b,c,d,color){this.tri(a,b,c,color);this.tri(a,c,d,color)}
  poly(pts,color){for(let i=1;i<pts.length-1;i++)this.tri(pts[0],pts[i],pts[i+1],color)}
@@ -372,7 +372,7 @@ function tractor(G,id){
 const cache=new WeakMap();
 export function buildVehicleGeometryData(id,options={}){
  if(!(id in VEHICLES))throw new RangeError("Unknown model: "+id);
- const G=new Builder();if(id==="volvo240")volvo(G,options.paint||VEHICLES[id].paint);
+ const G=new Builder(Boolean(options.includeLayers));if(id==="volvo240")volvo(G,options.paint||VEHICLES[id].paint);
  else if(id==="saab900")saab(G,options.paint||VEHICLES[id].paint);
  else if(id==="saab95Estate")saab95Estate(G,options.paint||VEHICLES[id].paint);
  else tractor(G,id);
