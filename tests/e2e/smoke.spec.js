@@ -32,6 +32,15 @@ test.describe('game (index.html)', () => {
     await expect(page.locator('#intro')).toBeVisible();
     await expectWebGL(page);
     expect(await state(page)).toMatchObject({ started: false, inCar: false });
+    // Verify actual Blender assets, not just GLB HTTP requests or fallback boxes.
+    await expect.poll(async () => (await state(page)).showcase.length,
+      { timeout: 30000 }).toBe(4);
+    await expect.poll(async () => (await state(page)).showcase.every(c => c.loaded && c.wheels === 4),
+      { timeout: 30000 }).toBe(true);
+    const lineup = (await state(page)).showcase;
+    expect(lineup.map(c => c.type)).toEqual(['volvo','saab','xc70','polis']);
+    for (let i=0;i<lineup.length;i++) for (let j=i+1;j<lineup.length;j++)
+      expect(Math.hypot(lineup[i].x-lineup[j].x,lineup[i].z-lineup[j].z)).toBeGreaterThan(5.2);
     await page.screenshot({ path: testInfo.outputPath('game-intro.png') });
     expect(errors).toEqual([]);
   });
@@ -54,7 +63,7 @@ test.describe('game (index.html)', () => {
     expect(errors).toEqual([]);
   });
 
-  test('W moves the player, and E next to the parked Volvo gets you in', async ({ page }, testInfo) => {
+  test('W moves the player, and E next to a parked showcase car gets you in', async ({ page }, testInfo) => {
     const errors = watchErrors(page);
     await page.goto('/index.html');
     await page.locator('#go').click();
@@ -66,23 +75,28 @@ test.describe('game (index.html)', () => {
     await page.keyboard.up('KeyW');
     await page.keyboard.press('KeyR');                            // back to the spawn point at Torget
 
-    // With the camera as Start leaves it, the parked Volvo is about 7 m to the player's right.
-    // Release D as soon as any car is in reach, so a slow runner can't walk past it between polls.
+    // The Torget showcase replaces the old fixed starter Volvo position.
+    // Release D as soon as a car is in reach so slow runners do not walk past it.
     await page.keyboard.down('KeyD');
     await expect.poll(async () => (await state(page)).near, { intervals: [50] }).not.toBeNull();
     await page.keyboard.up('KeyD');
-    // The parked Volvo, not AI traffic passing through Torget (that would be a carjack and a star).
+    // Verify a parked car is available, without hard-coding which showcase
+    // vehicle happens to be nearest after collision-aware placement.
     await expect.poll(async () => (await state(page)).near).toBe('parked');
-    await expect(page.locator('#prompt')).toHaveText('ESteal the Volvo 240');
+    const prompt = page.locator('#prompt');
+    await expect(prompt).toContainText('Steal the ');
+    const carName = (await prompt.textContent()).replace(/^E\s*Steal the\s*/, '').trim();
+    expect(carName).not.toBe('');
     await page.keyboard.press('KeyE');
 
     await expect(page.locator('#speed')).toBeVisible();
-    await expect(page.locator('#carname')).toHaveText('Volvo 240');
+    await expect(page.locator('#carname')).toHaveText(carName);
     const entered = await state(page);
-    expect(entered).toMatchObject({ inCar: true, car: 'volvo', drivetrain: 'v4' });
+    expect(entered).toMatchObject({ inCar: true, drivetrain: 'v4' });
+    expect(entered.car).toBeTruthy();
     // Stealing a parked car has an intentional 35% witness probability.
     expect([0, 1]).toContain(entered.stars);
-    await page.screenshot({ path: testInfo.outputPath('game-in-volvo.png') });
+    await page.screenshot({ path: testInfo.outputPath('game-in-showcase-car.png') });
 
     // Exercise the actual gameplay input path, not only the standalone engine.
     await expect.poll(async () => (await state(page)).gear).toBe('1');

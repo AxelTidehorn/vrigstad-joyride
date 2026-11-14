@@ -108,4 +108,25 @@ for(let i=0;i<300;i++)stepCar(drifting,{throttle:1,steer:.65},dt,
 assert.ok(drifting.u>9,'drift should retain usable forward speed');
 assert.ok(Math.abs(drifting.slip)<.75,'drift should avoid uncontrolled overrotation');
 
+// Regression: ordinary cornering must stay predictable and deliberate oversteer
+// must be recoverable without spinning away after the driver countersteers.
+function steeringScenario(type, input, seconds=4, initialSpeed=18){
+  const c=newCar(type,0,0,0,type==='rwd'?'volvo':type==='fwd'?'saab':null);
+  c.u=initialSpeed;
+  let maxSlip=0;
+  for(let i=0;i<seconds/dt;i++){
+    stepCar(c,input(i*dt),dt,{feel:'balanced',powertrain:'v4',surface:'asphalt',hardCap:38});
+    maxSlip=Math.max(maxSlip,Math.abs(c.slip));
+  }
+  return {car:c,maxSlip};
+}
+const everydayTurn=steeringScenario('rwd',()=>({throttle:.45,steer:.26}),3,16);
+assert.ok(everydayTurn.maxSlip<.10,'normal asphalt cornering should retain a planted feel');
+const recoveredDrift=steeringScenario('rwd',t=>({
+  throttle:t<1.5?.8:.35,steer:t<1.5?.55:t<2.6?-.45:0
+}));
+assert.ok(recoveredDrift.maxSlip<.14,'countersteer should limit excessive lateral slide');
+assert.ok(Math.abs(recoveredDrift.car.r)<.08,'the car should settle after the steering is released');
+assert.ok(recoveredDrift.car.u>12,'slip recovery should retain useful road speed');
+
 console.log('Driving V4: automatic gearboxes, calibrated launches, drift and terrain checks passed.');

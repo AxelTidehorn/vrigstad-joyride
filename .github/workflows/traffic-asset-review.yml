@@ -14,4 +14,6 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install 'numpy>=1.26,<3' 'trimesh>=4.5,<5' 'networkx>=3,<5'
-      - run: python tools/vehicle_pipeline/inspect_traffic_candidates.py
+      # Historical Kenney review candidates are intentionally rejected, not production assets.
+      # Fail if their validation status changes or a new structural error appears.
+      - run: python tools/vehicle_pipeline/inspect_traffic_candidates.py --expect-rejected
