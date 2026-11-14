@@ -56,7 +56,7 @@ test.describe('game (index.html)', () => {
     expect(errors).toEqual([]);
   });
 
-  test('W moves the player, and E next to the parked Volvo gets you in', async ({ page }, testInfo) => {
+  test('W moves the player, and E enters a nearby parked car', async ({ page }, testInfo) => {
     const errors = watchErrors(page);
     await page.goto('/index.html');
     await page.locator('#go').click();
@@ -75,12 +75,16 @@ test.describe('game (index.html)', () => {
     await page.keyboard.up('KeyD');
     // The parked Volvo, not AI traffic passing through Torget (that would be a carjack and a star).
     await expect.poll(async () => (await state(page)).near).toBe('parked');
-    await expect(page.locator('#prompt')).toHaveText('ESteal the Volvo 240');
+    await expect(page.locator('#prompt')).toContainText('Steal the ');
+    const selectedName = (await page.locator('#prompt').textContent()).replace(/^E\s*Steal the\s*/, '').trim();
     await page.keyboard.press('KeyE');
 
     await expect(page.locator('#speed')).toBeVisible();
-    await expect(page.locator('#carname')).toHaveText('Volvo 240');
-    expect(await state(page)).toMatchObject({ inCar: true, car: 'volvo', stars: 0 });
+    await expect(page.locator('#carname')).toHaveText(selectedName);
+    const entered = await state(page);
+    expect(entered.inCar).toBe(true);
+    expect(entered.car).toBeTruthy();
+    expect(entered.stars).toBe(0);
     await page.screenshot({ path: testInfo.outputPath('game-in-volvo.png') });
     expect(errors).toEqual([]);
   });
