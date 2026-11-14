@@ -1,0 +1,12 @@
+{
+  "civilian": {
+    "no_POLIS_nodes_or_materials": true,
+    "no_texture_images": true,
+    "triangles": 11888
+  },
+  "police": {
+    "no_POLIS_nodes_or_materials": true,
+    "no_texture_images": true,
+    "triangles": 12240
+  }
+}
