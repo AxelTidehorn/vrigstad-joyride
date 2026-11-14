@@ -69,7 +69,7 @@ assert.ok(zeroToHundred!==null&&zeroToHundred<17.5,
 
 // Calibrated production variants: launch is measured in the same physical
 // 120 Hz stepping path used by the game, not an imposed speed-over-time spline.
-import {VEHICLE_VARIANTS} from '../src/physics/driving-v4.mjs';
+import {VEHICLE_VARIANTS} from '../src/game/sim/driving-v4.mjs';
 function launchVariant(id) {
   const v=VEHICLE_VARIANTS[id], car=newCar(v.type,0,0,0,id);
   for(let i=0;i<Math.round(28/dt);i++){
