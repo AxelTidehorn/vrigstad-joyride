@@ -1,8 +1,8 @@
 {
   "objects": {
     "body": {
-      "verts": 933,
-      "faces": 1862,
+      "verts": 2702,
+      "faces": 5400,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -10,7 +10,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 6.256958998,
+      "volume": 6.262929374,
       "scale": [
         1.0,
         1.0,
@@ -391,6 +391,144 @@
       ],
       "islands": 1
     },
+    "grille_frame": {
+      "verts": 16,
+      "faces": 32,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000343726,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.66,
+        0.018,
+        0.23
+      ],
+      "islands": 1
+    },
+    "grille_slats_and_diagonal": {
+      "verts": 240,
+      "faces": 260,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000515443,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.5803,
+        0.029,
+        0.2133
+      ],
+      "islands": 10
+    },
+    "lamp_front_lenses_-1": {
+      "verts": 48,
+      "faces": 52,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000962521,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.352,
+        0.018,
+        0.164
+      ],
+      "islands": 2
+    },
+    "lamp_front_lenses_1": {
+      "verts": 48,
+      "faces": 52,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000962521,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.352,
+        0.018,
+        0.164
+      ],
+      "islands": 2
+    },
+    "lamp_rear_reverse": {
+      "verts": 24,
+      "faces": 26,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 9.5691e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.105,
+        0.014,
+        0.067
+      ],
+      "islands": 1
+    },
+    "lamp_rear_reverse.001": {
+      "verts": 24,
+      "faces": 26,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 9.5691e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.105,
+        0.014,
+        0.067
+      ],
+      "islands": 1
+    },
     "wheel_fl": {
       "verts": 290,
       "faces": 576,
@@ -579,7 +717,7 @@
   "errors": [],
   "warnings": [],
   "info": [
-    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-bumper_front embedded 0.084 m; body-bumper_rear embedded 0.090 m; body-trim_side_-1 embedded 0.011 m; body-trim_side_1 embedded 0.011 m; body-trim_handle embedded 0.012 m; body-trim_handle.001 embedded 0.012 m; body-mirror_housing flush; body-trim_handle.002 embedded 0.012 m; body-trim_handle.003 embedded 0.012 m; body-mirror_housing.001 flush; body-grille_front embedded 0.012 m; body-lamp_front_-1 embedded 0.015 m; body-lamp_rear_-1 embedded 0.015 m; body-lamp_front_1 embedded 0.015 m; body-lamp_rear_1 embedded 0.015 m; body-wheel_fl embedded 0.025 m; body-wheel_fr embedded 0.025 m; body-wheel_rl embedded 0.025 m; body-wheel_rr embedded 0.025 m; glass_envelope[island 5]-mirror_housing.001 flush; glass_envelope[island 6]-mirror_housing flush; wheel_fl-trim_rim_wheel_fl flush; wheel_fr-trim_rim_wheel_fr flush; wheel_rl-trim_rim_wheel_rl flush; wheel_rr-trim_rim_wheel_rr flush"
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-bumper_front embedded 0.084 m; body-bumper_rear embedded 0.090 m; body-trim_side_-1 embedded 0.011 m; body-trim_side_1 embedded 0.011 m; body-trim_handle embedded 0.013 m; body-trim_handle.001 embedded 0.013 m; body-mirror_housing flush; body-trim_handle.002 embedded 0.013 m; body-trim_handle.003 embedded 0.013 m; body-mirror_housing.001 flush; body-grille_front embedded 0.012 m; body-lamp_front_-1 embedded 0.015 m; body-lamp_rear_-1 embedded 0.015 m; body-lamp_front_1 embedded 0.015 m; body-lamp_rear_1 embedded 0.015 m; body-wheel_fl embedded 0.025 m; body-wheel_fr embedded 0.025 m; body-wheel_rl embedded 0.025 m; body-wheel_rr embedded 0.025 m; glass_envelope[island 5]-mirror_housing.001 flush; glass_envelope[island 6]-mirror_housing flush; grille_front-grille_frame flush; grille_front-grille_slats_and_diagonal[island 0] flush; grille_front-grille_slats_and_diagonal[island 1] flush; grille_front-grille_slats_and_diagonal[island 2] flush; grille_front-grille_slats_and_diagonal[island 3] flush; grille_front-grille_slats_and_diagonal[island 4] flush; grille_front-grille_slats_and_diagonal[island 5] flush; grille_front-grille_slats_and_diagonal[island 6] flush; grille_front-grille_slats_and_diagonal[island 7] flush; grille_front-grille_slats_and_diagonal[island 8] flush; lamp_front_-1-lamp_front_lenses_-1[island 0] flush; lamp_front_-1-lamp_front_lenses_-1[island 1] flush; lamp_rear_-1-lamp_rear_reverse flush; lamp_front_1-lamp_front_lenses_1[island 0] flush; lamp_front_1-lamp_front_lenses_1[island 1] flush; lamp_rear_1-lamp_rear_reverse.001 flush; grille_frame-grille_slats_and_diagonal[island 9] flush; grille_slats_and_diagonal[island 0]-grille_slats_and_diagonal[island 9] flush; grille_slats_and_diagonal[island 1]-grille_slats_and_diagonal[island 9] flush; grille_slats_and_diagonal[island 2]-grille_slats_and_diagonal[island 9] flush; grille_slats_and_diagonal[island 3]-grille_slats_and_diagonal[island 9] flush; grille_slats_and_diagonal[island 4]-grille_slats_and_diagonal[island 9] flush; grille_slats_and_diagonal[island 5]-grille_slats_and_diagonal[island 9] flush; grille_slats_and_diagonal[island 6]-grille_slats_and_diagonal[island 9] flush; grille_slats_and_diagonal[island 7]-grille_slats_and_diagonal[island 9] flush; grille_slats_and_diagonal[island 8]-grille_slats_and_diagonal[island 9] flush; wheel_fl-trim_rim_wheel_fl flush; wheel_fr-trim_rim_wheel_fr flush; wheel_rl-trim_rim_wheel_rl flush; wheel_rr-trim_rim_wheel_rr flush"
   ],
   "units": "m",
   "overall": {
@@ -599,7 +737,7 @@
       1.4329015016555786
     ],
     "contact_tolerance": 0.005351113182195436,
-    "parts": 32
+    "parts": 49
   },
   "contacts": [
     {
@@ -665,25 +803,25 @@
     {
       "a": "body",
       "b": "trim_side_-1",
-      "depth": 0.01126844435930252,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "trim_side_1",
       "depth": 0.011268489994108677,
       "expected": false
     },
     {
       "a": "body",
+      "b": "trim_side_1",
+      "depth": 0.011268488131463528,
+      "expected": false
+    },
+    {
+      "a": "body",
       "b": "trim_handle",
-      "depth": 0.011534028686583042,
+      "depth": 0.012534474022686481,
       "expected": false
     },
     {
       "a": "body",
       "b": "trim_handle.001",
-      "depth": 0.011534036137163639,
+      "depth": 0.01253441534936428,
       "expected": false
     },
     {
@@ -695,13 +833,13 @@
     {
       "a": "body",
       "b": "trim_handle.002",
-      "depth": 0.011534028686583042,
+      "depth": 0.01253441534936428,
       "expected": false
     },
     {
       "a": "body",
       "b": "trim_handle.003",
-      "depth": 0.011534036137163639,
+      "depth": 0.01253441534936428,
       "expected": false
     },
     {
@@ -774,6 +912,162 @@
       "a": "glass_envelope[island 6]",
       "b": "mirror_housing",
       "depth": 0.0028237097430974245,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_frame",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_slats_and_diagonal[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_slats_and_diagonal[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_slats_and_diagonal[island 2]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_slats_and_diagonal[island 3]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_slats_and_diagonal[island 4]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_slats_and_diagonal[island 5]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_slats_and_diagonal[island 6]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_slats_and_diagonal[island 7]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_front",
+      "b": "grille_slats_and_diagonal[island 8]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_front_-1",
+      "b": "lamp_front_lenses_-1[island 0]",
+      "depth": 0.002000093460083008,
+      "expected": false
+    },
+    {
+      "a": "lamp_front_-1",
+      "b": "lamp_front_lenses_-1[island 1]",
+      "depth": 0.002000093460083008,
+      "expected": false
+    },
+    {
+      "a": "lamp_rear_-1",
+      "b": "lamp_rear_reverse",
+      "depth": 0.003999948501586914,
+      "expected": false
+    },
+    {
+      "a": "lamp_front_1",
+      "b": "lamp_front_lenses_1[island 0]",
+      "depth": 0.002000093460083008,
+      "expected": false
+    },
+    {
+      "a": "lamp_front_1",
+      "b": "lamp_front_lenses_1[island 1]",
+      "depth": 0.002000093460083008,
+      "expected": false
+    },
+    {
+      "a": "lamp_rear_1",
+      "b": "lamp_rear_reverse.001",
+      "depth": 0.003999948501586914,
+      "expected": false
+    },
+    {
+      "a": "grille_frame",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_slats_and_diagonal[island 0]",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.004463951103389263,
+      "expected": false
+    },
+    {
+      "a": "grille_slats_and_diagonal[island 1]",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_slats_and_diagonal[island 2]",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_slats_and_diagonal[island 3]",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_slats_and_diagonal[island 4]",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_slats_and_diagonal[island 5]",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_slats_and_diagonal[island 6]",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_slats_and_diagonal[island 7]",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "grille_slats_and_diagonal[island 8]",
+      "b": "grille_slats_and_diagonal[island 9]",
+      "depth": 0.004463951103389263,
       "expected": false
     },
     {

@@ -245,3 +245,7 @@ import sys
 sys.path.insert(0,str(HERE))
 from refine_forms import refine
 refine(body,P)
+
+# Round 2 retains the approved arch solution and refines only adjacent panels/details.
+from round2 import apply as apply_round2
+apply_round2()
