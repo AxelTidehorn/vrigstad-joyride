@@ -3,11 +3,13 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { VEHICLE_ASSETS } from '../src/vehicles/vehicle-assets.mjs';
 
+// Structural guardrails, not exact mesh counts: Round 2 batches details into
+// fewer primitives while preserving geometry, materials and wheel rigs.
 const expected = {
   volvo: { wheelbase: 2.65, minMeshes: 20 },
-  saab: { wheelbase: 2.517, minMeshes: 40 },
-  xc70: { wheelbase: 2.763, minMeshes: 70 },
-  polis: { wheelbase: 2.763, minMeshes: 80 }
+  saab: { wheelbase: 2.517, minMeshes: 35 },
+  xc70: { wheelbase: 2.763, minMeshes: 50 },
+  polis: { wheelbase: 2.763, minMeshes: 60 }
 };
 const wheelNames = ['wheel_fl','wheel_fr','wheel_rl','wheel_rr'];
 for (const [id,spec] of Object.entries(expected)) {
