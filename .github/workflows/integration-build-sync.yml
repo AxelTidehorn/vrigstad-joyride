@@ -1,0 +1,29 @@
+name: Temporary Blender fleet build sync
+on:
+  push:
+    branches: [contrib/oliver-r187-blender-vehicles]
+    paths: ['src/**', 'tests/**', 'tools/**', 'package*.json', '.github/workflows/integration-build-sync.yml']
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run data && npm run check && npm run test:driving && npm run test:vehicles && npm run build
+      - name: Commit generated HTML on review branch only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html map.html data/vrigstad.json
+          if ! git diff --cached --quiet; then
+            git commit -m "build(vehicles): sync generated r187 fleet"
+            git push
+          fi
