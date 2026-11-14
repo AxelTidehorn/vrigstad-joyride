@@ -1450,7 +1450,7 @@ collide(player, 0.6); scene.add(player.mesh);
   if(!chosen){console.warn('No clear four-car showcase row found by Torget');return;}
   // Remove only parked overlaps; never delete active traffic or police.
   for(const c of [...cars])if(c.mode==='parked'&&chosen.slots.some(o=>Math.hypot(c.x-o.x,c.z-o.z)<5.7))removeCar(c);
-  lineup.forEach((type,i)=>addCar(type,chosen.slots[i].x,chosen.slots[i].z,chosen.heading,'parked'));
+  lineup.forEach((type,i)=>{ const c=addCar(type,chosen.slots[i].x,chosen.slots[i].z,chosen.heading,'parked'); c.isShowcase=true; });
 })();
 
 let inCar = false, pcar = null, stars = 0, evade = 0, bustT = 0, stolen = 0, ramCool = 0, started = false, bigT = 0;
@@ -1649,7 +1649,20 @@ function updatePolice(c, dt, T, tv) {
 function resize() { const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
   renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); resizeFilmFrame(); }
 addEventListener('resize', resize); if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas);
-let last = performance.now();
+let last = performance.now(), glbDetailElapsed = 1;
+function refreshVehicleDetail(focus) {
+  // Show the high-detail GLBs on the four Torget demonstration cars and a
+  // bounded number of nearby vehicles; leave far traffic on legacy meshes.
+  // Both render paths share a single simulation and collision model.
+  const ranked = cars.filter(c => glbVehicles.has(c.type))
+    .map(c => ({ c, dist: Math.hypot(c.x-focus.x,c.z-focus.z) }))
+    .filter(item => item.c.isShowcase || item.dist < 120)
+    .sort((a,b) => (a.c.isShowcase ? -1000 : a.dist) -
+                   (b.c.isShowcase ? -1000 : b.dist));
+  const detailed = new Set(ranked.slice(0,14).map(item => item.c));
+  for (const c of cars) if (glbVehicles.has(c.type))
+    glbVehicles.setDetailed(c,detailed.has(c));
+}
 function frame(now) {
   requestAnimationFrame(frame);
   const dt = clamp((now - last) / 1000, 0, 0.05); last = now;
@@ -1674,6 +1687,8 @@ function frame(now) {
     player.mesh.position.set(player.x, hAt(player.x, player.z) - (wet ? 0.95 : 0), player.z); player.mesh.rotation.y = -player.h;
   }
   const T = inCar ? pcar : player;
+  glbDetailElapsed += dt;
+  if(glbDetailElapsed >= .35){ glbDetailElapsed=0; refreshVehicleDetail(T); }
   $('p-handbrake').hidden = !inCar;
   for (const c of cars) if (c.mode === 'ai') updateTraffic(c, dt, T);
   updateNpcs(T, dt);
