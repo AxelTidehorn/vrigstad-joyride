@@ -13,32 +13,37 @@ paint=T.material('Saab warm silver',(.40,.43,.42));glass=T.material('opaque smok
 rubber=T.material('charcoal plastic rubber',(.045,.052,.052));alloy=T.material('satin alloy',(.42,.45,.44))
 white=T.material('headlamp ivory',(.76,.77,.65));red=T.material('tail lamp red',(.40,.035,.025));amber=T.material('indicator amber',(.68,.28,.025))
 # Own Saab longitudinal architecture: low wedge nose, short bowed roof, long hatch.
-profile=[(-2.24,.78),(-2.10,.86),(-1.94,.94),(-1.70,1.04),(-1.42,1.16),(-1.10,1.36),(-.85,1.40),(-.65,1.414),(-.35,1.42),(-.05,1.415),(.24,1.355),(.39,1.25),(.57,1.12),(.66,1.065),(.70,1.035),(.759,1.0104),(.76,1.010),(.761,1.010),(.80,1.010),(.84,1.010),(.86,1.006),(.95,.986),(1.30,.910),(1.75,.810),(2.10,.75),(2.24,.72)]
-ys=sorted(set([y for y,z in profile]+[-.52,-.46,.66,.70,-1.57,-1.48,2.18,-2.18]))
+profile=[(-2.24,.78),(-2.10,.86),(-1.94,.94),(-1.70,1.05),(-1.42,1.18),(-1.10,1.33),(-.95,1.405),(-.75,1.416),(-.35,1.42),(.10,1.42),(.32,1.412),(.48,1.385),(.64,1.265),(.80,1.14),(.90,1.055),(.93,1.02),(.95,1.01),(1.00,1.01),(1.02,1.006),(1.30,.910),(1.75,.810),(2.10,.75),(2.24,.72)]
+ys=sorted(set([y for y,z in profile]+[-.43,-.37,.86,-1.28,-1.18,2.18,-2.18]))
 vertices=[];faces=[];zones=[]
 # Thirteen half-section points create a bowed transverse roof rather than Volvo's flat roof.
 for y in ys:
  top=T.interp(y,profile)
  w=T.interp(y,[(-2.24,.74),(-1.8,.82),(-1.25,.845),(1.30,.845),(2.05,.79),(2.24,.72)])
  base=min(.94,top-.095);belt=min(.81,base-.07)
- cabin=max(0,min(1,(top-.98)/.42));rw=w*.88*(1-cabin)+.635*cabin
+ # Keep side glazing on a controlled longitudinal plane instead of wrapping with roof height.
+ rw=min(w*.94,T.interp(y,[(-2.24,.68),(-1.94,.70),(-1.42,.66),(-.95,.66),(.48,.66),(.93,.76),(1.30,.77),(2.24,.66)]))
  half=[(0,.235),(w*.86,.235),(w*.96,.32),(w,.56),(w*.985,belt),(w*.94,base),
-       (rw+(w*.94-rw)*.86,base+(top-.047-base)*.10),
-       (rw+(w*.94-rw)*.10,base+(top-.047-base)*.90),
-       (rw,top-.047),(rw*.73,top-.015),(rw*.38,top-.004),(0,top)]
+       (rw+(w*.94-rw)*.86,base+(top-.025-base)*.04),
+       (rw+(w*.94-rw)*.10,base+(top-.025-base)*.90),
+       (rw,top-.025),(rw*.73,top-.009),(rw*.38,top-.003),(0,top)]
+ # Door and quarter glass share one plane instead of a height-driven wrap.
+ if -1.28<=y<=.86:
+  for index in [6,7]:
+   _,z=half[index];half[index]=(.78-(z-.96)*.29,z)
  ring=half+[(-x,z) for x,z in half[-2:0:-1]]
  for x,z in ring:
   # Windshield's centre projects forward, making a subtle wraparound bow.
-  bow_weight=1.0 if y<=.70 else max(0.,(.84-y)/.14)
-  bow=.055*(1-(abs(x)/max(w,.01))**2)*bow_weight if .24<=y<=.84 else 0
+  bow_weight=1.0 if y<=.86 else max(0.,(.95-y)/.09)
+  bow=.025*(1-(abs(x)/max(w,.01))**2)*bow_weight if .48<=y<=.95 else 0
   vertices.append((x,y+bow,z))
 N=len(ring)
 for i in range(len(ys)-1):
  mid=(ys[i]+ys[i+1])/2
  for j in range(N):
   faces.append((i*N+j,i*N+(j+1)%N,(i+1)*N+(j+1)%N,(i+1)*N+j))
-  side=j in (6,15) and -1.48<mid<.66 and not -.52<mid<-.46
-  screen=(.30<mid<.70 or -1.94<mid<-1.00) and 8<=j<=13
+  side=j in (6,15) and -1.28<mid<.86 and not -.43<mid<-.37
+  screen=(.48<mid<.90 or -1.94<mid<-.95) and 8<=j<=13
   zones.append(int(side or screen))
 faces += [tuple(range(N-1,-1,-1)),tuple((len(ys)-1)*N+j for j in range(N))];zones += [0,0]
 body=T.group(mk.mesh_from_data('body',vertices,faces),'BODY',paint)
@@ -105,8 +110,8 @@ def skin_x(y,z):
 for sign in [-1,1]:
     path=[(sign*(skin_x(y,.74)+.003),y) for y in [-1.93,-1.70,-1.3,-.65,0,.73,.95,1.3,1.75,1.99]]
     T.band('trim_side',path,.74,.012,.009,rubber,'PLASTIC_RUBBER')
-    T.slab('mirror_housing',(.13,.23,.105),(sign*.81,.64,1.02),rubber,'PLASTIC_RUBBER')
-    T.slab('trim_handle',(.028,.15,.035),(sign*.805,-.34,.91),rubber,'DETAILS')
+    T.slab('mirror_housing',(.13,.23,.105),(sign*.81,.85,1.04),rubber,'PLASTIC_RUBBER')
+    T.slab('trim_handle',(.028,.15,.035),(sign*.805,-.24,.91),rubber,'DETAILS')
     # A fitted six-face lamp wedge: top slopes down with the hood toward the nose.
     # Rear top .704 at y=2.205; front top .685 at y=2.255. Body hood at nose .72.
     lx=sign*.47;w=.35
@@ -122,19 +127,19 @@ T.slab('grille',(.52,.045,.15),(0,2.24,.625),rubber)
 for z in [.595,.635,.675]:T.slab('grille_bar',(.49,.018,.014),(0,2.266,z),alloy)
 T.slab('plate_rear',(.35,.03,.095),(0,-2.255,.62),rubber)
 # Fitted narrow rubber spoiler across the long hatch; part of Turbo identity.
-T.band('trim_hatch_spoiler',[(-.71,-1.88),(0,-1.94),(.71,-1.88)],.960,.055,.075,rubber,'PLASTIC_RUBBER')
+T.band('trim_hatch_spoiler',[(-.71,-1.88),(0,-1.94),(.71,-1.88)],.975,.055,.075,rubber,'PLASTIC_RUBBER')
 # Subtle single long-door shut lines, seated against the existing shell.
 for sign in [-1,1]:
- T.band('trim_door_seam',[(sign*.84,-.49),(sign*.84,-.49+.001)],.55,.29,.004,rubber,'DETAILS')
+ T.band('trim_door_seam',[(sign*.84,-.40),(sign*.84,-.40+.001)],.55,.29,.004,rubber,'DETAILS')
 for o in [o for o in bpy.context.scene.objects if o.type=='MESH']:
  bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(o.data);bm.free()
  for f in o.data.polygons:f.use_smooth=o.name=='body' or o.name.startswith('wheel_')
  # Close cowl support sections preserve the physical slope break without faceting.
- o['review_status']='Saab 900 T16 hood correction; reference uncertainty documented; human approval pending'
+ o['review_status']='Saab 900 T16 profile refinement; reference uncertainty documented; human approval pending'
 body['construction']='Saab-specific bowed roof and continuous hatch loft; closed recessed wheel wells'
 body['parameters']=json.dumps(P)
 body['longitudinal_profile']=json.dumps(profile)
-body['cowl_construction']='Short planar cowl y .80-.84; defined hood crease; windshield bow tapers to zero before cowl, no bevel/subdivision'
+body['cowl_construction']='Short cowl y .95-1.00; defined hood crease; windshield bow tapers to zero before cowl, no bevel/subdivision'
 bpy.context.scene.unit_settings.system='METRIC'
 
 ink=T.material('emblem blue grey',(.035,.065,.09))
