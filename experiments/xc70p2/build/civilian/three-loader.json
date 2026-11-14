@@ -2,7 +2,7 @@
   "ok": true,
   "loader": "existing Three r128 GLTFLoader",
   "meshes": 80,
-  "triangles": 13808,
+  "triangles": 11888,
   "dimensions_glb_xyz_m": [
     2.0200000256299973,
     1.5625000298023224,

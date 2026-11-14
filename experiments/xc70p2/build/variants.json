@@ -2,12 +2,12 @@
   "civilian": {
     "body_sha256": "5ed4a0c7154440925d7a297e804148defb03eb5bc2fc979c6bba5b65efe9278b",
     "visible_meshes": 78,
-    "triangles": 13808
+    "triangles": 11888
   },
   "police": {
     "body_sha256": "5ed4a0c7154440925d7a297e804148defb03eb5bc2fc979c6bba5b65efe9278b",
-    "visible_meshes": 90,
-    "triangles": 15440
+    "visible_meshes": 86,
+    "triangles": 12240
   },
   "same_body": true
 }

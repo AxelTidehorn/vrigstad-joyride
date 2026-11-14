@@ -16,8 +16,8 @@ wrap to the sides. Tall D-pillar lamps, grille/diagonal, rails, handles and whee
 are separate genuine components. Body/rim materials remain independently editable.
 
 `variants.py` changes only paint/livery and POLICE/POLICE_DECALS visibility.
-No duplicated base shell. The body paint material and ray-cast seated alpha vinyl
-markings are authored originals; reference photographs are not used as textures.
+No duplicated base shell. The body paint material and block tail-lamp geometry are authored originals;
+reference photographs are not used as textures. Current exports have no lettering.
 Blue light modules have distinct objects/material and emission strength zero,
 ready for later animation. No flashing or gameplay logic is added.
 
@@ -36,7 +36,7 @@ The editable master `build/model.blend` contains both configurations, opening in
 civilian mode; call `variants.apply('police')` to expose equipment and paint.
 Intermediate `civilian.blend` and `police.blend` are export staging snapshots,
 not separate authoring sources. The download contains only the shared master.
-Workbench shows materials and solid form; Cycles shows livery/alpha textures
+Workbench shows materials and solid form; Cycles shows vertex-colour body paint
 using the same Modeler cameras and light rig. This Blender build lacks the
 OpenImageDenoise backend, so Cycles uses 16 samples without denoising; some fine
 render noise remains. The exported materials are simple matte glTF materials.
@@ -82,7 +82,8 @@ simplified; this is stylized game geometry, not an exact factory body model.
 
 The current police paint is blue on white, as requested in the targeted correction.
 It supersedes the earlier blue/yellow experiment. Full front-fender and rear-quarter
-areas are blue; doors, hood centre and tailgate centre stay white for readable POLIS.
+areas are blue; doors, hood centre and tailgate centre stay white. All POLIS text is removed in
+the latest refinement; the blue lightbar and full blue panels remain.
 Paint follows body point colours, avoiding projected texture streaks. The old
 police-livery.png is a blue/white palette/reference swatch, not the current body shader.
 Crest, fleet numbers and extra equipment remain omitted; lightbar geometry is unchanged.
@@ -93,7 +94,7 @@ Safari performance or human visual approval is established by these checks.
 No model is installed in the game. Review the hosted PNGs and existing touch
 viewer before any integration.
 
-## Targeted detail correction
+## Earlier targeted detail correction (historical)
 
 See [before/after detail review](build/detail-review/index.html) and its audit.json.
 Front/rear reveal depth is reduced from 9 to 5 mm, upper/lower border 12 to 8 mm;
@@ -118,5 +119,35 @@ To rerun the preservation audit, restore the prior master from Git commit
 4812b85e8b75b1c788bee7824a45145692fa7152, then pass its absolute path and
 `experiments/xc70p2/build/detail-review` as arguments to `detail_audit.py` through
 Blender Modeler script mode. `detail_review.py` creates close-ups; run
-`detail_package.py` before `package_review.py` to refresh comparison sheets.
+`detail_package.py` only when updating that historical correction. For the current
+stage, run `block_package.py` before `package_review.py`.
 The existing export.sh and verify_variants.py still apply without structural changes.
+
+## Current block-lamp refinement
+
+[Latest before/after review](build/block-review/index.html) includes the same side,
+front-three-quarter and rear-three-quarter cameras for both variants, plus the
+fixed rear close-up. Tall rear-facing blocks replace the corner-wrapped ribbons.
+Lens face widths taper from 160 to 85 mm over 605 mm height; solid housings have
+240 mm depth, with inward-tapered backs. Most depth is embedded, not exposed.
+The preservation audit samples body seating across each lens row and checks
+closed solids, winding, degenerate faces and BVH self-intersections.
+
+Only `lamp_tail` and `lamp_tail.001` geometry changed. The body, glass, wheels,
+ride height, roof, bumpers, rails, front lights and lightbar are byte-coordinate
+and topology identical to the frozen previous master. Four `trim_POLIS*` meshes
+are removed, including hood and rear lettering. Neither GLB contains lettering
+nodes/materials or texture images. Blue/white panel point colours remain unchanged.
+The sharper lamp faces and cleaner police treatment are local refinements;
+soft wheel-arch shading and opaque faceted glass remain known limitations.
+
+Reproduce through the existing model/review/export commands above. Restore
+`build/model.blend` from parent commit `c130ae6577e19c1bf39e24c0d82c662f3f4ac973`
+to a temporary path for `block_audit.py`; pass that path and `build/block-review`
+through Blender Modeler script mode. `detail_review.py` writes the new close-ups
+into `build/block-review`. Run `verify_variants.py`, `detail_export_audit.py`,
+`block_package.py`, then `package_review.py`. Historical before PNGs are retained;
+no second authoring master is created. Current triangle counts are 11,888 civilian
+and 12,240 police, both below the 16,000 budget. Actual GLBs pass validation,
+Blender reimport and the existing Three.js parser. No physical Safari/GPU test
+or game integration is claimed.

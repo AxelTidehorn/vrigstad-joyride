@@ -122,34 +122,18 @@ for sign in [-1,1]:
  T.slab('lamp_indicator',(.065,.045,.085),(sign*.76,2.290,.718),amber,'LIGHTS')
  for x in [.47,.65]:
   T.group(mk.cylinder('lamp_reflector',.044,.014,location=(sign*x,2.307,.725),rotation=(90,0,0),segments=12),'LIGHTS',alloy)
- # Thin closed lamp lenses conform to the actual rear corner, rather than boxes.
- from mathutils.bvhtree import BVHTree
- from mathutils import Vector
- bpy.context.view_layer.update();lamp_tree=BVHTree.FromObject(body,bpy.context.evaluated_depsgraph_get())
- def rear_hit(x,z):return lamp_tree.ray_cast(Vector((sign*x,-3,z)),Vector((0,1,0)))
- def corner_limit(z):
-  lo=0.;hi=.94
-  for _ in range(24):
-   x=(lo+hi)/2;hit,_,_,_=rear_hit(x,z)
-   if hit is not None and hit.y<-2.12:lo=x
-   else:hi=x
-  return lo-.004
- # One continuous corner lens per side, with shared rows through body creases.
- zs=sorted(set([.85,.91,.94,.97,.99,1.003,1.035,1.05,1.06,1.15,1.23,1.24,1.445]+[.85+i*(1.445-.85)/24 for i in range(25)]))
- cols=6;rows=len(zs)-1;vv=[];ff=[];mi=[]
+ # Large rear-facing block housings: broad flat faces, deep embedded volume.
+ # There is no surface-wrapped ribbon or side-facing lens extension.
+ zs=[.80,.98,1.08,1.18,1.28,1.405];vv=[];ff=[];mi=[]
  for z in zs:
-  outer=corner_limit(z)
-  for i in range(cols+1):
-   hit,_,_,_=rear_hit(outer-.085+.085*i/cols,z)
-   if hit is None:raise ValueError('Rear lamp lost body contact')
-   vv.append(tuple(hit+Vector((0,-.020,0))))
- count=len(vv);vv += [tuple(Vector(v)+Vector((0,.028,0))) for v in vv]
- for j in range(rows):
-  zone=1 if 1.06<=(zs[j]+zs[j+1])/2<1.24 else 0
-  for i in range(cols):
-   k=j*(cols+1)+i;q=(k,k+1,k+cols+2,k+cols+1);ff.extend([q,tuple(n+count for n in q[::-1])]);mi.extend([zone,zone])
- boundary=list(range(cols+1))+[j*(cols+1)+cols for j in range(1,rows+1)]+[rows*(cols+1)+i for i in range(cols-1,-1,-1)]+[j*(cols+1) for j in range(rows-1,0,-1)]
- for a,b in zip(boundary,boundary[1:]+boundary[:1]):ff.append((a,a+count,b+count,b));mi.append(1 if 1.06<=(vv[a][2]+vv[b][2])/2<1.24 else 0)
+  outer=T.interp(z,[(.80,.84),(.98,.81),(1.08,.79),(1.18,.775),(1.28,.77),(1.405,.735)])
+  width=T.interp(z,[(.80,.16),(.98,.15),(1.18,.13),(1.28,.115),(1.405,.085)])
+  front=T.interp(z,[(.80,-2.304),(.98,-2.304),(1.18,-2.276),(1.28,-2.232),(1.405,-2.151)])
+  for x,y in [(outer-width,front),(outer,front),(outer-.055,front+.24),(outer-width-.055,front+.24)]:vv.append((sign*x,y,z))
+ for j in range(len(zs)-1):
+  zone=1 if 1.08<=(zs[j]+zs[j+1])/2<1.18 else 0
+  for k in range(4):ff.append((j*4+k,j*4+(k+1)%4,(j+1)*4+(k+1)%4,(j+1)*4+k));mi.append(zone)
+ ff += [(3,2,1,0),tuple((len(zs)-1)*4+i for i in range(4))];mi += [0,0]
  lens=T.group(mk.mesh_from_data('lamp_tail',vv,ff),'LIGHTS',red);lens.data.materials.append(white)
  for face,index in zip(lens.data.polygons,mi):face.material_index=index
 T.slab('grille',(.60,.05,.20),(0,2.29,.735),rubber)
@@ -183,39 +167,7 @@ for x in [-.43,0,.43]:
  lamp=T.slab('lamp_blue_module',(.38,.29,.11),(x,-.20,1.69),blue,'POLICE');lamp['animation_channel']='blue_emission_future'
 for sign in [-1,1]:
  T.slab('lamp_police_grille',(.06,.04,.045),(sign*.24,2.33,.69),blue,'POLICE')
-# Fitted alpha vinyl decals; actual ray-cast seating on shared body surface.
-label=T.material('POLIS vinyl',(.05,.15,.4));bs=label.node_tree.nodes.get('Principled BSDF')
-tex=label.node_tree.nodes.new('ShaderNodeTexImage');tex.image=bpy.data.images.load(str(HERE/'polis.png'));tex.image.pack()
-label.node_tree.links.new(tex.outputs['Color'],bs.inputs['Base Color']);label.node_tree.links.new(tex.outputs['Alpha'],bs.inputs['Alpha']);label.surface_render_method='DITHERED'
-from mathutils.bvhtree import BVHTree
-from mathutils import Vector
-bpy.context.view_layer.update();tree=BVHTree.FromObject(body,bpy.context.evaluated_depsgraph_get())
-def decal(name,origins,direction):
- vv=[];uvs=[];ff=[];cols=8;rows=8
- corners=[Vector(p) for p in origins];direction=Vector(direction)
- for j in range(rows+1):
-  t=j/rows
-  for i in range(cols+1):
-   u=i/cols;origin=corners[0]*(1-u)*(1-t)+corners[1]*u*(1-t)+corners[2]*u*t+corners[3]*(1-u)*t
-   hit,normal,_,_=tree.ray_cast(origin,direction)
-   if hit is None:raise ValueError('Decal misses body')
-   vv.append(tuple(hit-direction*.003));uvs.append((u,t))
- count=len(vv);vv += [tuple(Vector(v)+direction*.001) for v in vv];uvs+=uvs[:]
- for j in range(rows):
-  for i in range(cols):
-   k=j*(cols+1)+i;q=(k,k+1,k+cols+2,k+cols+1);ff.append(q);ff.append(tuple(n+count for n in q[::-1]))
- boundary=list(range(cols+1))+[j*(cols+1)+cols for j in range(1,rows+1)]+[rows*(cols+1)+i for i in range(cols-1,-1,-1)]+[j*(cols+1) for j in range(rows-1,0,-1)]
- for a,b in zip(boundary,boundary[1:]+boundary[:1]):ff.append((a,a+count,b+count,b))
- ob=T.group(mk.mesh_from_data(name,vv,ff),'POLICE_DECALS',label);layer=ob.data.uv_layers.new()
- for f in ob.data.polygons:
-  for li in f.loop_indices:
-   u,v=uvs[ob.data.loops[li].vertex_index]
-   layer.data[li].uv=(1-u if name in ('trim_POLIS_hood','trim_POLIS_rear') else u,v)
-for sign in [-1,1]:
- ys=[-.43,.43] if sign>0 else [.43,-.43]
- decal('trim_POLIS_side',[(sign*2,ys[0],.88),(sign*2,ys[1],.88),(sign*2,ys[1],1.025),(sign*2,ys[0],1.025)],(-sign,0,0))
-decal('trim_POLIS_hood',[(-.38,1.80,3),(.38,1.80,3),(.38,1.52,3),(-.38,1.52,3)],(0,0,-1))
-decal('trim_POLIS_rear',[(.3,-3,.95),(-.3,-3,.95),(-.3,-3,1.11),(.3,-3,1.11)],(0,1,0))
+# Police text is intentionally absent; preserve only blue/white paint and equipment.
 for o in [o for o in bpy.context.scene.objects if o.type=='MESH']:
  bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(o.data);bm.free()
  for f in o.data.polygons:f.use_smooth=o.name=='body' or o.name.startswith('wheel_')
