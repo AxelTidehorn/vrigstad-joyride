@@ -864,6 +864,7 @@ joyEl.addEventListener('pointerup', joyEnd); joyEl.addEventListener('pointercanc
 const hold = (el, k) => { el.addEventListener('pointerdown', e => { keys[k] = true; e.preventDefault(); });
   for (const t of ['pointerup', 'pointercancel', 'pointerleave']) el.addEventListener(t, () => { keys[k] = false; }); };
 hold($('p-brake'), 'brake');
+hold($('p-handbrake'), 'handbrake');
 $('p-act').addEventListener('click', () => action());
 function showTouch() { $('joy').hidden = false; $('pad').hidden = false; }
 if (coarse) showTouch(); else addEventListener('touchstart', showTouch, { once: true, passive: true });
@@ -936,7 +937,7 @@ function spawnPolice() {
   const c = addCar('polis', spot[0], spot[1], Math.atan2(T.x - spot[0], -(T.z - spot[1])), 'police'); police.push(c);
 }
 function clearWanted() { stars = 0; evade = 0; bustT = 0; for (const p of police) removeCar(p); police.length = 0; drawStars(); $('stars').classList.remove('evading'); }
-function respawn() { leaveHouse(); if (inCar) { pcar.mode = 'idle'; pcar.v = 0; pcar = null; inCar = false; player.mesh.visible = true; }
+function respawn() { leaveHouse(); if (inCar) { pcar.mode='idle'; pcar.v=0; pcar.driveState=null; pcar.bodyMotion=BODY_MOTION.createBodyMotion(); placeCar(pcar); pcar=null; inCar=false; player.mesh.visible=true; }
   player.x = HOME.x; player.z = HOME.z; collide(player, 0.6); }
 function busted() { clearWanted(); respawn(); bigT = 3; $('big').hidden = false; }
 function updatePolice(c, dt, T, tv) {
@@ -976,7 +977,7 @@ function frame(now) {
   if (trissT > 0) { trissT -= dt; if (trissT <= 0) trissResult(); }
   for (const p of places) p.gem.rotation.y += dt * 1.6;
 
-  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt, !!keys.run); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = pcar.driveState ? pcar.driveState.speed : Math.abs(pcar.v); }
+  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt, !!keys.run || !!keys.handbrake); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = pcar.driveState ? pcar.driveState.speed : Math.abs(pcar.v); }
   else {
     const mag = Math.min(1, Math.hypot(mx, my)), wet = inWater(player.x, player.z);
     if (mag > 0.08 && bigT <= 0 && !inside) {
@@ -1033,7 +1034,7 @@ function frame(now) {
     else if (inCar && !coarse) { pr.hidden = Math.abs(pcar.v) > 3; pr.innerHTML = '<kbd>E</kbd>Get out'; }
     else if (c) { pr.hidden = false; pr.innerHTML = '<kbd>E</kbd>' + (c.owned ? 'Get in the ' : 'Steal the ') + c.T.name; }
     else pr.hidden = true;
-    $('speed').hidden = !inCar; if (inCar) { $('kmh').textContent = Math.round(Math.abs(pcar.v) * 3.6); $('carname').textContent = pcar.T.name; } }
+    $('speed').hidden = !inCar; if (inCar) { $('kmh').textContent = Math.round((pcar.driveState ? pcar.driveState.speed : Math.abs(pcar.v)) * 3.6); $('carname').textContent = pcar.T.name; $('gear').textContent = pcar.driveState ? 'AUTO ' + pcar.driveState.gearLabel : ''; } }
   drawMini(T);
   renderer.render(scene, camera);
 }
@@ -1042,5 +1043,5 @@ $('go').addEventListener('click', () => { started = true; $('intro').hidden = tr
 resize(); requestAnimationFrame(frame);
 
 // ---------- test hook: read-only state for the smoke tests (tests/e2e), so they do not have to read pixels ----------
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, gear: pcar?.driveState?.gearLabel ?? null, drivetrain: DRIVE_MODE, near: n ? n.mode : null, stars, cats: cats.length, treats, loadedVehicles: cars.filter(c => c.assetType).length, visibleVehicles: cars.filter(c => c.visual?.visible).length }; } };
 })();
