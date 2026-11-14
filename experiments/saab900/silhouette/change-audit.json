@@ -1,0 +1,162 @@
+{
+  "preserved_components": [
+    "bumper_front",
+    "bumper_rear",
+    "mirror_housing",
+    "mirror_housing.001",
+    "trim_hatch_spoiler",
+    "lamp_head",
+    "lamp_indicator",
+    "lamp_tail",
+    "lamp_tail_indicator",
+    "lamp_head.001",
+    "lamp_indicator.001",
+    "lamp_tail.001",
+    "lamp_tail_indicator.001",
+    "trim_handle",
+    "trim_handle.001",
+    "grille",
+    "grille_bar",
+    "grille_bar.001",
+    "grille_bar.002",
+    "plate_rear",
+    "trim_door_seam",
+    "trim_door_seam.001",
+    "badge_front",
+    "wheel_fl",
+    "trim_rim_fl",
+    "trim_spoke",
+    "trim_spoke.001",
+    "trim_spoke.002",
+    "wheel_fr",
+    "trim_rim_fr",
+    "trim_spoke.003",
+    "trim_spoke.004",
+    "trim_spoke.005",
+    "wheel_rl",
+    "trim_rim_rl",
+    "trim_spoke.006",
+    "trim_spoke.007",
+    "trim_spoke.008",
+    "wheel_rr",
+    "trim_rim_rr",
+    "trim_spoke.009",
+    "trim_spoke.010",
+    "trim_spoke.011"
+  ],
+  "adapted_components": [
+    "trim_side",
+    "trim_side.001"
+  ],
+  "adaptation_reason": "Only side trim seating changes with adjacent upper front fender; thickness/style unchanged.",
+  "dimensions_before_m": [
+    1.75,
+    4.679958820343018,
+    1.4199999868869781
+  ],
+  "dimensions_after_m": [
+    1.75,
+    4.679958820343018,
+    1.4199999868869781
+  ],
+  "geometry_before": {
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume_m3": 5.721634538595005,
+    "self_intersection_candidates": [],
+    "triangles": 7610
+  },
+  "geometry_after": {
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume_m3": 5.821514716534438,
+    "self_intersection_candidates": [],
+    "triangles": 7822
+  },
+  "model_changes_units": "mm below are direct Blender measurements, NOT exact errors against the uncertain drawing",
+  "centreline_height_changes": [
+    {
+      "y_m": 2.1,
+      "before_m": 0.75,
+      "after_m": 0.75,
+      "raise_mm": 0.0
+    },
+    {
+      "y_m": 1.75,
+      "before_m": 0.8,
+      "after_m": 0.81,
+      "raise_mm": 10.000000000000009
+    },
+    {
+      "y_m": 1.3,
+      "before_m": 0.85,
+      "after_m": 0.91,
+      "raise_mm": 60.00000000000006
+    },
+    {
+      "y_m": 0.95,
+      "before_m": 0.89,
+      "after_m": 0.986,
+      "raise_mm": 95.99999999999997
+    },
+    {
+      "y_m": 0.84,
+      "before_m": 0.95,
+      "after_m": 1.01,
+      "raise_mm": 60.00000000000006
+    },
+    {
+      "y_m": 0.82,
+      "before_m": 0.9609090909090909,
+      "after_m": 1.01,
+      "raise_mm": 49.09090909090907
+    },
+    {
+      "y_m": 0.795,
+      "before_m": 0.9745454545454545,
+      "after_m": 1.01,
+      "raise_mm": 35.45454545454552
+    },
+    {
+      "y_m": 0.755,
+      "before_m": 1.00625,
+      "after_m": 1.035,
+      "raise_mm": 28.74999999999983
+    },
+    {
+      "y_m": 0.625,
+      "before_m": 1.108036773473825,
+      "after_m": 1.1094497993483603,
+      "raise_mm": 1.4130258745352897
+    },
+    {
+      "y_m": 0.445,
+      "before_m": 1.2388951456879898,
+      "after_m": 1.2388951779236417,
+      "raise_mm": 3.223565192556066e-05
+    },
+    {
+      "y_m": 0.295,
+      "before_m": 1.355,
+      "after_m": 1.355,
+      "raise_mm": 0.0
+    }
+  ],
+  "roof_rear_centreline_identical": true,
+  "front_centreline_identical": true,
+  "wheel_centres_identical": true,
+  "cowl_sections": {
+    "before": {
+      "hood_angle_deg": -28.61045966596522,
+      "cowl_angle_deg": -28.610459665965355,
+      "windscreen_lower_angle_deg": -41.185789479247724
+    },
+    "after": {
+      "hood_angle_deg": -12.528807709151527,
+      "cowl_angle_deg": 0.0,
+      "windscreen_lower_angle_deg": -31.429385211779856
+    }
+  }
+}

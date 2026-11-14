@@ -85,7 +85,8 @@ test('existing film script boots with preview globals; controls and neutral togg
   app.ids.view.emit('pointercancel',{pointerId:2});app.ids.view.emit('pointerup',{pointerId:1});assert.equal(state().activePointers,0);
   app.ids.look.value='off';app.ids.look.emit('change');assert.equal(state().film,'off');
   app.ids.reset.emit('click');assert.equal(state().view,'three_quarter');assert.equal(state().zoom,1);
-  await until(()=>app.frames.some(scene=>scene.getObjectByName('body')));
+  // Film's offscreen pass can contain the body before the visible frame commits.
+  await until(()=>app.frames.some(scene=>scene.getObjectByName('body'))&&app.ids.fallback.hidden);
   assert.equal(app.ids.fallback.hidden,true);
   assert.deepEqual(app.errors,[]);
 });

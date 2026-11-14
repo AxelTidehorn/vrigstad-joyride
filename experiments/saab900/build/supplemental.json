@@ -2,7 +2,7 @@
   "boundary_or_nonmanifold_edges": 0,
   "inconsistent_winding_edges": 0,
   "degenerate_faces": 0,
-  "signed_volume_m3": 5.721634538595005,
+  "signed_volume_m3": 5.821514716534438,
   "nonadjacent_overlap_candidates": [],
   "collections": {
     "BODY": [

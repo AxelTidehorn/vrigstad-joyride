@@ -69,3 +69,13 @@ Geometry passing is a requirement, not an appearance approval.
 - Actual Saab GLB, visual approval, and game integration: **not done**.
 
 This intentionally avoids installing placeholder geometry into the game.
+
+## Reference-driven silhouette gate
+
+The historical Saab 9-5 pilot status above applies only to that unsourced asset.
+Headless Blender 4.3.2 now runs in Codex for the isolated Volvo 240 and Saab 900
+experiments. The Saab's existing pipeline now includes axle-registered silhouette
+verification, internal control curves and automated numerical tests.
+See [SILHOUETTE.md](SILHOUETTE.md) for commands, configuration and quality rules,
+and [the Saab before/after report](../../experiments/saab900/silhouette/README.md).
+No existing game vehicle is replaced.
