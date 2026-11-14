@@ -3948,7 +3948,7 @@ function frame(now) {
 $('go').addEventListener('click', () => { started = true; $('intro').hidden = true; camYaw = 0.6; camPitch = 0.34; canvas.focus();
   toast('Find a car and press E to take it. Occupied cars always get you a wanted star.', 5); });
 // Read-only integration-test hook: never mutates gameplay.
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, gear: pcar?.driveState?.gearLabel ?? null, drivetrain: DRIVE_MODE, near: n ? n.mode : null, stars, cats: cats.length, treats }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, gear: pcar?.driveState?.gearLabel ?? null, drivetrain: DRIVE_MODE, near: n ? n.mode : null, stars, cats: cats.length, treats, showcase: cars.filter(c => c.isShowcase).map(c => ({ type:c.type, loaded:!!c.assetType, wheels:c.assetWheels?.length ?? 0, x:c.x, z:c.z })) }; } };
 // Optional DOM tooling; no renderer/UI dependencies in the solar calculations.
 if(new URLSearchParams(location.search).get('dev')==='lighting') {
   const panel=document.createElement('details');panel.id='visual-lab';panel.open=true;
