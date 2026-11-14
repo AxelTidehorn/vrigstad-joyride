@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "common_meshes": 84,
+  "common_meshes": 76,
   "identical_geometry": [
     "badge_volvo",
     "body",
@@ -24,14 +24,6 @@
     "lamp_reflector.001",
     "lamp_reflector.002",
     "lamp_reflector.003",
-    "lamp_tail",
-    "lamp_tail.001",
-    "lamp_tail.002",
-    "lamp_tail.003",
-    "lamp_tail.004",
-    "lamp_tail.005",
-    "lamp_tail.006",
-    "lamp_tail.007",
     "mirror_housing",
     "mirror_housing.001",
     "plate_front",
@@ -94,6 +86,10 @@
     "lamp_blue_module.002",
     "lamp_police_grille",
     "lamp_police_grille.001",
+    "lamp_tail.001_5fa148",
+    "lamp_tail.001_62b73d",
+    "lamp_tail_30a0a5",
+    "lamp_tail_9ab9d4",
     "trim_POLIS_hood",
     "trim_POLIS_rear",
     "trim_POLIS_side",
@@ -103,6 +99,6 @@
     "trim_police_mount.001"
   ],
   "cladding_width_m": 1.8600000143051147,
-  "body_sha256": "a0f37e098d61b049fba0bc514c44b4825e4312600948b023021c0b209788a91e",
+  "body_sha256": "58c05ceed1b03be34aca5682fa9dda6674ed657de16ac0d61907b25f7da5f38b",
   "texture_verification": "Packed PNG images independently decoded in Pillow and actual Blender reimport; Node loader checks scene structure only"
 }

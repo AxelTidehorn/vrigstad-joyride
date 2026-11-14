@@ -3,8 +3,8 @@
   "model": "xc70p2-civilian",
   "errors": [],
   "warnings": [],
-  "meshes": 84,
-  "triangles": 9300,
+  "meshes": 80,
+  "triangles": 13808,
   "dimensions_m": {
     "width": 1.8,
     "height": 1.5625,

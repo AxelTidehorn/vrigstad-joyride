@@ -3,8 +3,8 @@
   "model": "xc70p2-police",
   "errors": [],
   "warnings": [],
-  "meshes": 96,
-  "triangles": 10932,
+  "meshes": 92,
+  "triangles": 15440,
   "dimensions_m": {
     "width": 1.8,
     "height": 1.745,

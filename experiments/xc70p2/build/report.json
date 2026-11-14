@@ -1,8 +1,8 @@
 {
   "objects": {
     "body": {
-      "verts": 926,
-      "faces": 1848,
+      "verts": 2174,
+      "faces": 4344,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -10,7 +10,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 7.830943694,
+      "volume": 7.832815068,
       "scale": [
         1.0,
         1.0,
@@ -24,8 +24,8 @@
       "islands": 1
     },
     "glass_envelope": {
-      "verts": 194,
-      "faces": 356,
+      "verts": 244,
+      "faces": 456,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -33,16 +33,16 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.015174282,
+      "volume": 0.00878417,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        1.6571,
-        3.0247,
-        0.4283
+        1.6554,
+        3.0521,
+        0.4124
       ],
       "islands": 8
     },
@@ -424,16 +424,16 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.002335004,
+      "volume": 0.002035002,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        0.44,
-        0.075,
-        0.15
+        0.37,
+        0.055,
+        0.1
       ],
       "islands": 1
     },
@@ -447,7 +447,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.000296321,
+      "volume": 0.000226396,
       "scale": [
         1.0,
         1.0,
@@ -456,7 +456,7 @@
       "dimensions": [
         0.065,
         0.045,
-        0.11
+        0.085
       ],
       "islands": 1
     },
@@ -507,8 +507,8 @@
       "islands": 1
     },
     "lamp_tail": {
-      "verts": 8,
-      "faces": 12,
+      "verts": 504,
+      "faces": 1004,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -516,85 +516,16 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.001154999,
+      "volume": 0.001416106,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        0.1,
-        0.0658,
-        0.21
-      ],
-      "islands": 1
-    },
-    "lamp_tail.001": {
-      "verts": 8,
-      "faces": 12,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000495,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.1,
-        0.0596,
-        0.09
-      ],
-      "islands": 1
-    },
-    "lamp_tail.002": {
-      "verts": 8,
-      "faces": 12,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000495001,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.1,
-        0.0596,
-        0.09
-      ],
-      "islands": 1
-    },
-    "lamp_tail.003": {
-      "verts": 8,
-      "faces": 12,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.001320002,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.1,
-        0.15,
-        0.24
+        0.5815,
+        0.1979,
+        0.595
       ],
       "islands": 1
     },
@@ -608,16 +539,16 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.002335004,
+      "volume": 0.002035002,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        0.44,
-        0.075,
-        0.15
+        0.37,
+        0.055,
+        0.1
       ],
       "islands": 1
     },
@@ -631,7 +562,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.000296321,
+      "volume": 0.000226396,
       "scale": [
         1.0,
         1.0,
@@ -640,7 +571,7 @@
       "dimensions": [
         0.065,
         0.045,
-        0.11
+        0.085
       ],
       "islands": 1
     },
@@ -690,9 +621,9 @@
       ],
       "islands": 1
     },
-    "lamp_tail.004": {
-      "verts": 8,
-      "faces": 12,
+    "lamp_tail.001": {
+      "verts": 504,
+      "faces": 1004,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -700,85 +631,16 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.001154999,
+      "volume": 0.001416106,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        0.1,
-        0.0658,
-        0.21
-      ],
-      "islands": 1
-    },
-    "lamp_tail.005": {
-      "verts": 8,
-      "faces": 12,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000495,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.1,
-        0.0596,
-        0.09
-      ],
-      "islands": 1
-    },
-    "lamp_tail.006": {
-      "verts": 8,
-      "faces": 12,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.000495001,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.1,
-        0.0596,
-        0.09
-      ],
-      "islands": 1
-    },
-    "lamp_tail.007": {
-      "verts": 8,
-      "faces": 12,
-      "open_boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "loose_verts": 0,
-      "loose_edges": 0,
-      "degenerate_faces": 0,
-      "ngons": 0,
-      "closed": true,
-      "volume": 0.001320002,
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "dimensions": [
-        0.1,
-        0.15,
-        0.24
+        0.5815,
+        0.1979,
+        0.595
       ],
       "islands": 1
     },
@@ -1936,7 +1798,7 @@
   "errors": [],
   "warnings": [],
   "info": [
-    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-trim_arch embedded 0.033 m; body-trim_arch.001 embedded 0.033 m; body-trim_sill embedded 0.042 m; body-mirror_housing flush; body-trim_rail_foot flush; body-trim_arch.002 embedded 0.033 m; body-trim_arch.003 embedded 0.033 m; body-trim_sill.001 embedded 0.042 m; body-mirror_housing.001 flush; body-trim_rail_foot.002 flush; body-bumper_front embedded 0.024 m; body-bumper_rear embedded 0.042 m; body-lamp_head embedded 0.045 m; body-lamp_indicator embedded 0.045 m; body-lamp_reflector flush; body-lamp_reflector.001 flush; body-lamp_tail embedded 0.040 m; body-lamp_tail.001 embedded 0.034 m; body-lamp_tail.002 embedded 0.017 m; body-lamp_tail.003 flush; body-lamp_head.001 embedded 0.045 m; body-lamp_indicator.001 embedded 0.045 m; body-lamp_reflector.002 flush; body-lamp_reflector.003 flush; body-lamp_tail.004 embedded 0.040 m; body-lamp_tail.005 embedded 0.034 m; body-lamp_tail.006 embedded 0.017 m; body-lamp_tail.007 flush; body-trim_handle embedded 0.011 m; body-trim_handle.001 embedded 0.011 m; body-trim_handle.002 embedded 0.011 m; body-trim_handle.003 embedded 0.011 m; body-grille embedded 0.025 m; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; trim_arch-trim_sill embedded 0.026 m; trim_arch.001-trim_sill embedded 0.026 m; trim_sill-bumper_front embedded 0.027 m; trim_sill-bumper_rear embedded 0.027 m; trim_sill-wheel_fl flush; trim_sill-wheel_rl flush; trim_rail_foot-trim_roof_rail flush; trim_rail_foot.001-trim_roof_rail flush; trim_arch.002-trim_sill.001 embedded 0.026 m; trim_arch.003-trim_sill.001 embedded 0.026 m; trim_sill.001-bumper_front embedded 0.027 m; trim_sill.001-bumper_rear embedded 0.027 m; trim_sill.001-wheel_fr flush; trim_sill.001-wheel_rr flush; trim_rail_foot.002-trim_roof_rail.001 flush; trim_rail_foot.003-trim_roof_rail.001 flush; bumper_front-trim_skid_front embedded 0.043 m; bumper_front-plate_front embedded 0.024 m; bumper_front-grille embedded 0.033 m; bumper_front-grille_slats embedded 0.020 m; bumper_front-grille_slats.001 embedded 0.020 m; bumper_front-grille_slats.002 embedded 0.020 m; bumper_front-grille_slats.003 embedded 0.020 m; bumper_front-grille_slats.004 embedded 0.020 m; bumper_front-grille_slats.005 embedded 0.020 m; bumper_front-grille_slats.006 embedded 0.020 m; bumper_front-grille_diagonal embedded 0.037 m; bumper_rear-trim_skid_rear embedded 0.043 m; bumper_rear-plate_rear embedded 0.024 m; lamp_head-lamp_indicator embedded 0.013 m; lamp_tail-lamp_tail.001 flush; lamp_tail.001-lamp_tail.002 flush; lamp_tail.002-lamp_tail.003 flush; lamp_head.001-lamp_indicator.001 embedded 0.013 m; lamp_tail.004-lamp_tail.005 flush; lamp_tail.005-lamp_tail.006 flush; lamp_tail.006-lamp_tail.007 flush; plate_front-grille_diagonal flush; grille-grille_slats flush; grille-grille_slats.001 flush; grille-grille_slats.002 flush; grille-grille_slats.003 flush; grille-grille_slats.004 flush; grille-grille_slats.005 flush; grille-grille_slats.006 flush; grille_slats-grille_diagonal flush; grille_slats.001-grille_diagonal flush; grille_slats.002-grille_diagonal flush; grille_slats.003-grille_diagonal flush; grille_slats.004-grille_diagonal flush; grille_slats.005-grille_diagonal flush; grille_slats.006-grille_diagonal flush; grille_diagonal-badge_volvo flush; wheel_fl-trim_rim_fl flush; trim_rim_fl-trim_spoke flush; trim_rim_fl-trim_spoke.001 flush; trim_rim_fl-trim_spoke.002 flush; trim_rim_fl-trim_spoke.003 flush; trim_rim_fl-trim_spoke.004 flush; trim_rim_fl-trim_spoke.005 flush; wheel_fr-trim_rim_fr flush; trim_rim_fr-trim_spoke.006 flush; trim_rim_fr-trim_spoke.007 flush; trim_rim_fr-trim_spoke.008 flush; trim_rim_fr-trim_spoke.009 flush; trim_rim_fr-trim_spoke.010 flush; trim_rim_fr-trim_spoke.011 flush; wheel_rl-trim_rim_rl flush; trim_rim_rl-trim_spoke.012 flush; trim_rim_rl-trim_spoke.013 flush; trim_rim_rl-trim_spoke.014 flush; trim_rim_rl-trim_spoke.015 flush; trim_rim_rl-trim_spoke.016 flush; trim_rim_rl-trim_spoke.017 flush; wheel_rr-trim_rim_rr flush; trim_rim_rr-trim_spoke.018 flush; trim_rim_rr-trim_spoke.019 flush; trim_rim_rr-trim_spoke.020 flush; trim_rim_rr-trim_spoke.021 flush; trim_rim_rr-trim_spoke.022 flush; trim_rim_rr-trim_spoke.023 flush"
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-trim_arch embedded 0.033 m; body-trim_arch.001 embedded 0.033 m; body-trim_sill embedded 0.042 m; body-mirror_housing flush; body-trim_rail_foot flush; body-trim_arch.002 embedded 0.033 m; body-trim_arch.003 embedded 0.033 m; body-trim_sill.001 embedded 0.042 m; body-mirror_housing.001 flush; body-trim_rail_foot.002 flush; body-bumper_front embedded 0.024 m; body-bumper_rear embedded 0.042 m; body-lamp_head embedded 0.045 m; body-lamp_indicator embedded 0.023 m; body-lamp_tail flush; body-lamp_head.001 embedded 0.045 m; body-lamp_indicator.001 embedded 0.023 m; body-lamp_tail.001 flush; body-trim_handle embedded 0.011 m; body-trim_handle.001 embedded 0.011 m; body-trim_handle.002 embedded 0.011 m; body-trim_handle.003 embedded 0.011 m; body-grille embedded 0.025 m; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; glass_envelope[island 0]-lamp_tail flush; glass_envelope[island 0]-lamp_tail.001 flush; trim_arch-trim_sill embedded 0.026 m; trim_arch.001-trim_sill embedded 0.026 m; trim_sill-bumper_front embedded 0.027 m; trim_sill-bumper_rear embedded 0.027 m; trim_sill-wheel_fl flush; trim_sill-wheel_rl flush; trim_rail_foot-trim_roof_rail flush; trim_rail_foot.001-trim_roof_rail flush; trim_arch.002-trim_sill.001 embedded 0.026 m; trim_arch.003-trim_sill.001 embedded 0.026 m; trim_sill.001-bumper_front embedded 0.027 m; trim_sill.001-bumper_rear embedded 0.027 m; trim_sill.001-wheel_fr flush; trim_sill.001-wheel_rr flush; trim_rail_foot.002-trim_roof_rail.001 flush; trim_rail_foot.003-trim_roof_rail.001 flush; bumper_front-lamp_head flush; bumper_front-lamp_head.001 flush; bumper_front-trim_skid_front embedded 0.043 m; bumper_front-plate_front embedded 0.024 m; bumper_front-grille embedded 0.033 m; bumper_front-grille_slats embedded 0.020 m; bumper_front-grille_slats.001 embedded 0.020 m; bumper_front-grille_slats.002 embedded 0.020 m; bumper_front-grille_slats.003 embedded 0.020 m; bumper_front-grille_slats.004 embedded 0.020 m; bumper_front-grille_slats.005 embedded 0.020 m; bumper_front-grille_slats.006 embedded 0.020 m; bumper_front-grille_diagonal embedded 0.037 m; bumper_rear-trim_skid_rear embedded 0.043 m; bumper_rear-plate_rear embedded 0.024 m; lamp_head-lamp_reflector flush; lamp_head-lamp_reflector.001 flush; lamp_head.001-lamp_reflector.002 flush; lamp_head.001-lamp_reflector.003 flush; plate_front-grille_diagonal flush; grille-grille_slats flush; grille-grille_slats.001 flush; grille-grille_slats.002 flush; grille-grille_slats.003 flush; grille-grille_slats.004 flush; grille-grille_slats.005 flush; grille-grille_slats.006 flush; grille_slats-grille_diagonal flush; grille_slats.001-grille_diagonal flush; grille_slats.002-grille_diagonal flush; grille_slats.003-grille_diagonal flush; grille_slats.004-grille_diagonal flush; grille_slats.005-grille_diagonal flush; grille_slats.006-grille_diagonal flush; grille_diagonal-badge_volvo flush; wheel_fl-trim_rim_fl flush; trim_rim_fl-trim_spoke flush; trim_rim_fl-trim_spoke.001 flush; trim_rim_fl-trim_spoke.002 flush; trim_rim_fl-trim_spoke.003 flush; trim_rim_fl-trim_spoke.004 flush; trim_rim_fl-trim_spoke.005 flush; wheel_fr-trim_rim_fr flush; trim_rim_fr-trim_spoke.006 flush; trim_rim_fr-trim_spoke.007 flush; trim_rim_fr-trim_spoke.008 flush; trim_rim_fr-trim_spoke.009 flush; trim_rim_fr-trim_spoke.010 flush; trim_rim_fr-trim_spoke.011 flush; wheel_rl-trim_rim_rl flush; trim_rim_rl-trim_spoke.012 flush; trim_rim_rl-trim_spoke.013 flush; trim_rim_rl-trim_spoke.014 flush; trim_rim_rl-trim_spoke.015 flush; trim_rim_rl-trim_spoke.016 flush; trim_rim_rl-trim_spoke.017 flush; wheel_rr-trim_rim_rr flush; trim_rim_rr-trim_spoke.018 flush; trim_rim_rr-trim_spoke.019 flush; trim_rim_rr-trim_spoke.020 flush; trim_rim_rr-trim_spoke.021 flush; trim_rim_rr-trim_spoke.022 flush; trim_rim_rr-trim_spoke.023 flush"
   ],
   "units": "m",
   "overall": {
@@ -1956,55 +1818,55 @@
       1.5625
     ],
     "contact_tolerance": 0.005386822451228853,
-    "parts": 91
+    "parts": 85
   },
   "contacts": [
     {
       "a": "body",
       "b": "glass_envelope[island 0]",
-      "depth": 0.0010001066839322448,
+      "depth": 0.0016182904364541173,
       "expected": false
     },
     {
       "a": "body",
       "b": "glass_envelope[island 1]",
-      "depth": 0.001000010408461094,
+      "depth": 0.0,
       "expected": false
     },
     {
       "a": "body",
       "b": "glass_envelope[island 2]",
-      "depth": 0.001000010408461094,
+      "depth": 0.0,
       "expected": false
     },
     {
       "a": "body",
       "b": "glass_envelope[island 3]",
-      "depth": 0.0010000455658882856,
+      "depth": 0.0,
       "expected": false
     },
     {
       "a": "body",
       "b": "glass_envelope[island 4]",
-      "depth": 0.0010000455658882856,
+      "depth": 0.0,
       "expected": false
     },
     {
       "a": "body",
       "b": "glass_envelope[island 5]",
-      "depth": 0.0010000612819567323,
+      "depth": 1.2839233249906101e-06,
       "expected": false
     },
     {
       "a": "body",
       "b": "glass_envelope[island 6]",
-      "depth": 0.0010000859620049596,
+      "depth": 1.2839233249906101e-06,
       "expected": false
     },
     {
       "a": "body",
       "b": "glass_envelope[island 7]",
-      "depth": 0.0010000495240092278,
+      "depth": 1.1920928955078125e-07,
       "expected": false
     },
     {
@@ -2034,7 +1896,7 @@
     {
       "a": "body",
       "b": "trim_rail_foot",
-      "depth": 0.00038595928344875574,
+      "depth": 0.00038607697933912277,
       "expected": false
     },
     {
@@ -2064,7 +1926,7 @@
     {
       "a": "body",
       "b": "trim_rail_foot.002",
-      "depth": 0.00038608451723121107,
+      "depth": 0.00038607502938248217,
       "expected": false
     },
     {
@@ -2088,43 +1950,13 @@
     {
       "a": "body",
       "b": "lamp_indicator",
-      "depth": 0.04478161782026291,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_reflector",
-      "depth": 0.006999969482421875,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_reflector.001",
-      "depth": 0.006999969482421875,
+      "depth": 0.022500038146972656,
       "expected": false
     },
     {
       "a": "body",
       "b": "lamp_tail",
-      "depth": 0.039999961853027344,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_tail.001",
-      "depth": 0.033998504281044006,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_tail.002",
-      "depth": 0.01709224469959736,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_tail.003",
-      "depth": 0.000726975267753005,
+      "depth": 0.009318158030509949,
       "expected": false
     },
     {
@@ -2136,43 +1968,13 @@
     {
       "a": "body",
       "b": "lamp_indicator.001",
-      "depth": 0.04478169605135918,
+      "depth": 0.022500038146972656,
       "expected": false
     },
     {
       "a": "body",
-      "b": "lamp_reflector.002",
-      "depth": 0.006999969482421875,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_reflector.003",
-      "depth": 0.006999969482421875,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_tail.004",
-      "depth": 0.039999961853027344,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_tail.005",
-      "depth": 0.03399856016039848,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_tail.006",
-      "depth": 0.017092281952500343,
-      "expected": false
-    },
-    {
-      "a": "body",
-      "b": "lamp_tail.007",
-      "depth": 0.000726975267753005,
+      "b": "lamp_tail.001",
+      "depth": 0.009318170137703419,
       "expected": false
     },
     {
@@ -2196,7 +1998,7 @@
     {
       "a": "body",
       "b": "trim_handle.003",
-      "depth": 0.01119126658886671,
+      "depth": 0.011191211640834808,
       "expected": false
     },
     {
@@ -2227,6 +2029,18 @@
       "a": "body",
       "b": "wheel_rr",
       "depth": 0.020000040531158447,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 0]",
+      "b": "lamp_tail",
+      "depth": 0.0030029984191060066,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 0]",
+      "b": "lamp_tail.001",
+      "depth": 0.003002879675477743,
       "expected": false
     },
     {
@@ -2327,6 +2141,18 @@
     },
     {
       "a": "bumper_front",
+      "b": "lamp_head",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "bumper_front",
+      "b": "lamp_head.001",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "bumper_front",
       "b": "trim_skid_front",
       "depth": 0.04299640655517578,
       "expected": false
@@ -2405,50 +2231,26 @@
     },
     {
       "a": "lamp_head",
-      "b": "lamp_indicator",
-      "depth": 0.013000011444091797,
+      "b": "lamp_reflector",
+      "depth": 8.940696716308594e-08,
       "expected": false
     },
     {
-      "a": "lamp_tail",
-      "b": "lamp_tail.001",
-      "depth": 0.0,
-      "expected": false
-    },
-    {
-      "a": "lamp_tail.001",
-      "b": "lamp_tail.002",
-      "depth": 0.0,
-      "expected": false
-    },
-    {
-      "a": "lamp_tail.002",
-      "b": "lamp_tail.003",
+      "a": "lamp_head",
+      "b": "lamp_reflector.001",
       "depth": 0.0,
       "expected": false
     },
     {
       "a": "lamp_head.001",
-      "b": "lamp_indicator.001",
-      "depth": 0.013000011444091797,
+      "b": "lamp_reflector.002",
+      "depth": 5.960464477539063e-08,
       "expected": false
     },
     {
-      "a": "lamp_tail.004",
-      "b": "lamp_tail.005",
-      "depth": 0.0,
-      "expected": false
-    },
-    {
-      "a": "lamp_tail.005",
-      "b": "lamp_tail.006",
-      "depth": 0.0,
-      "expected": false
-    },
-    {
-      "a": "lamp_tail.006",
-      "b": "lamp_tail.007",
-      "depth": 0.0,
+      "a": "lamp_head.001",
+      "b": "lamp_reflector.003",
+      "depth": 5.960464477539063e-08,
       "expected": false
     },
     {
