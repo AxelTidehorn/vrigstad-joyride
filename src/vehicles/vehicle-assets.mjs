@@ -60,10 +60,17 @@ export function createVehicleAssets(THREE, Loader) {
         car.mesh.add(steer);
         wheels.push({ steer, spin, front: /^wheel_f/.test(node.name) });
       }
+      const beacons = [];
       visual.traverse(node => {
-        if (node.isMesh) {
-          node.castShadow = true;
-          node.receiveShadow = true;
+        if (!node.isMesh) return;
+        node.castShadow = true;
+        node.receiveShadow = true;
+        if (/^lamp_(blue_module|police_grille)/.test(node.name)) {
+          // Each police car needs its own emissive material state.
+          node.material = node.material.clone();
+          node.material.emissive = new THREE.Color('#176cff');
+          node.material.emissiveIntensity = 0;
+          beacons.push(node.material);
         }
       });
       visual.position.y = -0.72; // Cancel current body's +0.72m rig pivot.
@@ -72,6 +79,7 @@ export function createVehicleAssets(THREE, Loader) {
       car.assetType = type;
       car.visual = visual;
       car.assetWheels = wheels;
+      car.assetBeacons = beacons;
       car.assetWheelRadius = spec.radius;
       car.assetWheelTravel = 0;
       if (wheels.length !== 4) {
@@ -87,10 +95,15 @@ export function createVehicleAssets(THREE, Loader) {
       wheel.spin.rotation.x = -car.assetWheelTravel / car.assetWheelRadius;
     }
   }
+  function setEmergencyLights(car, active) {
+    if (!car.assetBeacons) return;
+    for (const material of car.assetBeacons) material.emissiveIntensity = active ? 1.8 : 0;
+  }
   function dispose(car) {
     if (!car.assetWheels) return;
     for (const wheel of car.assetWheels) car.mesh.remove(wheel.steer);
     car.assetWheels = null;
+    car.assetBeacons = null;
   }
-  return { preload, install, update, dispose };
+  return { preload, install, update, setEmergencyLights, dispose };
 }
