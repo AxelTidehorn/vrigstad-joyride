@@ -100,3 +100,12 @@ The latest canonical Blender and GLB files now include the targeted hood/cowl
 correction (7,822 triangles). See [the before/after report](silhouette/README.md)
 and [static review page](silhouette/index.html) for metrics, images, source
 uncertainty and reproduction. Previous refinement reports above are historical.
+
+## Current profile refinement
+
+The canonical files now include the forward cabin/cowl placement, longer flatter
+roof, controlled hatch break and planar long-door/quarter glazing. See the
+[current before/after profile review](proportion-review/index.html) and
+[measured report](proportion-review/README.md). 7,758 triangles; overall dimensions,
+wheelbase, wheels, bumpers, grille and lamps are retained. Earlier hood/window
+reports above describe their respective preserved checkpoints.

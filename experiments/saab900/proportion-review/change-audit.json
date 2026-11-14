@@ -1,0 +1,170 @@
+{
+  "baseline_blend_sha256": "c793483b10bfbdbf7a50ac071460e1966969e2089ae76ccef90de25e081da79a",
+  "unchanged_components": [
+    "bumper_front",
+    "bumper_rear",
+    "lamp_head",
+    "lamp_indicator",
+    "lamp_tail",
+    "lamp_tail_indicator",
+    "lamp_head.001",
+    "lamp_indicator.001",
+    "lamp_tail.001",
+    "lamp_tail_indicator.001",
+    "grille",
+    "grille_bar",
+    "grille_bar.001",
+    "grille_bar.002",
+    "plate_rear",
+    "badge_front",
+    "wheel_fl",
+    "trim_rim_fl",
+    "trim_spoke",
+    "trim_spoke.001",
+    "trim_spoke.002",
+    "wheel_fr",
+    "trim_rim_fr",
+    "trim_spoke.003",
+    "trim_spoke.004",
+    "trim_spoke.005",
+    "wheel_rl",
+    "trim_rim_rl",
+    "trim_spoke.006",
+    "trim_spoke.007",
+    "trim_spoke.008",
+    "wheel_rr",
+    "trim_rim_rr",
+    "trim_spoke.009",
+    "trim_spoke.010",
+    "trim_spoke.011"
+  ],
+  "adapted_components": [
+    "body",
+    "glass_envelope",
+    "mirror_housing",
+    "mirror_housing.001",
+    "trim_door_seam",
+    "trim_door_seam.001",
+    "trim_handle",
+    "trim_handle.001",
+    "trim_hatch_spoiler",
+    "trim_side",
+    "trim_side.001"
+  ],
+  "unexpected_changes": [],
+  "unexpected_removals": [],
+  "body_bounds_identical": true,
+  "before_body_bounds": [
+    [
+      -0.845,
+      -2.24,
+      0.235
+    ],
+    [
+      0.845,
+      2.24,
+      1.42
+    ]
+  ],
+  "after_body_bounds": [
+    [
+      -0.845,
+      -2.24,
+      0.235
+    ],
+    [
+      0.845,
+      2.24,
+      1.42
+    ]
+  ],
+  "side_glass_before": [
+    {
+      "centre_m": [
+        -0.7205011376312801,
+        0.14876995714647429,
+        1.0903488802058356
+      ],
+      "plane_rms_mm": 7.720390726125386,
+      "note": "Includes both surfaces of the 6 mm solid glass; a planar pane has about 3 mm RMS."
+    },
+    {
+      "centre_m": [
+        -0.7150009423494339,
+        -1.002290353178978,
+        1.1014023025830586
+      ],
+      "plane_rms_mm": 6.717315298901164,
+      "note": "Includes both surfaces of the 6 mm solid glass; a planar pane has about 3 mm RMS."
+    },
+    {
+      "centre_m": [
+        0.7150009423494339,
+        -1.002290353178978,
+        1.1014023025830586
+      ],
+      "plane_rms_mm": 6.717315298901164,
+      "note": "Includes both surfaces of the 6 mm solid glass; a planar pane has about 3 mm RMS."
+    },
+    {
+      "centre_m": [
+        0.7205011376312801,
+        0.14876995714647429,
+        1.0903488802058356
+      ],
+      "plane_rms_mm": 7.720390726125385,
+      "note": "Includes both surfaces of the 6 mm solid glass; a planar pane has about 3 mm RMS."
+    }
+  ],
+  "side_glass_after": [
+    {
+      "centre_m": [
+        -0.7306344285607338,
+        0.3114077765494585,
+        1.1050937213003635
+      ],
+      "plane_rms_mm": 2.9999994978626874,
+      "note": "Includes both surfaces of the 6 mm solid glass; a planar pane has about 3 mm RMS."
+    },
+    {
+      "centre_m": [
+        -0.7262614717086157,
+        -0.9472930431365967,
+        1.1201728979746501
+      ],
+      "plane_rms_mm": 2.999999497877372,
+      "note": "Includes both surfaces of the 6 mm solid glass; a planar pane has about 3 mm RMS."
+    },
+    {
+      "centre_m": [
+        0.7262614717086157,
+        -0.9472930431365967,
+        1.1201728979746501
+      ],
+      "plane_rms_mm": 2.999999497877373,
+      "note": "Includes both surfaces of the 6 mm solid glass; a planar pane has about 3 mm RMS."
+    },
+    {
+      "centre_m": [
+        0.7306344285607338,
+        0.3114077765494585,
+        1.1050937213003635
+      ],
+      "plane_rms_mm": 2.9999994978626874,
+      "note": "Includes both surfaces of the 6 mm solid glass; a planar pane has about 3 mm RMS."
+    }
+  ],
+  "changes": {
+    "cowl_rear_station_y_before_m": 0.84,
+    "cowl_rear_station_y_after_m": 1.0,
+    "roof_front_station_y_before_m": 0.24,
+    "roof_front_station_y_after_m": 0.48,
+    "B_pillar_centre_y_before_m": -0.49,
+    "B_pillar_centre_y_after_m": -0.4,
+    "quarter_window_rear_y_before_m": -1.48,
+    "quarter_window_rear_y_after_m": -1.28,
+    "transverse_roof_crown_before_mm": 47,
+    "transverse_roof_crown_after_mm": 25
+  },
+  "uncertainty": "Direct model-coordinate changes are measured. Manufacturer sketch is pre-facelift and not a calibrated 1988 master; reference errors remain canonical pixels, not certified mm."
+}

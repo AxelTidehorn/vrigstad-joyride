@@ -1,0 +1,19 @@
+✔ GLB becomes ready even while optional film script never completes (57.294162ms)
+✔ existing film script boots with preview globals; controls and neutral toggle work (20.607332ms)
+✔ film download failure retains a working neutral GLB preview (16.625521ms)
+✔ actual GLB loads at real dimensions and -Z-forward wheel positions (1.271596ms)
+✔ pinch spread zooms in; releasing one finger continues without a jump (0.266131ms)
+✔ cancelled, third and crossing touches do not create invalid zoom (0.118218ms)
+✔ fixed views restore neutral zoom and reset active gesture state (0.176496ms)
+✔ five views fit the available 1024×768 review region (1.786342ms)
+✔ five views fit the available 768×1024 review region (0.705142ms)
+✔ five views fit the available 1366×1024 review region (0.565602ms)
+✔ five views fit the available 390×844 review region (1.171355ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 264.556791

@@ -8,9 +8,9 @@
   "tire_width": 0.195,
   "front_track": 1.43,
   "rear_track": 1.43,
-  "roof_front": 0.24,
-  "roof_rear": -0.65,
-  "cowl": 0.73,
+  "roof_front": 0.48,
+  "roof_rear": -0.95,
+  "cowl": 0.95,
   "hatch_base": -1.94,
   "arch_radius": 0.35
 }

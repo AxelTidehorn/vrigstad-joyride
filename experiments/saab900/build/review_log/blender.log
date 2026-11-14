@@ -1,49 +1,49 @@
 Blender 4.3.2
 Read blend: "/workspace/work/vrigstad-joyride/experiments/saab900/build/model.blend"
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/A_body/clay_side.png'
-Time: 00:00.57 (Saving: 00:00.16)
+Time: 00:00.62 (Saving: 00:00.18)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/A_body/clay_front.png'
-Time: 00:00.51 (Saving: 00:00.08)
+Time: 00:00.54 (Saving: 00:00.09)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/A_body/clay_rear.png'
-Time: 00:00.60 (Saving: 00:00.06)
+Time: 00:00.45 (Saving: 00:00.08)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/A_body/clay_front_three_quarter.png'
-Time: 00:00.34 (Saving: 00:00.05)
+Time: 00:00.32 (Saving: 00:00.05)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/A_body/clay_rear_three_quarter.png'
-Time: 00:00.35 (Saving: 00:00.07)
+Time: 00:00.32 (Saving: 00:00.07)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/B_glass/clay_side.png'
-Time: 00:00.31 (Saving: 00:00.05)
+Time: 00:00.33 (Saving: 00:00.07)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/B_glass/clay_front.png'
-Time: 00:00.48 (Saving: 00:00.06)
+Time: 00:00.50 (Saving: 00:00.06)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/B_glass/clay_rear.png'
-Time: 00:00.51 (Saving: 00:00.09)
+Time: 00:00.54 (Saving: 00:00.09)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/B_glass/clay_front_three_quarter.png'
-Time: 00:00.34 (Saving: 00:00.08)
+Time: 00:00.34 (Saving: 00:00.07)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/B_glass/clay_rear_three_quarter.png'
-Time: 00:00.31 (Saving: 00:00.05)
+Time: 00:00.32 (Saving: 00:00.05)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/C_complete/clay_side.png'
-Time: 00:00.34 (Saving: 00:00.05)
+Time: 00:00.33 (Saving: 00:00.06)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/C_complete/clay_front.png'
-Time: 00:00.52 (Saving: 00:00.09)
+Time: 00:00.49 (Saving: 00:00.07)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/C_complete/clay_rear.png'
-Time: 00:00.54 (Saving: 00:00.08)
+Time: 00:00.50 (Saving: 00:00.08)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/C_complete/clay_front_three_quarter.png'
-Time: 00:00.36 (Saving: 00:00.07)
+Time: 00:00.37 (Saving: 00:00.05)
 
 Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/C_complete/clay_rear_three_quarter.png'
-Time: 00:00.37 (Saving: 00:00.05)
+Time: 00:00.35 (Saving: 00:00.05)
 
 RENDER: 5 views -> /workspace/work/vrigstad-joyride/experiments/saab900/build/A_body/clay_sheet.png
 RENDER: 5 views -> /workspace/work/vrigstad-joyride/experiments/saab900/build/B_glass/clay_sheet.png

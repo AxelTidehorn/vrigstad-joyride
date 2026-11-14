@@ -2,11 +2,12 @@
   "ok": true,
   "loader": "existing Three r128 GLTFLoader",
   "meshes": 47,
-  "triangles": 7822,
+  "triangles": 7758,
   "dimensions_glb_xyz_m": [
     1.75,
     1.4199999868869781,
     4.679958820343018
   ],
-  "browser_gpu_or_safari_tested": false
+  "browser_gpu_or_safari_tested": false,
+  "texture_check": "PNG dimensions supplied for CPU scene parsing only; no GPU upload/decoding claim"
 }
