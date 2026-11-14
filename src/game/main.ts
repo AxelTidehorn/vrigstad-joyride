@@ -3,6 +3,10 @@
 import * as THREE from 'three';
 import D from '../../data/vrigstad.json';
 import { LEGACY_LIGHT } from '../world/three-legacy';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { createVehicleAssets } from './render/vehicle-assets.mjs';
+import * as DRIVING_PHYSICS from './sim/driving-v4.mjs';
+import * as BODY_MOTION from './render/body-motion.mjs';
 
 (function () {
 'use strict';
@@ -380,6 +384,7 @@ const lamps = z => [[0.34, 0.16, 0.06, -0.6, 0.72, -z, '#fff6c8'], [0.34, 0.16, 
 const TYPES = {
   volvo: { name: 'Volvo 240', max: 38, acc: 7, off: 0.5, cols: ['#27406b', '#7a2530', '#c9bd9c', '#e6e4dc', '#2f5a41', '#8a8f93'] },
   saab: { name: 'Saab 900', max: 42, acc: 8.5, off: 0.5, cols: ['#1d1d1f', '#8c1c1c', '#3d5a80', '#d8d4c8', '#55606a'] },
+  xc70: { name:'Volvo XC70 P2', max:42, acc:8.5, off:.6, cols:['#a4afb8','#36465a','#66786c','#e0dad0','#76504b','#b0a58a','#313c40'] },
   epa: { name: 'EPA-traktor', max: 8.33, acc: 4, off: 0.7, cols: ['#c8372d', '#2a2a2c', '#e8a020', '#3f6b8a'] },
   traktor: { name: 'Traktor', max: 11, acc: 3.5, off: 1, cols: ['#2f7a3a', '#b5302a', '#2a5fa0'] },
   polis: { name: 'Polisbil', max: 35, acc: 9, off: 0.6, cols: ['#f1f1ee'] }
@@ -434,21 +439,43 @@ function personParts(shirt, pants, hair) {
 
 // ---------- cars ----------
 const cars = [], police = [];
+const glbVehicles = createVehicleAssets(THREE, GLTFLoader);
+let glbDetailElapsed = 0;
 const _f = new THREE.Vector3(), _r = new THREE.Vector3(), _m = new THREE.Matrix4();
 function placeCar(c) {
   const n = normalAt(c.x, c.z);
   _f.set(Math.sin(c.h), 0, -Math.cos(c.h)); _f.addScaledVector(n, -_f.dot(n)).normalize(); _r.crossVectors(_f, n);
   _m.makeBasis(_r, n, _f.negate()); c.mesh.quaternion.setFromRotationMatrix(_m);
-  c.mesh.position.set(c.x, groundAt(c.x, c.z) - (c.wet ? 0.55 : 0), c.z);
+  c.mesh.position.set(c.x, groundAt(c.x,c.z)-(c.wet?0.55:0), c.z);
+  if(c.bodyRig){
+    c.bodyRig.position.y=.72+c.bodyMotion.heave;
+    c.bodyRig.rotation.set(c.bodyMotion.pitch,0,c.bodyMotion.roll);
+  }
+  if(c.assetWheels && c.wheelLastX !== undefined){
+    const dx=c.x-c.wheelLastX, dz=c.z-c.wheelLastZ;
+    if(Math.hypot(dx,dz)<20) c.assetWheelTravel+=dx*Math.sin(c.h)-dz*Math.cos(c.h);
+  }
+  c.wheelLastX=c.x; c.wheelLastZ=c.z;
+  glbVehicles.update(c);
 }
 function addCar(type, x, z, h, mode) {
-  const T = TYPES[type], mesh = new THREE.Mesh(carGeo(type, pick(T.cols)), carMat); mesh.castShadow = true; blob(mesh, 2.8, 5.8);
-  if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); mesh.add(bar); }
-  const c = { type, T, mesh, x, z, h, v: 0, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
-  scene.add(mesh); cars.push(c); placeCar(c); return c;
+  const T = TYPES[type], paint = pick(T.cols);
+  const body = new THREE.Mesh(carGeo(type === 'xc70' ? 'volvo' : type, paint), carMat);
+  body.castShadow = true;
+  // Keep terrain alignment and wheel pivots independent of the body suspension.
+  const mesh = new THREE.Group(), bodyRig = new THREE.Group();
+  bodyRig.position.y = .72; body.position.y = -.72;
+  bodyRig.add(body); mesh.add(bodyRig); blob(mesh, 2.8, 5.8);
+  if(type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, .2); body.add(bar); }
+  const c = {type, T, mesh, bodyRig, bodyMotion:BODY_MOTION.createBodyMotion(),
+    x,z,h,v:0,driveState:null,mode,wet:false,owned:false,
+    blocked:0,ghost:0,stuck:0,rev:0,revSteer:1};
+  scene.add(mesh); cars.push(c); placeCar(c);
+  glbVehicles.install(c,type,body,paint);
+  return c;
 }
-function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
-const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : 'traktor'; };
+function removeCar(c) { glbVehicles.dispose(c); scene.remove(c.mesh); const i=cars.indexOf(c); if(i>=0)cars.splice(i,1); }
+const civType = () => { const r=rnd(); return r<.32?'volvo':r<.58?'saab':r<.78?'xc70':r<.89?'epa':'traktor'; };
 // parked cars along streets and driveways
 (function () {
   let count = 0;
@@ -501,24 +528,84 @@ function updateTraffic(c, dt, T) {
   placeCar(c);
 }
 // shared driving model for the player and the police
-function drive(c, thr, steer, brake, dt) {
-  const road = nearestRoad(c.x, c.z).d < 0.6; c.wet = inWater(c.x, c.z);
-  if (brake) c.v -= Math.sign(c.v) * Math.min(Math.abs(c.v), 26 * dt);
-  else if (thr > 0) c.v += (c.v < 0 ? 20 : c.T.acc * (1 - 0.6 * Math.max(0, c.v) / c.T.max)) * thr * dt;
-  else if (thr < 0) c.v += (c.v > 0.5 ? 20 : c.T.acc * 0.6) * thr * dt;
-  else c.v -= Math.sign(c.v) * Math.min(Math.abs(c.v), (road ? 2 : 5) * dt);
-  const max = c.wet ? 2.5 : c.T.max * (road ? 1 : c.T.off);
-  if (c.v > max) c.v = Math.max(max, c.v - 14 * dt);
-  if (c.v < -7) c.v = -7;
-  c.h = wrap(c.h + c.v / 2.7 * Math.tan(steer * 0.6 / (1 + Math.abs(c.v) / 11)) * dt);
-  c.x += Math.sin(c.h) * c.v * dt; c.z -= Math.cos(c.h) * c.v * dt;
-  c.x = clamp(c.x, -HALF + 4, HALF - 4); c.z = clamp(c.z, -HALF + 4, HALF - 4);
-  if (collide(c, 1.5)) c.v *= Math.pow(0.02, dt);
-  for (const o of cars) { if (o === c) continue; const dx = c.x - o.x, dz = c.z - o.z, d = Math.hypot(dx, dz);
-    if (d < 2.7 && d > 0.01) { const push = 2.7 - d; c.x += dx / d * push; c.z += dz / d * push;
-      if (Math.abs(c.v) > 6 && c === pcar && o.mode === 'police' && ramCool <= 0) { ramCool = 6; addStar('Ramming a police car. That will not help.'); }
-      if (o.mode === 'parked' || o.mode === 'idle') { o.x -= dx / d * push * 0.4; o.z -= dz / d * push * 0.4; placeCar(o); }
-      c.v *= Math.pow(0.05, dt); } }
+// V4 — shared arcade tire dynamics and automatic powertrains for player/police.
+// Civilian path-following traffic intentionally keeps its existing movement model.
+const DRIVE_CLASS = {volvo:'rwd',epa:'rwd',saab:'fwd',saab95Estate:'fwd',xc70:'awd',polis:'awd',
+                     traktor:'awd',newHolland:'awd',johnDeere:'awd'};
+const DRIVE_MODE = new URLSearchParams(location.search).get('drivetrain')==='v3'?'v3':'v4';
+function drive(c, thr, steer, brake, dt, handbrake=false) {
+  if(dt<=0)return;
+  c.braking=!!brake;
+  const kind=DRIVE_CLASS[c.type]||'rwd';
+  if(!c.driveState){
+    c.driveState=DRIVING_PHYSICS.newCar(kind,c.x,c.z,c.h,c.type);
+    c.driveState.u=c.v;
+  }
+  const dyn=c.driveState;
+  const initialU=dyn.u,initialV=dyn.v;
+  const near=nearestRoad(c.x,c.z),roadIndex=near.ri,edge=near.d;
+  const onRoad=roadIndex>=0&&edge<.6;
+  const surface=roadIndex>=0&&R[roadIndex].c>=3?'gravel':'asphalt';
+  // Sample four footprint corners, so clipping a verge doesn't make the
+  // entire vehicle suddenly switch to grass physics or lose its speed cap.
+  const fX=Math.sin(c.h),fZ=-Math.cos(c.h),rX=Math.cos(c.h),rZ=Math.sin(c.h);
+  let grassWheels=0;
+  for(const longitudinal of [-1.15,1.15])for(const lateral of [-.78,.78]){
+    const sample=nearestRoad(c.x+fX*longitudinal+rX*lateral,
+                             c.z+fZ*longitudinal+rZ*lateral);
+    if(sample.ri<0||sample.d>.55)grassWheels++;
+  }
+  const grassFraction=grassWheels*.25;
+  c.wet=inWater(c.x,c.z);
+  // Only water imposes an immediate lower speed cap. Roadside terrain
+  // changes rolling resistance and grip, not an instantaneous maximum speed.
+  const limit=c.wet?2.5:c.T.max;
+  const reference=DRIVING_PHYSICS.VEHICLE_PRESETS[kind];
+  // V4 has per-model measured acceleration; V3 retains its former A/B behavior.
+  const powerScale=DRIVE_MODE==='v3'
+    ?clamp(c.T.acc/reference.acceleration,.35,1.5):1;
+  const count=Math.max(1,Math.ceil(dt/(1/120))),h=dt/count;
+  for(let i=0;i<count;i++){
+    DRIVING_PHYSICS.stepCar(dyn,{throttle:thr,steer,brake:brake?1:0,handbrake:handbrake?1:0},
+      h,{feel:'balanced',powertrain:DRIVE_MODE,surface,grassFraction,
+         speedLimit:limit,hardCap:limit,powerScale});
+  }
+  c.x=clamp(dyn.x,-HALF+4,HALF-4);
+  c.z=clamp(dyn.z,-HALF+4,HALF-4);
+  c.h=wrap(dyn.h);c.v=dyn.u;
+  if(collide(c,1.5)){
+    // Resolve position back into the dynamics state, damping both lateral and yaw
+    // momentum rather than letting the next step drive through the wall again.
+    dyn.u*=Math.pow(.08,Math.max(dt,1/120));dyn.v*=.35;dyn.r*=.35;
+    c.v=dyn.u;
+  }
+  for(const o of cars){
+    if(o===c)continue;
+    const dx=c.x-o.x,dz=c.z-o.z,d=Math.hypot(dx,dz);
+    if(d<2.7&&d>.01){
+      const push=2.7-d;c.x+=dx/d*push;c.z+=dz/d*push;
+      if(Math.abs(c.v)>6&&c===pcar&&o.mode==='police'&&ramCool<=0){
+        ramCool=6;addStar('Ramming a police car. That will not help.');
+      }
+      if(o.mode==='parked'||o.mode==='idle'){
+        o.x-=dx/d*push*.4;o.z-=dz/d*push*.4;
+        if(o.driveState){o.driveState.x=o.x;o.driveState.z=o.z;o.driveState.u=0;o.driveState.v=0;}
+        placeCar(o);
+      }
+      dyn.u*=Math.pow(.05,Math.max(dt,1/120));dyn.v*=.6;dyn.r*=.5;c.v=dyn.u;
+    }
+  }
+  dyn.x=c.x;dyn.z=c.z;dyn.h=c.h;dyn.speed=Math.hypot(dyn.u,dyn.v);
+  // Spring-damped body movement is deliberately visual-only: it cannot
+  // change tire grip, heading, vehicle hitboxes or road contact.
+  const forwardAccel=clamp((dyn.u-initialU)/dt,-10,10);
+  const lateralAccel=clamp((dyn.v-initialV)/dt+dyn.u*dyn.r,-12,12);
+  const hx=Math.sin(c.h)*1.3,hz=-Math.cos(c.h)*1.3;
+  const terrainOffset=(groundAt(c.x+hx,c.z+hz)+groundAt(c.x-hx,c.z-hz))*.5-groundAt(c.x,c.z);
+  BODY_MOTION.stepBodyMotion(c.bodyMotion,{
+    forwardAcceleration:forwardAccel,lateralAcceleration:lateralAccel,
+    speed:dyn.speed,distance:dyn.distance,terrainOffset,surface:grassFraction>.5?'grass':surface
+  },dt);
   placeCar(c);
 }
 
@@ -867,6 +954,19 @@ function resize() { const w = canvas.clientWidth, h = canvas.clientHeight; if (!
   renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
 addEventListener('resize', resize); if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas);
 let last = performance.now();
+function refreshVehicleDetail(focus) {
+  // Show the high-detail GLBs on the four Torget demonstration cars and a
+  // bounded number of nearby vehicles; leave far traffic on legacy meshes.
+  // Both render paths share a single simulation and collision model.
+  const ranked = cars.filter(c => glbVehicles.has(c.type))
+    .map(c => ({ c, dist: Math.hypot(c.x-focus.x,c.z-focus.z) }))
+    .filter(item => item.c.isShowcase || item.dist < 120)
+    .sort((a,b) => (a.c.isShowcase ? -1000 : a.dist) -
+                   (b.c.isShowcase ? -1000 : b.dist));
+  const detailed = new Set(ranked.slice(0,14).map(item => item.c));
+  for (const c of cars) if (glbVehicles.has(c.type))
+    glbVehicles.setDetailed(c,detailed.has(c));
+}
 function frame(now) {
   requestAnimationFrame(frame);
   const dt = clamp((now - last) / 1000, 0, 0.05); last = now;
@@ -876,7 +976,7 @@ function frame(now) {
   if (trissT > 0) { trissT -= dt; if (trissT <= 0) trissResult(); }
   for (const p of places) p.gem.rotation.y += dt * 1.6;
 
-  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = Math.abs(pcar.v); }
+  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt, !!keys.run); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = pcar.driveState ? pcar.driveState.speed : Math.abs(pcar.v); }
   else {
     const mag = Math.min(1, Math.hypot(mx, my)), wet = inWater(player.x, player.z);
     if (mag > 0.08 && bigT <= 0 && !inside) {
@@ -891,6 +991,8 @@ function frame(now) {
     player.mesh.position.set(player.x, groundAt(player.x, player.z) - (wet ? 0.95 : 0), player.z); player.mesh.rotation.y = -player.h;
   }
   const T = inCar ? pcar : player;
+  glbDetailElapsed += dt;
+  if(glbDetailElapsed >= .35) { glbDetailElapsed=0; refreshVehicleDetail(T); }
   for (const c of cars) if (c.mode === 'ai') updateTraffic(c, dt, T);
   updateNpcs(T, dt);
   updateCats(T, dt);
@@ -901,7 +1003,7 @@ function frame(now) {
     $('stars').classList.toggle('evading', evade > 2);
     if (inside) { hideT -= dt; if (hideT <= 0) { clearWanted(); toast('The police gave up. The coast is clear.'); } }
     else if (md < 7.5 && player.speed < 2.5) { bustT += dt; if (bustT > 1.6) busted(); } else bustT = Math.max(0, bustT - dt);
-    blinkT += dt; if (blinkT > 0.22) { blinkT = 0; blink = !blink; barMat.color.copy(blink ? BAR_RED : BAR_BLUE); }
+    blinkT += dt; if (blinkT > 0.22) { blinkT = 0; blink = !blink; barMat.color.copy(blink ? BAR_RED : BAR_BLUE); for(const p of police) glbVehicles.setEmergencyLights(p,blink); }
   }
   for (let i = peds.length - 1; i >= 0; i--) { const p = peds[i]; p.ttl -= dt; p.rotation.y = -Math.atan2(T.x - p.position.x, -(T.z - p.position.z));
     if (p.ttl <= 0) { scene.remove(p); peds.splice(i, 1); } }
