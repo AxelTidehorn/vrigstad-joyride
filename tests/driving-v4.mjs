@@ -56,5 +56,6 @@ const allGrass=newCar('rwd');allGrass.u=23;
 for(let i=0;i<120;i++)stepCar(allGrass,{throttle:.3},dt,{feel:'balanced',powertrain:'v4',surface:'asphalt',powerScale:1.2,hardCap:38,grassFraction:1});
 assert.ok(allGrass.u>18,'grass should not instantly erase momentum');
 const launch=simulate('rwd',18,{throttle:1},{powerScale:1.26,hardCap:38});
+console.log('Volvo 18s:',(launch.u*3.6).toFixed(1),'km/h','gear',launch.gear,'rpm',Math.round(launch.rpm));
 assert.ok(launch.u>27.78,'Volvo should eventually reach 100 km/h under continuous power');
 console.log('Driving V4: automatic gearboxes, launch, partial grass and speed continuity passed.');
