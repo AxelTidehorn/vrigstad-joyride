@@ -201,6 +201,11 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   const allowedYaw=lateralMu*g/Math.max(4,Math.abs(c.u));
   const targetYaw=clamp(steerYaw,-allowedYaw,allowedYaw);
   rdot+=(targetYaw-c.r)*yawAssist;
+  // Rate-limit an excessive spin, not the slide angle itself: the driver can
+  // still countersteer into a drift without an abrupt snap-to-straight reset.
+  const yawCeiling=Math.max(.40,Math.abs(targetYaw)*1.25);
+  const overspin=Math.max(0,Math.abs(c.r)-yawCeiling);
+  rdot-=Math.sign(c.r)*overspin*(2+7*driftBlend);
   if(Math.abs(c.u)<1&&Math.abs(c.v)<.5){vdot-=c.v*4;rdot-=c.r*5}
   const prevU=c.u;
   c.u=clamp(c.u+udot*dt,-8,settings.hardCap??spec.maxSpeed*1.17);
