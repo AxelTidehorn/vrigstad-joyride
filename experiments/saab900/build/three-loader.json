@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "three_revision": "128",
+  "dimensions_glb_xyz": [
+    1.75,
+    1.4199999868869781,
+    4.679958820343018
+  ],
+  "parse_milliseconds": 16.29534199999999,
+  "warning": "Node CPU parse, not Safari/WebGL frame performance."
+}

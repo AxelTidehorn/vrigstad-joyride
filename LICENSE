@@ -43,3 +43,10 @@ Third-party components keep their own licenses:
   and its matching GLTFLoader, MIT License. Full licence text is included as
   `media/vehicles/vendor/THREE-LICENSE.txt`. These are the same versions previously
   loaded by the preview from CDNs; local copies avoid extra third-party requests.
+
+- Saab 900 experiment reference PNGs in `experiments/saab900/references/`:
+  photographs by Alexander Migl, CC BY-SA 4.0,
+  https://creativecommons.org/licenses/by-sa/4.0/ . Resized PNG conversions;
+  no photo textures are included in the original procedural model. Sources:
+  https://commons.wikimedia.org/wiki/File:Saab_900_(first_generation)_three-door_hatchback_Turbo_DSC_2936.jpg
+  https://commons.wikimedia.org/wiki/File:Saab_900_(first_generation)_three-door_hatchback_Turbo_DSC_2938.jpg

@@ -1,0 +1,56 @@
+GEOMETRY CHECK: 0 errors, 0 warnings
+  overall size (m): (1.750, 4.680, 1.420)  parts: 52  contact tol: 0.0052
+  [INFO] badge_front: 2 n-gons (matters only before subdivision).
+  [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-bumper_front embedded 0.030 m; body-bumper_rear embedded 0.034 m; body-trim_side embedded 0.017 m; body-mirror_housing embedded 0.021 m; body-trim_side.001 embedded 0.017 m; body-mirror_housing.001 embedded 0.021 m; body-trim_hatch_spoiler embedded 0.017 m; body-lamp_head embedded 0.040 m; body-lamp_indicator embedded 0.038 m; body-lamp_tail embedded 0.028 m; body-lamp_tail_indicator embedded 0.040 m; body-lamp_head.001 embedded 0.040 m; body-lamp_indicator.001 embedded 0.038 m; body-lamp_tail.001 embedded 0.028 m; body-lamp_tail_indicator.001 embedded 0.040 m; body-trim_handle embedded 0.015 m; body-trim_handle.001 embedded 0.015 m; body-grille embedded 0.023 m; body-plate_rear flush; body-trim_door_seam flush; body-trim_door_seam.001 flush; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; glass_envelope[island 0]-trim_hatch_spoiler embedded 0.011 m; glass_envelope[island 3]-glass_envelope[island 5] flush; glass_envelope[island 3]-mirror_housing.001 flush; glass_envelope[island 4]-glass_envelope[island 5] flush; glass_envelope[island 4]-mirror_housing flush; lamp_head-lamp_indicator flush; lamp_tail-lamp_tail_indicator embedded 0.016 m; lamp_head.001-lamp_indicator.001 flush; lamp_tail.001-lamp_tail_indicator.001 embedded 0.016 m; grille-grille_bar flush; grille-grille_bar.001 flush; grille-grille_bar.002 flush; grille-badge_front flush; grille_bar.001-badge_front flush; grille_bar.002-badge_front flush; wheel_fl-trim_rim_fl embedded 0.016 m; wheel_fl-trim_spoke flush; wheel_fl-trim_spoke.001 flush; wheel_fl-trim_spoke.002 flush; trim_rim_fl-trim_spoke flush; trim_rim_fl-trim_spoke.001 flush; trim_rim_fl-trim_spoke.002 flush; wheel_fr-trim_rim_fr embedded 0.016 m; wheel_fr-trim_spoke.003 flush; wheel_fr-trim_spoke.004 flush; wheel_fr-trim_spoke.005 flush; trim_rim_fr-trim_spoke.003 flush; trim_rim_fr-trim_spoke.004 flush; trim_rim_fr-trim_spoke.005 flush; wheel_rl-trim_rim_rl embedded 0.016 m; wheel_rl-trim_spoke.006 flush; wheel_rl-trim_spoke.007 flush; wheel_rl-trim_spoke.008 flush; trim_rim_rl-trim_spoke.006 flush; trim_rim_rl-trim_spoke.007 flush; trim_rim_rl-trim_spoke.008 flush; wheel_rr-trim_rim_rr embedded 0.016 m; wheel_rr-trim_spoke.009 flush; wheel_rr-trim_spoke.010 flush; wheel_rr-trim_spoke.011 flush; trim_rim_rr-trim_spoke.009 flush; trim_rim_rr-trim_spoke.010 flush; trim_rim_rr-trim_spoke.011 flush
+  objects:
+    body: dims (1.690, 4.480, 1.185) verts 873 faces 1742 islands 1
+    glass_envelope: dims (1.589, 2.721, 0.474) verts 258 faces 492 islands 6
+    bumper_front: dims (1.700, 0.410, 0.145) verts 160 faces 316 islands 1
+    bumper_rear: dims (1.700, 0.410, 0.145) verts 160 faces 316 islands 1
+    trim_side: dims (0.348, 3.923, 0.012) verts 168 faces 332 islands 1
+    mirror_housing: dims (0.130, 0.230, 0.105) verts 24 faces 44 islands 1
+    trim_side.001: dims (0.348, 3.923, 0.012) verts 168 faces 332 islands 1
+    mirror_housing.001: dims (0.130, 0.230, 0.105) verts 24 faces 44 islands 1
+    trim_hatch_spoiler: dims (1.425, 0.134, 0.055) verts 68 faces 132 islands 1
+    lamp_head: dims (0.390, 0.050, 0.170) verts 24 faces 44 islands 1
+    lamp_indicator: dims (0.110, 0.060, 0.170) verts 24 faces 44 islands 1
+    lamp_tail: dims (0.285, 0.045, 0.190) verts 24 faces 44 islands 1
+    lamp_tail_indicator: dims (0.100, 0.050, 0.090) verts 24 faces 44 islands 1
+    lamp_head.001: dims (0.390, 0.050, 0.170) verts 24 faces 44 islands 1
+    lamp_indicator.001: dims (0.110, 0.060, 0.170) verts 24 faces 44 islands 1
+    lamp_tail.001: dims (0.285, 0.045, 0.190) verts 24 faces 44 islands 1
+    lamp_tail_indicator.001: dims (0.100, 0.050, 0.090) verts 24 faces 44 islands 1
+    trim_handle: dims (0.028, 0.150, 0.035) verts 24 faces 44 islands 1
+    trim_handle.001: dims (0.028, 0.150, 0.035) verts 24 faces 44 islands 1
+    grille: dims (0.520, 0.045, 0.175) verts 24 faces 44 islands 1
+    grille_bar: dims (0.490, 0.018, 0.014) verts 24 faces 44 islands 1
+    grille_bar.001: dims (0.490, 0.018, 0.014) verts 24 faces 44 islands 1
+    grille_bar.002: dims (0.490, 0.018, 0.014) verts 24 faces 44 islands 1
+    plate_rear: dims (0.350, 0.030, 0.095) verts 24 faces 44 islands 1
+    trim_door_seam: dims (0.004, 0.001, 0.290) verts 56 faces 108 islands 1
+    trim_door_seam.001: dims (0.004, 0.001, 0.290) verts 56 faces 108 islands 1
+    badge_front: dims (0.046, 0.046, 0.008) verts 24 faces 14 islands 1
+    wheel_fl: dims (0.268, 0.610, 0.610) verts 242 faces 480 islands 1
+    trim_rim_fl: dims (0.412, 0.412, 0.020) verts 48 faces 92 islands 1
+    trim_spoke: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    trim_spoke.001: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    trim_spoke.002: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    wheel_fr: dims (0.268, 0.610, 0.610) verts 242 faces 480 islands 1
+    trim_rim_fr: dims (0.412, 0.412, 0.020) verts 48 faces 92 islands 1
+    trim_spoke.003: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    trim_spoke.004: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    trim_spoke.005: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    wheel_rl: dims (0.268, 0.610, 0.610) verts 242 faces 480 islands 1
+    trim_rim_rl: dims (0.412, 0.412, 0.020) verts 48 faces 92 islands 1
+    trim_spoke.006: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    trim_spoke.007: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    trim_spoke.008: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    wheel_rr: dims (0.268, 0.610, 0.610) verts 242 faces 480 islands 1
+    trim_rim_rr: dims (0.412, 0.412, 0.020) verts 48 faces 92 islands 1
+    trim_spoke.009: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    trim_spoke.010: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+    trim_spoke.011: dims (0.022, 0.120, 0.055) verts 24 faces 44 islands 1
+Info: Saved "model.blend"
+Blender 4.3.2
+
+Blender quit

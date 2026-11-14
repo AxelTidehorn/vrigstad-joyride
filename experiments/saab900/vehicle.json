@@ -1,0 +1,17 @@
+{
+  "id": "saab900Turbo16_1988",
+  "dimensions_m": {
+    "length": 4.68,
+    "width": 1.69,
+    "height": 1.42
+  },
+  "tolerance_m": {
+    "length": 0.025,
+    "width": 0.02,
+    "height": 0.02
+  },
+  "wheelbase_m": 2.517,
+  "wheelbase_tolerance_m": 0.015,
+  "triangle_budget": 14000,
+  "detail_clearance_m": 0.4
+}

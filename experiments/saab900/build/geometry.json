@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "model": "saab900Turbo16_1988",
+  "errors": [],
+  "warnings": [],
+  "meshes": 47,
+  "triangles": 7486,
+  "dimensions_m": {
+    "width": 1.69,
+    "height": 1.42,
+    "length": 4.68
+  },
+  "wheelbase_m": 2.517
+}

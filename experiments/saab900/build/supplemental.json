@@ -1,0 +1,69 @@
+{
+  "boundary_or_nonmanifold_edges": 0,
+  "inconsistent_winding_edges": 0,
+  "degenerate_faces": 0,
+  "signed_volume_m3": 5.750553404800498,
+  "nonadjacent_overlap_candidates": [],
+  "collections": {
+    "BODY": [
+      "body"
+    ],
+    "DETAILS": [
+      "trim_handle",
+      "trim_handle.001",
+      "grille",
+      "grille_bar",
+      "grille_bar.001",
+      "grille_bar.002",
+      "plate_rear",
+      "trim_door_seam",
+      "trim_door_seam.001",
+      "badge_front"
+    ],
+    "GLASS": [
+      "glass_envelope"
+    ],
+    "LIGHTS": [
+      "lamp_head",
+      "lamp_indicator",
+      "lamp_tail",
+      "lamp_tail_indicator",
+      "lamp_head.001",
+      "lamp_indicator.001",
+      "lamp_tail.001",
+      "lamp_tail_indicator.001"
+    ],
+    "PLASTIC_RUBBER": [
+      "bumper_front",
+      "bumper_rear",
+      "trim_side",
+      "mirror_housing",
+      "trim_side.001",
+      "mirror_housing.001",
+      "trim_hatch_spoiler"
+    ],
+    "WHEELS": [
+      "wheel_fl",
+      "trim_rim_fl",
+      "trim_spoke",
+      "trim_spoke.001",
+      "trim_spoke.002",
+      "wheel_fr",
+      "trim_rim_fr",
+      "trim_spoke.003",
+      "trim_spoke.004",
+      "trim_spoke.005",
+      "wheel_rl",
+      "trim_rim_rl",
+      "trim_spoke.006",
+      "trim_spoke.007",
+      "trim_spoke.008",
+      "wheel_rr",
+      "trim_rim_rr",
+      "trim_spoke.009",
+      "trim_spoke.010",
+      "trim_spoke.011"
+    ]
+  },
+  "caveat": "BVH screen does not prove absence of every inter-component intersection; mounted seating contacts are intentional."
+}
