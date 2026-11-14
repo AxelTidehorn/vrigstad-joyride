@@ -1,0 +1,24 @@
+// Verify independent instance paint on the actual GLB with the pinned loader.
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+import {applyBodyPaint} from './paint.mjs';
+const context=vm.createContext({console,TextDecoder,TextEncoder,setTimeout,clearTimeout});
+for(const file of ['three-r128.min.js','GLTFLoader-r128.js'])vm.runInContext(fs.readFileSync(new URL('../../media/vehicles/vendor/'+file,import.meta.url),'utf8'),context);
+const bytes=fs.readFileSync(new URL('./build/impala1970-hardtop.glb',import.meta.url)),T=context.THREE;
+const gltf=await new Promise((resolve,reject)=>new T.GLTFLoader().parse(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'',resolve,reject));
+const source=gltf.scene,a=source.clone(true),b=source.clone(true);
+const size=new T.Box3().setFromObject(source).getSize(new T.Vector3());
+for(const [actual,expected] of [[size.x,2.21],[size.y,1.397],[size.z,5.4864]])assert.ok(Math.abs(actual-expected)<.003,'Actual Three bounding box must match authored dimensions');
+const colours=root=>{const out={};root.traverse(o=>{if(o.isMesh)out[o.name]=o.material.color.getHexString();});return out;};
+const original=colours(source),beforeB=colours(b);
+applyBodyPaint(a,'#653b43');applyBodyPaint(b,'#344e65');
+assert.notEqual(a.getObjectByName('body').material,b.getObjectByName('body').material);
+assert.deepEqual(colours(source),original);
+for(const root of [a,b])for(const [name,colour] of Object.entries(original))if(name!=='body')assert.equal(colours(root)[name],colour);
+const first=a.getObjectByName('body').material;applyBodyPaint(a,'#d3d2bf');assert.equal(a.getObjectByName('body').material,first);
+const paintedClone=a.clone(true);applyBodyPaint(paintedClone,'#303331');assert.equal(a.getObjectByName('body').material,first);assert.notEqual(paintedClone.getObjectByName('body').material,first);
+assert.equal(b.getObjectByName('body').material.color.getHexString(),new T.Color('#344e65').convertSRGBToLinear().getHexString());
+assert.throws(()=>applyBodyPaint(a,'invalid'));
+const report={ok:true,actual_glb:true,independent_instance_materials:true,unpainted_source_preserved:true,chrome_glass_lights_and_wheels_preserved:true,repaint_reuses_instance_material:true,scope:'CPU Three r128 test; no GPU/Safari test'};
+fs.writeFileSync(new URL('./build/paint-test.json',import.meta.url),JSON.stringify(report,null,2)+'\n');console.log(report);

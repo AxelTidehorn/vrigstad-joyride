@@ -1,0 +1,11 @@
+{
+  "note": "Period-inspired approximations, not calibrated Chevrolet paint chips. Names correspond to 1970 brochure colours. Values are sRGB; only the body material changes.",
+  "presets": [
+    {"id":"forest-green","label":"Forest Green inspired","hex":"#4a6755"},
+    {"id":"black-cherry","label":"Black Cherry inspired","hex":"#653b43"},
+    {"id":"fathom-blue","label":"Fathom Blue inspired","hex":"#344e65"},
+    {"id":"tuxedo-black","label":"Tuxedo Black inspired","hex":"#303331"},
+    {"id":"classic-white","label":"Classic White inspired","hex":"#d3d2bf"},
+    {"id":"cortez-silver","label":"Cortez Silver inspired","hex":"#929a99"}
+  ]
+}

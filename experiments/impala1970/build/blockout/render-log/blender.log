@@ -1,0 +1,25 @@
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/impala1970/build/blockout/model.blend"
+Saved: 'experiments/impala1970/build/blockout/views/clay_side.png'
+Time: 00:01.00 (Saving: 00:00.21)
+
+Saved: 'experiments/impala1970/build/blockout/views/clay_front.png'
+Time: 00:00.98 (Saving: 00:00.12)
+
+Saved: 'experiments/impala1970/build/blockout/views/clay_rear.png'
+Time: 00:00.94 (Saving: 00:00.12)
+
+Saved: 'experiments/impala1970/build/blockout/views/clay_front_three_quarter.png'
+Time: 00:00.81 (Saving: 00:00.14)
+
+Saved: 'experiments/impala1970/build/blockout/views/clay_rear_three_quarter.png'
+Time: 00:00.74 (Saving: 00:00.11)
+
+Saved: 'experiments/impala1970/build/blockout/views/clay_high_three_quarter.png'
+Time: 00:00.69 (Saving: 00:00.12)
+
+RENDER: 6 views -> experiments/impala1970/build/blockout/views/clay_sheet.png
+
+Blender quit
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).

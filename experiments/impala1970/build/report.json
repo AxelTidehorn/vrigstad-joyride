@@ -1,0 +1,1438 @@
+{
+  "objects": {
+    "body": {
+      "verts": 3582,
+      "faces": 7160,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 8.56263233,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0256,
+        5.34,
+        1.197
+      ],
+      "islands": 1
+    },
+    "glass_envelope": {
+      "verts": 300,
+      "faces": 576,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.007530592,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.8337,
+        2.6134,
+        0.4074
+      ],
+      "islands": 6
+    },
+    "trim_body_chrome": {
+      "verts": 2584,
+      "faces": 4548,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.0090296,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.21,
+        5.2518,
+        1.0656
+      ],
+      "islands": 162
+    },
+    "bumper_front": {
+      "verts": 214,
+      "faces": 424,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.034348079,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.084,
+        0.3288,
+        0.19
+      ],
+      "islands": 1
+    },
+    "bumper_rear": {
+      "verts": 230,
+      "faces": 456,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.043303725,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.084,
+        0.3288,
+        0.245
+      ],
+      "islands": 1
+    },
+    "lamp_taillights": {
+      "verts": 432,
+      "faces": 792,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.005341094,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.9601,
+        0.244,
+        0.2805
+      ],
+      "islands": 18
+    },
+    "lamp_parking": {
+      "verts": 96,
+      "faces": 176,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001523962,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0119,
+        0.358,
+        0.2095
+      ],
+      "islands": 4
+    },
+    "lamp_reverse_units": {
+      "verts": 192,
+      "faces": 352,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002602553,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.599,
+        0.097,
+        0.161
+      ],
+      "islands": 8
+    },
+    "lamp_headlights": {
+      "verts": 192,
+      "faces": 368,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002088359,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.91,
+        0.025,
+        0.164
+      ],
+      "islands": 4
+    },
+    "trim_seals_and_recesses": {
+      "verts": 240,
+      "faces": 440,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.020771599,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.023,
+        5.464,
+        0.6101
+      ],
+      "islands": 10
+    },
+    "plate_registration": {
+      "verts": 48,
+      "faces": 88,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000799246,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.315,
+        5.472,
+        0.296
+      ],
+      "islands": 2
+    },
+    "wheel_fl": {
+      "verts": 218,
+      "faces": 432,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.082195246,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.3182,
+        0.7,
+        0.7
+      ],
+      "islands": 1
+    },
+    "trim_rim_fl": {
+      "verts": 170,
+      "faces": 336,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001152352,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.021,
+        0.382,
+        0.382
+      ],
+      "islands": 1
+    },
+    "trim_rim_whitewall_fl": {
+      "verts": 96,
+      "faces": 192,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 5.4228e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.003,
+        0.592,
+        0.592
+      ],
+      "islands": 1
+    },
+    "trim_spokes_fl": {
+      "verts": 64,
+      "faces": 96,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 2.304e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.008,
+        0.346,
+        0.346
+      ],
+      "islands": 8
+    },
+    "wheel_fr": {
+      "verts": 218,
+      "faces": 432,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.082195246,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.3182,
+        0.7,
+        0.7
+      ],
+      "islands": 1
+    },
+    "trim_rim_fr": {
+      "verts": 170,
+      "faces": 336,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001152352,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.021,
+        0.382,
+        0.382
+      ],
+      "islands": 1
+    },
+    "trim_rim_whitewall_fr": {
+      "verts": 96,
+      "faces": 192,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 5.4228e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.003,
+        0.592,
+        0.592
+      ],
+      "islands": 1
+    },
+    "trim_spokes_fr": {
+      "verts": 64,
+      "faces": 96,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 2.304e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.008,
+        0.346,
+        0.346
+      ],
+      "islands": 8
+    },
+    "wheel_rl": {
+      "verts": 218,
+      "faces": 432,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.08215555,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.3169,
+        0.7,
+        0.7
+      ],
+      "islands": 1
+    },
+    "trim_rim_rl": {
+      "verts": 170,
+      "faces": 336,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001152352,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.021,
+        0.382,
+        0.382
+      ],
+      "islands": 1
+    },
+    "trim_rim_whitewall_rl": {
+      "verts": 96,
+      "faces": 192,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 5.4228e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.003,
+        0.592,
+        0.592
+      ],
+      "islands": 1
+    },
+    "trim_spokes_rl": {
+      "verts": 64,
+      "faces": 96,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 2.304e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.008,
+        0.346,
+        0.346
+      ],
+      "islands": 8
+    },
+    "wheel_rr": {
+      "verts": 218,
+      "faces": 432,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.08215555,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.3169,
+        0.7,
+        0.7
+      ],
+      "islands": 1
+    },
+    "trim_rim_rr": {
+      "verts": 170,
+      "faces": 336,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001152352,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.021,
+        0.382,
+        0.382
+      ],
+      "islands": 1
+    },
+    "trim_rim_whitewall_rr": {
+      "verts": 96,
+      "faces": 192,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 5.4228e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.003,
+        0.592,
+        0.592
+      ],
+      "islands": 1
+    },
+    "trim_spokes_rr": {
+      "verts": 64,
+      "faces": 96,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 2.304e-05,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.008,
+        0.346,
+        0.346
+      ],
+      "islands": 8
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "info": [
+    "trim_body_chrome: 162 islands, treated as one part.",
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-trim_body_chrome embedded 0.019 m; body-lamp_taillights[island 0] flush; body-lamp_taillights[island 1] flush; body-lamp_taillights[island 2] embedded 0.031 m; body-lamp_taillights[island 6] embedded 0.031 m; body-lamp_taillights[island 10] embedded 0.031 m; body-lamp_taillights[island 14] embedded 0.031 m; body-lamp_parking[island 0] flush; body-lamp_parking[island 1] flush; body-lamp_parking[island 2] flush; body-lamp_parking[island 3] flush; body-lamp_reverse_units[island 0] embedded 0.031 m; body-lamp_reverse_units[island 4] embedded 0.031 m; body-trim_seals_and_recesses[island 0] embedded 0.014 m; body-trim_seals_and_recesses[island 1] embedded 0.014 m; body-trim_seals_and_recesses[island 2] embedded 0.014 m; body-trim_seals_and_recesses[island 3] embedded 0.014 m; body-trim_seals_and_recesses[island 4] flush; body-trim_seals_and_recesses[island 5] flush; body-trim_seals_and_recesses[island 6] flush; body-trim_seals_and_recesses[island 7] flush; body-trim_seals_and_recesses[island 8] embedded 0.020 m; body-trim_seals_and_recesses[island 9] embedded 0.020 m; glass_envelope[island 0]-trim_body_chrome flush; glass_envelope[island 1]-glass_envelope[island 3] flush; glass_envelope[island 1]-trim_body_chrome flush; glass_envelope[island 2]-glass_envelope[island 4] flush; glass_envelope[island 2]-trim_body_chrome flush; glass_envelope[island 3]-trim_body_chrome flush; glass_envelope[island 4]-trim_body_chrome flush; glass_envelope[island 5]-trim_body_chrome flush; trim_body_chrome-lamp_headlights[island 0] flush; trim_body_chrome-lamp_headlights[island 1] flush; trim_body_chrome-lamp_headlights[island 2] flush; trim_body_chrome-lamp_headlights[island 3] flush; trim_body_chrome-trim_seals_and_recesses[island 0] flush; trim_body_chrome-trim_seals_and_recesses[island 1] flush; trim_body_chrome-trim_seals_and_recesses[island 2] flush; trim_body_chrome-trim_seals_and_recesses[island 3] flush; trim_body_chrome-trim_seals_and_recesses[island 4] flush; trim_body_chrome-trim_seals_and_recesses[island 5] flush; trim_body_chrome-trim_seals_and_recesses[island 6] flush; bumper_front-lamp_parking[island 2] flush; bumper_front-lamp_parking[island 3] flush; bumper_front-trim_seals_and_recesses[island 8] flush; bumper_rear-lamp_taillights[island 0] embedded 0.039 m; bumper_rear-lamp_taillights[island 1] embedded 0.039 m; bumper_rear-lamp_taillights[island 2] flush; bumper_rear-lamp_taillights[island 6] flush; bumper_rear-lamp_taillights[island 10] flush; bumper_rear-lamp_taillights[island 14] flush; bumper_rear-lamp_reverse_units[island 0] flush; bumper_rear-lamp_reverse_units[island 4] flush; bumper_rear-trim_seals_and_recesses[island 9] flush; lamp_taillights[island 2]-lamp_taillights[island 3] flush; lamp_taillights[island 2]-lamp_taillights[island 4] flush; lamp_taillights[island 2]-lamp_taillights[island 5] flush; lamp_taillights[island 6]-lamp_taillights[island 7] flush; lamp_taillights[island 6]-lamp_taillights[island 8] flush; lamp_taillights[island 6]-lamp_taillights[island 9] flush; lamp_taillights[island 10]-lamp_taillights[island 11] flush; lamp_taillights[island 10]-lamp_taillights[island 12] flush; lamp_taillights[island 10]-lamp_taillights[island 13] flush; lamp_taillights[island 14]-lamp_taillights[island 15] flush; lamp_taillights[island 14]-lamp_taillights[island 16] flush; lamp_taillights[island 14]-lamp_taillights[island 17] flush; lamp_reverse_units[island 0]-lamp_reverse_units[island 1] flush; lamp_reverse_units[island 0]-lamp_reverse_units[island 2] flush; lamp_reverse_units[island 0]-lamp_reverse_units[island 3] flush; lamp_reverse_units[island 4]-lamp_reverse_units[island 5] flush; lamp_reverse_units[island 4]-lamp_reverse_units[island 6] flush; lamp_reverse_units[island 4]-lamp_reverse_units[island 7] flush; lamp_headlights[island 0]-trim_seals_and_recesses[island 4] flush; lamp_headlights[island 1]-trim_seals_and_recesses[island 4] flush; lamp_headlights[island 2]-trim_seals_and_recesses[island 5] flush; lamp_headlights[island 3]-trim_seals_and_recesses[island 5] flush; trim_seals_and_recesses[island 8]-plate_registration[island 0] flush; trim_seals_and_recesses[island 9]-plate_registration[island 1] flush; wheel_fl-trim_rim_fl flush; wheel_fl-trim_rim_whitewall_fl flush; trim_rim_fl-trim_spokes_fl[island 0] flush; trim_rim_fl-trim_spokes_fl[island 1] flush; trim_rim_fl-trim_spokes_fl[island 2] flush; trim_rim_fl-trim_spokes_fl[island 3] flush; trim_rim_fl-trim_spokes_fl[island 4] flush; trim_rim_fl-trim_spokes_fl[island 5] flush; trim_rim_fl-trim_spokes_fl[island 6] flush; trim_rim_fl-trim_spokes_fl[island 7] flush; wheel_fr-trim_rim_fr flush; wheel_fr-trim_rim_whitewall_fr flush; trim_rim_fr-trim_spokes_fr[island 0] flush; trim_rim_fr-trim_spokes_fr[island 1] flush; trim_rim_fr-trim_spokes_fr[island 2] flush; trim_rim_fr-trim_spokes_fr[island 3] flush; trim_rim_fr-trim_spokes_fr[island 4] flush; trim_rim_fr-trim_spokes_fr[island 5] flush; trim_rim_fr-trim_spokes_fr[island 6] flush; trim_rim_fr-trim_spokes_fr[island 7] flush; wheel_rl-trim_rim_rl flush; wheel_rl-trim_rim_whitewall_rl flush; trim_rim_rl-trim_spokes_rl[island 0] flush; trim_rim_rl-trim_spokes_rl[island 1] flush; trim_rim_rl-trim_spokes_rl[island 2] flush; trim_rim_rl-trim_spokes_rl[island 3] flush; trim_rim_rl-trim_spokes_rl[island 4] flush; trim_rim_rl-trim_spokes_rl[island 5] flush; trim_rim_rl-trim_spokes_rl[island 6] flush; trim_rim_rl-trim_spokes_rl[island 7] flush; wheel_rr-trim_rim_rr flush; wheel_rr-trim_rim_whitewall_rr flush; trim_rim_rr-trim_spokes_rr[island 0] flush; trim_rim_rr-trim_spokes_rr[island 1] flush; trim_rim_rr-trim_spokes_rr[island 2] flush; trim_rim_rr-trim_spokes_rr[island 3] flush; trim_rim_rr-trim_spokes_rr[island 4] flush; trim_rim_rr-trim_spokes_rr[island 5] flush; trim_rim_rr-trim_spokes_rr[island 6] flush; trim_rim_rr-trim_spokes_rr[island 7] flush",
+    "6 expected embedded contacts (expect_embedded)."
+  ],
+  "units": "m",
+  "overall": {
+    "min": [
+      -1.1049998998641968,
+      -2.7432000637054443,
+      -2.9802322387695312e-08
+    ],
+    "max": [
+      1.1050000190734863,
+      2.7432000637054443,
+      1.3969999551773071
+    ],
+    "size": [
+      2.2100000381469727,
+      5.486400127410889,
+      1.3969999551773071
+    ],
+    "contact_tolerance": 0.006077523738668788,
+    "parts": 100
+  },
+  "contacts": [
+    {
+      "a": "body",
+      "b": "glass_envelope[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 2]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 3]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 4]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 5]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_body_chrome",
+      "depth": 0.019000530242919922,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "bumper_front",
+      "depth": 0.06615624576807022,
+      "expected": true
+    },
+    {
+      "a": "body",
+      "b": "bumper_rear",
+      "depth": 0.056450698524713516,
+      "expected": true
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights[island 0]",
+      "depth": 0.011459766887128353,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights[island 1]",
+      "depth": 0.011459766887128353,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights[island 2]",
+      "depth": 0.031000137329101562,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights[island 6]",
+      "depth": 0.031000137329101562,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights[island 10]",
+      "depth": 0.031000137329101562,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights[island 14]",
+      "depth": 0.031000137329101562,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_parking[island 0]",
+      "depth": 0.00863375049084425,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_parking[island 1]",
+      "depth": 0.00863375049084425,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_parking[island 2]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_parking[island 3]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_reverse_units[island 0]",
+      "depth": 0.031000137329101562,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_reverse_units[island 4]",
+      "depth": 0.031000137329101562,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 0]",
+      "depth": 0.01362613681703806,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 1]",
+      "depth": 0.01395326480269432,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 2]",
+      "depth": 0.01362607628107071,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 3]",
+      "depth": 0.013953207060694695,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 4]",
+      "depth": 0.010499954223632812,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 5]",
+      "depth": 0.010499954223632812,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 6]",
+      "depth": 0.009000062942504883,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 7]",
+      "depth": 0.0060002803802490234,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 8]",
+      "depth": 0.019999980926513672,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_seals_and_recesses[island 9]",
+      "depth": 0.019999980926513672,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "wheel_fl",
+      "depth": 0.018000006675720215,
+      "expected": true
+    },
+    {
+      "a": "body",
+      "b": "wheel_fr",
+      "depth": 0.018000006675720215,
+      "expected": true
+    },
+    {
+      "a": "body",
+      "b": "wheel_rl",
+      "depth": 0.018000006675720215,
+      "expected": true
+    },
+    {
+      "a": "body",
+      "b": "wheel_rr",
+      "depth": 0.018000006675720215,
+      "expected": true
+    },
+    {
+      "a": "glass_envelope[island 0]",
+      "b": "trim_body_chrome",
+      "depth": 0.00028072306304238737,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 1]",
+      "b": "glass_envelope[island 3]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 1]",
+      "b": "trim_body_chrome",
+      "depth": 0.0009561178740113974,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 2]",
+      "b": "glass_envelope[island 4]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 2]",
+      "b": "trim_body_chrome",
+      "depth": 0.0009560619946569204,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 3]",
+      "b": "trim_body_chrome",
+      "depth": 0.0010143626714125276,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 4]",
+      "b": "trim_body_chrome",
+      "depth": 0.0010144596453756094,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 5]",
+      "b": "trim_body_chrome",
+      "depth": 0.0004253382212482393,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "lamp_headlights[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "lamp_headlights[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "lamp_headlights[island 2]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "lamp_headlights[island 3]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "trim_seals_and_recesses[island 0]",
+      "depth": 0.008100032806396484,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "trim_seals_and_recesses[island 1]",
+      "depth": 0.00810009241104126,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "trim_seals_and_recesses[island 2]",
+      "depth": 0.008099973201751709,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "trim_seals_and_recesses[island 3]",
+      "depth": 0.008100152015686035,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "trim_seals_and_recesses[island 4]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "trim_seals_and_recesses[island 5]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "trim_body_chrome",
+      "b": "trim_seals_and_recesses[island 6]",
+      "depth": 0.0015001296997070312,
+      "expected": false
+    },
+    {
+      "a": "bumper_front",
+      "b": "lamp_parking[island 2]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "bumper_front",
+      "b": "lamp_parking[island 3]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "bumper_front",
+      "b": "trim_seals_and_recesses[island 8]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "bumper_rear",
+      "b": "lamp_taillights[island 0]",
+      "depth": 0.03949999809265137,
+      "expected": false
+    },
+    {
+      "a": "bumper_rear",
+      "b": "lamp_taillights[island 1]",
+      "depth": 0.03949999809265137,
+      "expected": false
+    },
+    {
+      "a": "bumper_rear",
+      "b": "lamp_taillights[island 2]",
+      "depth": 0.0065000057220458984,
+      "expected": false
+    },
+    {
+      "a": "bumper_rear",
+      "b": "lamp_taillights[island 6]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "bumper_rear",
+      "b": "lamp_taillights[island 10]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "bumper_rear",
+      "b": "lamp_taillights[island 14]",
+      "depth": 0.0065000057220458984,
+      "expected": false
+    },
+    {
+      "a": "bumper_rear",
+      "b": "lamp_reverse_units[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "bumper_rear",
+      "b": "lamp_reverse_units[island 4]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "bumper_rear",
+      "b": "trim_seals_and_recesses[island 9]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 2]",
+      "b": "lamp_taillights[island 3]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 2]",
+      "b": "lamp_taillights[island 4]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 2]",
+      "b": "lamp_taillights[island 5]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 6]",
+      "b": "lamp_taillights[island 7]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 6]",
+      "b": "lamp_taillights[island 8]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 6]",
+      "b": "lamp_taillights[island 9]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 10]",
+      "b": "lamp_taillights[island 11]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 10]",
+      "b": "lamp_taillights[island 12]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 10]",
+      "b": "lamp_taillights[island 13]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 14]",
+      "b": "lamp_taillights[island 15]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 14]",
+      "b": "lamp_taillights[island 16]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights[island 14]",
+      "b": "lamp_taillights[island 17]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_reverse_units[island 0]",
+      "b": "lamp_reverse_units[island 1]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_reverse_units[island 0]",
+      "b": "lamp_reverse_units[island 2]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_reverse_units[island 0]",
+      "b": "lamp_reverse_units[island 3]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_reverse_units[island 4]",
+      "b": "lamp_reverse_units[island 5]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_reverse_units[island 4]",
+      "b": "lamp_reverse_units[island 6]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_reverse_units[island 4]",
+      "b": "lamp_reverse_units[island 7]",
+      "depth": 0.001979848137125373,
+      "expected": false
+    },
+    {
+      "a": "lamp_headlights[island 0]",
+      "b": "trim_seals_and_recesses[island 4]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_headlights[island 1]",
+      "b": "trim_seals_and_recesses[island 4]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_headlights[island 2]",
+      "b": "trim_seals_and_recesses[island 5]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_headlights[island 3]",
+      "b": "trim_seals_and_recesses[island 5]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "trim_seals_and_recesses[island 8]",
+      "b": "plate_registration[island 0]",
+      "depth": 0.002828559372574091,
+      "expected": false
+    },
+    {
+      "a": "trim_seals_and_recesses[island 9]",
+      "b": "plate_registration[island 1]",
+      "depth": 0.002828559372574091,
+      "expected": false
+    },
+    {
+      "a": "wheel_fl",
+      "b": "trim_rim_fl",
+      "depth": 1.4901161193847656e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_fl",
+      "b": "trim_rim_whitewall_fl",
+      "depth": 0.0009999871253967285,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fl",
+      "b": "trim_spokes_fl[island 0]",
+      "depth": 0.004875129088759422,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fl",
+      "b": "trim_spokes_fl[island 1]",
+      "depth": 0.004875133279711008,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fl",
+      "b": "trim_spokes_fl[island 2]",
+      "depth": 0.004875119775533676,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fl",
+      "b": "trim_spokes_fl[island 3]",
+      "depth": 0.004875179845839739,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fl",
+      "b": "trim_spokes_fl[island 4]",
+      "depth": 0.004875182639807463,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fl",
+      "b": "trim_spokes_fl[island 5]",
+      "depth": 0.004875192418694496,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fl",
+      "b": "trim_spokes_fl[island 6]",
+      "depth": 0.00487513979896903,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fl",
+      "b": "trim_spokes_fl[island 7]",
+      "depth": 0.004875131417065859,
+      "expected": false
+    },
+    {
+      "a": "wheel_fr",
+      "b": "trim_rim_fr",
+      "depth": 1.4901161193847656e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_fr",
+      "b": "trim_rim_whitewall_fr",
+      "depth": 0.0009999871253967285,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fr",
+      "b": "trim_spokes_fr[island 0]",
+      "depth": 0.004875129088759422,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fr",
+      "b": "trim_spokes_fr[island 1]",
+      "depth": 0.004875133279711008,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fr",
+      "b": "trim_spokes_fr[island 2]",
+      "depth": 0.00487513979896903,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fr",
+      "b": "trim_spokes_fr[island 3]",
+      "depth": 0.004875130485743284,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fr",
+      "b": "trim_spokes_fr[island 4]",
+      "depth": 0.004875182639807463,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fr",
+      "b": "trim_spokes_fr[island 5]",
+      "depth": 0.004875179845839739,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fr",
+      "b": "trim_spokes_fr[island 6]",
+      "depth": 0.004875119775533676,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_fr",
+      "b": "trim_spokes_fr[island 7]",
+      "depth": 0.004875189159065485,
+      "expected": false
+    },
+    {
+      "a": "wheel_rl",
+      "b": "trim_rim_rl",
+      "depth": 1.4901161193847656e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_rl",
+      "b": "trim_rim_whitewall_rl",
+      "depth": 0.0009999871253967285,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rl",
+      "b": "trim_spokes_rl[island 0]",
+      "depth": 0.004875129088759422,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rl",
+      "b": "trim_spokes_rl[island 1]",
+      "depth": 0.004875189159065485,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rl",
+      "b": "trim_spokes_rl[island 2]",
+      "depth": 0.004875119775533676,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rl",
+      "b": "trim_spokes_rl[island 3]",
+      "depth": 0.004875179845839739,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rl",
+      "b": "trim_spokes_rl[island 4]",
+      "depth": 0.004875182639807463,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rl",
+      "b": "trim_spokes_rl[island 5]",
+      "depth": 0.004875133745372295,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rl",
+      "b": "trim_spokes_rl[island 6]",
+      "depth": 0.00487513979896903,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rl",
+      "b": "trim_spokes_rl[island 7]",
+      "depth": 0.004875133279711008,
+      "expected": false
+    },
+    {
+      "a": "wheel_rr",
+      "b": "trim_rim_rr",
+      "depth": 1.4901161193847656e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_rr",
+      "b": "trim_rim_whitewall_rr",
+      "depth": 0.0009999871253967285,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rr",
+      "b": "trim_spokes_rr[island 0]",
+      "depth": 0.004875129088759422,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rr",
+      "b": "trim_spokes_rr[island 1]",
+      "depth": 0.004875131417065859,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rr",
+      "b": "trim_spokes_rr[island 2]",
+      "depth": 0.00487513979896903,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rr",
+      "b": "trim_spokes_rr[island 3]",
+      "depth": 0.004875192418694496,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rr",
+      "b": "trim_spokes_rr[island 4]",
+      "depth": 0.004875182639807463,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rr",
+      "b": "trim_spokes_rr[island 5]",
+      "depth": 0.004875130485743284,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rr",
+      "b": "trim_spokes_rr[island 6]",
+      "depth": 0.004875119775533676,
+      "expected": false
+    },
+    {
+      "a": "trim_rim_rr",
+      "b": "trim_spokes_rr[island 7]",
+      "depth": 0.004875133279711008,
+      "expected": false
+    }
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 0
+  }
+}

@@ -1,0 +1,10 @@
+test_closed_car_passes (test_vehicle_validate.VehicleValidatorTests.test_closed_car_passes) ... ok
+test_dimensions_wrong_rejected (test_vehicle_validate.VehicleValidatorTests.test_dimensions_wrong_rejected) ... ok
+test_disconnected_body_rejected (test_vehicle_validate.VehicleValidatorTests.test_disconnected_body_rejected) ... ok
+test_hole_in_body_rejected (test_vehicle_validate.VehicleValidatorTests.test_hole_in_body_rejected) ... ok
+test_missing_wheel_rejected (test_vehicle_validate.VehicleValidatorTests.test_missing_wheel_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.117s
+
+OK

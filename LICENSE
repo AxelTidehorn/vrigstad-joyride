@@ -70,3 +70,16 @@ side.png / rear.png and spec.pdf: Volvo UK XC70 Technical Specification April
 claimed. Author/source/licence URLs and modifications: experiments/xc70p2/references.md.
 Generated body, original livery raster and POLIS lettering contain no reference
 photograph pixels. No endorsement by Volvo or the Swedish Police is implied.
+
+Impala 1970 experiment reference photographs only (not game textures):
+`experiments/impala1970/references/{front,sedan-side-details,front-three-quarter,
+rear-three-quarter,rear}.jpg`: AlfvanBeem, CC0 1.0.
+`references/hardtop-{front,side,rear}.jpg`: DanTD, CC BY-SA 4.0,
+https://creativecommons.org/licenses/by-sa/4.0/ . Resized JPEGs.
+File-page URLs, authors and modifications:
+`experiments/impala1970/references/sources.json`. Photo/annotation adaptations
+`review/*reference-overlay.png`, `review/*glass-detail.png` and
+`review/reference-views.png` are distributed under CC BY-SA 4.0, with source
+photographers credited in the images and notes. No endorsement is implied.
+GM technical kits / brochures are linked for reference, not used as textures.
+The original procedural Impala contains no imported third-party 3D mesh.

@@ -1,0 +1,472 @@
+{
+  "source": "build/model.blend",
+  "body": {
+    "nonmanifold_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_faces": 0,
+    "signed_volume_m3": 8.562632329802023,
+    "connected_components": 1,
+    "self_intersection_candidates": 0,
+    "sample_pairs": [],
+    "triangles": 7160
+  },
+  "meshes": 27,
+  "triangles": 19604,
+  "materials": [
+    "Impala configurable body paint",
+    "amber parking lamps",
+    "clear reverse lenses",
+    "narrow ivory whitewall",
+    "period wheel covers",
+    "red tail lenses",
+    "registration ivory",
+    "restrained satin chrome",
+    "sealed beam ivory",
+    "smoky blue grey glass",
+    "tire charcoal",
+    "weatherstrip rubber"
+  ],
+  "components": {
+    "glass_envelope": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.007530591763011626,
+      "connected_components": 6,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 576
+    },
+    "trim_body_chrome": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.00902960307333617,
+      "connected_components": 162,
+      "self_intersection_candidates": 3259,
+      "sample_pairs": [
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          2364
+        ],
+        [
+          2,
+          42
+        ],
+        [
+          2,
+          43
+        ],
+        [
+          2,
+          46
+        ],
+        [
+          2,
+          2400
+        ],
+        [
+          2,
+          2405
+        ]
+      ],
+      "triangles": 4548
+    },
+    "bumper_front": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.03434807898010074,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 424
+    },
+    "bumper_rear": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.04330372493213687,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 456
+    },
+    "lamp_taillights": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.005341091255204034,
+      "connected_components": 18,
+      "self_intersection_candidates": 168,
+      "sample_pairs": [
+        [
+          52,
+          79
+        ],
+        [
+          52,
+          81
+        ],
+        [
+          52,
+          91
+        ],
+        [
+          52,
+          98
+        ],
+        [
+          52,
+          105
+        ],
+        [
+          52,
+          107
+        ],
+        [
+          52,
+          117
+        ],
+        [
+          52,
+          124
+        ]
+      ],
+      "triangles": 792
+    },
+    "lamp_parking": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.0015239623016123072,
+      "connected_components": 4,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 176
+    },
+    "lamp_reverse_units": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.0026025515571193843,
+      "connected_components": 8,
+      "self_intersection_candidates": 84,
+      "sample_pairs": [
+        [
+          0,
+          27
+        ],
+        [
+          0,
+          29
+        ],
+        [
+          0,
+          39
+        ],
+        [
+          0,
+          46
+        ],
+        [
+          0,
+          53
+        ],
+        [
+          0,
+          55
+        ],
+        [
+          0,
+          65
+        ],
+        [
+          0,
+          72
+        ]
+      ],
+      "triangles": 352
+    },
+    "lamp_headlights": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.002088367455852074,
+      "connected_components": 4,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 368
+    },
+    "trim_seals_and_recesses": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.02077159910650617,
+      "connected_components": 10,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 440
+    },
+    "plate_registration": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.0007992551341321072,
+      "connected_components": 2,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 88
+    },
+    "wheel_fl": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.082195244545655,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 432
+    },
+    "trim_rim_fl": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.001152352078515113,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 336
+    },
+    "trim_rim_whitewall_fl": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 5.422819937477119e-05,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 192
+    },
+    "trim_spokes_fl": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 2.304008672979044e-05,
+      "connected_components": 8,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 96
+    },
+    "wheel_fr": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.08219524458975686,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 432
+    },
+    "trim_rim_fr": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.0011523520785151214,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 336
+    },
+    "trim_rim_whitewall_fr": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 5.4228199374774905e-05,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 192
+    },
+    "trim_spokes_fr": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 2.3040086729789952e-05,
+      "connected_components": 8,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 96
+    },
+    "wheel_rl": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.08215554815844654,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 432
+    },
+    "trim_rim_rl": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.0011523520785150956,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 336
+    },
+    "trim_rim_whitewall_rl": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 5.4228138398968104e-05,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 192
+    },
+    "trim_spokes_rl": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 2.3040072568415825e-05,
+      "connected_components": 8,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 96
+    },
+    "wheel_rr": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.08215554814498198,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 432
+    },
+    "trim_rim_rr": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 0.001152352078515089,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 336
+    },
+    "trim_rim_whitewall_rr": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 5.4228138398969114e-05,
+      "connected_components": 1,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 192
+    },
+    "trim_spokes_rr": {
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": 0,
+      "signed_volume_m3": 2.3040072568416675e-05,
+      "connected_components": 8,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 96
+    }
+  },
+  "shoulder_moulding_fit": {
+    "radius_m": 0.006,
+    "maximum_centreline_to_steel_m": 0.003340827999636531,
+    "all_sampled_sections_seated": true,
+    "samples": 160,
+    "criterion": "3.5 mm maximum axis/steel distance, less than 4.24 mm inscribed radius of four-sided 6 mm trim"
+  },
+  "glass_body_surface_intersection_candidates": 0,
+  "glass_signed_backing_clearance_m": {
+    "minimum": 0.0010949864554277156,
+    "maximum": 0.003999906316209945,
+    "nonpositive_samples": 0
+  },
+  "wheels": {
+    "wheel_fl": {
+      "hub_world_m": [
+        -0.805180013179779,
+        1.793239951133728,
+        0.3499999940395355
+      ],
+      "parent": null,
+      "tire_body_intersection_candidates": 0,
+      "fixtures": [
+        "trim_rim_fl",
+        "trim_rim_whitewall_fl",
+        "trim_spokes_fl"
+      ]
+    },
+    "wheel_fr": {
+      "hub_world_m": [
+        0.805180013179779,
+        1.793239951133728,
+        0.3499999940395355
+      ],
+      "parent": null,
+      "tire_body_intersection_candidates": 0,
+      "fixtures": [
+        "trim_rim_fr",
+        "trim_rim_whitewall_fr",
+        "trim_spokes_fr"
+      ]
+    },
+    "wheel_rl": {
+      "hub_world_m": [
+        -0.8039100170135498,
+        -1.2293599843978882,
+        0.3499999940395355
+      ],
+      "parent": null,
+      "tire_body_intersection_candidates": 0,
+      "fixtures": [
+        "trim_rim_rl",
+        "trim_rim_whitewall_rl",
+        "trim_spokes_rl"
+      ]
+    },
+    "wheel_rr": {
+      "hub_world_m": [
+        0.8039100170135498,
+        -1.2293599843978882,
+        0.3499999940395355
+      ],
+      "parent": null,
+      "tire_body_intersection_candidates": 0,
+      "fixtures": [
+        "trim_rim_rr",
+        "trim_rim_whitewall_rr",
+        "trim_spokes_rr"
+      ]
+    }
+  },
+  "overall_xyz_m": [
+    2.209999918937683,
+    5.486400127410889,
+    1.3969999849796295
+  ],
+  "axle_distance_m": 3.022599935531616,
+  "body_paint_material_count": 1,
+  "wheel_fixtures_own_hub": true,
+  "all_fixed_fixtures_follow_body": true,
+  "lamp_tops_z_m": 0.7420000433921814,
+  "ok": true
+}

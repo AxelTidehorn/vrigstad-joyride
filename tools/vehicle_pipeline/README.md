@@ -112,3 +112,15 @@ review step supports `--snapshots-only` to save both export snapshots without
 rerendering. A real temporary rear-aperture mutation was exported through the same
 CLI twice and verified identical. Current reports and pose tests are linked in
 the round-2 review; no game integration or measured hardware FPS is implied.
+
+## Original Impala hardtop experiment
+
+[`experiments/impala1970`](../../experiments/impala1970/README.md) reuses this
+exporter, validator, Modeler tools, wheel hierarchy and Three preview, with its
+own GM-dimensioned 16439 loft. The orthographic renderer now accepts a vehicle
+`orthographic_scale_m` (default remains 5.4 m) and optional `skip_quality`; this
+lets a 5.486 m car fit without altering vehicle scale. Existing configurations
+retain their previous output. A cropped snowy hardtop photo is used only for
+side-glass comparison with existing silhouette algorithms. It cannot certify
+global body contours; that absence is explicit in the report. The generated
+asset and six-colour preview are isolated from installed game vehicles.
