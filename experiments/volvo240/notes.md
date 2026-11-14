@@ -208,3 +208,15 @@ rendered. Additional logic tests verify actual GLB parsing, exact scale,
 film compatibility, gestures, film failure/pending behavior and poster removal.
 There is no claim of a physical iPad or GPU/browser test: the managed browser
 control tool is unavailable. See `media/vehicles/README.md` for verification.
+
+## Later targeted wheel-arch refinement
+
+Current refinement/assessment.md and refinement/arch-review/index.html supersede
+the old circular-well appearance assessment. The existing latest master was
+locally edited, not rebuilt. Controlled polygonal opening profiles and connected
+inner support rows replace the vague circular transitions. The source uses the
+same helper for reproducibility. Actual geometry + preservation audit and GLB
+validation pass; current export has 6162 triangles. Initial trial split normals
+were rejected by the indexed GLB gate; the final version uses shared-vertex
+normal data and physical support loops, without changing either pipeline gate.
+Final images are visually reviewed; human approval remains pending.

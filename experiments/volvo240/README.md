@@ -1,3 +1,54 @@
+# Current Volvo 240 refinement — controlled wheel arches
+
+Latest editable master: `refinement/model.blend`; GLB: `refinement/review-only.glb`.
+[Same-camera before/after review](refinement/arch-review/index.html) includes side,
+front/rear three-quarter and wheel-arch close-ups, with and without wheels.
+See [assessment](refinement/assessment.md) for preserved geometry and limitations.
+
+The latest pass edits the existing Blender body locally. `refine_forms.py` is shared
+by the direct-edit adapter `refine_existing.py` and the end of the existing
+`model.py`, so source regeneration and the edited master stay aligned. Opening
+profiles remain parametrically editable in `parameters.json: arch_refinement`.
+All 24 separate component meshes and the vehicle's primary proportions are retained.
+The unchanged exporter/validator passes; 6162 total triangles, 25 mesh objects.
+
+Codex/maintainer reproduction (no viewer-side setup):
+
+```sh
+# Edit the existing master once; adapter is idempotent on an already refined file.
+python "$BMOD" --script experiments/volvo240/refine_existing.py \
+  --blend path/to/frozen-previous-master.blend --out /tmp/240-edit --check -- \
+  experiments/volvo240/refinement/model.blend
+# Same fixed cameras for both masters:
+python "$BMOD" --script experiments/volvo240/arch_review.py \
+  --blend experiments/volvo240/refinement/model.blend --out /tmp/240-review -- \
+  experiments/volvo240/refinement/arch-review/after
+blender -b --python-exit-code 1 --python tools/vehicle_pipeline/blender_import.py -- \
+  --source experiments/volvo240/refinement/model.blend \
+  --output experiments/volvo240/refinement/review-only.glb \
+  --previews experiments/volvo240/refinement/repository_previews
+python tools/vehicle_pipeline/validate.py experiments/volvo240/refinement/review-only.glb \
+  experiments/volvo240/vehicle.json --report experiments/volvo240/refinement/glb_geometry.json
+blender -b --python-exit-code 1 --python tools/vehicle_pipeline/reimport_check.py -- \
+  experiments/volvo240/refinement/review-only.glb
+node tools/vehicle_pipeline/check_preview_glb.mjs experiments/volvo240/refinement/review-only.glb \
+  experiments/volvo240/refinement/arch-review/three-loader.json
+python experiments/volvo240/package_arch_review.py
+```
+
+`arch_audit.py` accepts the frozen previous master and output folder through
+Blender Modeler script mode. Restore that master from parent commit `f064b57` into
+a temporary path; do not overwrite the current master. It verifies body closure,
+winding, degeneracy, BVH contacts, bounds and preservation of protected geometry.
+`arch_repro.py` compares a source-generated temporary `.blend` against the edited
+master. JSON proof is retained under `refinement/arch-review/`. The source check
+uses the existing pinned Modeler and `model.py`; it does not create a second design.
+
+The earlier experimental notes below are historical and do not describe the
+current export status or current wheel-arch construction.
+
+---
+
 Current refinement comparisons (iPad, no setup):
 https://vrigstad-240-review-179ef06.plushpangolin8.chatgpt.site/refinement/
 

@@ -1,3 +1,8 @@
+Current targeted refinement: controlled polygonal wheel openings, tight connected
+reveals and restrained panel shading; 6162 triangles. The latest Blender master
+and GLB pass technical gates; appearance approval remains pending. See
+refinement/assessment.md. Earlier checkpoint notes below are historical.
+
 # Art direction and review access
 
 Stylized realism within Vrigstad Joyride's visual identity. Recognizable Volvo

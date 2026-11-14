@@ -1,12 +1,12 @@
 {
-  "body_vertices": 766,
-  "body_triangles": 1528,
+  "body_vertices": 933,
+  "body_triangles": 1862,
   "boundary_or_nonmanifold_edges": 0,
   "inconsistent_winding_edges": 0,
   "degenerate_triangles": 0,
-  "signed_volume_m3": 6.247121387421,
+  "signed_volume_m3": 6.256958998262019,
   "nonadjacent_bvh_overlap_pairs": 0,
   "overlap_pairs": [],
-  "max_mirror_vertex_distance_m": 0.12153255939483643,
+  "max_mirror_vertex_distance_m": 0.1260455846786499,
   "caveat": "BVH screening is not an exhaustive solid/solid self-intersection proof."
 }

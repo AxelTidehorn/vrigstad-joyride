@@ -1,8 +1,8 @@
 {
   "objects": {
     "body": {
-      "verts": 766,
-      "faces": 1528,
+      "verts": 933,
+      "faces": 1862,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -10,7 +10,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 6.247121387,
+      "volume": 6.256958998,
       "scale": [
         1.0,
         1.0,
@@ -653,7 +653,7 @@
     {
       "a": "body",
       "b": "bumper_front",
-      "depth": 0.08410228788852692,
+      "depth": 0.08409040421247482,
       "expected": false
     },
     {

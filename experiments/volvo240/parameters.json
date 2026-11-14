@@ -1,5 +1,5 @@
 {
-  "revision": "refinement",
+  "revision": "defined-wheel-arches",
   "length": 4.82,
   "width": 1.71,
   "height": 1.43,
@@ -21,5 +21,11 @@
   "sill_z": 0.27,
   "c_pillar_width_y": 0.14,
   "quarterlight_divider_y": -0.84,
-  "quarterlight_divider_width": 0.045
+  "quarterlight_divider_width": 0.045,
+  "arch_refinement": {
+    "front_crown": 0.355,
+    "rear_crown": 0.35,
+    "half_width": 0.355,
+    "flat_half_span": 0.085
+  }
 }
