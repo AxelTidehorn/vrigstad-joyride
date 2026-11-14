@@ -21,6 +21,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test:driving
+      - run: npm run test:vehicles
       # The built pages are committed: fail if they are not what src/ and data/ build to.
       - run: npm run data && npm run build && git diff --exit-code -- index.html map.html data/vrigstad.json
       - run: npx playwright install --with-deps chromium
