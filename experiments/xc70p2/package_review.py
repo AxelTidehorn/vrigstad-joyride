@@ -33,8 +33,17 @@ html+='</div><nav><a href="build/variant-comparison.png">PNG review sheet</a><a 
 for name in ['side.png','front.jpg','rear.png','rear-three-quarter.jpg','police-new.jpg']:html+=f'<img loading="lazy" src="references/{name}" alt="Reference {name}">'
 html+='</main></html>';(p/'index.html').write_text(html)
 with zipfile.ZipFile(b/'xc70-delivery.zip','w',zipfile.ZIP_DEFLATED) as z:
- for f in sorted(p.rglob('*')):
-  if f.is_file() and f.suffix not in ('.zip','.blend1','.pyc') and '__pycache__' not in f.parts and f.name not in ('civilian.blend','police.blend'):z.write(f,f.relative_to(root))
+ for f in sorted(p.glob('*')):
+  if f.is_file():z.write(f,f.relative_to(root))
+ for name in ['model.blend','xc70-civilian.glb','xc70-police.glb','variants.json','shared-export-geometry.json','variant-comparison.png','silhouette-tests.txt','preview-tests.txt','validator-tests.txt']:
+  f=b/name;z.write(f,f.relative_to(root))
+ for sub in ['civilian','police']:
+  for name in ['geometry.json','reimport.json','three-loader.json']:
+   f=b/sub/name;z.write(f,f.relative_to(root))
+ for stage in ['baseline','silhouette']:
+  for f in (b/stage/'comparison').glob('*'):z.write(f,f.relative_to(root))
+ for f in (p/'references').glob('*'):
+  if f.suffix=='.png':z.write(f,f.relative_to(root))
  for f in (root/'tools/vehicle_pipeline').glob('*'):
   if f.is_file():z.write(f,f.relative_to(root))
  z.write(root/'LICENSE','LICENSE')
