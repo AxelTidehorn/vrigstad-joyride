@@ -1,0 +1,22 @@
+Blender 4.3.2
+Read blend: "/workspace/work/vrigstad-joyride/experiments/saab900/build/model.blend"
+Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/final_views/clay_front_three_quarter.png'
+Time: 00:00.94 (Saving: 00:00.21)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/final_views/clay_side.png'
+Time: 00:00.65 (Saving: 00:00.11)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/window_closeup/clay_window_frame.png'
+Time: 00:01.23 (Saving: 00:00.16)
+
+Saved: '/workspace/work/vrigstad-joyride/experiments/saab900/build/front_closeup/clay_headlight_fit.png'
+Time: 00:01.35 (Saving: 00:00.14)
+
+RENDER: 2 views -> /workspace/work/vrigstad-joyride/experiments/saab900/build/final_views/clay_sheet.png
+RENDER: 1 views -> /workspace/work/vrigstad-joyride/experiments/saab900/build/window_closeup/clay_sheet.png
+RENDER: 1 views -> /workspace/work/vrigstad-joyride/experiments/saab900/build/front_closeup/clay_sheet.png
+{"unchanged_components": ["wheel_rr", "wheel_rl", "wheel_fr", "wheel_fl", "trim_spoke.011", "trim_spoke.010", "trim_spoke.009", "trim_spoke.008", "trim_spoke.007", "trim_spoke.006", "trim_spoke.005", "trim_spoke.004", "trim_spoke.003", "trim_spoke.002", "trim_spoke.001", "trim_spoke", "trim_side.001", "trim_side", "trim_rim_rr", "trim_rim_rl", "trim_rim_fr", "trim_rim_fl", "trim_hatch_spoiler", "trim_handle.001", "trim_handle", "trim_door_seam.001", "trim_door_seam", "plate_rear", "mirror_housing.001", "mirror_housing", "lamp_tail_indicator.001", "lamp_tail_indicator", "lamp_tail.001", "lamp_tail", "grille_bar.002", "grille_bar.001", "grille_bar", "bumper_rear", "bumper_front", "badge_front"], "unexpected_changes": [], "pillar_construction": "12 mm inset border and 9 mm recessed window reveals are part of the one closed painted body; existing B gap retained and widened by frames. Glass thickness 6 mm; inner seating nominally 1 mm into backing, outer glass 4 mm below frame.", "headlamp_top_rear_inner_outer_m": [0.7, 0.652], "headlamp_top_front_inner_outer_m": [0.692, 0.644], "hood_nose_height_m": 0.72, "note": "The backing under opaque glazing remains closed; no interior or sheet-thickness reconstruction."}
+
+Blender quit
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+EGL Error (0x3009): EGL_BAD_MATCH: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).

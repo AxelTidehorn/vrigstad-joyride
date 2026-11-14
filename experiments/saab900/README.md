@@ -70,3 +70,26 @@ file size and measured Blender import time. Mesh count is a draw-call cost;
 GPU FPS, several cars in-game and physical iPad Safari performance are not
 verified and must not be inferred from the polygon budget or CPU import time.
 No game integration, physics change, existing-model change or PR.
+
+## Final limited geometry refinement
+
+The approved overall profile, roof line, wheelbase, wheels, arches, bumpers and
+moldings are preserved. Window regions now have a 12 mm painted inset border
+and 9 mm deep reveals built into the original one-piece body mesh. The existing
+three-door B-pillar gap is retained, with physical frame margins on both sides;
+A and C connections use the same continuous painted shell, not separate bars.
+Glazing is six mm thick, nominally seated one mm into its backing and four mm
+below the painted reveal. Normal orientation is corrected per closed island.
+
+Headlamps are fitted wedges, not lowered copies of the old boxes. Their upper
+edges slope both across the tapered hood and in depth. The local indicator and
+grille proportions were adjusted to suit; no hood, wheel or bumper volume moved.
+The four requested views are in `build/final_views`, `build/window_closeup` and
+`build/front_closeup`. `build/final-change-audit.json` compares unchanged parts
+against the approved Blender checkpoint. `final_review.py` reproduces the views
+and audit (baseline can be restored from git commit 0cd5b4c).
+
+Scope remains limited. Glass is stylized opaque glazing over closed backing;
+this is not a manufactured hollow cabin or precise sheet-metal reconstruction.
+Very small low-poly shading changes remain. No broader styling iteration,
+physics/gameplay changes or game integration was performed.

@@ -43,19 +43,32 @@ faces += [tuple(range(N-1,-1,-1)),tuple((len(ys)-1)*N+j for j in range(N))];zone
 body=T.group(mk.mesh_from_data('body',vertices,faces),'BODY',paint)
 # Store glazing labels before triangulating; both surfaces derive from identical triangles.
 for f,zone in zip(body.data.polygons,zones):f.material_index=zone
-bm=bmesh.new();bm.from_mesh(body.data);bmesh.ops.triangulate(bm,faces=list(bm.faces));bm.to_mesh(body.data);bm.free()
+bm=bmesh.new();bm.from_mesh(body.data)
+window_faces=[f for f in bm.faces if f.material_index==1]
+# Inset the contiguous window regions, leaving painted, volumetric reveal frames
+# in the original connected body. No separate pillar overlays or black disguises.
+result=bmesh.ops.inset_region(bm,faces=window_faces,thickness=.012,depth=-.009,use_even_offset=True,use_boundary=True)
+for f in result['faces']:f.material_index=0
+bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(body.data);bm.free()
 gv=[];gf=[]
 for f in body.data.polygons:
  zone=f.material_index;f.material_index=0
  if zone:
   start=len(gv)
   for vi in f.vertices:
-   p=body.data.vertices[vi].co;gv.append((p.x*1.009,p.y*1.008,p.z))
+   p=body.data.vertices[vi].co;gv.append(tuple(p))
   gf.append(tuple(range(start,len(gv))))
 glazing=T.group(mk.mesh_from_data('glass_envelope',gv,gf),'GLASS',glass)
-bm=bmesh.new();bm.from_mesh(glazing.data);bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.00001);bm.to_mesh(glazing.data);bm.free()
+bm=bmesh.new();bm.from_mesh(glazing.data);bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.00001);bm.normal_update()
+from mathutils import Vector
+for f in bm.faces:
+    c=f.calc_center_median()
+    if f.normal.dot(Vector((c.x,c.y,c.z-.6)))<0:f.normal_flip()
+bm.normal_update()
+for v in bm.verts:v.co+=v.normal*.002
+bm.to_mesh(glazing.data);bm.free()
 bpy.context.view_layer.objects.active=glazing
-mod=glazing.modifiers.new('seated glass','SOLIDIFY');mod.thickness=.008;mod.offset=0;bpy.ops.object.modifier_apply(modifier=mod.name)
+mod=glazing.modifiers.new('seated glass','SOLIDIFY');mod.thickness=.006;mod.offset=0;bpy.ops.object.modifier_apply(modifier=mod.name)
 for axle,y in [('f',P['front_axle_y']),('r',P['front_axle_y']-P['wheelbase'])]:
  for side,sign in [('l',-1),('r',1)]:
   inner=.565
@@ -93,11 +106,18 @@ for sign in [-1,1]:
     T.band('trim_side',path,.74,.012,.009,rubber,'PLASTIC_RUBBER')
     T.slab('mirror_housing',(.13,.23,.105),(sign*.81,.64,1.02),rubber,'PLASTIC_RUBBER')
     T.slab('trim_handle',(.028,.15,.035),(sign*.805,-.34,.91),rubber,'DETAILS')
-    T.slab('lamp_head',(.39,.05,.17),(sign*.50,2.225,.635),white,'LIGHTS')
-    T.slab('lamp_indicator',(.11,.06,.17),(sign*.748,2.195,.635),amber,'LIGHTS')
+    # A fitted six-face lamp wedge: top slopes down with the hood toward the nose.
+    # Rear top .704 at y=2.205; front top .685 at y=2.255. Body hood at nose .72.
+    lx=sign*.47;w=.35
+    lv=[(lx+dx,y,z) for dx,y,z in [(-w/2,2.205,.555),(w/2,2.205,.555),(w/2,2.255,.555),(-w/2,2.255,.555),(-w/2,2.205,.704),(w/2,2.205,.704),(w/2,2.255,.685),(-w/2,2.255,.685)]]
+    # Slope the top across the width as well as in depth to stay below the tapered hood.
+    lv=[(x,y, (.692 if abs(x)<.47 else .644)+(.008 if y<2.23 else 0)) if i>=4 else (x,y,z) for i,(x,y,z) in enumerate(lv)]
+    lf=[(3,2,1,0),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7),(4,5,6,7)]
+    T.group(mk.mesh_from_data('lamp_head',lv,lf),'LIGHTS',white)
+    T.slab('lamp_indicator',(.11,.06,.10),(sign*.748,2.195,.605),amber,'LIGHTS')
     T.slab('lamp_tail',(.285,.045,.19),(sign*.59,-2.235,.655),red,'LIGHTS')
     T.slab('lamp_tail_indicator',(.10,.05,.09),(sign*.70,-2.225,.71),amber,'LIGHTS')
-T.slab('grille',(.52,.045,.175),(0,2.24,.635),rubber)
+T.slab('grille',(.52,.045,.15),(0,2.24,.625),rubber)
 for z in [.595,.635,.675]:T.slab('grille_bar',(.49,.018,.014),(0,2.266,z),alloy)
 T.slab('plate_rear',(.35,.03,.095),(0,-2.255,.62),rubber)
 # Fitted narrow rubber spoiler across the long hatch; part of Turbo identity.
@@ -115,3 +135,18 @@ bpy.context.scene.unit_settings.system='METRIC'
 
 ink=T.material('emblem blue grey',(.035,.065,.09))
 emblem=mk.cylinder('badge_front',.023,.008,location=(0,2.263,.67),rotation=(90,0,0),segments=12);T.group(emblem,'DETAILS',ink)
+
+# Closed glazing islands must retain outward winding after thin-shell creation.
+bm=bmesh.new();bm.from_mesh(glazing.data);bm.normal_update()
+remaining=set(bm.faces)
+while remaining:
+    faces={remaining.pop()};todo=list(faces)
+    while todo:
+        face=todo.pop()
+        for e in face.edges:
+            for f in e.link_faces:
+                if f in remaining:remaining.remove(f);faces.add(f);todo.append(f)
+    volume=sum(f.verts[0].co.dot(f.verts[i].co.cross(f.verts[i+1].co))/6 for f in faces for i in range(1,len(f.verts)-1))
+    if volume<0:
+        for f in faces:f.normal_flip()
+bm.to_mesh(glazing.data);bm.free()
