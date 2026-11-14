@@ -61,10 +61,11 @@ Geometry passing is a requirement, not an appearance approval.
    Vehicle physics remain separate from render geometry.
 6. Record original creator, asset licence, and modifications in `LICENSE`.
 
-## Current pilot status
+## Historical Saab 9-5 pilot status
 
 - Validator, Blender export script and synthetic regression tests: implemented.
-- Blender script syntax checked; **not executed here** (Blender unavailable).
+- Initial Saab 9-5 pilot only syntax-checked Blender. Later Volvo 240, Saab 900
+  and XC70 experiments execute Blender 4.3.2 headlessly; see round-2 evidence below.
 - Licensed and silhouette-approved 2002–2005 Saab 9-5 SportCombi source: **not sourced**.
 - Actual Saab GLB, visual approval, and game integration: **not done**.
 
@@ -90,3 +91,24 @@ actual GLBs' common geometry. No game assets are replaced.
 The CPU `check_preview_glb.mjs` adapter now supports embedded PNGs by exposing
 header dimensions to the real pinned loader. It does not simulate GPU texture
 upload; PNG decoding is checked independently with Pillow and Blender reimport.
+
+## Current shared vehicle refinements
+
+[Vehicle refinement round 2](../../experiments/round2/README.md) retains the existing
+exporter, validator, reimport and Three loader. `surface_refinement.py` adds local
+pressed sheet-metal reveals, physical support rows, closed fixture bezels and
+hierarchy helpers. It does not replace body construction or repair exports.
+
+`compare_shared_geometry.py CIVIL.glb POLICE.glb --report FILE.json` compares every
+original glTF mesh node, all material primitives, world-space triangles and parent
+hierarchy. Paint is allowed to vary; body, glass, tail lamps and wheel rig are not.
+This avoids false matches caused by randomized loader names for split primitives.
+Six binary-GLB regression fixtures cover material-only differences and changed /
+missing glass, multi-material lamps, wheel parents and independent variant meshes.
+
+XC70 `model.py` owns one body/opening/lamp implementation. `round2.py` applies
+common forms; `variants.py` changes material and equipment visibility. The existing
+review step supports `--snapshots-only` to save both export snapshots without
+rerendering. A real temporary rear-aperture mutation was exported through the same
+CLI twice and verified identical. Current reports and pose tests are linked in
+the round-2 review; no game integration or measured hardware FPS is implied.
