@@ -44,4 +44,17 @@ assert.ok(motion.pitch>.01&&motion.pitch<.08,'body pitches up while accelerating
 for(let i=0;i<600;i++)stepBodyMotion(motion,{speed:0},dt);
 assert.ok(Math.abs(motion.roll)<.005&&Math.abs(motion.pitch)<.005,'body settles after inputs stop');
 assert.ok(Math.abs(motion.heave)<.01,'heave settles after terrain');
-console.log('Driving V4: automatic FWD/RWD/AWD, reverse, steering, gravel, and caps passed.');
+// At the same entry speed, momentary roadside excursions must not kill speed.
+const road=newCar('rwd'),verge=newCar('rwd');
+for(const c of [road,verge])c.u=23;
+for(let i=0;i<120;i++){
+  stepCar(road,{throttle:.3},dt,{feel:'balanced',powertrain:'v4',surface:'asphalt',powerScale:1.2,hardCap:38,grassFraction:0});
+  stepCar(verge,{throttle:.3},dt,{feel:'balanced',powertrain:'v4',surface:'asphalt',powerScale:1.2,hardCap:38,grassFraction:.25});
+}
+assert.ok(road.u-verge.u<1.8,'one wheel on grass should not produce a dramatic speed penalty');
+const allGrass=newCar('rwd');allGrass.u=23;
+for(let i=0;i<120;i++)stepCar(allGrass,{throttle:.3},dt,{feel:'balanced',powertrain:'v4',surface:'asphalt',powerScale:1.2,hardCap:38,grassFraction:1});
+assert.ok(allGrass.u>18,'grass should not instantly erase momentum');
+const launch=simulate('rwd',18,{throttle:1},{powerScale:1.26,hardCap:38});
+assert.ok(launch.u>27.78,'Volvo should eventually reach 100 km/h under continuous power');
+console.log('Driving V4: automatic gearboxes, launch, partial grass and speed continuity passed.');
