@@ -12,9 +12,19 @@ export const VEHICLE_PRESETS = Object.freeze({
   awd: { name: 'AWD · Polis', drive: 'awd', mass: 1570, wheelbase: 2.68, width: 1.78, maxSpeed: 42, acceleration: 5.1, grip: 1.10, yawInertia: 1.10 },
 });
 export const SURFACES = Object.freeze({
-  asphalt: { name: 'Asfalt', mu: 1.05, rolling: .020 },
-  gravel:  { name: 'Grus', mu: .70, rolling: .035 },
-  grass:   { name: 'Gräs', mu: .46, rolling: .060 },
+  asphalt: { name: 'Asfalt', mu: 1.05, lateral: 1.05, rolling: .020 },
+  gravel:  { name: 'Grus', mu: .70, lateral: .61, rolling: .035 },
+  grass:   { name: 'Gräs', mu: .46, lateral: .35, rolling: .060 },
+});
+// The game keeps an automatic gearbox. These are reference *variants*, not
+// implied specifications for every engine/trim sharing the same body shell.
+// Volvo: https://www.encycarpedia.com/se/volvo/86-240-gl-sedan
+// Saab 900: Saab-Scania 1988 technical brochure, Turbo 16S, 8.7s
+// Saab 9-5: https://www.auto-data.net/se/saab-9-5-sport-combi-facelift-2001-generation-7158
+export const VEHICLE_VARIANTS = Object.freeze({
+  volvo: {label:'Volvo 240 GL 2.3 (1986–93)',type:'rwd',mass:1310,target0to100:11.6,power:1.6371},
+  saab: {label:'Saab 900 Turbo 16S (1988)',type:'fwd',mass:1290,target0to100:8.7,power:2.1374},
+  saab95Estate: {label:'Saab 9-5 SportCombi 2.3t 185 hp (2003)',type:'fwd',mass:1680,target0to100:8.8,power:2.7337},
 });
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
@@ -94,13 +104,15 @@ function automaticForce(c,rawPedal,dt,spec){
   return engineForce;
 }
 
-export function newCar(type='rwd',x=0,z=0,h=0){
+export function newCar(type='rwd',x=0,z=0,h=0,vehicleId=null){
   if(!VEHICLE_PRESETS[type]) throw Error('Unknown vehicle '+type);
-  return { type, x,z,h, u:0,v:0,r:0, steer:0, slip:0, speed:0, slipFront:0, slipRear:0, gripFront:0, gripRear:0, surface:'asphalt', distance:0, smoothedThrottle:0, slideResponse:0, range:'D', gear:1, gearLabel:'1', rpm:AUTO_SPECS[type].idle, engineLoad:0, shiftTime:0, shiftLock:0, shiftCount:0 };
+  return { type, vehicleId, x,z,h, u:0,v:0,r:0, steer:0, slip:0, speed:0, slipFront:0, slipRear:0, gripFront:0, gripRear:0, surface:'asphalt', distance:0, smoothedThrottle:0, slideResponse:0, range:'D', gear:1, gearLabel:'1', rpm:AUTO_SPECS[type].idle, engineLoad:0, shiftTime:0, shiftLock:0, shiftCount:0 };
 }
 export function stepCar(c,input={},dt=1/120,settings={}){
   if(!(dt>0&&dt<=.05)) throw Error('stepCar expects dt in (0, .05]');
-  const preset=VEHICLE_PRESETS[c.type],spec=settings.speedLimit?{...preset,maxSpeed:Math.min(preset.maxSpeed,settings.speedLimit)}:preset,
+  const preset=VEHICLE_PRESETS[c.type],variant=VEHICLE_VARIANTS[c.vehicleId],
+        base=variant?{...preset,mass:variant.mass}:preset,
+        spec=settings.speedLimit?{...base,maxSpeed:Math.min(base.maxSpeed,settings.speedLimit)}:base,
         surface=SURFACES[settings.surface||c.surface]||SURFACES.asphalt;
   const balanced=settings.feel==='balanced';
   const m=spec.mass,g=9.81,L=spec.wheelbase,lf=L*.47,lr=L*.53;
@@ -117,6 +129,7 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   // Grass changes traction immediately but does not act like a speed limiter.
   const grass=clamp(settings.grassFraction??(settings.surface==='grass'?1:0),0,1);
   const mu=(surface.mu*(1-grass)+SURFACES.grass.mu*grass)*spec.grip;
+  const lateralMu=(surface.lateral*(1-grass)+SURFACES.grass.lateral*grass)*spec.grip;
   const normalFront=m*g*(lr/L),normalRear=m*g*(lf/L);
   const forwardV=c.u;
   let engine;
@@ -131,7 +144,7 @@ export function stepCar(c,input={},dt=1/120,settings={}){
     // The same already-smoothed throttle as V3: chassis behavior is unchanged.
     engine=automaticForce(c,throttle,dt,spec);
   }
-  engine *= clamp(settings.powerScale??1,0.25,1.7);
+  engine *= clamp((settings.powerScale??1)*(variant?.power??1),0.20,3.5);
   let frontDrive=spec.drive==='fwd'?.96:spec.drive==='awd'?.48:0;
   let rearDrive=1-frontDrive;
   let fxF=engine*frontDrive,fxR=engine*rearDrive;
@@ -153,12 +166,12 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   // Mild arcade power-oversteer: driven rear tires give up lateral grip sooner.
   const powerSlide=clamp((Math.abs(c.u)-4)/8,0,1)*clamp((Math.abs(steer)-.055)/.18,0,1)*clamp(throttle,0,1);
   c.slideResponse=balanced ? c.slideResponse+(powerSlide-c.slideResponse)*(1-Math.exp(-dt/(powerSlide>c.slideResponse?.22:.18))) : powerSlide;
-  const rearSlide=spec.drive==='rwd'?((balanced?.31:.43)*c.slideResponse):spec.drive==='awd'?(.12*c.slideResponse):0;
+  const rearSlide=spec.drive==='rwd'?((balanced?.38:.43)*c.slideResponse):spec.drive==='awd'?(.15*c.slideResponse):0;
   // Friction-circle limit: accelerating through the driven tires takes away cornering grip.
   function axle(x,y,normal,hand=0){
-    const mx=normal*mu;
+    const mx=normal*mu, my=normal*lateralMu;
     const clampedX=clamp(x,-mx*.78,mx*.78);
-    const available=Math.sqrt(Math.max(0,mx*mx-clampedX*clampedX));
+    const available=my*Math.sqrt(Math.max(0,1-(clampedX/mx)**2));
     const lateralLimit=available*(1-.72*hand)*(1-(normal===normalRear?rearSlide:0));
     return [clampedX,clamp(y,-lateralLimit,lateralLimit),lateralLimit];
   }
@@ -178,9 +191,14 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   let rdot=(lf*(fxF*Math.sin(steer)+fyF*Math.cos(steer))-lr*fyR)/inertia;
   // Arcade yaw stabiliser: limit unrecoverable spins while preserving slip.
   const steerYaw=(Math.abs(c.u)>0.25?c.u/L*Math.tan(steer):0);
-  const yawAssist=spec.drive==='rwd'?(balanced?(Math.abs(steerIn)<.08?2.9:Math.sign(steerIn)!==Math.sign(c.r)&&Math.abs(c.r)>.1?2.5:1.45):1.5):spec.drive==='fwd'?1.8:2.3;
+  const slipMagnitude=Math.abs(Math.atan2(c.v,Math.max(4,Math.abs(c.u))));
+  // Avoid the stabiliser snapping an established slide straight against the
+  // player's countersteer. A weaker stabiliser remains to prevent endless spins.
+  const driftBlend=clamp((slipMagnitude-.065)/.19,0,1)*clamp((Math.abs(c.u)-5)/9,0,1);
+  const baseYawAssist=spec.drive==='rwd'?(balanced?1.6:1.5):spec.drive==='fwd'?1.8:2.3;
+  const yawAssist=baseYawAssist*(1-.68*driftBlend);
   // The yaw target is also bounded by the tire/road lateral grip budget.
-  const allowedYaw=mu*g/Math.max(4,Math.abs(c.u));
+  const allowedYaw=lateralMu*g/Math.max(4,Math.abs(c.u));
   const targetYaw=clamp(steerYaw,-allowedYaw,allowedYaw);
   rdot+=(targetYaw-c.r)*yawAssist;
   if(Math.abs(c.u)<1&&Math.abs(c.v)<.5){vdot-=c.v*4;rdot-=c.r*5}
@@ -191,7 +209,7 @@ export function stepCar(c,input={},dt=1/120,settings={}){
   c.r=clamp(c.r+rdot*dt,-1.65,1.65);
   // Suppress unrealistically endless pirouettes; lower factor at speed.
   c.r*=Math.exp(-dt*(.32+.15*Math.abs(c.u)/20));
-  c.v*=Math.exp(-dt*(balanced?.55:.40));
+  c.v*=Math.exp(-dt*(balanced?.48:.40)*(1-.45*driftBlend));
   c.h+=c.r*dt;
   if(c.h>Math.PI)c.h-=2*Math.PI;if(c.h< -Math.PI)c.h+=2*Math.PI;
   const wx=Math.sin(c.h)*c.u+Math.cos(c.h)*c.v;
