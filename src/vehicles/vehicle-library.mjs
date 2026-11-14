@@ -13,12 +13,17 @@ export const VEHICLES = Object.freeze({
 const COLORS={tyre:"#202426",glass:"#263c47",black:"#1a2224",silver:"#b1b8b6",rear:"#ac3432",amber:"#d99b48",lamp:"#dce0d8"};
 const rgb=h=>{const x=h.replace("#","");return [0,2,4].map(i=>parseInt(x.slice(i,i+2),16)/255)};
 class Builder{
- constructor(){this.position=[];this.normal=[];this.color=[]}
+ constructor(collectLayers=false){this.position=[];this.normal=[];this.color=[];this.layer='body';this.layers=collectLayers?new Map():null}
+ setLayer(layer){this.layer=layer;return this}
+
  tri(a,b,c,color){
   let u=b.map((v,i)=>v-a[i]),v=c.map((x,i)=>x-a[i]);
   let n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]];
   const len=Math.hypot(...n);if(len<1e-8)return;n=n.map(x=>x/len);
-  for(const p of [a,b,c]){this.position.push(...p);this.normal.push(...n);this.color.push(...rgb(color))}
+  const tint=rgb(color);
+  let layer=null;
+  if(this.layers){layer=this.layers.get(this.layer)||{positions:[],normals:[],colors:[]};if(!this.layers.has(this.layer))this.layers.set(this.layer,layer)}
+  for(const p of [a,b,c]){this.position.push(...p);this.normal.push(...n);this.color.push(...tint);if(layer){layer.positions.push(...p);layer.normals.push(...n);layer.colors.push(...tint)}}
  }
  quad(a,b,c,d,color){this.tri(a,b,c,color);this.tri(a,c,d,color)}
  poly(pts,color){for(let i=1;i<pts.length-1;i++)this.tri(pts[0],pts[i],pts[i+1],color)}
@@ -80,22 +85,29 @@ function volvo(G,paint){
  for(const s of [-1,1]){
   const a=s*.756,b=s*.67;
   // Two tall rectangular door windows with a narrow central pillar.
+  G.setLayer('glazing');
   G.quad([a,1.055,-.93],[a,1.055,.255],[b,1.395,.255],[b,1.395,-.59],COLORS.black);
   G.quad([a,1.082,-.87],[a,1.082,.19],[b,1.37,.19],[b,1.37,-.53],COLORS.glass);
   G.quad([a,1.055,.30],[a,1.055,1.48],[b,1.395,1.12],[b,1.395,.30],COLORS.black);
   G.quad([a,1.082,.35],[a,1.082,1.40],[b,1.37,1.05],[b,1.37,.35],COLORS.glass);
+  G.setLayer('body');
   G.quad([s*.77,1.02,.245],[s*.77,1.02,.31],[s*.68,1.43,.31],[s*.68,1.43,.245],paint);
+  G.setLayer('trim');
   G.lineOnSide(s*.855,.86,-2.17,.86,2.17,COLORS.black,.014);
   for(const z of [-.20,.88])G.box(s*.86,.96,z,.022,.022,.18,COLORS.black);
   for(const z of [-.75,.27,1.43])G.lineOnSide(s*.853,.46,z,.85,z,COLORS.black,.006);
+  G.setLayer('wheels');
   G.wheel(s*.84,fy+.055,fr,.357,.29,COLORS.silver);
   G.wheel(s*.84,fy+.055,rr,.357,.29,COLORS.silver);
+  G.setLayer('body');
  }
  // Front and rear windscreens follow the roof planes.
+ G.setLayer('glazing');
  G.quad([-.756,1.055,-.98],[.756,1.055,-.98],[.67,1.41,-.60],[-.67,1.41,-.60],COLORS.black);
  G.quad([-.72,1.075,-.94],[.72,1.075,-.94],[.635,1.39,-.61],[-.635,1.39,-.61],COLORS.glass);
  G.quad([.67,1.41,1.13],[-.67,1.41,1.13],[-.756,1.055,1.55],[.756,1.055,1.55],COLORS.black);
  G.quad([.635,1.39,1.14],[-.635,1.39,1.14],[-.72,1.075,1.51],[.72,1.075,1.51],COLORS.glass);
+ G.setLayer('body');
  // Roof-to-window rebates and C-pillar close the apparent holes at the ends.
  for(const s of [-1,1]){
   G.quad([s*.756,1.055,-.98],[s*.67,1.41,-.60],[s*.635,1.39,-.61],[s*.72,1.075,-.94],paint);
@@ -107,18 +119,23 @@ function volvo(G,paint){
  // Close the actual rear body panel; previously only lamps, plate and bumper existed here.
  // The panel sits beneath the trim so the license plate cannot reveal open space.
  G.quad([-.785,.565,2.359],[.785,.565,2.359],[.785,.984,2.359],[-.785,.984,2.359],paint);
- // 1986-90 front treatment and rear lighting.
+ // 1986-90 front treatment and rear lighting. Separate layers let us refine
+ // the painted shell without reshaping bumper plastics and attached trim.
+ G.setLayer('trim');
  G.box(0,.78,-2.361,1.51,.32,.045,COLORS.black);
  G.box(0,.78,-2.393,.62,.25,.02,COLORS.black);
+ G.setLayer('lighting');
  for(const s of [-1,1]){
   G.box(s*.53,.80,-2.40,.39,.225,.025,COLORS.lamp);
   G.box(s*.75,.80,-2.405,.075,.225,.03,COLORS.amber);
   G.box(s*.65,.80,2.386,.27,.32,.03,COLORS.rear);
  }
+ G.setLayer('trim');
  for(let i=-2;i<=2;i++)G.box(i*.10,.78,-2.414,.012,.23,.02,"#899295");
  G.box(0,.55,-2.46,1.83,.15,.25,COLORS.tyre);
  G.box(0,.55,2.46,1.83,.15,.25,COLORS.tyre);
  G.box(0,.75,2.397,.45,.11,.03,COLORS.silver);
+ G.setLayer('body');
 }
 const SAAB_COLORS={glass:'#263d4a',glass2:'#334b57',black:'#172126',rubber:'#222729',gray:'#929c9e',silver:'#b8c0be',lamp:'#d9dfd8',amber:'#d79955',rear:'#ab3532'};
 // Experimental 900 silhouette, retained for evaluation rather than approved production shape.
@@ -355,11 +372,18 @@ function tractor(G,id){
 const cache=new WeakMap();
 export function buildVehicleGeometryData(id,options={}){
  if(!(id in VEHICLES))throw new RangeError("Unknown model: "+id);
- const G=new Builder();if(id==="volvo240")volvo(G,options.paint||VEHICLES[id].paint);
+ const G=new Builder(Boolean(options.includeLayers));if(id==="volvo240")volvo(G,options.paint||VEHICLES[id].paint);
  else if(id==="saab900")saab(G,options.paint||VEHICLES[id].paint);
  else if(id==="saab95Estate")saab95Estate(G,options.paint||VEHICLES[id].paint);
  else tractor(G,id);
- return {positions:G.position,normals:G.normal,colors:G.color};
+ return {positions:G.position,normals:G.normal,colors:G.color,...(options.includeLayers?{layers:Object.fromEntries(G.layers)}:{})};
+}
+/** Separate buffers for painted shell, windows, trim, lighting and wheels.
+ * Only the Volvo currently has explicit layer tagging; other vehicles remain
+ * one body layer until they are reviewed individually. Combined output and
+ * existing rendering API are unchanged. */
+export function buildVehicleLayerData(id,options={}){
+ return buildVehicleGeometryData(id,{...options,includeLayers:true}).layers;
 }
 export function createVehicleGeometry(THREE,id,options={}){
  if(!(id in VEHICLES))throw new RangeError("Unknown model: "+id);
