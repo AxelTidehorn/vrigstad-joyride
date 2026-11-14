@@ -1,0 +1,808 @@
+{
+  "objects": {
+    "body": {
+      "verts": 766,
+      "faces": 1528,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 6.247121387,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.71,
+        4.62,
+        1.16
+      ],
+      "islands": 1
+    },
+    "glass_envelope": {
+      "verts": 148,
+      "faces": 264,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002313153,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.61,
+        2.2129,
+        0.4891
+      ],
+      "islands": 8
+    },
+    "bumper_front": {
+      "verts": 160,
+      "faces": 316,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.032549912,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.73,
+        0.45,
+        0.145
+      ],
+      "islands": 1
+    },
+    "bumper_rear": {
+      "verts": 160,
+      "faces": 316,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.032549912,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.73,
+        0.45,
+        0.145
+      ],
+      "islands": 1
+    },
+    "trim_side_-1": {
+      "verts": 80,
+      "faces": 156,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001419514,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.0326,
+        4.19,
+        0.027
+      ],
+      "islands": 1
+    },
+    "trim_side_1": {
+      "verts": 80,
+      "faces": 156,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001419514,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.0326,
+        4.19,
+        0.027
+      ],
+      "islands": 1
+    },
+    "trim_handle": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000103366,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.025,
+        0.145,
+        0.035
+      ],
+      "islands": 1
+    },
+    "trim_handle.001": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000103366,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.025,
+        0.145,
+        0.035
+      ],
+      "islands": 1
+    },
+    "mirror_housing": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.00368401,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.13,
+        0.24,
+        0.12
+      ],
+      "islands": 1
+    },
+    "trim_handle.002": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000103366,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.025,
+        0.145,
+        0.035
+      ],
+      "islands": 1
+    },
+    "trim_handle.003": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000103366,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.025,
+        0.145,
+        0.035
+      ],
+      "islands": 1
+    },
+    "mirror_housing.001": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.00368401,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.13,
+        0.24,
+        0.12
+      ],
+      "islands": 1
+    },
+    "grille_front": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.004891891,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.65,
+        0.035,
+        0.22
+      ],
+      "islands": 1
+    },
+    "lamp_front_-1": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.003438251,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.4,
+        0.04,
+        0.22
+      ],
+      "islands": 1
+    },
+    "lamp_rear_-1": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002963371,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.38,
+        0.04,
+        0.2
+      ],
+      "islands": 1
+    },
+    "lamp_front_1": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.003438251,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.4,
+        0.04,
+        0.22
+      ],
+      "islands": 1
+    },
+    "lamp_rear_1": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002963371,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.38,
+        0.04,
+        0.2
+      ],
+      "islands": 1
+    },
+    "wheel_fl": {
+      "verts": 290,
+      "faces": 576,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.058414256,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.2625,
+        0.63,
+        0.63
+      ],
+      "islands": 1
+    },
+    "wheel_fr": {
+      "verts": 290,
+      "faces": 576,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.058414256,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.2625,
+        0.63,
+        0.63
+      ],
+      "islands": 1
+    },
+    "wheel_rl": {
+      "verts": 290,
+      "faces": 576,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.057526157,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.2275,
+        0.63,
+        0.63
+      ],
+      "islands": 1
+    },
+    "wheel_rr": {
+      "verts": 290,
+      "faces": 576,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.057526157,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.2275,
+        0.63,
+        0.63
+      ],
+      "islands": 1
+    },
+    "trim_rim_wheel_fl": {
+      "verts": 40,
+      "faces": 76,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002337559,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.41,
+        0.41,
+        0.018
+      ],
+      "islands": 1
+    },
+    "trim_rim_wheel_fr": {
+      "verts": 40,
+      "faces": 76,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002337559,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.41,
+        0.41,
+        0.018
+      ],
+      "islands": 1
+    },
+    "trim_rim_wheel_rl": {
+      "verts": 40,
+      "faces": 76,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002337559,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.41,
+        0.41,
+        0.018
+      ],
+      "islands": 1
+    },
+    "trim_rim_wheel_rr": {
+      "verts": 40,
+      "faces": 76,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002337559,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.41,
+        0.41,
+        0.018
+      ],
+      "islands": 1
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "info": [
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-glass_envelope[island 6] flush; body-glass_envelope[island 7] flush; body-bumper_front embedded 0.084 m; body-bumper_rear embedded 0.090 m; body-trim_side_-1 embedded 0.011 m; body-trim_side_1 embedded 0.011 m; body-trim_handle embedded 0.012 m; body-trim_handle.001 embedded 0.012 m; body-mirror_housing flush; body-trim_handle.002 embedded 0.012 m; body-trim_handle.003 embedded 0.012 m; body-mirror_housing.001 flush; body-grille_front embedded 0.012 m; body-lamp_front_-1 embedded 0.015 m; body-lamp_rear_-1 embedded 0.015 m; body-lamp_front_1 embedded 0.015 m; body-lamp_rear_1 embedded 0.015 m; body-wheel_fl embedded 0.025 m; body-wheel_fr embedded 0.025 m; body-wheel_rl embedded 0.025 m; body-wheel_rr embedded 0.025 m; glass_envelope[island 5]-mirror_housing.001 flush; glass_envelope[island 6]-mirror_housing flush; wheel_fl-trim_rim_wheel_fl flush; wheel_fr-trim_rim_wheel_fr flush; wheel_rl-trim_rim_wheel_rl flush; wheel_rr-trim_rim_wheel_rr flush"
+  ],
+  "units": "m",
+  "overall": {
+    "min": [
+      -0.9150000214576721,
+      -2.4099950790405273,
+      -2.9802322387695312e-08
+    ],
+    "max": [
+      0.9150000214576721,
+      2.4099950790405273,
+      1.4329015016555786
+    ],
+    "size": [
+      1.8300000429153442,
+      4.819990158081055,
+      1.4329015016555786
+    ],
+    "contact_tolerance": 0.005351113182195436,
+    "parts": 32
+  },
+  "contacts": [
+    {
+      "a": "body",
+      "b": "glass_envelope[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 2]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 3]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 4]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 5]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 6]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 7]",
+      "depth": 0.0016631907783448696,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "bumper_front",
+      "depth": 0.08410228788852692,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "bumper_rear",
+      "depth": 0.08998090028762817,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_side_-1",
+      "depth": 0.01126844435930252,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_side_1",
+      "depth": 0.011268489994108677,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_handle",
+      "depth": 0.011534028686583042,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_handle.001",
+      "depth": 0.011534036137163639,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "mirror_housing",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_handle.002",
+      "depth": 0.011534028686583042,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_handle.003",
+      "depth": 0.011534036137163639,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "mirror_housing.001",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "grille_front",
+      "depth": 0.012499810196459293,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_front_-1",
+      "depth": 0.014999866485595703,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_rear_-1",
+      "depth": 0.014999866485595703,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_front_1",
+      "depth": 0.014999866485595703,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_rear_1",
+      "depth": 0.014999866485595703,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "wheel_fl",
+      "depth": 0.02500009536743164,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "wheel_fr",
+      "depth": 0.02500009536743164,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "wheel_rl",
+      "depth": 0.025000035762786865,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "wheel_rr",
+      "depth": 0.025000035762786865,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 5]",
+      "b": "mirror_housing.001",
+      "depth": 0.0028237097430974245,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 6]",
+      "b": "mirror_housing",
+      "depth": 0.0028237097430974245,
+      "expected": false
+    },
+    {
+      "a": "wheel_fl",
+      "b": "trim_rim_wheel_fl",
+      "depth": 0.010500013828277588,
+      "expected": false
+    },
+    {
+      "a": "wheel_fr",
+      "b": "trim_rim_wheel_fr",
+      "depth": 0.010500013828277588,
+      "expected": false
+    },
+    {
+      "a": "wheel_rl",
+      "b": "trim_rim_wheel_rl",
+      "depth": 0.010499954223632812,
+      "expected": false
+    },
+    {
+      "a": "wheel_rr",
+      "b": "trim_rim_wheel_rr",
+      "depth": 0.010499954223632812,
+      "expected": false
+    }
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 0
+  }
+}

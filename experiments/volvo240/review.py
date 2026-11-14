@@ -18,7 +18,7 @@ views=[('front',180,0,True),('side',90,0,True),('rear',0,0,True),('top',180,90,T
        ('three_quarter',135,22,False),('three_quarter_left',-135,22,False),
        ('three_quarter_rear',35,22,False),('low_front',160,6,False)]
 def clay_regions(scene):
-    scene.display.shading.color_type='VERTEX'
+    scene.display.shading.color_type='MATERIAL'
 # Renderer's fixed cameras and sheet builder are reused unchanged. A documented
 # Workbench setting displays the body's single-material vertex color regions.
 bpy.app.handlers.render_pre.append(clay_regions)
