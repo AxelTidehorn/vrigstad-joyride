@@ -1,146 +1,143 @@
-# Chevrolet Impala 1970 — four-door hardtop
+# Chevrolet Impala 1970 — shape refinement
 
 [Review gallery](index.html) · [Touch / paint viewer](preview.html) ·
-[Six-view PNG](review/contact-sheet.png) · [Delivery ZIP](impala1970-delivery.zip)
+[Before / after](review/before-after.png) · [Delivery ZIP](impala1970-delivery.zip)
 
-New original **16439 Impala Sport Sedan** body on
-`experiment/impala-1970-hardtop`, based on completed refinement round 2 (`ff6a0f1`).
-Everything was generated, checked, exported and rendered in Codex with headless
-Blender 4.3.2. Reviewers need only a browser. No existing car, game code, physics,
-traffic, main or Oliver repository is changed. Human visual approval is pending.
+Refines the existing **16439 Impala Sport Sedan, four-door hardtop** from
+`6c7f32c783aa0923cb2f18836157a7ef1cccfc9b` on the separate branch
+`experiment/impala-1970-shape`. The existing loft, closed wheel wells, inset window
+frames, materials, exporter and validator are retained. All generation, rendering
+and checks ran in Codex with headless Blender 4.3.2. No reviewer setup is required.
+No game code, physics, existing vehicle, main or Oliver repository was changed.
+Human visual approval remains pending.
 
-## Delivered asset
+## Actual form changes
 
-- [`model.py`](model.py) + [`parameters.json`](parameters.json): original
-  dimensioned Impala loft, inset frames, closed wheel wells, glass and fixtures.
-- [`build/model.blend`](build/model.blend): current editable master, organised
-  into BODY, GLASS, CHROME, RUBBER, LIGHTS, DETAILS and WHEELS collections.
-- [`build/impala1970-hardtop.glb`](build/impala1970-hardtop.glb): GLB 2.0, metres,
-  +Y up / −Z forward, one closed mesh `body`, four independent `wheel_fl/fr/rl/rr`
-  hub nodes. Rims, whitewalls and slots are children of their own hubs; glass,
-  lamps, bumpers and fixed trim follow body motion.
-- [`review`](review/contact-sheet.png): exact side, front, rear, two three-quarter
-  views, higher roof/hood view, front/rear close-ups, clay blockout/final, actual
-  scale comparison with latest Saab 900 and 240, dimensions and reference study.
-- [`references.md`](references.md), [`notes.md`](notes.md) and
-  [`summary.json`](summary.json): primary sources, estimates, critique/fixes and
-  independent machine-readable checks. Raw studio renders remain in `build/final`.
+- Front centre remains in place; outer corners retreat into a shallow V. Grille,
+  lamp housings and bumper follow that plan instead of a flat front plane.
+- Broad fender crowns flank depressed hood channels and a raised central hood.
+  Outer front steel now supports the upper headlamp bezel corners. These are
+  changes to the closed steel mesh, not painted lines or additional chrome.
+- Narrower waist and a tucked lower side replace flatter slab sides, preserving
+  the existing wheel openings, hubs and tracks.
+- Lower rear deck sits between broad quarter shoulders; tail and bumper corners
+  return inward. A fin-like intermediate draft was rejected.
+- Windshield becomes more upright, upper opening moves forward, roof broadens
+  60 mm across its upper section and gains a controlled transverse crown. The
+  existing pillarless hardtop construction and overall design height remain.
+- Existing glass sash is fitted to the changed pane geometry, not old widths.
+  Five grille blades replace six to reserve the polygon budget for body shape.
 
-## Form and construction
+Measured steel differences are recorded in [preservation.json](shape-review/preservation.json).
+At the fixed hood sample the centre rises 29.5 mm and the channel falls 20.9 mm;
+front relief is 89.1 mm at x = 0.775 m. Waist width at y = 0, z = 0.60 falls
+67.1 mm. Rear deck sample falls 64.0 mm. Actual front-pane inclination increases
+from 32.15° to 39.97° above horizontal. These compare the two models; they are
+**not millimetre accuracy claims against perspective photographs**.
 
-The 5.486 m full-size car uses its own longitudinal and transverse sections:
-long low hood, swept low hardtop, broad C pillars, long deck, coke-bottle shoulder,
-shorter front / very long rear overhang and low rear wheel openings. No existing
-vehicle body was stretched or copied. Steel is one consistently wound closed
-volume, with recessed window backing and genuine wells. The rear full-size inner
-tyre pocket intersects the lower outer opening, leaving substantial connected
-quarter geometry above the tyre instead of a detached skirt.
+## Review evidence
 
-No fixed painted B pillar: front/rear door glass is physically split by a 4 mm
-meeting join and narrow bright sash. Hood/fender relief rails rise up to 22 mm;
-shallow supported V-reveals are real body vertices. Four round sealed beams,
-paired rectangular bezels, deep horizontal grille, formed chrome bumpers and
-six vertical rear sockets establish 1970 identity. The two middle rear units
-have separate neutral reverse-lens material. Bumper lamps, grille slot and plate
-mounts have actual pockets. Rocker chrome stops at the wheel openings.
+Identical camera metadata, physical framing, material values and lighting are
+used for both versions; each comparison applies the same crop to both images.
 
-Reused `authoring.py` / `surface_refinement.py`, pinned Blender Modeler helpers,
-unchanged repository exporter and raw-topology validator. No new model pipeline,
-export repair or validator weakening. Fixture rotations are baked before parenting
-so Three r128 bounds match real geometry. Stable window-edge ordering makes
-independent source builds match within the existing 1 µm comparison tolerance.
+- [Side and both three-quarter comparisons](review/before-after.png).
+- [Exact front and rear comparison](review/ends-before-after.png).
+- [Front and rear close comparisons](review/fascia-before-after.png).
+- [Steel and tyres only](review/body-before-after.png), without glass, chrome or
+  lighting changes concealing the body shape.
+- [Same-mode clay comparison](review/blockout-final.png); despite its historical
+  filename this now compares the prior finished master with this refinement.
+- [Six final views](review/contact-sheet.png), [front close-up](review/front_detail.png),
+  [rear close-up](review/rear_detail.png), [factory dimensions](review/dimensions.png).
+- [Same-scale fleet comparison](review/fleet-scale.png) and
+  [side comparison](review/fleet-side-scale.png). Only the Impala was regenerated;
+  Saab and 240 images use the unchanged existing masters and same fixed rig.
 
-## Dimensions and checks
+Raw before / after images and cameras are in `shape-review/`; final raw renders
+and exact transparent orthographic masks remain in `build/final/`.
 
-| Property | Documented / model result |
+## Source, asset and compatibility
+
+[`model.py`](model.py) and [`parameters.json`](parameters.json) are authoritative.
+[`build/model.blend`](build/model.blend) is the editable master, organised into
+BODY, GLASS, CHROME, RUBBER, LIGHTS, DETAILS and WHEELS collections.
+[`build/impala1970-hardtop.glb`](build/impala1970-hardtop.glb) is GLB 2.0 in metres,
+Y-up / −Z forward, with one closed `body` and `wheel_fl`, `wheel_fr`, `wheel_rl`,
+`wheel_rr`. Fixture names, parenting, material values and body origin are retained.
+All 16 tyre / rim / whitewall / spoke meshes retain their world geometry and
+origins against the frozen prior master. Individual body paint still works.
+
+| Property | Current result |
 | --- | --- |
-| Wheelbase | 3.022600 m; actual hubs and GLB agree |
-| Overall length | 5.486400 m |
-| Design height | 1.397000 m |
-| Body width | GM 2.026920 m; actual GLB 2.025600 m, 1.32 mm narrower |
-| Width including mirrors | 2.210 m |
-| Front / rear overhang | 0.949960 / 1.513840 m |
-| Front / rear hub tracks | 1.610360 / 1.607820 m |
-| Tyres | Estimated Ø0.700 × 0.210 m; 15-inch rim documented |
-| Triangles / glTF mesh primitives | **19,604 / 27**, below 20,000 budget |
+| Length / body width / height | 5.4864 / 2.0269 / 1.3970 m |
+| Wheelbase | 3.0226 m |
+| Front / rear overhang | 0.9500 / 1.5138 m |
+| Front / rear hub track | 1.61036 / 1.60782 m |
+| Overall width including mirrors | 2.210 m |
+| Triangles / mesh primitives | **19,856 / 27**, below 20,000 budget |
 | Materials / textures | **12 / 0** |
-| Actual GLB size | Approximately 0.7 MB |
+| Tyre overall diameter | 0.700 m, estimate; 15-inch rim documented |
 
-[`source-audit.json`](build/source-audit.json): body one connected component,
-0 nonmanifold/open edges, 0 inconsistent edges, 0 degenerates, positive volume,
-0 nonadjacent BVH body self-intersection candidates. All component source meshes
-are closed / consistently wound / nondegenerate. Glass is six closed panes,
-0 glass/body surface intersections, minimum sampled signed backing clearance
-**1.095 mm**; 0 tyre/body surface intersection candidates (small hidden axle-mount
-stubs intentionally enter the inner wall). Headlamp tops are at 0.742 m, below
-the front hood. Chrome moulding joints and lens ribs contain intentional seated
-fixture overlaps; this is not an exhaustive proof of all-component collision freedom.
-The shoulder moulding is ray-fitted to the actual steel, with adaptive support
-stations only where a straight chord would leave the panel. Across 160 probes,
-maximum axis-to-steel distance is 3.341 mm, below the four-sided strip's 4.243 mm
-inscribed radius. This separately checks the front-fender trim seating that a
-batched-fixture contact report could overlook.
+## Checks actually run
 
-The unchanged [`GLB validator`](build/geometry.json), actual
-[`Blender reimport`](build/reimport.json), pinned
-[`Three r128 loader`](build/three-loader.json),
-[`transient pose test`](build/pose.json),
-[`independent source regeneration`](build/reproduction.json) and
-[`per-instance paint test`](build/paint-test.json) pass. Actual Three bounds are
-2.210 × 1.397 × 5.4864 m. The pose probe now chooses a fixed off-axis vertex:
-a lathed hubcap centre pole must remain stationary during spin, so the old
-first-vertex probe was unsuitable. Existing 240/Saab/XC exports are regression
-checked with the improved probe without changing their assets.
+- Pinned Blender Modeler: 0 errors / 0 warnings.
+- Source body: one connected component, zero open/nonmanifold edges,
+  inconsistent edges, degenerate faces or nonadjacent self-intersection candidates.
+- All component meshes closed and consistently wound. Six closed glass panes;
+  zero glass/body surface intersections, minimum sampled signed backing gap
+  about 1.095 mm. All four tyres have zero body surface intersection candidates.
+- Unchanged strict raw GLB topology/dimensions validator passes. No export repair,
+  welding or relaxed criteria. Blender reimport and actual Three r128 parsing pass.
+- Actual exported-GLB steering, wheel spin and body-motion probe passes, as does
+  per-instance paint isolation. No in-game integration or driving test claimed.
+- Independent source regeneration matches all 27 meshes within 1 µm.
+- Five validator tests, 11 numerical silhouette tests and 11 preview/control/boot
+  tests pass. Five full game smoke tests pass; their log is in `build/e2e-tests.txt`.
+- `build/protected-files.json` compares existing Saab / 240 / XC70 masters,
+  exports and game sources byte-for-byte against baseline `6c7f32c`.
 
-Five validator tests, 11 numerical silhouette tests and six shared-geometry tests
-pass. `build/protected-files.json` verifies existing masters, exports and game
-sources against base commit `ff6a0f1`. No physical iPad/Safari FPS or in-game driving
-test was available; this delivery prepares an asset for subsequent approved integration.
+`summary.json` collects actual check results and asset/source hashes.
+`shape-review/preservation.json` independently checks protected geometry,
+materials and node names against the old master. Seated lens ribs / trim joints
+contain intentional fixture intersections; checks do not prove exhaustive
+collision freedom between every pair of fixtures. Actual current GLB also passed the existing browser preview in Chromium software
+WebGL at 1024 × 768, both film modes, five fixed views and zoom extremes. A visual
+check caught striped glass caused by an excessively broad preview camera depth
+range in the film target, rather than intersecting source panes. The local Impala
+preview now derives near/far planes from the existing model bounds. Its
+`preview-check.mjs` verifies a conservative 16-bit depth step below 1 mm and saves
+`build/browser-preview.json` / `.png`. No geometry, polygon offset, material bias
+or game rendering changes were used to hide the problem. Physical iPad Safari
+GPU/FPS has not been measured.
 
-## Reference verification and remaining limits
+## Reference assessment and remaining limits
 
-The manufacturer labels the correct hardtop in 1970 brochure pages 16–17. Primary
-GM Sport Sedan dimensions constrain scale and axles. Other body variants are
-explicitly excluded from cabin decisions. See [reference scope](references.md).
+The GM 1970 brochure labels this hardtop on pages 16–17; it is the primary source
+for cabin and front form. Factory Sport Sedan dimensions constrain scale and
+axles. Licensed photographs supplement shared fascia and rear-quarter details;
+ordinary sedan roofs are excluded. See [references.md](references.md) for source
+URLs, variant restrictions and uncertainties.
 
-No complete reliable orthographic 16439 side source was obtained. The snowy,
-cropped DanTD photo cannot verify hood/roof/overhang outer contours. Therefore
-**no full-car silhouette IoU or exact contour millimetre approval is claimed**.
-The existing silhouette algorithms were run on its visible **side-glass aperture
-only**, uniformly registered by wheel centres and ground: glass IoU 0.514 → 0.705,
-mean contour distance 31.34 → 13.79 canonical px. These perspective estimates
-support the aperture correction; they do not certify the car. Both overlays,
-deviation maps and explicit uncertainty are in
-[`reference-comparison.json`](review/reference-comparison.json).
+Six final views, close-ups and steel-only renders were visually inspected. The
+front relief and hood/fender separation are clearer, the sides less box-like and
+the rear deck more distinct from its shoulders. Major scale, wheel placement and
+material style are preserved. The model remains a stylised approximation: exact
+hood-channel curvature, rear-quarter swell, windshield wrap and bumper returns
+need better clean hardtop photographs before further metric refinement. Grille
+and bumper sections remain simplified; opaque glass has no detailed interior.
 
-Visually reviewed six final views and detail views show the intended full-size
-mass, pillarless four-door glass, tucked rear wheels and correct major lamp
-configuration. Remaining simplifications: bumper/grille central V is restrained,
-hood/quarter curves remain hand-authored estimates, hubcap slots and lens optics
-are simplified, script emblems and plate lettering omitted. Glass is opaque;
-no interior, opening doors or animation tracks. Better clean hardtop orthographic
-reference would justify a subsequent small shape pass; no major new silhouette
-change is warranted from the snow-covered photo alone.
+No complete reliable orthographic 16439 side reference was obtained. **No global
+silhouette IoU or exact photographic contour accuracy is claimed.** The existing
+`review/reference-comparison.json` is explicitly a limited, perspective side-glass
+study against the historical initial blockout, not the baseline for this shape
+refinement. It cannot certify hood, roof, overhangs or the whole car. New before /
+after sheets compare directly against the latest finished model at `6c7f32c`.
 
-## Paint and review
+## Reproduction
 
-The existing Three touch preview supplies rotation, pinch / button zoom, fixed
-orthographic cameras, neutral materials and Joyride's film treatment. It renders
-on demand, limits pixel ratio and keeps a PNG fallback. Six period-inspired
-colours are stored in `paint-presets.json`, not six duplicated GLBs.
-`paint.mjs` clones only each instance's body material; actual-GLB tests verify that
-another car, chrome, glass, lights and wheels retain their colours. Names are
-period-correct, RGB values are approximations rather than calibrated paint chips.
-The future vehicle-loader adapter can call `applyBodyPaint(instance, hex)`;
-game spawning and runtime integration are intentionally not wired here.
-
-## Reproduction in the Codex / maintainer environment
-
-Blender 4.3.2; repository vehicle-pipeline Python requirements; external
-[Blender Modeler](https://github.com/calebrisc/blender-modeler) pinned to
-`c8f245982108e2627972768d4311cbe172b58137`. Use its documented check/render workflow;
-the repository's +Y-forward convention overrides its default −Y-forward convention.
-No local software is required from the reviewer.
+Use repository vehicle-pipeline Python requirements and Blender Modeler pinned to
+`c8f245982108e2627972768d4311cbe172b58137`. Retain repository +Y-forward authoring
+rather than Modeler's default forward convention.
 
 ```bash
 BMOD=/workspace/work/blender-modeler/scripts/bmod.py \
@@ -148,10 +145,14 @@ VEHICLE_PYTHON=/workspace/work/venv/bin/python \
 bash experiments/impala1970/build.sh
 ```
 
-`fleet.py` renders any of the latest existing masters with the same physical focus
-bounds/camera/light rig. `package.py` composes genuine renders and assembles the
-review ZIP after asserting every check. The historical `build/blockout/model.blend`
-is retained for comparison; current source reproduces the final master.
-When only comparison logic changes, rerun `compare_reference.py` / `package.py`
-without rebuilding the car. The static gallery uses relative links and existing
-vendored Three libraries, so it is compatible with static hosting / GitHub Pages.
+`review.py`, `fleet.py` and `shape_body_review.py` use the existing Modeler renderer.
+`shape_audit.py OLD_MASTER.blend REPORT.json` runs within that Blender workflow;
+extract the prior master from commit `6c7f32c` outside the repository for comparison.
+`package.py` asserts checks, preserves identical cameras and composes real PNGs
+and the source/master/export ZIP. Source regeneration uses the existing
+`experiments/round2/reproduction.py` comparison. No new generator or export pipeline.
+
+The existing static `preview.html` keeps touch rotation, zoom, fixed views, paint
+selection, film treatment and PNG fallback. The gallery uses relative paths and
+is GitHub Pages compatible; repository source alone is not a claim of a newly
+published live viewer. PNG sheets are directly reviewable in a browser / iPad.

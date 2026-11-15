@@ -1,0 +1,335 @@
+{
+  "ok": true,
+  "browser": "Chromium headless / SwiftShader, touch emulation",
+  "viewport": [
+    1024,
+    768
+  ],
+  "state": {
+    "vehicle": "impala1970",
+    "ready": true,
+    "view": "three_quarter",
+    "projection": "perspective",
+    "az": -2.356194490192345,
+    "el": 0.3,
+    "zoom": 1,
+    "activePointers": 0,
+    "triangles": 19856,
+    "bounds": {
+      "width": 2.210000157356262,
+      "height": 1.3969999849796295,
+      "length": 5.486400127410889
+    },
+    "film": "negative",
+    "modelScale": [
+      1,
+      1,
+      1
+    ],
+    "modelRotationY": 0
+  },
+  "depth_samples": [
+    {
+      "mode": "off",
+      "view": "side",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 11.372091824590486,
+      "conservative_16bit_step_m": 0.00035211026726858377,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "side",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 5.725191364338691,
+      "conservative_16bit_step_m": 0.000438276445040031,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "side",
+      "zoom": 2.8,
+      "near_m": 25.4052187771956,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 29.85285696723272,
+      "conservative_16bit_step_m": 0.00023647952680290005,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "front",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 13.010291809617799,
+      "conservative_16bit_step_m": 0.00035211026726858377,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "front",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 7.363391349366004,
+      "conservative_16bit_step_m": 0.000438276445040031,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "front",
+      "zoom": 2.8,
+      "near_m": 25.4052187771956,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 31.491056952260035,
+      "conservative_16bit_step_m": 0.00023647952680290005,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "rear",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 13.010291809617799,
+      "conservative_16bit_step_m": 0.00035211026726858377,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "rear",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 7.363391349366004,
+      "conservative_16bit_step_m": 0.000438276445040031,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "rear",
+      "zoom": 2.8,
+      "near_m": 25.4052187771956,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 31.491056952260035,
+      "conservative_16bit_step_m": 0.00023647952680290005,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "top",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 10.96559173840217,
+      "conservative_16bit_step_m": 0.00035211026726858377,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "top",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 5.318691278150375,
+      "conservative_16bit_step_m": 0.000438276445040031,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "top",
+      "zoom": 2.8,
+      "near_m": 25.4052187771956,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 29.446356881044405,
+      "conservative_16bit_step_m": 0.00023647952680290005,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "three_quarter",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 13.073067662028258,
+      "conservative_16bit_step_m": 0.0002896856221158341,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "three_quarter",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 7.426167201776456,
+      "conservative_16bit_step_m": 0.000630633934806945,
+      "ready": true
+    },
+    {
+      "mode": "off",
+      "view": "three_quarter",
+      "zoom": 2.8,
+      "near_m": 25.405218777195604,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 31.55383280467049,
+      "conservative_16bit_step_m": 0.00022657954460585393,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "side",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 11.372091824590486,
+      "conservative_16bit_step_m": 0.00035211026726858377,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "side",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 5.725191364338691,
+      "conservative_16bit_step_m": 0.000438276445040031,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "side",
+      "zoom": 2.8,
+      "near_m": 25.4052187771956,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 29.85285696723272,
+      "conservative_16bit_step_m": 0.00023647952680290005,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "front",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 13.010291809617799,
+      "conservative_16bit_step_m": 0.00035211026726858377,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "front",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 7.363391349366004,
+      "conservative_16bit_step_m": 0.000438276445040031,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "front",
+      "zoom": 2.8,
+      "near_m": 25.4052187771956,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 31.491056952260035,
+      "conservative_16bit_step_m": 0.00023647952680290005,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "rear",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 13.010291809617799,
+      "conservative_16bit_step_m": 0.00035211026726858377,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "rear",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 7.363391349366004,
+      "conservative_16bit_step_m": 0.000438276445040031,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "rear",
+      "zoom": 2.8,
+      "near_m": 25.4052187771956,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 31.491056952260035,
+      "conservative_16bit_step_m": 0.00023647952680290005,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "top",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 10.96559173840217,
+      "conservative_16bit_step_m": 0.00035211026726858377,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "top",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 5.318691278150375,
+      "conservative_16bit_step_m": 0.000438276445040031,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "top",
+      "zoom": 2.8,
+      "near_m": 25.4052187771956,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 29.446356881044405,
+      "conservative_16bit_step_m": 0.00023647952680290005,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "three_quarter",
+      "zoom": 1,
+      "near_m": 6.9244536345533625,
+      "far_m": 30,
+      "worst_car_depth_m": 13.073067662028258,
+      "conservative_16bit_step_m": 0.0002896856221158341,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "three_quarter",
+      "zoom": 0.45,
+      "near_m": 1.2775531743015676,
+      "far_m": 30,
+      "worst_car_depth_m": 7.426167201776456,
+      "conservative_16bit_step_m": 0.000630633934806945,
+      "ready": true
+    },
+    {
+      "mode": "negative",
+      "view": "three_quarter",
+      "zoom": 2.8,
+      "near_m": 25.405218777195604,
+      "far_m": 40.902904566223654,
+      "worst_car_depth_m": 31.55383280467049,
+      "conservative_16bit_step_m": 0.00022657954460585393,
+      "ready": true
+    }
+  ],
+  "errors": [],
+  "scope": "Actual current GLB, both film modes, five fixed views and zoom extremes. Conservative 16-bit depth bound below 1 mm. Screenshot requires human inspection; no pixel-diff approval, physical Safari or game integration claim."
+}

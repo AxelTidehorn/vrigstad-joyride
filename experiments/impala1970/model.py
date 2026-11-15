@@ -34,34 +34,56 @@ for mat, rough, metallic in [(paint,.66,.08),(chrome,.42,.70),(rim,.52,.5),(glas
     bsdf=mat.node_tree.nodes.get('Principled BSDF');bsdf.inputs['Roughness'].default_value=rough;bsdf.inputs['Metallic'].default_value=metallic
 
 roof=P['roof_profile'];shoulders=P['shoulder_profile'];widths=P['half_width_profile']
-base_profile=[(-2.67,.835),(-1.5,.99),(-.55,1.005),(.65,.90),(1.13,.887),(2.67,.755)]
+base_profile=P['window_belt_profile']
 def section_heights(y):
-    top=T.interp(y,roof);base=min(T.interp(y,base_profile),top-.040)
-    return top,base,min(T.interp(y,shoulders),base-.026)
-ys=sorted(set([p[0] for p in roof] + [p[0] for p in widths] + [p[0] for p in shoulders] +
+    top=T.interp(y,roof);base=min(T.interp(y,base_profile),top+(.005 if y>1.13 else -.040))
+    shoulder=T.interp(y,shoulders)
+    if y < -1.60:base=shoulder+.026
+    else:shoulder=min(shoulder,base-.026)
+    return top,base,shoulder
+def plan_shape(p):
+    x,y,z=p
+    if y>1.13:
+        f=T.interp(y,[(1.13,0),(1.79324,.20),(2.4,.75),(2.67,1),(3,1)])
+        y-=P['front_corner_setback_m']*abs(x)*f
+    elif y<-1.60:
+        f=min(1,(-y-1.60)/1.07)
+        y+=P['rear_corner_setback_m']*abs(x)**2*f
+    return Vector((x,y,z))
+ys=sorted(set([p[0] for p in roof] + [p[0] for p in widths] + [p[0] for p in shoulders] + [p[0] for p in base_profile] +
               [-1.57,-1.50,-1.11,-.98,-.55,-.15,-.142,-.138,-.13,.51,.56,1.045,1.075,2.60,-2.60]))
 verts=[];faces=[];zones=[]
 for y in ys:
     top,base,shoulder=section_heights(y);w=T.interp(y,widths)
     cabin=max(0,min(1,(top-1.00)/.35));rw=w*.875*(1-cabin)+P['roof_half_width']*cabin
     # Controlled coke-bottle shoulder; crown flattens toward the long hood/deck.
-    half=[(0,.20),(.78*w,.20),(.90*w,.255),(.965*w,.37),
-          (.995*w,min(.60,shoulder-.14)),(w,shoulder-.065),(.998*w,shoulder-.018),
+    half=[(0,.20),(.78*w,.20),(.89*w,.255),(.940*w,.37),
+          (.988*w,min(.60,shoulder-.14)),(w,shoulder-.065),(.998*w,shoulder-.018),
           (.982*w,shoulder),(.94*w,base),
           (rw+(.94*w-rw)*.92,base+.045*(top-.025-base)),
-          (rw+(.94*w-rw)*.08,base+.92*(top-.025-base)),
-          (rw,top-.025),(.83*rw,top-.012),(.45*rw,top-.003),(0,top)]
+          (rw+(.94*w-rw)*.08,base+.92*(top-P['roof_edge_drop_m']-base)),
+          (rw,top-P['roof_edge_drop_m']),(.83*rw,top-.022),(.45*rw,top-.004),(0,top)]
+    if y>1.13:
+        strength=min(1,(y-1.13)/.17)
+        # Fender brow, depressed hood channel and raised central hood are steel.
+        targets={10:(.90*w,top+.018),11:(.84*w,top+P['fender_crown_m']),
+                 12:(.72*w,top-P['hood_channel_depth_m']),13:(.40*w,top+.006),14:(0,top+.012)}
+        for j,(x,z) in targets.items():
+            ox,oz=half[j];half[j]=(ox+(x-ox)*strength,oz+(z-oz)*strength)
+    elif y<-1.60:
+        # Rear haunches flank a lower deck, rather than a centre-peaked box.
+        quarter=shoulder+.026
+        half[8:]=[(.94*w,quarter),(.92*w,quarter+.004),(.84*w,quarter+.008),
+                  (.70*w,top+.018),(.60*w,top+.012),(.35*w,top+.006),(0,top)]
     ring=half+[(-x,z) for x,z in half[-2:0:-1]]
     for j,(x,z) in enumerate(ring):
-        if j in (12,len(ring)-12) and 1.13<y<2.67:
-            z+=.022*min(1,(y-1.13)/.17,(2.67-y)/.17)
         # Windshield wrap is shallow and confined to that surface, not the hood.
-        bow=.018*(1-(abs(x)/w)**2) if .56<=y<=1.045 else 0
+        bow=.018*(1-(abs(x)/w)**2) if .72<=y<=1.075 else 0
         # Window-belt stations are sheared relative to the roof stations. This
         # makes a true hardtop trapezoid, instead of a pointed glass wedge that
         # follows the falling windshield/backlight envelope to its very end.
-        belt_y=T.interp(y,[(-2.67,-2.67),(-1.60,-1.60),(-.55,-.90),(.65,1.045),(1.30,1.30),(2.67,2.67)]) if j in (8,9,len(ring)-9,len(ring)-8) else y
-        verts.append((x,belt_y+bow,z))
+        belt_y=T.interp(y,[(-2.67,-2.67),(-1.60,-1.60),(-.55,-.90),(.72,1.045),(1.30,1.30),(2.67,2.67)]) if j in (8,9,len(ring)-9,len(ring)-8) else y
+        verts.append(tuple(plan_shape((x,belt_y+bow,z))))
 N=len(ring)
 for i in range(len(ys)-1):
     mid=(ys[i]+ys[i+1])/2
@@ -69,14 +91,15 @@ for i in range(len(ys)-1):
         faces.append((i*N+j,i*N+(j+1)%N,(i+1)*N+(j+1)%N,(i+1)*N+j))
         # Continuous pillarless opening. Glass meeting strip is a separate sash,
         # not a fixed painted B-pillar. Broad real C pillar remains in the loft.
-        side=j in (9,N-10) and -.55<mid<.65
-        wind=.56<mid<1.045 and 11<=j<=N-12
+        side=j in (9,N-10) and -.55<mid<.72
+        wind=.72<mid<1.075 and 11<=j<=N-12
         back=-1.57<mid<-.98 and 11<=j<=N-12
         zones.append(2 if wind else 3 if back else int(side))
 faces += [tuple(range(N-1,-1,-1)),tuple((len(ys)-1)*N+j for j in range(N))];zones += [0,0]
 body=T.group(mk.mesh_from_data('body',verts,faces),'BODY',paint)
 for f,z in zip(body.data.polygons,zones):f.material_index=z
 bm=bmesh.new();bm.from_mesh(body.data)
+bmesh.ops.bisect_plane(bm,geom=list(bm.verts)+list(bm.edges)+list(bm.faces),plane_co=(0,0,0),plane_no=(1,0,0),dist=1e-7)
 for zone in (1,2,3):
     res=bmesh.ops.inset_region(bm,faces=[f for f in bm.faces if f.material_index==zone],thickness=.009,depth=-.008,use_even_offset=True,use_boundary=True)
     for f in res['faces']:f.material_index=0
@@ -168,10 +191,18 @@ if STAGE=='complete':
     glass_boundaries.sort(key=lambda edge:tuple(sorted(tuple(round(c,7) for c in p) for p in edge)))
     for edge in glass_boundaries:
         a,b=sorted(edge);rod('trim_window_surround',a,b,.0045,chrome,segments=4)
-    # Slender meeting sash carried by the door glass; no painted B pillar.
-    y=P['glass_meeting_y'];top=T.interp(y,roof)
+    # Fit retained meeting sashes to the changed glass, not old cabin widths.
+    from mathutils.bvhtree import BVHTree
+    bm=bmesh.new();bm.from_mesh(glazing.data);pane_tree=BVHTree.FromBMesh(bm,epsilon=0);bm.free()
+    y=P['glass_meeting_y'];hits=[]
+    for i in range(121):
+        z=.90+i*.004
+        hit=pane_tree.ray_cast(Vector((3,y+.004,z)),Vector((-1,0,0)))
+        if hit[0] is not None and hit[0].x>.65:hits.append(hit[0])
+    if not hits:raise ValueError('No side glass for hardtop sash')
     for sign in [-1,1]:
-        rod('trim_glass_meeting_sash',(sign*.918,y,.966),(sign*.792,y,top-.058),.006,chrome)
+        a,b=hits[1],hits[-2]
+        rod('trim_glass_meeting_sash',(sign*(a.x+.001),y,a.z),(sign*(b.x+.001),y,b.z),.006,chrome)
     # Steel pressings are actual support cuts in the single body, never seam bars.
     side=lambda p: abs(p.x)>.91 and .34<p.z<.95
     for y in [1.045,-.14,-1.43]:S.press_line(body,1,y,.0035,.0016,side)
@@ -234,24 +265,36 @@ if STAGE=='complete':
                 for dx in [-.023,0,.023]:T.slab(name+'_flute',(.004,.006,.145),(x+dx,-2.733,.482),mat,'LIGHTS')
     # Four round sealed beams in paired rectangular housings. All below hood.
     for sign in [-1,1]:
-        S.frame('trim_headlamp_bezel',.404,.205,.046,(sign*.775,2.674,.660),chrome,T.collections['CHROME'],.012)
-        T.slab('grille_lamp_recess',(.38,.023,.181),(sign*.775,2.671,.660),rubber,'DETAILS')
+        S.frame('trim_headlamp_bezel',.404,.205,.046,(sign*.775,2.674,.690),chrome,T.collections['CHROME'],.012)
+        T.slab('grille_lamp_recess',(.38,.023,.181),(sign*.775,2.671,.690),rubber,'DETAILS')
         for x in [.677,.873]:
-            cyl=mk.cylinder('lamp_head',.082,.025,location=(sign*x,2.698,.660),rotation=(90,0,0),segments=24);T.group(cyl,'LIGHTS',head)
+            cyl=mk.cylinder('lamp_head',.082,.025,location=(sign*x,2.698,.690),rotation=(90,0,0),segments=24);T.group(cyl,'LIGHTS',head)
             # Physical reflector bezel ring surrounding each lens.
-            r=mk.lathe('trim_lamp_ring',[(.083,-.008),(.091,-.008),(.091,.008),(.083,.008),(.083,-.008)],segments=24,location=(sign*x,2.694,.660),rotation=(90,0,0));T.group(r,'CHROME',chrome)
+            r=mk.lathe('trim_lamp_ring',[(.083,-.008),(.091,-.008),(.091,.008),(.083,.008),(.083,-.008)],segments=24,location=(sign*x,2.694,.690),rotation=(90,0,0));T.group(r,'CHROME',chrome)
             bm=bmesh.new();bm.from_mesh(r.data);bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.000001);bm.to_mesh(r.data);bm.free()
         T.slab('lamp_parking',(.175,.065,.066),(sign*.805,2.703,.422),amber,'LIGHTS')
-    S.frame('grille_frame',1.13,.219,.048,(0,2.680,.651),chrome,T.collections['CHROME'],.011)
-    T.slab('grille_backing',(1.108,.028,.200),(0,2.675,.651),rubber,'DETAILS')
-    for z in [.568,.603,.638,.673,.708,.743]:
-        T.band('grille_horizontal',[(-.548,2.701),(0,2.715),(.548,2.701)],z,.008,.012,chrome,'CHROME')
-    for x in [-.40,-.20,0,.20,.40]:T.slab('grille_upright',(.007,.010,.19),(x,2.707,.651),chrome,'CHROME')
+    S.frame('grille_frame',1.13,.219,.048,(0,2.680,.680),chrome,T.collections['CHROME'],.011)
+    T.slab('grille_backing',(1.108,.028,.200),(0,2.675,.680),rubber,'DETAILS')
+    for z in [.568,.612,.656,.700,.743]:
+        T.band('grille_horizontal',[(-.548,2.701),(0,2.715),(.548,2.701)],z+.029,.008,.012,chrome,'CHROME')
+    for x in [-.40,-.20,0,.20,.40]:T.slab('grille_upright',(.007,.010,.19),(x,2.707,.680),chrome,'CHROME')
     # Thin lower air slot and correctly recessed number plates, no texture assets.
     T.slab('grille_lower',(.96,.070,.055),(0,2.699,.435),rubber,'DETAILS')
     for sign,z in [(1,.31),(-1,.478)]:
         T.slab('plate_mount',(.34,.080,.140),(0,sign*2.690,z),rubber,'DETAILS')
         T.slab('plate_registration',(.315,.010,.128),(0,sign*2.731,z),plate,'DETAILS')
+    # Shape the original fixtures before batching; the steel was shaped before
+    # wheel cuts, so wells stay centred on the frozen hubs. Mouldings were ray
+    # fitted to that steel already and must not be deformed a second time.
+    bpy.context.view_layer.update()
+    for obj in [o for o in bpy.context.scene.objects if o.type=='MESH' and o not in (body,glazing) and not o.name.startswith(('wheel_','trim_rim','trim_spoke','trim_shoulder_spear','plate_'))]:
+        world=obj.matrix_world.copy();inv=world.inverted()
+        bm=bmesh.new();bm.from_mesh(obj.data)
+        if min((world@v.co).x for v in bm.verts)<-.00001 and max((world@v.co).x for v in bm.verts)>.00001:
+            bmesh.ops.bisect_plane(bm,geom=list(bm.verts)+list(bm.edges)+list(bm.faces),plane_co=inv@Vector((0,0,0)),plane_no=world.to_3x3().transposed()@Vector((1,0,0)),dist=1e-7)
+        for v in bm.verts:v.co=inv@plan_shape(world@v.co)
+        bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(obj.data);bm.free();obj.data.update()
+        S.clean_cut_slivers(obj,min_area=1e-9,merge_distance=.00008)
     # Batch same-material fixed fixtures, preserving glass, body and wheel rigs.
     for prefix,name in [('trim_window_surround','trim_window_surrounds'),('trim_shoulder_spear','trim_shoulder_spears'),('trim_door_handle','trim_handles'),('lamp_head','lamp_headlights'),('lamp_tail','lamp_taillights'),('lamp_reverse','lamp_reverse_units'),('grille_horizontal','grille_blades'),('grille_upright','grille_supports'),('trim_lamp_ring','trim_lamp_rings')]:
         S.merge_static([o for o in list(bpy.context.scene.objects) if o.type=='MESH' and o.name.startswith(prefix)],name)

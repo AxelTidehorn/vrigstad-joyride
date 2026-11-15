@@ -1,0 +1,22 @@
+
+> test:e2e
+> playwright test
+
+[WebServer] 127.0.0.1 - - [15/Nov/2026 00:57:19] "GET /index.html HTTP/1.1" 200 -
+
+Running 5 tests using 1 worker
+
+(node:26766) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 00:57:20] "GET /index.html HTTP/1.1" 200 -
+  ✓  1 tests/e2e/smoke.spec.js:29:3 › game (index.html) › loads with no console errors and a WebGL canvas (32.3s)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 00:58:12] "GET /index.html HTTP/1.1" 200 -
+  ✓  2 tests/e2e/smoke.spec.js:39:3 › game (index.html) › Start hides the intro and shows the HUD (33.0s)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 00:58:44] "GET /index.html HTTP/1.1" 200 -
+  ✓  3 tests/e2e/smoke.spec.js:57:3 › game (index.html) › W moves the player, and E next to the parked Volvo gets you in (1.8m)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 01:00:33] "GET /index.html HTTP/1.1" 200 -
+  ✓  4 tests/e2e/smoke.spec.js:86:3 › game (index.html) › cats are around, and the kiosk sells cat treats from its menu (1.4m)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 01:01:55] "GET /map.html HTTP/1.1" 200 -
+  ✓  5 tests/e2e/smoke.spec.js:116:3 › map (map.html) › loads with no console errors and draws the map (21.8s)
+
+  5 passed (4.7m)

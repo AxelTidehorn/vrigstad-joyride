@@ -1,0 +1,55 @@
+{
+  "focus_m": [
+    [
+      -1.15,
+      -2.88,
+      0
+    ],
+    [
+      1.15,
+      2.88,
+      1.65
+    ]
+  ],
+  "views": [
+    [
+      "side",
+      90,
+      0,
+      true
+    ],
+    [
+      "front",
+      180,
+      0,
+      true
+    ],
+    [
+      "rear",
+      0,
+      0,
+      true
+    ],
+    [
+      "front_three_quarter",
+      135,
+      20,
+      false
+    ],
+    [
+      "rear_three_quarter",
+      35,
+      20,
+      false
+    ],
+    [
+      "high_three_quarter",
+      135,
+      42,
+      true
+    ]
+  ],
+  "renderer": "Modeler Workbench clay or Cycles16 matte shaded",
+  "front": "+Y",
+  "units": "m"
+}

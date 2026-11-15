@@ -54,6 +54,12 @@ function draw(){
     lookBottom:document.querySelector('.look').getBoundingClientRect().bottom,
     controlsTop:document.querySelector('.controls').getBoundingClientRect().top});
   camera=controls.frameReviewCamera(THREE,{state,perspective,orthographic,target,corners,radius,width,height,region});
+  // A single-car scene needs a tight depth range: the film render target can
+  // have 16-bit depth, where .05–1000 m makes correctly seated glass flicker.
+  const distance=camera.position.distanceTo(target);
+  camera.near=Math.max(.05,distance-radius*1.10);
+  camera.far=Math.max(30,distance+radius*4);
+  camera.updateProjectionMatrix();
   if(filmReady)renderFilmFrame();else renderer.render(scene,camera);
   if(ready)fallback.hidden=true;
 }

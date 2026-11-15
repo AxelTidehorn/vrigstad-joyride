@@ -93,26 +93,26 @@
     },
     "final": {
       "side_glass_aperture_only": {
-        "iou": 0.7050939423388403,
-        "mean_contour_distance_px": 13.787725735935231,
+        "iou": 0.7270428095571,
+        "mean_contour_distance_px": 12.676813016012275,
         "max_contour_distance_px": 50.0
       },
       "regions": {
         "front_glass": {
-          "samples": 326,
-          "signed_height_mean_px": 6.398773006134969,
-          "absolute_height_mean_px": 7.938650306748467,
+          "samples": 327,
+          "signed_height_mean_px": 7.201834862385321,
+          "absolute_height_mean_px": 7.201834862385321,
           "max_absolute_height_px": 14.0,
-          "mean_contour_distance_px": 15.301113466759213,
+          "mean_contour_distance_px": 14.526485497258058,
           "max_contour_distance_px": 50.0
         },
         "rear_glass": {
           "samples": 184,
-          "signed_height_mean_px": 12.690217391304348,
-          "absolute_height_mean_px": 12.690217391304348,
-          "max_absolute_height_px": 25.0,
-          "mean_contour_distance_px": 10.826190302271389,
-          "max_contour_distance_px": 19.924858845171276
+          "signed_height_mean_px": 8.608695652173912,
+          "absolute_height_mean_px": 8.608695652173912,
+          "max_absolute_height_px": 23.0,
+          "mean_contour_distance_px": 9.05912402777172,
+          "max_contour_distance_px": 19.313207915827967
         }
       },
       "independent_render_wheelbase_m": 3.0226001143455505

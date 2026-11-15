@@ -14,7 +14,7 @@ for name in views:
     im=flatten(HERE/f'build/final/views/shaded_{name}.png');im.save(OUT/f'{name}.png',optimize=True)
 sheet=Image.new('RGB',(1800,1740),BG);d=ImageDraw.Draw(sheet)
 d.text((32,22),'1970 CHEVROLET IMPALA · 16439 FOUR-DOOR HARDTOP',font=font(31),fill=INK)
-d.text((32,68),'Original low-poly body · 5.486 m long · visual approval pending',font=font(24),fill=INK)
+d.text((32,68),'Shape refinement · 5.486 m long · visual approval pending',font=font(24),fill=INK)
 for i,(name,label) in enumerate(zip(views,labels)):
     x=(i%2)*900;y=118+(i//2)*532;im=flatten(OUT/f'{name}.png').resize((875,875))
     # Consistent per-view presentation crop, never used to alter vehicle metrics.
@@ -28,15 +28,43 @@ sheet.save(OUT/'contact-sheet.png',optimize=True)
 for folder,name in [('details','front_detail'),('rear_detail','rear_detail')]:
     src='front_detail' if folder=='details' else 'rear_detail'
     flatten(HERE/f'build/final/{folder}/shaded_{src}.png').save(OUT/f'{name}.png',optimize=True)
-# Genuine identical-mode, identical-camera before/after, first blockout vs final.
-sheet=Image.new('RGB',(1800,1100),BG);d=ImageDraw.Draw(sheet)
-d.text((26,15),'BLOCKOUT → FINAL · same Workbench cameras, lights and scale',font=font(29),fill=INK)
-angles=['side','front_three_quarter','rear_three_quarter']
-for row,(folder,label) in enumerate([('blockout','A · initial blockout'),('final-clay','D · completed geometry')]):
-    y=75+row*500;d.text((26,y),label,font=font(25),fill=INK)
-    for col,name in enumerate(angles):
-        im=flatten(HERE/f'build/{folder}/views/clay_{name}.png').crop((0,280,1100,860));im=im.resize((595,314));sheet.paste(im,(col*600,y+70))
-sheet.save(OUT/'blockout-final.png',optimize=True)
+# Same fixed cameras / crop for both versions; never fit each car independently.
+REVIEW=HERE/'shape-review'
+assert json.loads((REVIEW/'before/cameras.json').read_text())==json.loads((REVIEW/'after/cameras.json').read_text())
+provenance={'baseline_commit':'6c7f32c783aa0923cb2f18836157a7ef1cccfc9b','identical_camera_metadata':True,'before':{},'after':{}}
+for folder in ['views','details','rear_detail']:
+    for image in (REVIEW/'before'/folder).glob('shaded_*.png'):
+        rel=f'experiments/impala1970/build/final/{folder}/{image.name}'
+        old=subprocess.check_output(['git','show','6c7f32c:'+rel],cwd=ROOT)
+        new_image=REVIEW/'after'/folder/image.name
+        assert image.read_bytes()==old, f'Baseline render mismatch: {image}'
+        assert new_image.read_bytes()==(HERE/'build/final'/folder/image.name).read_bytes(), f'Final render mismatch: {new_image}'
+        provenance['before'][str(image.relative_to(REVIEW))]=hashlib.sha256(old).hexdigest()
+        provenance['after'][str(new_image.relative_to(REVIEW))]=hashlib.sha256(new_image.read_bytes()).hexdigest()
+provenance['ok']=True
+(REVIEW/'render-provenance.json').write_text(json.dumps(provenance,indent=2)+'\n')
+def pairs(filename,title,items,mode='shaded',body=False):
+    sheet=Image.new('RGB',(1800,105+530*len(items)),BG);d=ImageDraw.Draw(sheet)
+    d.text((28,12),title,font=font(28),fill=INK)
+    d.text((28,55),'BEFORE · 6c7f32c',font=font(25),fill=INK)
+    d.text((928,55),'AFTER · same cameras, scale, materials and lighting',font=font(23),fill=INK)
+    for row,(folder,name,label) in enumerate(items):
+        for col,version in enumerate(['before','after']):
+            source=REVIEW/version/('body' if body else folder)/f'{mode}_{name}.png'
+            im=flatten(source)
+            # One shared crop per camera, applied equally to before and after.
+            if folder=='views':
+                crop=(0,280,1100,860) if name=='side' else ((180,150,920,1000) if name in ('front','rear') else (0,180,1100,950))
+            else:crop=(0,100,1200,1080)
+            im=ImageOps.contain(im.crop(crop),(875,470));y=100+530*row
+            sheet.paste(im,(900*col+(900-im.width)//2,y+40))
+            d.text((26+900*col,y),label,font=font(23),fill=INK)
+    sheet.save(OUT/filename,optimize=True)
+pairs('before-after.png','1970 IMPALA · SHAPE REFINEMENT', [('views',v,l) for v,l in [('side','Exact orthographic side'),('front_three_quarter','Front three-quarter'),('rear_three_quarter','Rear three-quarter')]])
+pairs('ends-before-after.png','ORTHOGRAPHIC FRONT / REAR · SAME SCALE', [('views','front','Front'),('views','rear','Rear')])
+pairs('fascia-before-after.png','FASCIA / QUARTERS · SAME FRAMING', [('details','front_detail','Hood channels, fender crowns and recessed V grille'),('rear_detail','rear_detail','Broad rear shoulders, lowered deck, returning bumper corners')])
+pairs('body-before-after.png','STEEL + TYRES ONLY · GEOMETRY, WITHOUT GLASS OR CHROME', [('views',v,l) for v,l in [('side','Side'),('front','Front'),('rear','Rear'),('front_three_quarter','Front three-quarter')]],mode='clay',body=True)
+pairs('blockout-final.png','PRIOR MASTER → REFINED MASTER · WORKBENCH CLAY', [('views',v,l) for v,l in [('side','Side'),('front_three_quarter','Front three-quarter'),('rear_three_quarter','Rear three-quarter')]],mode='clay')
 # Common real-world camera bounds, not an auto-fit per vehicle.
 cars=[('impala1970','Chevrolet Impala 1970 · 5.486 m'),('volvo240','Volvo 240 · 4.82 m'),('saab900','Saab 900 · 4.68 m')]
 for view,filename,crop in [('common','fleet-scale.png',(0,285,1100,850)),('side','fleet-side-scale.png',(0,365,1100,755))]:
@@ -70,22 +98,24 @@ draw.text((32,930),'Documented nominal dimensions. Curves / tyre overall diamete
 canvas.save(OUT/'dimensions.png',optimize=True)
 # Freeze independent checks, never turn a missing/failed result into approval.
 checks={}
-for name in ['source-audit','geometry','reimport','three-loader','pose','paint-test','reproduction','existing-pose-regression']:
+for name in ['source-audit','geometry','reimport','three-loader','pose','paint-test','reproduction','existing-pose-regression','browser-preview']:
     checks[name]=json.loads((HERE/f'build/{name}.json').read_text());assert checks[name]['ok'],name
 protected={}
 for rel in ['experiments/saab900/build/model.blend','experiments/saab900/build/saab900-t16.glb','experiments/volvo240/refinement/model.blend','experiments/volvo240/refinement/review-only.glb','experiments/xc70p2/build/model.blend','experiments/xc70p2/build/xc70-civilian.glb','experiments/xc70p2/build/xc70-police.glb','src/vehicles/vehicle-library.mjs','src/game.html']:
-    previous=subprocess.check_output(['git','show','ff6a0f1:'+rel],cwd=ROOT);current=(ROOT/rel).read_bytes();protected[rel]={'unchanged':previous==current,'sha256':hashlib.sha256(current).hexdigest()}
+    previous=subprocess.check_output(['git','show','6c7f32c:'+rel],cwd=ROOT);current=(ROOT/rel).read_bytes();protected[rel]={'unchanged':previous==current,'sha256':hashlib.sha256(current).hexdigest()}
 assert all(x['unchanged'] for x in protected.values())
+assert '5 passed' in (HERE/'build/e2e-tests.txt').read_text(), 'Game smoke tests incomplete or failed'
 (HERE/'build/protected-files.json').write_text(json.dumps(protected,indent=2)+'\n')
 fingerprints={str(p.relative_to(HERE)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [HERE/'model.py',HERE/'parameters.json',HERE/'build/model.blend',HERE/'build/impala1970-hardtop.glb']}
-summary={'vehicle':'1970 Chevrolet Impala 16439 four-door hardtop','branch':'experiment/impala-1970-hardtop','base':'ff6a0f1','sha256':fingerprints,'verified':{k:checks[k] for k in checks},'reference_comparison':json.loads((OUT/'reference-comparison.json').read_text()),'protected_files':protected,'human_visual_approval':'pending','physical_ipad_safari_tested':False,'game_integration':False}
+summary={'vehicle':'1970 Chevrolet Impala 16439 four-door hardtop','branch':'experiment/impala-1970-shape','base':'6c7f32c783aa0923cb2f18836157a7ef1cccfc9b','sha256':fingerprints,'verified':{k:checks[k] for k in checks},'reference_comparison':json.loads((OUT/'reference-comparison.json').read_text()),'render_provenance':provenance,'shape_preservation':json.loads((REVIEW/'preservation.json').read_text()),'protected_files':protected,'human_visual_approval':'pending','physical_ipad_safari_tested':False,'game_integration':False}
 (HERE/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 # A compact source/asset/review archive, not duplicate GLBs for each paint colour.
 files=[p for p in HERE.glob('*') if p.suffix in ['.py','.json','.mjs','.js','.md','.html','.sh']]
-compact_sheets=['contact-sheet.png','blockout-final.png','fleet-scale.png','fleet-side-scale.png','dimensions.png','blockout-reference-overlay.png','final-reference-overlay.png','blockout-glass-deviation.png','final-glass-deviation.png']
+compact_sheets=['ends-before-after.png','before-after.png','fascia-before-after.png','body-before-after.png','contact-sheet.png','blockout-final.png','fleet-scale.png','fleet-side-scale.png','dimensions.png','blockout-reference-overlay.png','final-reference-overlay.png','blockout-glass-deviation.png','final-glass-deviation.png']
+compact_sheets += [f'{name}.png' for name in views]+['front_detail.png','rear_detail.png']
 files += list((HERE/'references').glob('*'))+[OUT/x for x in compact_sheets]+list(OUT.glob('*.json'))
-files += [HERE/'build/blockout/model.blend']
-files += [HERE/f'build/{x}' for x in ['model.blend','impala1970-hardtop.glb','report.json','report.txt','source-audit.json','geometry.json','reimport.json','three-loader.json','pose.json','paint-test.json','reproduction.json','existing-pose-regression.json','protected-files.json','validator-tests.txt','silhouette-tests.txt','shared-geometry-tests.txt']]
+files += list(REVIEW.glob('*.json'))
+files += [HERE/f'build/{x}' for x in ['model.blend','impala1970-hardtop.glb','report.json','report.txt','source-audit.json','geometry.json','reimport.json','three-loader.json','pose.json','paint-test.json','reproduction.json','existing-pose-regression.json','protected-files.json','validator-tests.txt','silhouette-tests.txt','shared-geometry-tests.txt','preview-tests.txt','e2e-tests.txt','browser-preview.json','browser-preview.png']]
 files += [ROOT/'LICENSE',ROOT/'experiments/round2/pose_audit.py',ROOT/'experiments/round2/reproduction.py']
 files += [ROOT/'tools/vehicle_pipeline'/x for x in ['authoring.py','surface_refinement.py','blender_import.py','validate.py','reimport_check.py','check_preview_glb.mjs','verify_silhouette.py','silhouette_render.py','requirements.txt','README.md']]
 files += [ROOT/'media/vehicles/vendor'/x for x in ['three-r128.min.js','GLTFLoader-r128.js','THREE-LICENSE.txt']]
