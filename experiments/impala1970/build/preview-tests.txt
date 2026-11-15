@@ -1,14 +1,14 @@
-✔ GLB becomes ready even while optional film script never completes (81.676335ms)
-✔ existing film script boots with preview globals; controls and neutral toggle work (25.034582ms)
-✔ film download failure retains a working neutral GLB preview (20.53772ms)
-✔ actual GLB loads at real dimensions and -Z-forward wheel positions (1.251404ms)
-✔ pinch spread zooms in; releasing one finger continues without a jump (0.31869ms)
-✔ cancelled, third and crossing touches do not create invalid zoom (0.136215ms)
-✔ fixed views restore neutral zoom and reset active gesture state (0.206221ms)
-✔ five views fit the available 1024×768 review region (1.924669ms)
-✔ five views fit the available 768×1024 review region (0.831443ms)
-✔ five views fit the available 1366×1024 review region (0.571821ms)
-✔ five views fit the available 390×844 review region (1.343473ms)
+✔ GLB becomes ready even while optional film script never completes (85.956238ms)
+✔ existing film script boots with preview globals; controls and neutral toggle work (31.360524ms)
+✔ film download failure retains a working neutral GLB preview (21.669762ms)
+✔ actual GLB loads at real dimensions and -Z-forward wheel positions (1.16842ms)
+✔ pinch spread zooms in; releasing one finger continues without a jump (0.260403ms)
+✔ cancelled, third and crossing touches do not create invalid zoom (0.120852ms)
+✔ fixed views restore neutral zoom and reset active gesture state (0.144548ms)
+✔ five views fit the available 1024×768 review region (1.713902ms)
+✔ five views fit the available 768×1024 review region (0.747005ms)
+✔ five views fit the available 1366×1024 review region (0.51043ms)
+✔ five views fit the available 390×844 review region (4.445939ms)
 ℹ tests 11
 ℹ suites 0
 ℹ pass 11
@@ -16,4 +16,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 301.479482
+ℹ duration_ms 433.469598

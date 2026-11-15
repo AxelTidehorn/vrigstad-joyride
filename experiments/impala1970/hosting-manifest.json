@@ -73,5 +73,7 @@
     "vehicle.json"
   ],
   "new_bytes": 23836364,
-  "audience": "existing owner-only Site preserved"
+  "audience": "existing owner-only Site preserved",
+  "status": "historical upload manifest; current shape refinement not published",
+  "branch": "experiment/impala-1970-shape"
 }

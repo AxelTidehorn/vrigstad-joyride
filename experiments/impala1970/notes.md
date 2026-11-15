@@ -71,3 +71,37 @@ Remaining: simplified bumper/grille centre V, wheel-cover pattern, optical lens
 details; script badges and registration lettering omitted. Full-car metric
 silhouette verification lacks a suitable correct-variant reference. No physical
 iPad GPU/FPS or in-game driving test is claimed.
+
+## E — Shape refinement from finished master 6c7f32c
+
+Retained the original loft, six recessed panes, closed wheel wells and wheel rig.
+Manufacturer brochure 16–17 motivated a shallow V nose, broad fender crowns with
+hood channels, steeper windshield and less slab-sided waist. Rear comparison
+motivated a lower deck between broad shoulders and returning bumper corners.
+Measured source differences and protected wheels/materials are in
+`shape-review/preservation.json`; these are model differences, not factory CAD.
+
+Rejected / corrected during this pass:
+
+1. Initial narrow rear peaks read as fins. Broadened the quarter shelves and
+   reduced their rise rather than adding trim to hide the steel.
+2. A post-assembly plan warp moved the wheel wells into the tyres. Applied the
+   steel plan shaping before existing well cuts; all four tyre checks return zero.
+3. Bisecting already batched chrome introduced slivers. Shape and clean each
+   original fixture before the existing material batch step. No export repair.
+4. A changed cabin left the old sash floating. Ray-fit it to the actual pane.
+5. Final front close-up exposed unsupported upper bezel corners. Raised the
+   outer steel belt locally without moving wheels, overall height or centre nose.
+
+Final render review includes six angles, front/rear close-ups and steel-only views.
+Source remains closed, with no glass/body or tyre/body surface intersections.
+19,856 triangles, 27 mesh primitives, 12 materials; material values unchanged.
+Exact channel curves and quarter swell remain reference-based estimates.
+
+6. Actual Three browser inspection caught striped glass not visible in Blender.
+   The film target's shallow depth precision combined with the single-car
+   preview's .05–1000 m camera range caused z-fighting. Tightened only the local
+   preview camera range to its existing vehicle bounds; source geometry and
+   materials were correct and remain unchanged. Added an actual-GLB browser
+   check over both film modes, five cameras and zoom extremes, including a
+   conservative 16-bit depth-resolution bound. Final screenshot inspected.

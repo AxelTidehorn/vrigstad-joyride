@@ -1,0 +1,31 @@
+{
+  "baseline_commit": "6c7f32c783aa0923cb2f18836157a7ef1cccfc9b",
+  "identical_camera_metadata": true,
+  "before": {
+    "before/views/shaded_rear.png": "83bb9e9a32e5487162f04b51e1af69d5d8a395d5c7467a26f6c65a2175efacb1",
+    "before/views/shaded_front_three_quarter.png": "8e49836b9160660e9ff1f4cd6a573ebc91664256e0bea1b8ed32de51d7a9c7aa",
+    "before/views/shaded_rear_three_quarter.png": "ae09ed2ec4ff1621d74fde8941d219b6c8d77eea8793c66492c9b456e593b4db",
+    "before/views/shaded_sheet.png": "a74cebe448c225b6c7624e9607dd044aea6884131efd70366c5f402ae620d93a",
+    "before/views/shaded_side.png": "79bcc4afb64adcbe16174d3b7c9565807cb16a46e54418bbe7786aae98c42a0e",
+    "before/views/shaded_front.png": "35b65331c5073003df54d5e92088643fd62d466fc2ac6f01df49cb17918d5add",
+    "before/views/shaded_high_three_quarter.png": "c581bc44e01068fced563949c016c2312b8655bdb48d395f6d0fd8b802112bdb",
+    "before/details/shaded_sheet.png": "a796a23e386816091751f2339504f335193b75e7410e7ffb05ad4c23f049e51a",
+    "before/details/shaded_front_detail.png": "7f1d79c914ac77ebba358d43f02ab7331091ef01c80c3beddf7bd22df26acb2d",
+    "before/rear_detail/shaded_rear_detail.png": "3e100d5b8563f7c9c8836f72914b1274b3d6f7f89ab6c5531db1da8fda42b12e",
+    "before/rear_detail/shaded_sheet.png": "4abc0d7ec14fd8f46703f7173309424c0254bd3b78d3517885bc294781f574a9"
+  },
+  "after": {
+    "after/views/shaded_rear.png": "2b0701cd648eed579ca1e92148601138b49a458f423e5d981809fc93c853164e",
+    "after/views/shaded_front_three_quarter.png": "257c1e08e9e077f8be44ece62ffde5c3732b778db601b333983c3baee8c55ddd",
+    "after/views/shaded_rear_three_quarter.png": "a1cfd57fd4cd69f8a570b1051da5c952f665667ac87f8ca4320c6e89158a3562",
+    "after/views/shaded_sheet.png": "de434d487fefa6d4a739d417e3e080b45f527de70e934b746124a9bef43f0755",
+    "after/views/shaded_side.png": "51fac12d49ebe5df5d6dad3119e9b2cad091945c6180ec55b3b3665d3f2000aa",
+    "after/views/shaded_front.png": "89cc5ed3becc9cdbe3e2f8aee1e0f79e919f6b9c06e3e9685231f5289c164eb3",
+    "after/views/shaded_high_three_quarter.png": "798022c35bf1630ab8199e20479f0557cee2eaef3ca7b26190f2a0f97fa5f47c",
+    "after/details/shaded_sheet.png": "fd1e500d4527d981aba0947ac6a9a80038ce71c4157d66eb668ab9c68e190c29",
+    "after/details/shaded_front_detail.png": "2d8667e04ad847c3616b41688af72ee12036fcfa560d8b168ebaf6360cf21ebd",
+    "after/rear_detail/shaded_rear_detail.png": "e42cf41f924f7a5e82671705cfb9116d21e73a640b0b032432f75d5b2d00605a",
+    "after/rear_detail/shaded_sheet.png": "7e06fec461a5a0537856be8b0a234c73c75f33a2d683ca9311302c8c5c0addff"
+  },
+  "ok": true
+}

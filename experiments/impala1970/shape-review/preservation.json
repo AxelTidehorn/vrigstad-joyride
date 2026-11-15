@@ -1,0 +1,123 @@
+{
+  "baseline_commit": "6c7f32c783aa0923cb2f18836157a7ef1cccfc9b",
+  "baseline_blend_sha256": "fdbe6c4cfb411819f685b833f27f00c5ee042826ec8c1a8ba46860ce86daa6e8",
+  "measurements": {
+    "before": {
+      "front_centre_y_m": 2.6700000762939453,
+      "front_outboard_y_m": 2.6700000762939453,
+      "front_chevron_relief_m": 0.0,
+      "hood_centre_z_m": 0.868654727935791,
+      "hood_channel_z_m": 0.8781704902648926,
+      "fender_crown_z_m": 0.8524649143218994,
+      "waist_width_at_y0_z060_m": 1.9601502418518066,
+      "rear_deck_z_m": 0.9129998683929443,
+      "rear_haunch_z_m": 0.8912770748138428,
+      "windscreen_angle_from_horizontal_deg": 32.14595407450522,
+      "body_xyz_bounds_m": [
+        2.025552988052368,
+        5.340000152587891,
+        1.196999952197075
+      ]
+    },
+    "after": {
+      "front_centre_y_m": 2.6700000762939453,
+      "front_outboard_y_m": 2.5808749198913574,
+      "front_chevron_relief_m": 0.08912515640258789,
+      "hood_centre_z_m": 0.8981492519378662,
+      "hood_channel_z_m": 0.8572452068328857,
+      "fender_crown_z_m": 0.9101324081420898,
+      "waist_width_at_y0_z060_m": 1.8930082321166992,
+      "rear_deck_z_m": 0.8490002155303955,
+      "rear_haunch_z_m": 0.8747591972351074,
+      "windscreen_angle_from_horizontal_deg": 39.969318962338505,
+      "body_xyz_bounds_m": [
+        2.0269200801849365,
+        5.340000152587891,
+        1.196999952197075
+      ]
+    },
+    "difference": {
+      "front_centre_y_m": 0.0,
+      "front_outboard_y_m": -0.08912515640258789,
+      "front_chevron_relief_m": 0.08912515640258789,
+      "hood_centre_z_m": 0.029494524002075195,
+      "hood_channel_z_m": -0.020925283432006836,
+      "fender_crown_z_m": 0.05766749382019043,
+      "waist_width_at_y0_z060_m": -0.06714200973510742,
+      "rear_deck_z_m": -0.06399965286254883,
+      "rear_haunch_z_m": -0.01651787757873535,
+      "windscreen_angle_from_horizontal_deg": 7.823364887833286
+    }
+  },
+  "protected_wheel_nodes": {
+    "wheel_rr": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "wheel_rl": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "wheel_fr": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "wheel_fl": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_spokes_rr": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_spokes_rl": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_spokes_fr": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_spokes_fl": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_rim_whitewall_rr": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_rim_whitewall_rl": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_rim_whitewall_fr": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_rim_whitewall_fl": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_rim_rr": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_rim_rl": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_rim_fr": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    },
+    "trim_rim_fl": {
+      "geometry_preserved": true,
+      "hub_or_fixture_origin_delta_m": 0.0
+    }
+  },
+  "materials_unchanged": true,
+  "node_names_preserved": true,
+  "body_origin_preserved": true,
+  "scope": "Measurements are actual model geometry, not a metric verdict against perspective photographs.",
+  "ok": true
+}

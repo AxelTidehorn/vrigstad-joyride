@@ -88,3 +88,29 @@ contour comparison, without independently stretching images. All results are
 canonical-pixel estimates. Overall dimensions are independently checked against
 the factory table; six actual renders are manually compared with the correct
 manufacturer three-quarter image.
+
+## Shape-refinement study (baseline 6c7f32c)
+
+Revisited the manufacturer's **1970 Chevrolet Full Size brochure, pages 16–17**,
+which explicitly labels the 16439 Impala Sport Sedan / four-door hardtop:
+https://oldcarbrochures.org/United%20States/Chevrolet/1970-Chevrolet/1970%20Chevrolet%20Full%20Size/slides/1970%20Chevrolet%20Full%20Size%20Brochure%2016-17.html
+
+The oblique manufacturer illustration shows the forward-projecting centre nose,
+receding outer fascia, broad front fender crowns and the depressed channels beside
+the central hood. It also supports a broader, less flattened upper cabin and more
+upright windshield than the prior model. This is artwork / perspective, not an
+orthographic measuring template. Its curves and angles were interpreted, not
+claimed as exact millimetre measurements. The scan is linked, not redistributed.
+
+Existing DanTD hardtop photographs constrain roof and aperture character. The
+existing AlfvanBeem photographs of an ordinary sedan supplement common fascia,
+rear bumper, tail lamp and quarter details only; its cabin is excluded. The
+manufacturer coupe rear view on pages 12–13 informs common deck / quarter shape,
+not hardtop C-pillars. No AI-generated references were used.
+
+The documented factory dimensions above remain authoritative. This pass changes
+internal profile distribution, not wheelbase, overall length, design height or
+tracks. Actual before/after measured hood, waist, deck and glass-angle differences
+in `shape-review/preservation.json` are explicitly **model measurements**.
+No reliable complete orthographic hardtop contour was obtained, so no total-car
+IoU or millimetre reference-error score is used to declare this refinement correct.

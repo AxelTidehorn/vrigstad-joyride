@@ -4,14 +4,14 @@
     "nonmanifold_edges": 0,
     "inconsistent_edges": 0,
     "degenerate_faces": 0,
-    "signed_volume_m3": 8.562632329802023,
+    "signed_volume_m3": 8.466680234649605,
     "connected_components": 1,
     "self_intersection_candidates": 0,
     "sample_pairs": [],
-    "triangles": 7160
+    "triangles": 7312
   },
   "meshes": 27,
-  "triangles": 19604,
+  "triangles": 19856,
   "materials": [
     "Impala configurable body paint",
     "amber parking lamps",
@@ -31,114 +31,114 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.007530591763011626,
+      "signed_volume_m3": 0.0071127999995097895,
       "connected_components": 6,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 576
+      "triangles": 580
     },
     "trim_body_chrome": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.00902960307333617,
-      "connected_components": 162,
-      "self_intersection_candidates": 3259,
+      "signed_volume_m3": 0.008820415343475368,
+      "connected_components": 169,
+      "self_intersection_candidates": 3150,
       "sample_pairs": [
         [
           0,
-          6
+          12
         ],
         [
           0,
-          7
+          13
         ],
         [
           0,
-          2364
+          18
         ],
         [
           2,
-          42
+          108
         ],
         [
           2,
-          43
+          109
         ],
         [
           2,
-          46
+          114
         ],
         [
           2,
-          2400
+          119
         ],
         [
-          2,
-          2405
+          4,
+          13
         ]
       ],
-      "triangles": 4548
+      "triangles": 4602
     },
     "bumper_front": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.03434807898010074,
+      "signed_volume_m3": 0.03303275188878811,
       "connected_components": 1,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 424
+      "triangles": 430
     },
     "bumper_rear": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.04330372493213687,
+      "signed_volume_m3": 0.04419590565188105,
       "connected_components": 1,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 456
+      "triangles": 460
     },
     "lamp_taillights": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.005341091255204034,
+      "signed_volume_m3": 0.005293270589572734,
       "connected_components": 18,
       "self_intersection_candidates": 168,
       "sample_pairs": [
         [
-          52,
-          79
+          88,
+          133
         ],
         [
-          52,
-          81
+          88,
+          135
         ],
         [
-          52,
-          91
+          88,
+          145
         ],
         [
-          52,
-          98
+          88,
+          152
         ],
         [
-          52,
-          105
+          88,
+          163
         ],
         [
-          52,
-          107
+          88,
+          170
         ],
         [
-          52,
-          117
+          88,
+          177
         ],
         [
-          52,
-          124
+          88,
+          179
         ]
       ],
       "triangles": 792
@@ -147,7 +147,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0015239623016123072,
+      "signed_volume_m3": 0.00151388673960151,
       "connected_components": 4,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -157,41 +157,41 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0026025515571193843,
+      "signed_volume_m3": 0.002582106068832524,
       "connected_components": 8,
       "self_intersection_candidates": 84,
       "sample_pairs": [
         [
           0,
-          27
+          45
         ],
         [
           0,
-          29
+          47
         ],
         [
           0,
-          39
+          57
         ],
         [
           0,
-          46
+          64
         ],
         [
           0,
-          53
+          75
         ],
         [
           0,
-          55
+          82
         ],
         [
           0,
-          65
+          89
         ],
         [
           0,
-          72
+          91
         ]
       ],
       "triangles": 352
@@ -200,7 +200,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.002088367455852074,
+      "signed_volume_m3": 0.002088367456433281,
       "connected_components": 4,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -210,11 +210,11 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.02077159910650617,
+      "signed_volume_m3": 0.020590995695910393,
       "connected_components": 10,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 440
+      "triangles": 472
     },
     "plate_registration": {
       "nonmanifold_edges": 0,
@@ -389,15 +389,15 @@
   },
   "shoulder_moulding_fit": {
     "radius_m": 0.006,
-    "maximum_centreline_to_steel_m": 0.003340827999636531,
+    "maximum_centreline_to_steel_m": 0.0030717183835804462,
     "all_sampled_sections_seated": true,
-    "samples": 160,
+    "samples": 170,
     "criterion": "3.5 mm maximum axis/steel distance, less than 4.24 mm inscribed radius of four-sided 6 mm trim"
   },
   "glass_body_surface_intersection_candidates": 0,
   "glass_signed_backing_clearance_m": {
-    "minimum": 0.0010949864554277156,
-    "maximum": 0.003999906316209945,
+    "minimum": 0.0010935674401366668,
+    "maximum": 0.003999709113031713,
     "nonpositive_samples": 0
   },
   "wheels": {
@@ -459,7 +459,7 @@
     }
   },
   "overall_xyz_m": [
-    2.209999918937683,
+    2.2100000381469727,
     5.486400127410889,
     1.3969999849796295
   ],
@@ -467,6 +467,6 @@
   "body_paint_material_count": 1,
   "wheel_fixtures_own_hub": true,
   "all_fixed_fixtures_follow_body": true,
-  "lamp_tops_z_m": 0.7420000433921814,
+  "lamp_tops_z_m": 0.7720000147819519,
   "ok": true
 }
