@@ -1,5 +1,5 @@
 {
-  "baseline": "5c84a17",
+  "baseline": "f6aaa2d",
   "files": {
     "media/vehicles/micra-k11.glb": {
       "unchanged": true,
@@ -28,6 +28,18 @@
     "src/physics/driving-v4.mjs": {
       "unchanged": true,
       "sha256": "914b4e81f412200f0cef14dad278db1eee44e36ab242488624c74dba6826be9a"
+    },
+    "src/game.html": {
+      "unchanged": true,
+      "sha256": "bdb0482bbcaeef73d32bf71dc8a29990b4b268b8a165a412a8582dbfc48c1104"
+    },
+    "index.html": {
+      "unchanged": true,
+      "sha256": "11341468e9ac157761f74c02b3090335b68e49119fc89cc98af3f1470e42866c"
+    },
+    "src/vehicles/vehicle-assets.mjs": {
+      "unchanged": true,
+      "sha256": "bdc77f0d9a656cf9b4a9cdcfe8b2b2d8dada8e9711d6b86debf93063988e125a"
     }
   },
   "ok": true

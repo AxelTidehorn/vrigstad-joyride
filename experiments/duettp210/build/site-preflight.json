@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "static_links": "all local HTML links resolve",
+  "asset_sha256": "2278cd3ee8cbe65b174acf2a8b8c6c361c793238cf12eda6deb5cacbc945c46e",
+  "interactive_browser_qa": "unverified: managed Site browser infrastructure unavailable",
+  "physical_ipad_tested": false
+}

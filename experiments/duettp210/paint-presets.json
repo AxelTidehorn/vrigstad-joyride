@@ -1,0 +1,25 @@
+{
+  "note": "Approximate period-inspired EPA colours, not factory paint chips. Only body paint changes.",
+  "presets": [
+    {
+      "id": "faded-teal",
+      "label": "Faded blue green",
+      "hex": "#8eb8b3"
+    },
+    {
+      "id": "work-blue",
+      "label": "Work blue",
+      "hex": "#719a95"
+    },
+    {
+      "id": "cream",
+      "label": "Aged ivory",
+      "hex": "#c6c3a8"
+    },
+    {
+      "id": "red",
+      "label": "Faded red",
+      "hex": "#934c43"
+    }
+  ]
+}

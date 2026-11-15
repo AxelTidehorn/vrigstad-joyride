@@ -3,6 +3,7 @@ from pathlib import Path
 import sys,json,math,os
 import bpy,bmesh,numpy as np
 from mathutils import Vector
+from mathutils.bvhtree import BVHTree
 import modelkit as mk
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 sys.path.insert(0,str(ROOT/'tools/vehicle_pipeline'))
@@ -14,29 +15,32 @@ for name in ['BODY','GLASS','BED','CHROME','RUBBER','LIGHTS','DETAILS','WHEELS']
 paint=T.material('Duett configurable body paint',(.27,.48,.45));glass=T.material('Duett smoky glazing',(.075,.12,.135));rubber=T.material('aged charcoal rubber',(.028,.032,.032));chrome=T.material('restrained satin chrome',(.48,.52,.50));rim=T.material('ivory steel wheels',(.64,.65,.56));bedmat=T.material('darker bed floor',(.14,.25,.23));head=T.material('headlamp ivory',(.76,.77,.66));red=T.material('tail red',(.48,.028,.018));amber=T.material('indicator amber',(.75,.27,.03));orange=T.material('LGF fluorescent orange',(.9,.18,.025));plate=T.material('registration ivory',(.7,.7,.61))
 for m,rough,metal in [(paint,.72,.03),(chrome,.45,.65),(rim,.73,.12),(glass,.66,0)]:
  bs=m.node_tree.nodes['Principled BSDF'];bs.inputs['Roughness'].default_value=rough;bs.inputs['Metallic'].default_value=metal
-anchors=sorted(set([a for a,b in P['profile']]+[a for a,b in P['fender_profile']]+P['side_window']+P['windshield']+[-.475,-.485]))
+anchors=sorted(set([a for a,b in P['profile']]+[a for a,b in P['fender_profile']]+P['side_window']+P['windshield']+[-.715,-.705]))
 ys=sorted(anchors+[round(-2.10+i*4.16/70,6) for i in range(1,70) if min(abs((-2.10+i*4.16/70)-a) for a in anchors)>.025])
 verts=[];faces=[];zones=[]
 for y in ys:
  top=T.interp(y,P['profile']);ft=T.interp(y,P['fender_profile'])
- cab=-.50<y<.60
- width=T.interp(y,[(-2.1,.76),(-1.7,.83),(-.6,.80),(.1,.80),(.8,.83),(1.5,.83),(1.9,.76),(2.06,.65)])
+ cab=-.72<y<.60
+ width=T.interp(y,[(-2.1,.76),(-1.7,.83),(-.6,.80),(.1,.80),(.8,.83),(1.5,.83),(1.9,.76),(2.06,.77)])
  if cab:
-  belt=1.045;rw=.645
-  half=[(0,.23),(.48,.23),(.70,.27),(.76,.43),(width,.64),(.99*width,.88),(.96*width,.99),(.93*width,1.025),(.91*width,belt),(.895*width,belt+.035),(rw,max(belt+.07,top-.07)),(.84*rw,top-.025),(.46*rw,top-.004),(0,top)]
+  belt=1.045;rw=.650
+  half=[(0,.23),(.48,.23),(.70,.27),(.76,.43),(width,.64),(.99*width,.88),(.96*width,.99),(.93*width,1.025),(.91*width,belt),(.895*width,belt+.035),(rw,max(belt+.07,top-.07)),(.84*rw,top-.038),(.46*rw,top-.008),(0,top)]
  else:
   # Nonmonotonic upper cross-section forms real full-depth wings alongside
   # the narrow crowned bonnet (and alongside the narrow bed behind the cab).
-  hw=min(.50,.67*width) if y>=.60 else .655
-  half=[(0,.23),(.48,.23),(.70,.27),(.78,.43),(width,.64),(.99*width,max(.69,ft-.12)),(.94*width,ft),(.84*width,ft+.025),(.72*width,ft-.005),(hw, min(ft-.025,top-.13)),(.97*hw,top-.09),(.80*hw,top-.035),(.43*hw,top-.006),(0,top)]
- if y<=-.50:
-  half[8:]=[(.78*width,top-.012),(.72*width,top),(.66*width,top),(.53*width,top),(.30*width,top),(0,top)]
+  hw=min(.465,.67*width) if y>=.60 else .655
+  half=[(0,.23),(.48,.23),(.70,.27),(.78,.43),(width,.64),(.99*width,max(.69,ft-.12)),(.94*width,ft),(.84*width,ft+.045),(.72*width,ft-.005),(hw, min(ft-.025,top-.13)),(.97*hw,top-.09),(.80*hw,top-.035),(.43*hw,top-.006),(0,top)]
+ if y<=-.72:
+  # Narrow, straight bed box with a pronounced traditional mudguard outside it.
+  width=.645+.185*math.exp(-((y+1.50)/.48)**4)
+  bottom=.66
+  half=[(0,bottom),(.46,bottom),(.59,bottom+.015),(.63,.42),(width,.55),(width,max(.69,ft-.12)),(.63+(width-.63)*.85,ft+.015),(.63+(width-.63)*.55,ft+.055),(.63+(width-.63)*.18,ft+.025),(.63,ft-.05),(.625,top-.03),(.610,top),(.30,top),(0,top)]
  ring=half+[(-x,z) for x,z in half[-2:0:-1]]
  for j,(x,z) in enumerate(ring):
   yy=y
   if y>1.70:yy-=.085*(abs(x)/.83)**2*min(1,(y-1.7)/.36)
   # Lengthen door glass towards the cowl while the upper edge follows the roof.
-  if cab and j in (8,9,len(ring)-9,len(ring)-8):yy=T.interp(y,[(-.50,-.50),(-.32,-.32),(.30,.50),(.60,.60)])
+  if cab and j in (8,9,len(ring)-9,len(ring)-8):yy=T.interp(y,[(-.72,-.72),(-.52,-.52),(.30,.50),(.60,.60)])
   verts.append((x,yy,z))
 N=len(ring)
 for i in range(len(ys)-1):
@@ -45,7 +49,7 @@ for i in range(len(ys)-1):
   faces.append((i*N+j,i*N+(j+1)%N,(i+1)*N+(j+1)%N,(i+1)*N+j));zone=0
   if j in (9,N-10) and P['side_window'][0]<mid<P['side_window'][1]:zone=1
   if P['windshield'][0]<mid<P['windshield'][1] and 10<=j<=N-11:zone=2
-  if -.485<mid<-.475 and 10<=j<=N-11:zone=3
+  if -.715<mid<-.705 and 10<=j<=N-11:zone=3
   zones.append(zone)
 faces.extend([tuple(range(N-1,-1,-1)),tuple((len(ys)-1)*N+j for j in range(N))]);zones.extend([0,0])
 body=T.group(mk.mesh_from_data('body',verts,faces),'BODY',paint)
@@ -57,6 +61,14 @@ for zone in [1,2]:
  fs=[f for f in bm.faces if f.material_index==zone]
  res=bmesh.ops.inset_region(bm,faces=fs,thickness=.022,depth=-.014,use_even_offset=True,use_boundary=True)
  for f in res['faces']:f.material_index=0
+# Small actual steel/glass aperture radii, solved at shared frame corners.
+corner_verts=[]
+for v in bm.verts:
+ es=[e for e in v.link_edges if any(f.material_index for f in e.link_faces) and any(not f.material_index for f in e.link_faces)]
+ if len(es)==2 and any(f.material_index for f in v.link_faces):
+  a,b=[(e.other_vert(v).co-v.co).normalized() for e in es]
+  if a.angle(b)<math.radians(140):corner_verts.append(v)
+if corner_verts:bmesh.ops.bevel(bm,geom=corner_verts,offset=.018,segments=3,affect='VERTICES',clamp_overlap=True,material=0)
 bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(body.data);bm.free()
 # Extract exactly the triangulated inset surfaces, then offset/solidify a
 # controlled 3 mm: no independent floating window geometry.
@@ -81,6 +93,7 @@ while remaining:
 bm.to_mesh(windows.data);bm.free();
 bpy.context.view_layer.objects.active=windows;m=windows.modifiers.new('closed seated panes','SOLIDIFY');m.thickness=.002;m.offset=1;bpy.ops.object.modifier_apply(modifier=m.name)
 def cut(cutter,label):
+ bm=bmesh.new();bm.from_mesh(cutter.data);bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(cutter.data);bm.free()
  print('CUT START',label,len(body.data.polygons));bpy.context.view_layer.objects.active=body;m=body.modifiers.new(label,'BOOLEAN');m.operation='DIFFERENCE';m.solver='EXACT';m.object=cutter;bpy.ops.object.modifier_apply(modifier=m.name);bpy.data.objects.remove(cutter,do_unlink=True);print('CUT END',label,len(body.data.polygons));assert len(body.data.polygons)>0,label
 def rounded_box(name,dims,loc,mat,collection='DETAILS',radius=.025):
  # Extruded rounded X/Z outline: thin glazing and grille backing must not
@@ -104,39 +117,89 @@ for axle,y in [('f',P['front_axle_y']),('r',P['front_axle_y']-P['wheelbase'])]:
    bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o;bpy.ops.object.transform_apply(location=False,rotation=True,scale=True)
    for v in o.data.vertices:v.co.x-=hub
    o.location.x=hub
+# Real rear axle hangers join the thin load-bed floor to the hub height.
+# They are unioned into the existing one-body construction, not floating struts.
+for sign in [-1,1]:
+ hanger=mk.box('_rear_frame_hanger',(.09,.16,.38),location=(sign*.44,-1.5,.49))
+ bpy.context.view_layer.objects.active=body;m=body.modifiers.new('connected rear chassis hanger','BOOLEAN');m.operation='UNION';m.solver='EXACT';m.object=hanger;bpy.ops.object.modifier_apply(modifier=m.name);bpy.data.objects.remove(hanger,do_unlink=True)
 # Rear glass seats on a true vertical rear wall, with its own volumetric frame.
 # Its lower edge is above the bed rail; rounded corners are genuine geometry.
-rear_y=-.490
-rounded_box('trim_rear_window_frame',(1.01,.030,.37),(0,rear_y,1.365),rubber,'RUBBER',.055)
-rounded_box('glass_rear',(.935,.018,.295),(0,rear_y-.018,1.365),glass,'GLASS',.048)
-rounded_box('trim_bed_floor',(1.10,1.45,.014),(0,-1.285,P['bed_floor']+.008),bedmat,'BED',.006)
+rear_y=P['rear_window_y']
+rounded_box('trim_rear_window_frame',(.86,.014,.295),(0,rear_y,1.39),rubber,'RUBBER',.055)
+rounded_box('glass_rear',(.805,.008,.245),(0,rear_y-.010,1.39),glass,'GLASS',.048)
+rounded_box('trim_bed_floor',(1.10,P['bed_front']-P['bed_rear']-.07,.014),(0,(P['bed_front']+P['bed_rear'])/2,P['bed_floor']+.008),bedmat,'BED',.006)
 if STAGE!='blockout':
- # Grille is an inset curved surround with individual bars, not a flat image.
- rounded_box('grille_backing',(1.06,.065,.27),(0,2.035,.805),rubber,'CHROME',.085)
+ # A smaller rounded opening is actually recessed into the nose steel.
+ cutter=rounded_box('_grille_recess',(P['grille_width'],.16,P['grille_height']),(0,2.045,.815),rubber,'CHROME',.105)
+ cut(cutter,'rounded grille recess')
+ rounded_box('grille_backing',(P['grille_width']-.008,.016,P['grille_height']-.008),(0,1.968,.815),rubber,'CHROME',.10)
+ # Rounded ring follows the curved front plate; the back is embedded in steel.
+ def rounded_outline(w,h,r):
+  pts=[]
+  for cx,cz,start in [(w/2-r,h/2-r,0),(-w/2+r,h/2-r,90),(-w/2+r,-h/2+r,180),(w/2-r,-h/2+r,270)]:
+   for i in range(7):
+    a=math.radians(start+i*15);pts.append((cx+r*math.cos(a),.815+cz+r*math.sin(a)))
+  dense=[]
+  for a,b in zip(pts,pts[1:]+pts[:1]):
+   for j in range(4):dense.append((a[0]+(b[0]-a[0])*j/4,a[1]+(b[1]-a[1])*j/4))
+  return dense
+ outer=rounded_outline(.935,.34,.12);inner=rounded_outline(.87,.275,.096);vv=[]
+ for back in [False,True]:
+  for outline in [outer,inner]:
+   for x,z in outline:vv.append((x,2.07-.085*(x/.83)**2-(.055 if back else 0),z))
+ n=len(outer);ff=[]
+ for i in range(n):
+  j=(i+1)%n
+  ff.extend([(i,j,n+j,n+i),(2*n+i,3*n+i,3*n+j,2*n+j),(i,2*n+i,2*n+j,j),(n+i,n+j,3*n+j,3*n+i)])
+ T.group(mk.mesh_from_data('grille_surround',vv,ff),'CHROME',chrome)
+ for x in [i*.075 for i in range(-5,6)]:
+  h=.247 if abs(x)<.30 else .195
+  rounded_box('grille_bar',(.013,.070,h),(x,1.99,.815),chrome,'CHROME',.005)
  for sign in [-1,1]:
-  for zz in [.68,.93]:T.band('grille_surround',[(sign*.50,2.045),(sign*.30,2.07),(0,2.078)],zz,.022,.024,chrome,'CHROME')
-  rounded_box('grille_end',(.025,.028,.20),(sign*.515,2.04,.807),chrome,'CHROME',.01)
- for x in [i*.07 for i in range(-6,7)]:rounded_box('grille_bar',(.014,.022,.225),(x,2.078-.06*abs(x),.805),chrome,'CHROME',.005)
- for sign in [-1,1]:
-  # Cylinders point forward (+Y) and intersect the wing by their seated backs.
-  for name,rad,depth,y,mat in [('trim_head_bezel',.119,.065,1.915,chrome),('lamp_headlights',.102,.045,1.955,head)]:
-   o=T.group(mk.cylinder(name,rad,depth,location=(sign*.655,y,.93),rotation=(90,0,0),segments=32),'LIGHTS',mat)
-  o=T.group(mk.cylinder('lamp_front_indicator',.040,.030,location=(sign*.69,1.93,.68),rotation=(90,0,0),segments=16),'LIGHTS',amber)
-  rounded_box('lamp_tail',(.12,.055,.17),(sign*.735,-2.075,.79),red,'LIGHTS',.032)
-  rounded_box('trim_door_handle',(.035,.15,.03),(sign*.780,-.24,.95),chrome,'DETAILS',.012)
+  # Recesses and annular sockets replace the former protruding cylinders.
+  xc=sign*.630;zc=.985
+  bm=bmesh.new();bm.from_mesh(body.data);skin=BVHTree.FromBMesh(bm);bm.free()
+  outer_y=[]
+  for i in range(40):
+   x=xc+.124*math.cos(i*math.tau/40);z=zc+.124*math.sin(i*math.tau/40);hit=skin.ray_cast(Vector((x,3,z)),Vector((0,-1,0)))[0]
+   if hit is None:raise ValueError("Lamp surround outside wing")
+   outer_y.append(hit.y+.005)
+  cut(mk.cylinder('_lamp_socket',.116,.145,location=(xc,1.966,zc),rotation=(90,0,0),segments=40),'recessed headlamp socket')
+  vv=[]
+  for radius,depth,conform in [(.124,0,True),(.108,1.996,False),(.124,-.050,True),(.108,1.946,False)]:
+   vv.extend((xc+radius*math.cos(i*math.tau/40),(outer_y[i] if conform else 0)+depth,zc+radius*math.sin(i*math.tau/40)) for i in range(40))
+  ff=[]
+  for i in range(40):
+   j=(i+1)%40
+   ff.extend([(i,j,40+j,40+i),(80+i,120+i,120+j,80+j),(i,80+i,80+j,j),(40+i,40+j,120+j,120+i)])
+  T.group(mk.mesh_from_data('trim_head_bezel',vv,ff),'LIGHTS',chrome)
+  T.group(mk.cylinder('lamp_headlights',.106,.013,location=(xc,1.985,zc),rotation=(90,0,0),segments=40),'LIGHTS',head)
+  indicator_hit=skin.ray_cast(Vector((sign*.69,3,.68)),Vector((0,-1,0)))[0]
+  if indicator_hit is None:raise ValueError('Indicator outside nose')
+  o=T.group(mk.cylinder('lamp_front_indicator',.040,.030,location=(sign*.69,indicator_hit.y+.005,.68),rotation=(90,0,0),segments=16),'LIGHTS',amber)
+  rounded_box('lamp_tail',(.105,.040,.14),(sign*.59,-2.087,.845),red,'LIGHTS',.032)
+  rounded_box('trim_door_handle',(.035,.15,.03),(sign*.780,-.40,.95),chrome,'DETAILS',.012)
   rounded_box('mirror_mount',(.17,.045,.035),(sign*.735,.48,1.125),chrome,'DETAILS',.008)
   rounded_box('mirror_stalk',(.025,.04,.16),(sign*.79,.48,1.19),chrome,'DETAILS',.008)
   rounded_box('mirror_housing',(.035,.13,.15),(sign*.805,.48,1.32),chrome,'DETAILS',.03)
+  rounded_box('trim_running_board',(.12,.78,.045),(sign*.78,-.20,.36),rubber,'DETAILS',.02)
   # Door pressing sits in the existing steel instead of a panel overlay.
-  S.press_line(body,1,-.37,.006,.002,lambda p:abs(p.x)>.70 and .47<p.z<1.08)
+  S.press_line(body,1,-.59,.006,.002,lambda p:abs(p.x)>.70 and .47<p.z<1.08)
  T.band('bumper_front',[(-.79,1.92),(-.67,2.08),(-.4,2.12),(0,2.13),(.4,2.12),(.67,2.08),(.79,1.92)],.47,.09,.055,chrome,'CHROME')
- T.band('bumper_rear',[(-.75,-2.10),(-.60,-2.16),(0,-2.18),(.60,-2.16),(.75,-2.10)],.44,.07,.055,chrome,'CHROME')
- rounded_box('plate_registration',(.31,.03,.10),(.30,-2.105,.64),plate,'DETAILS',.01)
+ T.group(mk.cylinder('trim_rear_axle',.045,1.12,location=(0,-1.5,.335),rotation=(0,90,0),segments=12),'DETAILS',rubber)
+ # Four millimetres of real tailgate relief, with a closed inner backing.
+ cut(rounded_box('_tailgate_relief',(1.075,.024,.27),(0,-2.108,.895),rubber,'BED',.035),'tailgate pressing')
+ for sign in [-1,1]:
+  T.band('trim_bed_rail',[(sign*.610,-2.035),(sign*.610,-.755)],P['bed_top']+.008,.025,.030,bedmat,'BED')
+  rounded_box('trim_gate_hinge',(.11,.03,.025),(sign*.40,-2.109,.769),chrome,'DETAILS',.008)
+  rounded_box('trim_bumper_mount',(.04,.15,.17),(sign*.40,-2.11,.635),chrome,'DETAILS',.008)
+ T.band('bumper_rear',[(-.75,-2.10),(-.60,-2.16),(0,-2.18),(.60,-2.16),(.75,-2.10)],.57,.07,.055,chrome,'CHROME')
+ rounded_box('plate_registration',(.25,.025,.085),(.32,-2.106,.80),plate,'DETAILS',.01)
  # LGF triangle: red border, orange centre, both closed and mounted to rear gate.
  def triangle(name,w,h,y,z,mat):
   vv=[(-w/2,y,z-h/2),(w/2,y,z-h/2),(0,y,z+h/2),(-w/2,y+.014,z-h/2),(w/2,y+.014,z-h/2),(0,y+.014,z+h/2)]
   return T.group(mk.mesh_from_data(name,vv,[(0,2,1),(3,4,5),(0,1,4,3),(1,2,5,4),(2,0,3,5)]),'DETAILS',mat)
- triangle('trim_lgf_border',.37,.32,-2.11,.89,red);triangle('trim_lgf_orange',.285,.235,-2.119,.89,orange)
+ triangle('trim_lgf_border',.30,.26,-2.11,.89,red);triangle('trim_lgf_orange',.225,.185,-2.119,.89,orange)
  for sign in [-1,1]:T.band('trim_wiper',[(sign*.07,.655),(sign*.31,.515)],1.30,.012,.012,rubber,'DETAILS')
 # Batch details by material while preserving exact body/hub naming.
 for prefix in ['grille_','lamp_','trim_','mirror_']:
@@ -146,7 +209,12 @@ for prefix in ['grille_','lamp_','trim_','mirror_']:
 for o in [o for o in bpy.context.scene.objects if o.type=='MESH']:
  bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o;bpy.ops.object.transform_apply(location=False,rotation=True,scale=True)
  S.clean_cut_slivers(o,min_area=1e-10,merge_distance=.00001)
- bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.normal_update();normals=[tuple(v.normal) for v in bm.verts];bm.to_mesh(o.data);bm.free()
+ bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.normal_update();normals=[]
+ for v in bm.verts:
+  caps=[f for f in v.link_faces if abs(f.normal.y)>.95] if o.name.startswith(('lamp_head','glass_rear')) else []
+  n=sum((f.normal*f.calc_area() for f in caps),Vector()) if caps else v.normal.copy()
+  normals.append(tuple(n.normalized()) if n.length>1e-8 else tuple(v.normal))
+ bm.to_mesh(o.data);bm.free()
  for f in o.data.polygons:f.use_smooth=True
  while o.data.uv_layers:o.data.uv_layers.remove(o.data.uv_layers[0])
  o.data.normals_split_custom_set_from_vertices(normals)
