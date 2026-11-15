@@ -111,3 +111,7 @@ Metres; origin 57.3555° N, 14.4756° E; x east, z south, y up; the world spans 
 | `labels` | Named places: `t` text, `x`, `z`, `k` kind |
 
 Class codes are defined in `tools/process.py`. Move them into a shared typed module once the code is TypeScript.
+
+### Geographic daylight
+
+The default is a fixed afternoon; `?cycle=on` opts into an accelerated Stockholm civil-time clock. `?time=`, `date=`, and `lighting=off` support review; `?dev=lighting` enables the optional Visual Lab. The geographic model intentionally preserves Vrigstad's seasonal day length and DST. Only sky/hemisphere carry twilight below the horizon; direct sun and its shadow pass are disabled. Solar output and calendar calculations are reused, and lamp placement queries the existing road/building indexes. Two (coarse) or four point-light slots use 12 m hysteresis, 0.35 s fade-out before reassignment, fade-in and range attenuation. The whole light bank is hidden when fully off. Four sun/lamp shader-count combinations are compiled at startup to avoid transition recompilation. Physical mobile performance and long night driving still require review.
