@@ -1,8 +1,8 @@
 {
   "objects": {
     "body": {
-      "verts": 2140,
-      "faces": 4276,
+      "verts": 2530,
+      "faces": 5056,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -10,7 +10,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 5.071698187,
+      "volume": 4.751725362,
       "scale": [
         1.0,
         1.0,
@@ -24,8 +24,8 @@
       "islands": 1
     },
     "glass_envelope": {
-      "verts": 538,
-      "faces": 1052,
+      "verts": 568,
+      "faces": 1112,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -33,16 +33,16 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.005603866,
+      "volume": 0.005548653,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        1.3754,
-        2.5116,
-        0.4751
+        1.376,
+        2.3314,
+        0.4448
       ],
       "islands": 6
     },
@@ -102,7 +102,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.006602612,
+      "volume": 0.005080103,
       "scale": [
         1.0,
         1.0,
@@ -110,8 +110,8 @@
       ],
       "dimensions": [
         1.35,
-        0.0936,
-        0.207
+        0.0858,
+        0.174
       ],
       "islands": 2
     },
@@ -125,15 +125,15 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.00046,
+      "volume": 0.000470718,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        1.38,
-        0.1309,
+        1.396,
+        0.1748,
         0.15
       ],
       "islands": 2
@@ -156,7 +156,7 @@
       ],
       "dimensions": [
         1.41,
-        0.0619,
+        0.0983,
         0.26
       ],
       "islands": 4
@@ -179,7 +179,7 @@
       ],
       "dimensions": [
         1.41,
-        0.0507,
+        0.0505,
         0.06
       ],
       "islands": 2
@@ -202,14 +202,14 @@
       ],
       "dimensions": [
         1.41,
-        0.0882,
+        0.0947,
         0.06
       ],
       "islands": 2
     },
     "trim_window_seals": {
-      "verts": 2328,
-      "faces": 3880,
+      "verts": 2568,
+      "faces": 4280,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -217,18 +217,18 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.001132828,
+      "volume": 0.001117978,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        1.385,
-        2.5203,
-        0.4833
+        1.3858,
+        2.3407,
+        0.4533
       ],
-      "islands": 194
+      "islands": 214
     },
     "trim_handles": {
       "verts": 48,
@@ -263,16 +263,16 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.000186715,
+      "volume": 0.000282215,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        1.6644,
-        0.0412,
-        0.0459
+        1.6707,
+        0.0312,
+        0.0844
       ],
       "islands": 2
     },
@@ -323,8 +323,8 @@
       "islands": 1
     },
     "grille_slots": {
-      "verts": 48,
-      "faces": 88,
+      "verts": 96,
+      "faces": 176,
       "open_boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_verts": 0,
@@ -332,18 +332,18 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.001038859,
+      "volume": 0.000581139,
       "scale": [
         1.0,
         1.0,
         1.0
       ],
       "dimensions": [
-        0.46,
-        0.085,
-        0.032
+        0.535,
+        0.024,
+        0.077
       ],
-      "islands": 2
+      "islands": 4
     },
     "plate_registration": {
       "verts": 48,
@@ -556,8 +556,8 @@
   "errors": [],
   "warnings": [],
   "info": [
-    "trim_window_seals: 194 islands, treated as one part.",
-    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-bumper_rear embedded 0.064 m; body-bumper_front embedded 0.039 m; body-lamp_headlights[island 0] embedded 0.030 m; body-lamp_headlights[island 1] embedded 0.030 m; body-lamp_indicators[island 0] embedded 0.030 m; body-lamp_indicators[island 1] embedded 0.030 m; body-lamp_taillights_red[island 0] embedded 0.030 m; body-lamp_taillights_red[island 1] embedded 0.030 m; body-lamp_taillights_red[island 2] embedded 0.030 m; body-lamp_taillights_red[island 3] embedded 0.030 m; body-lamp_taillights_registration[island 0] embedded 0.030 m; body-lamp_taillights_registration[island 1] embedded 0.030 m; body-lamp_taillights_amber[island 0] embedded 0.030 m; body-lamp_taillights_amber[island 1] embedded 0.030 m; body-trim_window_seals flush; body-trim_handles[island 0] flush; body-trim_handles[island 1] flush; body-mirror_stalks[island 0] flush; body-mirror_stalks[island 1] flush; body-grille_lower flush; body-grille_slots[island 0] embedded 0.018 m; body-grille_slots[island 1] embedded 0.018 m; body-plate_registration[island 0] flush; body-plate_registration[island 1] flush; body-wheel_fl embedded 0.015 m; body-wheel_fr embedded 0.015 m; body-wheel_rl embedded 0.015 m; body-wheel_rr embedded 0.015 m; glass_envelope[island 0]-trim_window_seals flush; glass_envelope[island 1]-trim_window_seals flush; glass_envelope[island 2]-trim_window_seals flush; glass_envelope[island 3]-trim_window_seals flush; glass_envelope[island 4]-trim_window_seals flush; glass_envelope[island 5]-trim_window_seals flush; bumper_front-grille_lower embedded 0.027 m; bumper_front-plate_registration[island 1] embedded 0.017 m; lamp_headlights[island 0]-lamp_indicators[island 0] flush; lamp_headlights[island 1]-lamp_indicators[island 1] flush; lamp_taillights_red[island 0]-lamp_taillights_registration[island 0] flush; lamp_taillights_red[island 1]-lamp_taillights_registration[island 0] flush; lamp_taillights_red[island 1]-lamp_taillights_amber[island 0] flush; lamp_taillights_red[island 2]-lamp_taillights_registration[island 1] flush; lamp_taillights_red[island 3]-lamp_taillights_registration[island 1] flush; lamp_taillights_red[island 3]-lamp_taillights_amber[island 1] flush; mirror_stalks[island 0]-mirror_housings[island 0] embedded 0.028 m; mirror_stalks[island 1]-mirror_housings[island 1] embedded 0.028 m; wheel_fl-trim_rim_fl flush; wheel_fr-trim_rim_fr flush; wheel_rl-trim_rim_rl flush; wheel_rr-trim_rim_rr flush"
+    "trim_window_seals: 214 islands, treated as one part.",
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-bumper_rear embedded 0.068 m; body-bumper_front embedded 0.050 m; body-lamp_headlights[island 0] embedded 0.030 m; body-lamp_headlights[island 1] embedded 0.030 m; body-lamp_indicators[island 0] embedded 0.030 m; body-lamp_indicators[island 1] embedded 0.030 m; body-lamp_taillights_red[island 0] embedded 0.030 m; body-lamp_taillights_red[island 1] embedded 0.030 m; body-lamp_taillights_red[island 2] embedded 0.030 m; body-lamp_taillights_red[island 3] embedded 0.030 m; body-lamp_taillights_registration[island 0] embedded 0.030 m; body-lamp_taillights_registration[island 1] embedded 0.030 m; body-lamp_taillights_amber[island 0] embedded 0.027 m; body-lamp_taillights_amber[island 1] embedded 0.027 m; body-trim_window_seals flush; body-trim_handles[island 0] embedded 0.019 m; body-trim_handles[island 1] embedded 0.019 m; body-mirror_stalks[island 0] embedded 0.037 m; body-mirror_stalks[island 1] embedded 0.037 m; body-grille_lower flush; body-grille_slots[island 0] flush; body-grille_slots[island 1] flush; body-grille_slots[island 2] flush; body-grille_slots[island 3] flush; body-plate_registration[island 0] flush; body-plate_registration[island 1] flush; body-wheel_fl embedded 0.015 m; body-wheel_fr embedded 0.015 m; body-wheel_rl embedded 0.015 m; body-wheel_rr embedded 0.015 m; glass_envelope[island 0]-trim_window_seals flush; glass_envelope[island 1]-trim_window_seals flush; glass_envelope[island 2]-trim_window_seals flush; glass_envelope[island 3]-trim_window_seals flush; glass_envelope[island 4]-trim_window_seals flush; glass_envelope[island 5]-trim_window_seals flush; bumper_front-grille_lower embedded 0.027 m; bumper_front-plate_registration[island 1] embedded 0.017 m; lamp_headlights[island 0]-lamp_indicators[island 0] flush; lamp_headlights[island 1]-lamp_indicators[island 1] flush; lamp_taillights_red[island 0]-lamp_taillights_registration[island 0] flush; lamp_taillights_red[island 1]-lamp_taillights_registration[island 0] flush; lamp_taillights_red[island 1]-lamp_taillights_amber[island 0] flush; lamp_taillights_red[island 2]-lamp_taillights_registration[island 1] flush; lamp_taillights_red[island 3]-lamp_taillights_registration[island 1] flush; lamp_taillights_red[island 3]-lamp_taillights_amber[island 1] flush; mirror_stalks[island 0]-mirror_housings[island 0] embedded 0.027 m; mirror_stalks[island 1]-mirror_housings[island 1] embedded 0.027 m; wheel_fl-trim_rim_fl flush; wheel_fr-trim_rim_fr flush; wheel_rl-trim_rim_rl flush; wheel_rr-trim_rim_rr flush"
   ],
   "units": "m",
   "overall": {
@@ -577,7 +577,7 @@
       1.4299999475479126
     ],
     "contact_tolerance": 0.004349770771213147,
-    "parts": 41
+    "parts": 43
   },
   "contacts": [
     {
@@ -619,13 +619,13 @@
     {
       "a": "body",
       "b": "bumper_rear",
-      "depth": 0.0638219341635704,
+      "depth": 0.06752769649028778,
       "expected": false
     },
     {
       "a": "body",
       "b": "bumper_front",
-      "depth": 0.03869748115539551,
+      "depth": 0.049673378467559814,
       "expected": false
     },
     {
@@ -691,43 +691,43 @@
     {
       "a": "body",
       "b": "lamp_taillights_amber[island 0]",
-      "depth": 0.03000009059906006,
+      "depth": 0.026628339663147926,
       "expected": false
     },
     {
       "a": "body",
       "b": "lamp_taillights_amber[island 1]",
-      "depth": 0.03000009059906006,
+      "depth": 0.026628339663147926,
       "expected": false
     },
     {
       "a": "body",
       "b": "trim_window_seals",
-      "depth": 0.0029837272595614195,
+      "depth": 0.001414802041836083,
       "expected": false
     },
     {
       "a": "body",
       "b": "trim_handles[island 0]",
-      "depth": 0.0001424337096977979,
+      "depth": 0.019217418506741524,
       "expected": false
     },
     {
       "a": "body",
       "b": "trim_handles[island 1]",
-      "depth": 0.00014247072977013886,
+      "depth": 0.0192174781113863,
       "expected": false
     },
     {
       "a": "body",
       "b": "mirror_stalks[island 0]",
-      "depth": 0.0,
+      "depth": 0.037384867668151855,
       "expected": false
     },
     {
       "a": "body",
       "b": "mirror_stalks[island 1]",
-      "depth": 0.0,
+      "depth": 0.03738483041524887,
       "expected": false
     },
     {
@@ -739,13 +739,25 @@
     {
       "a": "body",
       "b": "grille_slots[island 0]",
-      "depth": 0.01750004291534424,
+      "depth": 0.003999948501586914,
       "expected": false
     },
     {
       "a": "body",
       "b": "grille_slots[island 1]",
-      "depth": 0.01750004291534424,
+      "depth": 0.003999948501586914,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "grille_slots[island 2]",
+      "depth": 0.003999948501586914,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "grille_slots[island 3]",
+      "depth": 0.003999948501586914,
       "expected": false
     },
     {
@@ -787,37 +799,37 @@
     {
       "a": "glass_envelope[island 0]",
       "b": "trim_window_seals",
-      "depth": 0.0008067522430792451,
+      "depth": 0.0009463083697482944,
       "expected": false
     },
     {
       "a": "glass_envelope[island 1]",
       "b": "trim_window_seals",
-      "depth": 0.000993378576822579,
+      "depth": 0.0009540719911456108,
       "expected": false
     },
     {
       "a": "glass_envelope[island 2]",
       "b": "trim_window_seals",
-      "depth": 0.0009934966219589114,
+      "depth": 0.0009539590682834387,
       "expected": false
     },
     {
       "a": "glass_envelope[island 3]",
       "b": "trim_window_seals",
-      "depth": 0.0009819656843319535,
+      "depth": 0.0009674580651335418,
       "expected": false
     },
     {
       "a": "glass_envelope[island 4]",
       "b": "trim_window_seals",
-      "depth": 0.0009819415863603354,
+      "depth": 0.0009675161563791335,
       "expected": false
     },
     {
       "a": "glass_envelope[island 5]",
       "b": "trim_window_seals",
-      "depth": 0.0009628973784856498,
+      "depth": 0.0005748053663410246,
       "expected": false
     },
     {
@@ -835,13 +847,13 @@
     {
       "a": "lamp_headlights[island 0]",
       "b": "lamp_indicators[island 0]",
-      "depth": 0.003138715634122491,
+      "depth": 0.0019502830691635609,
       "expected": false
     },
     {
       "a": "lamp_headlights[island 1]",
       "b": "lamp_indicators[island 1]",
-      "depth": 0.003138713538646698,
+      "depth": 0.0019502830691635609,
       "expected": false
     },
     {
@@ -883,13 +895,13 @@
     {
       "a": "mirror_stalks[island 0]",
       "b": "mirror_housings[island 0]",
-      "depth": 0.027926743030548096,
+      "depth": 0.027180612087249756,
       "expected": false
     },
     {
       "a": "mirror_stalks[island 1]",
       "b": "mirror_housings[island 1]",
-      "depth": 0.02792668342590332,
+      "depth": 0.027180612087249756,
       "expected": false
     },
     {

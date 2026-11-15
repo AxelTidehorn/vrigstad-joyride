@@ -78,3 +78,11 @@ GLB validator with Micra-specific rounded sections. `?vehicle=micra` selects the
 installed GLB in an existing Torget slot on its review branch. It reuses the
 existing FWD archetype; no new vehicle-dynamics calibration is claimed. The new
 `reimport_check.py` runs the existing body/wheel gate on the actual exported GLB.
+
+The comprehensive Micra refinement also brings the existing Saab/Impala
+`silhouette_render.py` into this integration branch: exact +X orthographic
+projection, wheel anchors and measured body control curves. Micra's separate
+`refinement/profile-reference.json` contains manual near-side reference points.
+`compare_profile.py` reports perspective estimates in source pixels, not an IoU
+or factory millimetre certificate. Backlight shape and frozen wheel geometry
+are checked independently of rendering; see the experiment's current report.

@@ -1,0 +1,11 @@
+{
+ "source_url":"https://www.nissan-autoparts.nl/c-4276469/nissan-micra-k11-augustus-1992-november-2002/",
+ "image_url":"https://cdn.myonlinestore.eu/9494fdab-6be1-11e9-a722-44a8421b9960/slideshow/en_US_857992_full.jpg",
+ "image_size_px":[816,612],
+ "variant_scope":"Early three-door K11; near-side stock-looking red car. Exact registration year not verified; shared pre-facelift shell only.",
+ "front_wheel_px":[688,378],"rear_wheel_px":[153,377],
+ "wheelbase_m":2.36,"rear_axle_y_m":-1.2275,"hub_z_m":0.276,
+ "upper_trace_px":[[35,252],[60,220],[95,175],[145,122],[230,110],[340,111],[430,123],[470,142],[530,187],[580,220],[650,235],[755,258],[790,280]],
+ "data_type":"manual points; calculated uniform wheel-anchor registration; sampled actual model centreline",
+ "uncertainties":["Photograph is near-side perspective, not orthographic. No metric photographic accuracy or whole-mask IoU.","Upper trace estimated +/-6 source pixels; wheel centres +/-4 pixels. Grass prevents a reliable independent ground line.","Axle spacing alone defines scale and direction; no independent horizontal/vertical rescaling or overlap fitting.","Photo apparent overhangs differ from documented nominal dimensions. Preserve documented model wheelbase/overhangs rather than fitting this perspective bias.","Source photograph is linked, not redistributed. Overlay contains only manually traced geometric points and Blender outlines."]
+}

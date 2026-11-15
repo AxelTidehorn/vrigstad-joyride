@@ -1,0 +1,14 @@
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:50:12] "GET /index.html HTTP/1.1" 200 -
+
+Running 1 test using 1 worker
+
+(node:5528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:50:13] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:50:16] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:50:16] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:50:16] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:50:16] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✓  1 tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in (1.0m)
+
+  1 passed (1.3m)

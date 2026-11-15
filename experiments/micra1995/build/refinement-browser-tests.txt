@@ -1,0 +1,75 @@
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:43:24] "GET /index.html HTTP/1.1" 200 -
+
+Running 6 tests using 1 worker
+
+(node:5110) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:43:25] "GET /index.html?vehicle=micra HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:43:27] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:43:27] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:43:27] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:43:27] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:43:27] "GET /media/vehicles/micra-k11.glb HTTP/1.1" 200 -
+  ✓  1 tests/e2e/micra.spec.js:2:1 › Micra choice loads four GLB wheels, can be entered and driven (38.3s)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:44:16] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:44:19] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:44:19] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:44:19] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:44:19] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✓  2 tests/e2e/smoke.spec.js:29:3 › game (index.html) › loads with no console errors and a WebGL canvas (43.0s)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:44:59] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:45:02] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:45:02] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:45:02] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:45:02] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✓  3 tests/e2e/smoke.spec.js:48:3 › game (index.html) › Start hides the intro and shows the HUD (27.6s)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:46:04] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:46:06] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:46:07] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:46:07] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:46:07] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✘  4 tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in (2.0m)
+(node:5350) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:47:26] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:47:29] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:47:29] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:47:29] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:47:29] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✓  5 tests/e2e/smoke.spec.js:114:3 › game (index.html) › cats are around, and the kiosk sells cat treats from its menu (1.0m)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 09:48:46] "GET /map.html HTTP/1.1" 200 -
+  ✓  6 tests/e2e/smoke.spec.js:144:3 › map (map.html) › loads with no console errors and draws the map (23.8s)
+
+
+  1) tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   1
+
+    Call Log:
+    - Test timeout of 120000ms exceeded
+
+      105 |     try {
+      106 |       await expect.poll(async () => Number(await page.locator('#kmh').textContent()),
+    > 107 |         { timeout: 20000, intervals: [100] }).toBeGreaterThan(2);
+          |                                               ^
+      108 |     } finally {
+      109 |       await page.keyboard.up('KeyW');
+      110 |     }
+        at /workspace/work/micra-k11/tests/e2e/smoke.spec.js:107:47
+
+    Error Context: ../../../tmp/micra-refinement-browser/smoke-game-index-html-W-mo-58852-ed-showcase-car-gets-you-in/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../tmp/micra-refinement-browser/smoke-game-index-html-W-mo-58852-ed-showcase-car-gets-you-in/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../tmp/micra-refinement-browser/smoke-game-index-html-W-mo-58852-ed-showcase-car-gets-you-in/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in
+  5 passed (5.5m)

@@ -1,0 +1,29 @@
+{
+  "views": [
+    [
+      "rear_glass",
+      0,
+      12,
+      true
+    ],
+    [
+      "high_rear_glass",
+      35,
+      40,
+      true
+    ]
+  ],
+  "focus": [
+    [
+      -1,
+      -1.92,
+      0.45
+    ],
+    [
+      1,
+      -0.95,
+      1.46
+    ]
+  ],
+  "renderer": "Cycles16"
+}
