@@ -34,7 +34,7 @@ test('actual solar lighting, all profiles and GLB fleet render together',async({
  await page.evaluate(()=>{const G=window.__G;window.staged=['volvo','saab','xc70','polis'].map((t,i)=>G.addCar(t,G.player.x-7+i*4,G.player.z-8,0,'parked'));});
  await expect.poll(()=>page.evaluate(()=>window.staged.filter(c=>c.assetType).length)).toBe(4);
  for(const [environment,hour] of [['day',13],['sunset',20.5],['night',23]]){
-  await page.evaluate(hour=>{const G=window.__G;G.daylight.setHour(hour);for(let i=0;i<30;i++)G.streetLighting.update(1/30,G.daylight.getSolarElevation());G.grain.set('off');},hour);
+  await page.evaluate(hour=>{const G=window.__G;G.refreshVehicleDetail(G.player);G.daylight.setHour(hour);for(let i=0;i<30;i++)G.streetLighting.update(1/30,G.daylight.getSolarElevation());G.grain.set('off');},hour);
   for(const profile of ['off','chrome','negative','gold','portra']){
    await page.evaluate(profile=>{window.__G.grades.set(profile);window.stepReview();},profile);
    await page.screenshot({path:info.outputPath(`${environment}-${profile}.png`)});
