@@ -21,13 +21,18 @@ jobs:
           cache: npm
       - run: npm ci
       # The built pages are committed: fail if they are not what src/ and data/ build to.
+      - run: npm run check
       - run: npm run data && npm run build && git diff --exit-code -- index.html map.html data/vrigstad.json
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      - run: node tools/review-grades.mjs
       # Screenshots of both pages, plus a trace of any failed test. Not pixel-diffed: headless WebGL output varies.
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: e2e-screenshots
-          path: test-results/
+          path: |
+            test-results/
+            .work/grades-review/*.png
+            .work/grades-review/parameters.json
           retention-days: 14

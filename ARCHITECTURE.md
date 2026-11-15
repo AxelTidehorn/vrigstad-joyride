@@ -111,3 +111,7 @@ Metres; origin 57.3555° N, 14.4756° E; x east, z south, y up; the world spans 
 | `labels` | Named places: `t` text, `x`, `z`, `k` kind |
 
 Class codes are defined in `tools/process.py`. Move them into a shared typed module once the code is TypeScript.
+
+### Photographic colour profiles
+
+`?film=chrome|negative|gold|portra` selects an optional display-space grade after native ACES/sRGB output. Missing, off and unknown values bypass grading; names are case insensitive. The read-only hook distinguishes the raw requested setting from the active preset and exposes the production parameters. Review fixtures use the same controller and setter as the game. `scene-finish.ts` is the shared base with #151: colour priority 10 precedes grain priority 20 within a single copy and fullscreen draw. Both PRs contain the identical shared infrastructure commit, and neither needs the other effect to be enabled. Retuning for managed colour (#150) is a separate review.

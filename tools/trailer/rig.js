@@ -1,6 +1,5 @@
 // Capture rig: drives a hooked copy of the built game in headless Chrome on a virtual clock,
 // so every frame is rendered deterministically at 30 fps regardless of how fast the machine is.
-const puppeteer = require('puppeteer-core');
 const path = require('path');
 const fs = require('fs');
 
@@ -27,6 +26,7 @@ async function buildCaptureCopy() {
 }
 
 async function open({ width = 1280, height = 720, scale = 1.5 } = {}) {
+  const puppeteer = require('puppeteer-core');
   const file = await buildCaptureCopy();
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new',
     args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--hide-scrollbars', `--window-size=${width},${height}`] });
