@@ -1,0 +1,22 @@
+{
+  "media/vehicles/volvo240.glb": {
+    "unchanged": true,
+    "sha256": "3f1ce4cc1d0f787451340abb28cd0037599bd0204946e23cc21320db883d0c58"
+  },
+  "media/vehicles/saab900-t16.glb": {
+    "unchanged": true,
+    "sha256": "15d155084df404338281478cc11422141c7e8b092a26ab08d6e13cde46b71894"
+  },
+  "media/vehicles/xc70-civilian.glb": {
+    "unchanged": true,
+    "sha256": "e1e27434bf113dfb5e70dc13778c92fbf216c56aa509a028874c039509b5940c"
+  },
+  "media/vehicles/xc70-police.glb": {
+    "unchanged": true,
+    "sha256": "28f35453d4e1797b8ae79cb514a75226dc3542f36348ce200612efb052f52913"
+  },
+  "src/physics/driving-v4.mjs": {
+    "unchanged": true,
+    "sha256": "914b4e81f412200f0cef14dad278db1eee44e36ab242488624c74dba6826be9a"
+  }
+}

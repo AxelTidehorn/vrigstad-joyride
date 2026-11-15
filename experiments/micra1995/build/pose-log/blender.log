@@ -1,0 +1,30 @@
+08:51:51 | INFO: Data are loaded, start creating Blender stuff
+08:51:51 | INFO: Blender create Mesh node body
+08:51:51 | INFO: Blender create Mesh node bumper_front
+08:51:51 | INFO: Blender create Mesh node bumper_rear
+08:51:51 | INFO: Blender create Mesh node glass_envelope
+08:51:51 | INFO: Blender create Mesh node grille_lower
+08:51:51 | INFO: Blender create Mesh node grille_slot
+08:51:51 | INFO: Blender create Mesh node lamp_headlights
+08:51:51 | INFO: Blender create Mesh node lamp_indicator
+08:51:51 | INFO: Blender create Mesh node lamp_tail.003
+08:51:51 | INFO: Blender create Mesh node lamp_tail
+08:51:51 | INFO: Blender create Mesh node lamp_tail.001
+08:51:51 | INFO: Blender create Mesh node mirror_housing
+08:51:51 | INFO: Blender create Mesh node mirror_stalk
+08:51:51 | INFO: Blender create Mesh node plate_registration
+08:51:51 | INFO: Blender create Mesh node trim_handle
+08:51:51 | INFO: Blender create Mesh node trim_glass_seal
+08:51:51 | INFO: Blender create Mesh node wheel_fl
+08:51:51 | INFO: Blender create Mesh node trim_rim_fl
+08:51:51 | INFO: Blender create Mesh node wheel_fr
+08:51:51 | INFO: Blender create Mesh node trim_rim_fr
+08:51:51 | INFO: Blender create Mesh node wheel_rl
+08:51:51 | INFO: Blender create Mesh node trim_rim_rl
+08:51:51 | INFO: Blender create Mesh node wheel_rr
+08:51:51 | INFO: Blender create Mesh node trim_rim_rr
+08:51:51 | INFO: glTF import finished in 0.04s
+{"ok": true, "actual_glb": "micra-k11.glb", "body_mounted_meshes": 15, "body_motion_carries_fixtures": true, "wheel_geometry_independent_of_body_bob": true, "steering_carries_rim_and_spokes": true, "wheel_spin_carries_rim_and_spokes": true, "wheel_hub_position_preserved": true, "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.", "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"}
+Blender 4.3.2
+
+Blender quit

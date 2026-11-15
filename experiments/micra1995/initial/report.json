@@ -1,0 +1,873 @@
+{
+  "objects": {
+    "body": {
+      "verts": 2432,
+      "faces": 4860,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 4.93004739,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.585,
+        3.56,
+        1.26
+      ],
+      "islands": 1
+    },
+    "glass_envelope": {
+      "verts": 606,
+      "faces": 1188,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.004725358,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.3754,
+        2.3619,
+        0.4592
+      ],
+      "islands": 6
+    },
+    "bumper_rear": {
+      "verts": 204,
+      "faces": 404,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.026487892,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.5851,
+        0.3517,
+        0.18
+      ],
+      "islands": 1
+    },
+    "bumper_front": {
+      "verts": 204,
+      "faces": 404,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.026487892,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.5851,
+        0.3517,
+        0.18
+      ],
+      "islands": 1
+    },
+    "lamp_headlights": {
+      "verts": 32,
+      "faces": 56,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.004593119,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.35,
+        0.146,
+        0.207
+      ],
+      "islands": 2
+    },
+    "lamp_indicators": {
+      "verts": 16,
+      "faces": 24,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.00032,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.38,
+        0.0522,
+        0.15
+      ],
+      "islands": 2
+    },
+    "lamp_taillights_red": {
+      "verts": 32,
+      "faces": 48,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001583998,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.51,
+        0.0447,
+        0.26
+      ],
+      "islands": 4
+    },
+    "lamp_taillights_registration": {
+      "verts": 16,
+      "faces": 24,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.00044,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.51,
+        0.0447,
+        0.06
+      ],
+      "islands": 2
+    },
+    "lamp_taillights_amber": {
+      "verts": 16,
+      "faces": 24,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000439999,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.51,
+        0.0447,
+        0.06
+      ],
+      "islands": 2
+    },
+    "trim_window_seals": {
+      "verts": 2616,
+      "faces": 4360,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001097121,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.3851,
+        2.3697,
+        0.4673
+      ],
+      "islands": 218
+    },
+    "trim_handles": {
+      "verts": 48,
+      "faces": 88,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000148754,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.598,
+        0.11,
+        0.027
+      ],
+      "islands": 2
+    },
+    "mirror_stalks": {
+      "verts": 24,
+      "faces": 40,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000186715,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.6644,
+        0.0412,
+        0.0459
+      ],
+      "islands": 2
+    },
+    "mirror_housings": {
+      "verts": 48,
+      "faces": 88,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.00342074,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.79,
+        0.15,
+        0.09
+      ],
+      "islands": 2
+    },
+    "grille_lower": {
+      "verts": 24,
+      "faces": 44,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.001860119,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.65,
+        0.035,
+        0.085
+      ],
+      "islands": 1
+    },
+    "grille_slots": {
+      "verts": 48,
+      "faces": 88,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000284787,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.46,
+        0.024,
+        0.032
+      ],
+      "islands": 2
+    },
+    "plate_registration": {
+      "verts": 48,
+      "faces": 88,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000763645,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.29,
+        3.668,
+        0.175
+      ],
+      "islands": 2
+    },
+    "wheel_fl": {
+      "verts": 194,
+      "faces": 384,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.035447377,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.155,
+        0.552,
+        0.552
+      ],
+      "islands": 1
+    },
+    "trim_rim_fl": {
+      "verts": 74,
+      "faces": 144,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000979216,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.018,
+        0.33,
+        0.33
+      ],
+      "islands": 1
+    },
+    "wheel_fr": {
+      "verts": 194,
+      "faces": 384,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.035447377,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.155,
+        0.552,
+        0.552
+      ],
+      "islands": 1
+    },
+    "trim_rim_fr": {
+      "verts": 74,
+      "faces": 144,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000979216,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.018,
+        0.33,
+        0.33
+      ],
+      "islands": 1
+    },
+    "wheel_rl": {
+      "verts": 194,
+      "faces": 384,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.035447377,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.155,
+        0.552,
+        0.552
+      ],
+      "islands": 1
+    },
+    "trim_rim_rl": {
+      "verts": 74,
+      "faces": 144,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000979219,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.018,
+        0.33,
+        0.33
+      ],
+      "islands": 1
+    },
+    "wheel_rr": {
+      "verts": 194,
+      "faces": 384,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.035447377,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.155,
+        0.552,
+        0.552
+      ],
+      "islands": 1
+    },
+    "trim_rim_rr": {
+      "verts": 74,
+      "faces": 144,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.000979219,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.018,
+        0.33,
+        0.33
+      ],
+      "islands": 1
+    }
+  },
+  "errors": [
+    "FLOATING: [body, glass_envelope[island 0], glass_envelope[island 1], glass_envelope[island 2], glass_envelope[island 3], glass_envelope[island 4], glass_envelope[island 5], bumper_rear, bumper_front, lamp_headlights[island 0], lamp_headlights[island 1], lamp_indicators[island 0], lamp_indicators[island 1], lamp_taillights_red[island 0], lamp_taillights_red[island 1], lamp_taillights_red[island 2], lamp_taillights_red[island 3], lamp_taillights_registration[island 0], lamp_taillights_registration[island 1], lamp_taillights_amber[island 0], lamp_taillights_amber[island 1], trim_window_seals, trim_handles[island 0], trim_handles[island 1], mirror_stalks[island 0], mirror_stalks[island 1], mirror_housings[island 0], mirror_housings[island 1], plate_registration[island 1]] is not connected to the main body. Closest gap 0.0388 m between body (center (0.000, 0.000, 0.800)) and wheel_fl.",
+    "FLOATING: [grille_lower] is not connected to the main body. Closest gap 0.5604 m between grille_lower (center (0.000, 1.880, 0.430)) and wheel_fl.",
+    "FLOATING: [grille_slots[island 0]] is not connected to the main body. Closest gap 0.6585 m between grille_slots[island 0] (center (-0.130, 1.840, 0.670)) and wheel_fl.",
+    "FLOATING: [grille_slots[island 1]] is not connected to the main body. Closest gap 0.8378 m between grille_slots[island 1] (center (0.130, 1.840, 0.670)) and wheel_fl.",
+    "FLOATING: [plate_registration[island 0]] is not connected to the main body. Closest gap 2.7218 m between plate_registration[island 0] (center (0.000, -1.810, 0.640)) and wheel_fl.",
+    "FLOATING: [wheel_fr, trim_rim_fr] is not connected to the main body. Closest gap 1.2050 m between wheel_fr (center (0.680, 1.133, 0.276)) and wheel_fl.",
+    "FLOATING: [wheel_rl, trim_rim_rl] is not connected to the main body. Closest gap 1.8080 m between wheel_rl (center (-0.673, -1.227, 0.276)) and wheel_fl.",
+    "FLOATING: [wheel_rr, trim_rim_rr] is not connected to the main body. Closest gap 2.2019 m between wheel_rr (center (0.673, -1.227, 0.276)) and wheel_fl."
+  ],
+  "warnings": [],
+  "info": [
+    "trim_window_seals: 218 islands, treated as one part.",
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-bumper_rear embedded 0.062 m; body-bumper_front embedded 0.034 m; body-lamp_headlights[island 0] embedded 0.086 m; body-lamp_headlights[island 1] embedded 0.086 m; body-lamp_indicators[island 0] embedded 0.072 m; body-lamp_indicators[island 1] embedded 0.072 m; body-lamp_taillights_red[island 0] embedded 0.033 m; body-lamp_taillights_red[island 1] embedded 0.033 m; body-lamp_taillights_red[island 2] embedded 0.033 m; body-lamp_taillights_red[island 3] embedded 0.033 m; body-lamp_taillights_registration[island 0] embedded 0.033 m; body-lamp_taillights_registration[island 1] embedded 0.033 m; body-lamp_taillights_amber[island 0] embedded 0.033 m; body-lamp_taillights_amber[island 1] embedded 0.033 m; body-trim_window_seals flush; body-trim_handles[island 0] flush; body-trim_handles[island 1] flush; body-mirror_stalks[island 0] flush; body-mirror_stalks[island 1] flush; glass_envelope[island 0]-trim_window_seals flush; glass_envelope[island 1]-trim_window_seals flush; glass_envelope[island 2]-trim_window_seals flush; glass_envelope[island 3]-trim_window_seals flush; glass_envelope[island 4]-trim_window_seals flush; glass_envelope[island 5]-trim_window_seals flush; bumper_front-plate_registration[island 1] embedded 0.014 m; lamp_headlights[island 0]-lamp_indicators[island 0] flush; lamp_headlights[island 1]-lamp_indicators[island 1] flush; lamp_taillights_red[island 0]-lamp_taillights_registration[island 0] flush; lamp_taillights_red[island 1]-lamp_taillights_registration[island 0] flush; lamp_taillights_red[island 1]-lamp_taillights_amber[island 0] flush; lamp_taillights_red[island 2]-lamp_taillights_registration[island 1] flush; lamp_taillights_red[island 3]-lamp_taillights_registration[island 1] flush; lamp_taillights_red[island 3]-lamp_taillights_amber[island 1] flush; mirror_stalks[island 0]-mirror_housings[island 0] embedded 0.028 m; mirror_stalks[island 1]-mirror_housings[island 1] embedded 0.028 m; wheel_fl-trim_rim_fl flush; wheel_fr-trim_rim_fr flush; wheel_rl-trim_rim_rl flush; wheel_rr-trim_rim_rr flush"
+  ],
+  "units": "m",
+  "overall": {
+    "min": [
+      -0.8949999809265137,
+      -1.8580868244171143,
+      -2.9802322387695312e-08
+    ],
+    "max": [
+      0.8949999213218689,
+      1.8975000381469727,
+      1.4299999475479126
+    ],
+    "size": [
+      1.7899999618530273,
+      3.755586862564087,
+      1.4299999475479126
+    ],
+    "contact_tolerance": 0.004399253674630852,
+    "parts": 41
+  },
+  "contacts": [
+    {
+      "a": "body",
+      "b": "glass_envelope[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 1]",
+      "depth": 0.0037390226498246193,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 2]",
+      "depth": 0.003743265988305211,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 3]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 4]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 5]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "bumper_rear",
+      "depth": 0.06212508678436279,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "bumper_front",
+      "depth": 0.03380681201815605,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_headlights[island 0]",
+      "depth": 0.08639226108789444,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_headlights[island 1]",
+      "depth": 0.08639221638441086,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_indicators[island 0]",
+      "depth": 0.07235610485076904,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_indicators[island 1]",
+      "depth": 0.07235610485076904,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights_red[island 0]",
+      "depth": 0.03263700008392334,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights_red[island 1]",
+      "depth": 0.03263700008392334,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights_red[island 2]",
+      "depth": 0.03263700008392334,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights_red[island 3]",
+      "depth": 0.03263700008392334,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights_registration[island 0]",
+      "depth": 0.03263700008392334,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights_registration[island 1]",
+      "depth": 0.03263700008392334,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights_amber[island 0]",
+      "depth": 0.03263700008392334,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "lamp_taillights_amber[island 1]",
+      "depth": 0.03263700008392334,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_window_seals",
+      "depth": 0.003575277281925082,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_handles[island 0]",
+      "depth": 0.0001424337096977979,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_handles[island 1]",
+      "depth": 0.00014247072977013886,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "mirror_stalks[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "mirror_stalks[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 0]",
+      "b": "trim_window_seals",
+      "depth": 0.0025653571356087923,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 1]",
+      "b": "trim_window_seals",
+      "depth": 0.0009991624392569065,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 2]",
+      "b": "trim_window_seals",
+      "depth": 0.000998904462903738,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 3]",
+      "b": "trim_window_seals",
+      "depth": 0.0009698865469545126,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 4]",
+      "b": "trim_window_seals",
+      "depth": 0.0009698282228782773,
+      "expected": false
+    },
+    {
+      "a": "glass_envelope[island 5]",
+      "b": "trim_window_seals",
+      "depth": 0.0009576535085216165,
+      "expected": false
+    },
+    {
+      "a": "bumper_front",
+      "b": "plate_registration[island 1]",
+      "depth": 0.013652709312736988,
+      "expected": false
+    },
+    {
+      "a": "lamp_headlights[island 0]",
+      "b": "lamp_indicators[island 0]",
+      "depth": 0.0001456597092328593,
+      "expected": false
+    },
+    {
+      "a": "lamp_headlights[island 1]",
+      "b": "lamp_indicators[island 1]",
+      "depth": 0.000145659752888605,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights_red[island 0]",
+      "b": "lamp_taillights_registration[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights_red[island 1]",
+      "b": "lamp_taillights_registration[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights_red[island 1]",
+      "b": "lamp_taillights_amber[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights_red[island 2]",
+      "b": "lamp_taillights_registration[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights_red[island 3]",
+      "b": "lamp_taillights_registration[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "lamp_taillights_red[island 3]",
+      "b": "lamp_taillights_amber[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "mirror_stalks[island 0]",
+      "b": "mirror_housings[island 0]",
+      "depth": 0.027926743030548096,
+      "expected": false
+    },
+    {
+      "a": "mirror_stalks[island 1]",
+      "b": "mirror_housings[island 1]",
+      "depth": 0.02792668342590332,
+      "expected": false
+    },
+    {
+      "a": "wheel_fl",
+      "b": "trim_rim_fl",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "wheel_fr",
+      "b": "trim_rim_fr",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "wheel_rl",
+      "b": "trim_rim_rl",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "wheel_rr",
+      "b": "trim_rim_rr",
+      "depth": 0.0,
+      "expected": false
+    }
+  ],
+  "summary": {
+    "errors": 8,
+    "warnings": 0
+  }
+}

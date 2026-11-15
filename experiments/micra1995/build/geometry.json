@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "model": "micra",
+  "errors": [],
+  "warnings": [],
+  "meshes": 24,
+  "triangles": 15988,
+  "dimensions_m": {
+    "width": 1.585,
+    "height": 1.43,
+    "length": 3.6975
+  },
+  "wheelbase_m": 2.36
+}

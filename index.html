@@ -129,6 +129,7 @@ body { background: var(--sky); color: var(--ink); font-family: var(--body); font
         <dt>Lie low</dt><dd>Go inside a safehouse (green house on the minimap) for a minute</dd>
         <dt>Back to Torget</dt><dd>R</dd>
       </dl>
+      <p><a id="micra-review" href="?vehicle=micra">Choose Nissan Micra K11 for the Torget lineup</a></p>
       <button type="button" id="go">Start</button>
       <p class="fine">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors. Elevation: Mapzen terrain tiles.</p>
     </div>
@@ -2760,6 +2761,7 @@ const VEHICLE_ASSETS = (() => {
  * the Vite/Three r187 application later.
  */
 const VEHICLE_ASSETS = Object.freeze({
+  micra: { url: 'media/vehicles/micra-k11.glb', radius: 0.276 },
   volvo: { url: 'media/vehicles/volvo240.glb', radius: 0.35 },
   saab: { url: 'media/vehicles/saab900-t16.glb', radius: 0.35 },
   xc70: { url: 'media/vehicles/xc70-civilian.glb', radius: 0.345 },
@@ -2931,6 +2933,8 @@ const TYPES = {
     parts: c => [...wheels(0.8, -1.5, 1.45), [1.74, 0.62, 4.8, 0, 0.66, 0, c], [1.56, 0.52, 3.0, 0, 1.22, 0.6, GLASS], [1.6, 0.07, 3.04, 0, 1.5, 0.6, c],
       [1.78, 0.2, 3.2, 0, 0.7, 0.2, '#1f4fa3'], [1.79, 0.08, 3.2, 0, 0.56, 0.2, '#f2d21f'], ...lamps(2.41)] }
 };
+// Temporary compatible handling/fallback, not measured Micra performance.
+TYPES.micra = {...TYPES.saab, name:'Nissan Micra K11 (1995)', cols:['#78b8a4','#559f9a','#a4b8b0','#d1cfc0']};
 // Oliver #116: bevelled legacy shapes and round wheels for EPA, police,
 // and generic tractor. The fork's detailed Volvo / Saab / New Holland / JD
 // models are more specific and are retained unchanged.
@@ -3319,7 +3323,7 @@ function addCar(type, x, z, h, mode) {
   const mesh=new THREE.Group(),bodyRig=new THREE.Group();
   bodyRig.position.y=.72;body.position.y=-.72;
   bodyRig.add(body);mesh.add(bodyRig);
-  attachContactShadow(mesh,2.8,5.8);
+  attachContactShadow(mesh,type==='micra'?1.8:2.8,type==='micra'?3.8:5.8);
   if(type==='polis'){const bar=new THREE.Mesh(barGeo,barMat);bar.position.set(0,1.62,.2);body.add(bar);}
   const c = { type, T, mesh, bodyRig, bodyMotion:BODY_MOTION.createBodyMotion(),
     x, z, h, v: 0, driveState: null, mode, wet: false, owned: false,
@@ -3404,7 +3408,7 @@ function updateTraffic(c, dt, T) {
 }
 // V4 — shared arcade tire dynamics and automatic powertrains for player/police.
 // Civilian path-following traffic intentionally keeps its existing movement model.
-const DRIVE_CLASS = {volvo:'rwd',epa:'rwd',saab:'fwd',saab95Estate:'fwd',xc70:'awd',polis:'awd',
+const DRIVE_CLASS = {micra:'fwd',volvo:'rwd',epa:'rwd',saab:'fwd',saab95Estate:'fwd',xc70:'awd',polis:'awd',
                      traktor:'awd',newHolland:'awd',johnDeere:'awd'};
 const DRIVE_MODE = new URLSearchParams(location.search).get('drivetrain')==='v3'?'v3':'v4';
 function drive(c, thr, steer, brake, dt, handbrake=false) {
@@ -3668,6 +3672,12 @@ collide(player, 0.6); scene.add(player.mesh);
     if(candidateScore<score){score=candidateScore;chosen={heading,slots};}
   }
   if(!chosen){console.warn('No clear four-car showcase row found by Torget');return;}
+  // A selected review car takes the nearest existing slot, so it is easy to reach.
+  if(new URLSearchParams(location.search).get('vehicle')==='micra'){
+    let nearest=0;
+    chosen.slots.forEach((p,i)=>{const q=chosen.slots[nearest];if(Math.hypot(p.x-player.x,p.z-player.z)<Math.hypot(q.x-player.x,q.z-player.z))nearest=i;});
+    lineup[nearest]='micra';
+  }
   // Remove only parked overlaps; never delete active traffic or police.
   for(const c of [...cars])if(c.mode==='parked'&&chosen.slots.some(o=>Math.hypot(c.x-o.x,c.z-o.z)<5.7))removeCar(c);
   lineup.forEach((type,i)=>{ const c=addCar(type,chosen.slots[i].x,chosen.slots[i].z,chosen.heading,'parked'); c.isShowcase=true; });
