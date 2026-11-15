@@ -2,6 +2,8 @@
 // Moved as-is from the single-file prototype (#44); it gets types as it is split into modules.
 import * as THREE from 'three';
 import D from '../../data/vrigstad.json';
+import { createPhotographicGrain } from './render/photographic-grain';
+import { createSceneFinish } from './render/scene-finish';
 import { LEGACY_LIGHT } from '../world/three-legacy';
 
 (function () {
@@ -47,6 +49,10 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(HORIZON);
 scene.fog = new THREE.FogExp2(HORIZON, FOG_PER_M);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
+const sceneFinish = createSceneFinish(renderer, scene, camera);
+const grain = createPhotographicGrain();
+grain.setPixelRatio(renderer.getPixelRatio());
+sceneFinish.add(grain.effect);
 scene.add(new THREE.HemisphereLight(0xffffff, col(0x9aa58a), 0.62 * LEGACY_LIGHT));
 const sun = new THREE.DirectionalLight(col(0xfff4dd), 0.95 * LEGACY_LIGHT);
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
@@ -864,7 +870,7 @@ function updatePolice(c, dt, T, tv) {
 
 // ---------- main loop ----------
 function resize() { const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
-  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); sceneFinish.resize(); }
 addEventListener('resize', resize); if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas);
 let last = performance.now();
 function frame(now) {
@@ -933,12 +939,12 @@ function frame(now) {
     else pr.hidden = true;
     $('speed').hidden = !inCar; if (inCar) { $('kmh').textContent = Math.round(Math.abs(pcar.v) * 3.6); $('carname').textContent = pcar.T.name; } }
   drawMini(T);
-  renderer.render(scene, camera);
+  sceneFinish.render();
 }
 $('go').addEventListener('click', () => { started = true; $('intro').hidden = true; camYaw = 0.6; camPitch = 0.34; canvas.focus();
   toast('Find a car and press E to take it. Occupied cars always get you a wanted star.', 5); });
 resize(); requestAnimationFrame(frame);
 
 // ---------- test hook: read-only state for the smoke tests (tests/e2e), so they do not have to read pixels ----------
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, rendering: sceneFinish.state(), grain: grain.state() }; } };
 })();

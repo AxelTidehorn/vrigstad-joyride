@@ -1,6 +1,5 @@
 // Capture rig: drives a hooked copy of the built game in headless Chrome on a virtual clock,
 // so every frame is rendered deterministically at 30 fps regardless of how fast the machine is.
-const puppeteer = require('puppeteer-core');
 const path = require('path');
 const fs = require('fs');
 
@@ -12,14 +11,14 @@ const CHROME = process.env.CHROME || '/Applications/Google Chrome.app/Contents/M
 // added to src/game/main.ts as Vite transforms it. The shipped game files are not modified.
 async function buildCaptureCopy() {
   const { build } = await import('vite');
-  const boot = 'resize(); requestAnimationFrame(frame);', render = 'renderer.render(scene, camera);\n}';
+  const boot = 'resize(); requestAnimationFrame(frame);', render = 'sceneFinish.render();\n}';
   const hook = `window.__G = { THREE, player, cars, police, keys, joy, R, D, hAt, camera, scene, action, addStar, toast, respawn, places, nearestRoad, TYPES, addCar, removeCar, clearWanted, sun, SUN_DIR, renderer, placeCar, nodes, nodeKey, driveable,
   get inCar() { return inCar; }, get pcar() { return pcar; }, get stars() { return stars; }, get camYaw() { return camYaw; }, set camYaw(v) { camYaw = v; }, set camPitch(v) { camPitch = v; },
   set hideT(v) { hideT = v; }, get hideT() { return hideT; }, set lookOff(v) { lookOff = v; lookIdle = 0; } };\n`;
   const hooks = { name: 'capture-hooks', enforce: 'pre', transform(src, id) {
     if (!id.endsWith('/src/game/main.ts')) return;
     if (src.split(boot).length !== 2 || src.split(render).length !== 2) throw new Error('src/game/main.ts no longer matches the capture hooks in rig.js');
-    return src.replace(boot, hook + boot).replace(render, 'if (window.__cam) window.__cam(camera, T);\n  renderer.render(scene, camera);\n}');
+    return src.replace(boot, hook + boot).replace(render, 'if (window.__cam) window.__cam(camera, T);\n  sceneFinish.render();\n}');
   } };
   await build({ configFile: path.join(ROOT, 'vite.config.ts'), root: path.join(ROOT, 'src'), logLevel: 'warn', plugins: [hooks],
     build: { outDir: WORK, emptyOutDir: false, rollupOptions: { input: path.join(ROOT, 'src', 'index.html') } } });
@@ -27,6 +26,7 @@ async function buildCaptureCopy() {
 }
 
 async function open({ width = 1280, height = 720, scale = 1.5 } = {}) {
+  const puppeteer = require('puppeteer-core');
   const file = await buildCaptureCopy();
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new',
     args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--hide-scrollbars', `--window-size=${width},${height}`] });
@@ -48,4 +48,4 @@ async function open({ width = 1280, height = 720, scale = 1.5 } = {}) {
   return { browser, page };
 }
 
-module.exports = { open, WORK, ROOT };
+module.exports = { open, buildCaptureCopy, WORK, ROOT };
