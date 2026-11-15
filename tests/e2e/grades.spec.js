@@ -34,6 +34,14 @@ test('production profile setter applies every uniform and bypasses off', async (
     }, preset);
     expect(result.values).toEqual(result.parameters);
   }
+  expect(await page.evaluate(() => {
+    const grades = window.harness.grades;
+    grades.set('negative');
+    grades.state().parameters.green[0] = 999;
+    grades.state().parameters.foliageReach = 0;
+    grades.set('negative');
+    return { green: grades.state().parameters.green[0], foliage: grades.effect.uniforms.uFoliageReach.value };
+  })).toEqual({ green: 0.62, foliage: 1 });
   const before = await page.evaluate(() => { window.harness.grades.set('unknown'); return window.harness.finish.state(); });
   await expect.poll(() => page.evaluate(() => window.harness.finish.state().nativeFrames)).toBeGreaterThan(before.nativeFrames + 3);
   expect(await page.evaluate(() => window.harness.finish.state().copies)).toBe(before.copies);
