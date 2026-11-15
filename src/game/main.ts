@@ -9,6 +9,7 @@ import { LEGACY_LIGHT } from '../world/three-legacy';
 import {createDaylightController} from './render/daylight';
 import {createStreetLighting} from './render/street-lighting';
 import {installVisualLab} from './render/visual-lab';
+import { createVehicleAssets } from './render/vehicle-assets';
 
 (function () {
 'use strict';
@@ -416,6 +417,7 @@ const lamps = z => [[0.34, 0.16, 0.06, -0.6, 0.72, -z, '#fff6c8'], [0.34, 0.16, 
 const TYPES = {
   volvo: { name: 'Volvo 240', max: 38, acc: 7, off: 0.5, cols: ['#27406b', '#7a2530', '#c9bd9c', '#e6e4dc', '#2f5a41', '#8a8f93'] },
   saab: { name: 'Saab 900', max: 42, acc: 8.5, off: 0.5, cols: ['#1d1d1f', '#8c1c1c', '#3d5a80', '#d8d4c8', '#55606a'] },
+  xc70: { name: 'Volvo XC70 P2', max: 42, acc: 8.5, off: 0.6, cols: ['#a4afb8', '#36465a', '#66786c', '#e0dad0', '#76504b', '#b0a58a', '#313c40'] },
   epa: { name: 'EPA-traktor', max: 8.33, acc: 4, off: 0.7, cols: ['#c8372d', '#2a2a2c', '#e8a020', '#3f6b8a'] },
   traktor: { name: 'Traktor', max: 11, acc: 3.5, off: 1, cols: ['#2f7a3a', '#b5302a', '#2a5fa0'] },
   polis: { name: 'Polisbil', max: 35, acc: 9, off: 0.6, cols: ['#f1f1ee'] }
@@ -470,21 +472,48 @@ function personParts(shirt, pants, hair) {
 
 // ---------- cars ----------
 const cars = [], police = [];
+const glbVehicles = createVehicleAssets();
+const DETAIL_LIMIT_DESKTOP = 14, DETAIL_LIMIT_COARSE = 3;
+const DETAIL_DISTANCE_M = 120, DETAIL_REFRESH_SECONDS = 0.35;
+let glbDetailElapsed = 0;
 const _f = new THREE.Vector3(), _r = new THREE.Vector3(), _m = new THREE.Matrix4();
 function placeCar(c) {
   const n = normalAt(c.x, c.z);
   _f.set(Math.sin(c.h), 0, -Math.cos(c.h)); _f.addScaledVector(n, -_f.dot(n)).normalize(); _r.crossVectors(_f, n);
   _m.makeBasis(_r, n, _f.negate()); c.mesh.quaternion.setFromRotationMatrix(_m);
   c.mesh.position.set(c.x, groundAt(c.x, c.z) - (c.wet ? 0.55 : 0), c.z);
+  if (c.assetWheels && Number.isFinite(c.wheelLastX)) {
+    const dx = c.x - c.wheelLastX, dz = c.z - c.wheelLastZ;
+    if (Math.hypot(dx, dz) < 20) c.assetWheelTravel += dx * Math.sin(c.h) - dz * Math.cos(c.h);
+  }
+  c.wheelLastX = c.x; c.wheelLastZ = c.z;
+  if (Number.isFinite(c.visualLastHeading)) c.visualSteer = clamp(wrap(c.h - c.visualLastHeading) * 12, -0.6, 0.6);
+  c.visualLastHeading = c.h;
+  glbVehicles.update(c);
 }
 function addCar(type, x, z, h, mode) {
-  const T = TYPES[type], mesh = new THREE.Mesh(carGeo(type, pick(T.cols)), carMat); mesh.castShadow = true; blob(mesh, 2.8, 5.8);
-  if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); mesh.add(bar); }
-  const c = { type, T, mesh, x, z, h, v: 0, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
-  scene.add(mesh); cars.push(c); placeCar(c); return c;
+  const T = TYPES[type], paint = pick(T.cols);
+  const fallback = new THREE.Mesh(carGeo(type === 'xc70' ? 'volvo' : type, paint), carMat);
+  fallback.castShadow = true;
+  const mesh = new THREE.Group(); mesh.add(fallback); blob(mesh, 2.8, 5.8);
+  if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); fallback.add(bar); }
+  const c = { type, T, mesh, fallback, paint, x, z, h, v: 0, mode, wet: false, owned: false,
+    blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1, visualSteer: 0, assetDetailed: false, assetWheelTravel: 0 };
+  scene.add(mesh); cars.push(c); placeCar(c); glbVehicles.install(c, type, fallback, paint);
+  return c;
 }
-function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
-const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : 'traktor'; };
+// Trailer staging changes appearance through the same adapter as normal cars.
+function setCarAppearance(c, type, paint) {
+  glbVehicles.dispose(c); c.fallback.geometry.dispose();
+  c.fallback.geometry = carGeo(type === 'xc70' ? 'volvo' : type, paint);
+  c.type = type; c.T = TYPES[type]; c.paint = paint; c.fallback.visible = true;
+  glbVehicles.install(c, type, c.fallback, paint);
+}
+function removeCar(c) {
+  glbVehicles.dispose(c); c.fallback.geometry.dispose(); scene.remove(c.mesh);
+  const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1);
+}
+const civType = () => { const r = rnd(); return r < 0.43 ? 'volvo' : r < 0.71 ? 'saab' : r < 0.82 ? 'xc70' : r < 0.92 ? 'epa' : 'traktor'; };
 // parked cars along streets and driveways
 (function () {
   let count = 0;
@@ -903,6 +932,13 @@ function resize() { const w = canvas.clientWidth, h = canvas.clientHeight; if (!
   renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); sceneFinish.resize(); }
 addEventListener('resize', resize); if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas);
 let last = performance.now();
+// Rendering-only detail budget. Driving and AI do not depend on GLB availability.
+function refreshVehicleDetail(focus) {
+  const candidates = cars.filter(c => glbVehicles.has(c.type)).map(c => ({ c, dist: Math.hypot(c.x - focus.x, c.z - focus.z) }))
+    .filter(item => item.dist < DETAIL_DISTANCE_M).sort((a, b) => a.dist - b.dist);
+  const detailed = new Set(candidates.slice(0, coarse ? DETAIL_LIMIT_COARSE : DETAIL_LIMIT_DESKTOP).map(item => item.c));
+  for (const c of cars) if (glbVehicles.has(c.type)) glbVehicles.setDetailed(c, detailed.has(c));
+}
 function frame(now) {
   requestAnimationFrame(frame);
   const dt = clamp((now - last) / 1000, 0, 0.05); last = now;
@@ -927,6 +963,8 @@ function frame(now) {
     player.mesh.position.set(player.x, groundAt(player.x, player.z) - (wet ? 0.95 : 0), player.z); player.mesh.rotation.y = -player.h;
   }
   const T = inCar ? pcar : player;
+  glbDetailElapsed += dt;
+  if (glbDetailElapsed >= DETAIL_REFRESH_SECONDS) { glbDetailElapsed = 0; refreshVehicleDetail(T); }
   for (const c of cars) if (c.mode === 'ai') updateTraffic(c, dt, T);
   updateNpcs(T, dt);
   updateCats(T, dt);
@@ -937,7 +975,7 @@ function frame(now) {
     $('stars').classList.toggle('evading', evade > 2);
     if (inside) { hideT -= dt; if (hideT <= 0) { clearWanted(); toast('The police gave up. The coast is clear.'); } }
     else if (md < 7.5 && player.speed < 2.5) { bustT += dt; if (bustT > 1.6) busted(); } else bustT = Math.max(0, bustT - dt);
-    blinkT += dt; if (blinkT > 0.22) { blinkT = 0; blink = !blink; barMat.color.copy(blink ? BAR_RED : BAR_BLUE); }
+    blinkT += dt; if (blinkT > 0.22) { blinkT = 0; blink = !blink; barMat.color.copy(blink ? BAR_RED : BAR_BLUE); for (const p of police) glbVehicles.setEmergencyLights(p, blink); }
   }
   for (let i = peds.length - 1; i >= 0; i--) { const p = peds[i]; p.ttl -= dt; p.rotation.y = -Math.atan2(T.x - p.position.x, -(T.z - p.position.z));
     if (p.ttl <= 0) { scene.remove(p); peds.splice(i, 1); } }
@@ -979,5 +1017,5 @@ streetLighting.prewarm(sun, () => renderer.compile(scene, camera));
 resize(); requestAnimationFrame(frame);
 
 // ---------- test hook: read-only state for the smoke tests (tests/e2e), so they do not have to read pixels ----------
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, rendering: sceneFinish.state(), grain: grain.state(), film: grades.state(), daylight: daylight.state(), streetlights: streetLighting.stats() }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, rendering: sceneFinish.state(), grain: grain.state(), film: grades.state(), daylight: daylight.state(), streetlights: streetLighting.stats(), loadedVehicles: cars.filter(c => c.assetType).length, visibleVehicles: cars.filter(c => c.visual?.visible).length }; } };
 })();

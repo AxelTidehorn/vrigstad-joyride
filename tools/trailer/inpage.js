@@ -96,10 +96,10 @@
   // ----- staging -----
   // a car of a given type and paint colour (the game picks colours at random, so keep trying)
   X.makeCar = (type, hex, x, z, h) => { const want = new G.THREE.Color(hex).convertSRGBToLinear();   // vertex colours are linear (see mergeGeo)
-    for (let t = 0; t < 80; t++) { const c = G.addCar(type, x, z, h, 'parked'), col = c.mesh.geometry.attributes.color.array, k = 144 * 3;
+    for (let t = 0; t < 80; t++) { const c = G.addCar(type, x, z, h, 'parked'), col = (c.fallback || c.mesh).geometry.attributes.color.array, k = 144 * 3;
       if (Math.abs(col[k] - want.r) + Math.abs(col[k + 1] - want.g) + Math.abs(col[k + 2] - want.b) < 0.02) return c; G.removeCar(c); }
     return G.addCar(type, x, z, h, 'parked'); };
-  X.recolor = (c, type, hex) => { const t = X.makeCar(type, hex, c.x, c.z, c.h); c.mesh.geometry = t.mesh.geometry; c.type = type; c.T = G.TYPES[type]; G.removeCar(t); return c; };
+  X.recolor = (c, type, hex) => { if (G.setCarAppearance) { G.setCarAppearance(c, type, hex); return c; } const t = X.makeCar(type, hex, c.x, c.z, c.h); c.mesh.geometry = t.mesh.geometry; c.type = type; c.T = G.TYPES[type]; G.removeCar(t); return c; };
   X.getIn = (car, silent) => { G.player.x = car.x - Math.cos(car.h) * 2.2; G.player.z = car.z - Math.sin(car.h) * 2.2; if (silent) car.owned = true; G.action(); };
   X.clearTraffic = pts => { for (const c of G.cars.slice()) { if (c.mode !== 'ai' && c.mode !== 'parked') continue;
     let near = false; for (let i = 1; i < pts.length && !near; i++) { const a = pts[i - 1], b = pts[i], dx = b[0] - a[0], dz = b[1] - a[1], L = dx * dx + dz * dz, t = L ? clamp(((c.x - a[0]) * dx + (c.z - a[1]) * dz) / L, 0, 1) : 0; if (Math.hypot(c.x - a[0] - dx * t, c.z - a[1] - dz * t) < (c.mode === 'ai' ? 30 : 4.5)) near = true; }
