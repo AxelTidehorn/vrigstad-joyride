@@ -167,5 +167,6 @@ uniform float uShoulder,uGreenMix,uFoliageReach,uSaturation,uNeutral;
     apply: 'if(uFilmEnabled>0.5) c=photographicGrade(c);',
   };
   return { effect, set, state: () => ({ setting, preset, enabled: preset !== 'off',
-    parameters: preset === 'off' ? null : FILM_PRESETS[preset] }) };
+    parameters: preset === 'off' ? null : Object.fromEntries(
+      Object.entries(FILM_PRESETS[preset]).map(([key, value]) => [key, Array.isArray(value) ? [...value] : value])) }) };
 }
