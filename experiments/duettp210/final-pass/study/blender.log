@@ -1,0 +1,31 @@
+CUT START open bed cavity 4484
+CUT END open bed cavity 4245
+CUT START closed full-depth wheel well 4245
+CUT END closed full-depth wheel well 4178
+CUT START closed full-depth wheel well 4178
+CUT END closed full-depth wheel well 4112
+CUT START closed full-depth wheel well 4112
+CUT END closed full-depth wheel well 4076
+CUT START closed full-depth wheel well 4076
+CUT END closed full-depth wheel well 4040
+GEOMETRY CHECK: 0 errors, 0 warnings
+  overall size (m): (1.660, 3.920, 1.750)  parts: 15  contact tol: 0.0046
+  [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-trim_bed_floor flush; body-trim_rear_window_frame flush; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.025 m; body-wheel_rr embedded 0.025 m; glass_rear-trim_rear_window_frame flush; wheel_fl-trim_rim_fl flush; wheel_fr-trim_rim_fr flush; wheel_rl-trim_rim_rl flush; wheel_rr-trim_rim_rr flush
+  objects:
+    body: dims (1.660, 3.920, 1.520) verts 2517 faces 5030 islands 1
+    glass_envelope: dims (1.410, 1.007, 0.517) verts 282 faces 552 islands 3
+    glass_rear: dims (0.805, 0.008, 0.235) verts 40 faces 76 islands 1
+    trim_bed_floor: dims (1.400, 1.190, 0.014) verts 40 faces 76 islands 1
+    trim_rear_window_frame: dims (0.860, 0.014, 0.285) verts 40 faces 76 islands 1
+    wheel_fl: dims (0.315, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_fl: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+    wheel_fr: dims (0.315, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_fr: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+    wheel_rl: dims (0.315, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_rl: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+    wheel_rr: dims (0.315, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_rr: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+Info: Saved "model.blend"
+Blender 4.3.2
+
+Blender quit

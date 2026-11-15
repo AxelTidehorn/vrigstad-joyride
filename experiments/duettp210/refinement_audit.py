@@ -26,6 +26,6 @@ def materials(objects):
   for m in o.data.materials:
    b=m.node_tree.nodes.get('Principled BSDF');result[re.sub(r'\.\d{3}$','',m.name)]={'colour':list(b.inputs['Base Color'].default_value),'roughness':float(b.inputs['Roughness'].default_value),'metallic':float(b.inputs['Metallic'].default_value)}
  return result
-report={'materials_unchanged':materials(old)==materials(current),'baseline_commit':'f6aaa2d','baseline_blend_sha256':hashlib.sha256(baseline.read_bytes()).hexdigest(),'before':measurements(old),'after':measurements(current),'protected_wheels':protected,'units':'actual Blender mesh metres, not error against photographs','ok':all(p['geometry_identical'] and p['origin_delta_m']<1e-6 for p in protected.values())}
+report={'materials_unchanged':materials(old)==materials(current),'baseline_commit':sys.argv[3] if len(sys.argv)>3 else 'f6aaa2d','baseline_blend_sha256':hashlib.sha256(baseline.read_bytes()).hexdigest(),'before':measurements(old),'after':measurements(current),'protected_wheels':protected,'units':'actual Blender mesh metres, not error against photographs','ok':all(p['geometry_identical'] and p['origin_delta_m']<1e-6 for p in protected.values())}
 report['ok']=report['ok'] and report['materials_unchanged']
 out.parent.mkdir(exist_ok=True,parents=True);out.write_text(json.dumps(report,indent=2)+'\n');assert report['ok'];print(json.dumps({'ok':True,'protected_wheels':len(protected)}))

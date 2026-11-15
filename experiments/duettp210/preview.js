@@ -7,7 +7,7 @@ const canvas=document.getElementById('view'),info=document.getElementById('info'
 const fallback=document.getElementById('fallback'),errorBox=document.getElementById('graphics-error');
 const selector=document.getElementById('vehicle'),look=document.getElementById('look');
 const buttons=[...document.querySelectorAll('#views button')];
-const assets={duettp210:{file:'../../media/vehicles/duett-p210-epa.glb?v=major-refinement-20261115',rotation:0,length:null,label:'Volvo Duett P210 EPA · authored metres'}};
+const assets={duettp210:{file:'../../media/vehicles/duett-p210-epa.glb?v=final-volumes-20261115',rotation:0,length:null,label:'Volvo Duett P210 EPA · authored metres'}};
 function fail(message){
   canvas.hidden=true;fallback.hidden=false;errorBox.hidden=false;
   errorBox.textContent=message+' The PNG sheet and downloads remain available above.';
