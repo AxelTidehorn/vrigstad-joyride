@@ -1,0 +1,14 @@
+Blender 4.3.2
+Read blend: "/workspace/work/micra-k11/experiments/micra1995/initial/model.blend"
+SCRIPT FAILED
+Traceback (most recent call last):
+  File "/workspace/work/blender-modeler/scripts/run_pipeline.py", line 102, in main
+    exec(compile(f.read(), path, "exec"), ns)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/micra-k11/experiments/micra1995/audit.py", line 46, in <module>
+    report['wheel_fixtures_own_hub']=all(bpy.data.objects['trim_rim_'+tag].parent==bpy.data.objects['wheel_'+tag] and bpy.data.objects['trim_rim_whitewall_'+tag].parent==bpy.data.objects['wheel_'+tag] for tag in ['fl','fr','rl','rr'])
+                                     ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/micra-k11/experiments/micra1995/audit.py", line 46, in <genexpr>
+    report['wheel_fixtures_own_hub']=all(bpy.data.objects['trim_rim_'+tag].parent==bpy.data.objects['wheel_'+tag] and bpy.data.objects['trim_rim_whitewall_'+tag].parent==bpy.data.objects['wheel_'+tag] for tag in ['fl','fr','rl','rr'])
+                                                                                                                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'bpy_prop_collection[key]: key "trim_rim_whitewall_fl" not found'

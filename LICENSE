@@ -22,3 +22,12 @@ Third-party components keep their own licenses:
   original models by Kenney, Creative Commons CC0 1.0 Universal,
   https://kenney.nl/assets/car-kit ; unchanged copy from the public
   https://github.com/Hidencod/tge-assets mirror on 2026-11-13.
+
+Nissan Micra K11 authoring experiment:
+- experiments/micra1995/ and media/vehicles/micra-k11.glb contain original
+  procedurally authored geometry for this repository; no third-party car mesh,
+  photograph, brochure scan or texture is embedded in the asset.
+- Reference photographs and Nissan/JAF documentation are linked with their
+  source/author/licence scope in experiments/micra1995/references.md, not bundled.
+- The external Blender Modeler tooling is not vendored; its pinned source and
+  reproduction instructions are documented in the experiment README.

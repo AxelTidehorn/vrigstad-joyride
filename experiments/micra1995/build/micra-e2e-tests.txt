@@ -1,0 +1,48 @@
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:49:57] "GET /index.html HTTP/1.1" 200 -
+
+Running 1 test using 1 worker
+
+(node:2674) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:49:59] "GET /index.html?vehicle=micra HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:13] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:13] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:13] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:13] "GET /media/vehicles/micra-k11.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:13] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✘  1 tests/e2e/micra.spec.js:2:1 › Micra choice loads four GLB wheels, can be entered and driven (2.7m)
+
+
+  1) tests/e2e/micra.spec.js:2:1 › Micra choice loads four GLB wheels, can be entered and driven ───
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 120000ms exceeded while waiting on the predicate
+
+      22 |    if(next!==active){if(active)await page.keyboard.up(active);await page.keyboard.down(next);active=next;}
+      23 |    return false;
+    > 24 |   },{timeout:120000,intervals:[150]}).toBe(true);
+         |                                       ^
+      25 |  }finally{if(active)await page.keyboard.up(active);}
+      26 |  await expect(page.locator('#prompt')).toContainText('Nissan Micra');
+      27 |  await page.keyboard.press('KeyE');
+        at /workspace/work/micra-k11/tests/e2e/micra.spec.js:24:39
+
+    Error: browserContext._wrapApiCall: ENOENT: no such file or directory, open '/workspace/work/micra-k11/test-results/.playwright-artifacts-0/traces/fe7c22e4a9a7506cc17a-5b462a26b45788a88fe4.trace'
+
+    Error Context: test-results/micra-Micra-choice-loads-f-e2a43-s-can-be-entered-and-driven/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/micra-Micra-choice-loads-f-e2a43-s-can-be-entered-and-driven/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/micra-Micra-choice-loads-f-e2a43-s-can-be-entered-and-driven/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests/e2e/micra.spec.js:2:1 › Micra choice loads four GLB wheels, can be entered and driven ────

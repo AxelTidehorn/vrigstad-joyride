@@ -1,0 +1,37 @@
+GEOMETRY CHECK: 8 errors, 0 warnings
+  overall size (m): (1.790, 3.756, 1.430)  parts: 41  contact tol: 0.0044
+  [ERROR] FLOATING: [body, glass_envelope[island 0], glass_envelope[island 1], glass_envelope[island 2], glass_envelope[island 3], glass_envelope[island 4], glass_envelope[island 5], bumper_rear, bumper_front, lamp_headlights[island 0], lamp_headlights[island 1], lamp_indicators[island 0], lamp_indicators[island 1], lamp_taillights_red[island 0], lamp_taillights_red[island 1], lamp_taillights_red[island 2], lamp_taillights_red[island 3], lamp_taillights_registration[island 0], lamp_taillights_registration[island 1], lamp_taillights_amber[island 0], lamp_taillights_amber[island 1], trim_window_seals, trim_handles[island 0], trim_handles[island 1], mirror_stalks[island 0], mirror_stalks[island 1], mirror_housings[island 0], mirror_housings[island 1], plate_registration[island 1]] is not connected to the main body. Closest gap 0.0388 m between body (center (0.000, 0.000, 0.800)) and wheel_fl.
+  [ERROR] FLOATING: [grille_lower] is not connected to the main body. Closest gap 0.5604 m between grille_lower (center (0.000, 1.880, 0.430)) and wheel_fl.
+  [ERROR] FLOATING: [grille_slots[island 0]] is not connected to the main body. Closest gap 0.6585 m between grille_slots[island 0] (center (-0.130, 1.840, 0.670)) and wheel_fl.
+  [ERROR] FLOATING: [grille_slots[island 1]] is not connected to the main body. Closest gap 0.8378 m between grille_slots[island 1] (center (0.130, 1.840, 0.670)) and wheel_fl.
+  [ERROR] FLOATING: [plate_registration[island 0]] is not connected to the main body. Closest gap 2.7218 m between plate_registration[island 0] (center (0.000, -1.810, 0.640)) and wheel_fl.
+  [ERROR] FLOATING: [wheel_fr, trim_rim_fr] is not connected to the main body. Closest gap 1.2050 m between wheel_fr (center (0.680, 1.133, 0.276)) and wheel_fl.
+  [ERROR] FLOATING: [wheel_rl, trim_rim_rl] is not connected to the main body. Closest gap 1.8080 m between wheel_rl (center (-0.673, -1.227, 0.276)) and wheel_fl.
+  [ERROR] FLOATING: [wheel_rr, trim_rim_rr] is not connected to the main body. Closest gap 2.2019 m between wheel_rr (center (0.673, -1.227, 0.276)) and wheel_fl.
+  [INFO] trim_window_seals: 218 islands, treated as one part.
+  [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_envelope[island 3] flush; body-glass_envelope[island 4] flush; body-glass_envelope[island 5] flush; body-bumper_rear embedded 0.062 m; body-bumper_front embedded 0.034 m; body-lamp_headlights[island 0] embedded 0.086 m; body-lamp_headlights[island 1] embedded 0.086 m; body-lamp_indicators[island 0] embedded 0.072 m; body-lamp_indicators[island 1] embedded 0.072 m; body-lamp_taillights_red[island 0] embedded 0.033 m; body-lamp_taillights_red[island 1] embedded 0.033 m; body-lamp_taillights_red[island 2] embedded 0.033 m; body-lamp_taillights_red[island 3] embedded 0.033 m; body-lamp_taillights_registration[island 0] embedded 0.033 m; body-lamp_taillights_registration[island 1] embedded 0.033 m; body-lamp_taillights_amber[island 0] embedded 0.033 m; body-lamp_taillights_amber[island 1] embedded 0.033 m; body-trim_window_seals flush; body-trim_handles[island 0] flush; body-trim_handles[island 1] flush; body-mirror_stalks[island 0] flush; body-mirror_stalks[island 1] flush; glass_envelope[island 0]-trim_window_seals flush; glass_envelope[island 1]-trim_window_seals flush; glass_envelope[island 2]-trim_window_seals flush; glass_envelope[island 3]-trim_window_seals flush; glass_envelope[island 4]-trim_window_seals flush; glass_envelope[island 5]-trim_window_seals flush; bumper_front-plate_registration[island 1] embedded 0.014 m; lamp_headlights[island 0]-lamp_indicators[island 0] flush; lamp_headlights[island 1]-lamp_indicators[island 1] flush; lamp_taillights_red[island 0]-lamp_taillights_registration[island 0] flush; lamp_taillights_red[island 1]-lamp_taillights_registration[island 0] flush; lamp_taillights_red[island 1]-lamp_taillights_amber[island 0] flush; lamp_taillights_red[island 2]-lamp_taillights_registration[island 1] flush; lamp_taillights_red[island 3]-lamp_taillights_registration[island 1] flush; lamp_taillights_red[island 3]-lamp_taillights_amber[island 1] flush; mirror_stalks[island 0]-mirror_housings[island 0] embedded 0.028 m; mirror_stalks[island 1]-mirror_housings[island 1] embedded 0.028 m; wheel_fl-trim_rim_fl flush; wheel_fr-trim_rim_fr flush; wheel_rl-trim_rim_rl flush; wheel_rr-trim_rim_rr flush
+  objects:
+    body: dims (1.585, 3.560, 1.260) verts 2432 faces 4860 islands 1
+    glass_envelope: dims (1.375, 2.362, 0.459) verts 606 faces 1188 islands 6
+    bumper_rear: dims (1.585, 0.352, 0.180) verts 204 faces 404 islands 1
+    bumper_front: dims (1.585, 0.352, 0.180) verts 204 faces 404 islands 1
+    lamp_headlights: dims (1.350, 0.146, 0.207) verts 32 faces 56 islands 2
+    lamp_indicators: dims (1.380, 0.052, 0.150) verts 16 faces 24 islands 2
+    lamp_taillights_red: dims (1.510, 0.045, 0.260) verts 32 faces 48 islands 4
+    lamp_taillights_registration: dims (1.510, 0.045, 0.060) verts 16 faces 24 islands 2
+    lamp_taillights_amber: dims (1.510, 0.045, 0.060) verts 16 faces 24 islands 2
+    trim_window_seals: dims (1.385, 2.370, 0.467) verts 2616 faces 4360 islands 218
+    trim_handles: dims (1.598, 0.110, 0.027) verts 48 faces 88 islands 2
+    mirror_stalks: dims (1.664, 0.041, 0.046) verts 24 faces 40 islands 2
+    mirror_housings: dims (1.790, 0.150, 0.090) verts 48 faces 88 islands 2
+    grille_lower: dims (0.650, 0.035, 0.085) verts 24 faces 44 islands 1
+    grille_slots: dims (0.460, 0.024, 0.032) verts 48 faces 88 islands 2
+    plate_registration: dims (0.290, 3.668, 0.175) verts 48 faces 88 islands 2
+    wheel_fl: dims (0.155, 0.552, 0.552) verts 194 faces 384 islands 1
+    trim_rim_fl: dims (0.018, 0.330, 0.330) verts 74 faces 144 islands 1
+    wheel_fr: dims (0.155, 0.552, 0.552) verts 194 faces 384 islands 1
+    trim_rim_fr: dims (0.018, 0.330, 0.330) verts 74 faces 144 islands 1
+    wheel_rl: dims (0.155, 0.552, 0.552) verts 194 faces 384 islands 1
+    trim_rim_rl: dims (0.018, 0.330, 0.330) verts 74 faces 144 islands 1
+    wheel_rr: dims (0.155, 0.552, 0.552) verts 194 faces 384 islands 1
+    trim_rim_rr: dims (0.018, 0.330, 0.330) verts 74 faces 144 islands 1

@@ -1,0 +1,150 @@
+
+> test:e2e
+> playwright test
+
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:46:33] "GET /index.html HTTP/1.1" 200 -
+
+Running 6 tests using 1 worker
+
+(node:2029) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:46:34] "GET /index.html?vehicle=micra HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:46:36] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:46:36] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:46:36] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:46:36] "GET /media/vehicles/micra-k11.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:46:36] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✘  1 tests/e2e/micra.spec.js:2:1 › Micra choice loads four GLB wheels, can be entered and driven (2.3m)
+(node:2394) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:49:03] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:49:05] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:49:05] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:49:05] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:49:05] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✘  2 tests/e2e/smoke.spec.js:29:3 › game (index.html) › loads with no console errors and a WebGL canvas (1.2m)
+(node:2814) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:37] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:42] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:42] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:42] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:50:42] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✓  3 tests/e2e/smoke.spec.js:48:3 › game (index.html) › Start hides the intro and shows the HUD (30.8s)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:51:29] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:51:33] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:51:33] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:51:33] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:51:33] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✘  4 tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in (1.9m)
+(node:3207) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:53:25] "GET /index.html HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:53:30] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:53:30] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:53:30] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:53:30] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✘  5 tests/e2e/smoke.spec.js:114:3 › game (index.html) › cats are around, and the kiosk sells cat treats from its menu (1.0m)
+(node:3483) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 08:55:00] "GET /map.html HTTP/1.1" 200 -
+  ✓  6 tests/e2e/smoke.spec.js:144:3 › map (map.html) › loads with no console errors and draws the map (21.9s)
+
+
+  1) tests/e2e/micra.spec.js:2:1 › Micra choice loads four GLB wheels, can be entered and driven ───
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 120000ms exceeded while waiting on the predicate
+
+      18 |    if(next!==active){if(active)await page.keyboard.up(active);await page.keyboard.down(next);active=next;}
+      19 |    return false;
+    > 20 |   },{timeout:120000,intervals:[150]}).toBe(true);
+         |                                       ^
+      21 |  }finally{if(active)await page.keyboard.up(active);}
+      22 |  await expect(page.locator('#prompt')).toContainText('Nissan Micra');
+      23 |  await page.keyboard.press('KeyE');
+        at /workspace/work/micra-k11/tests/e2e/micra.spec.js:20:39
+
+    Error Context: test-results/micra-Micra-choice-loads-f-e2a43-s-can-be-entered-and-driven/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/micra-Micra-choice-loads-f-e2a43-s-can-be-entered-and-driven/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/micra-Micra-choice-loads-f-e2a43-s-can-be-entered-and-driven/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests/e2e/smoke.spec.js:29:3 › game (index.html) › loads with no console errors and a WebGL canvas
+
+    Error: browserContext.close: ENOENT: no such file or directory, open '/workspace/work/micra-k11/test-results/.playwright-artifacts-1/traces/2c14808d47b386fba9eb-69d59160128b6b3411d6.trace'
+
+    Error: ENOENT: no such file or directory, open '/workspace/work/micra-k11/test-results/.playwright-artifacts-1/5dce43638c92cace56c4c2ae90587979.zip'
+
+    Error Context: test-results/smoke-game-index-html-load-e7a79-e-errors-and-a-WebGL-canvas/error-context.md
+
+  3) tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   0.6900000000000038
+
+    Call Log:
+    - Timeout 30000ms exceeded while waiting on the predicate
+
+      72 |
+      73 |     await page.keyboard.down('KeyW');
+    > 74 |     await expect.poll(async () => { const s = await state(page); return Math.hypot(s.x - from.x, s.z - from.z); }).toBeGreaterThan(1);
+         |                                                                                                                    ^
+      75 |     await page.keyboard.up('KeyW');
+      76 |     await page.keyboard.press('KeyR');                            // back to the spawn point at Torget
+      77 |
+        at /workspace/work/micra-k11/tests/e2e/smoke.spec.js:74:116
+
+    Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, copyfile '/workspace/work/micra-k11/test-results/.playwright-artifacts-2/traces/2c14808d47b386fba9eb-41b5544068310fe8085c-recording3.network' -> '/workspace/work/micra-k11/test-results/.playwright-artifacts-2/traces/2c14808d47b386fba9eb-41b5544068310fe8085c-recording3-pwnetcopy-1.network'
+
+    Error: browserContext._wrapApiCall: ENOENT: no such file or directory, open '/workspace/work/micra-k11/test-results/.playwright-artifacts-2/traces/2c14808d47b386fba9eb-41b5544068310fe8085c-recording2.trace'
+
+    Error: ENOENT: no such file or directory, open '/workspace/work/micra-k11/test-results/.playwright-artifacts-2/619720a050c30419d39f4f85afa802df.zip'
+
+  4) tests/e2e/smoke.spec.js:114:3 › game (index.html) › cats are around, and the kiosk sells cat treats from its menu
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "EHandla i kiosken"
+    Received: ""
+
+    Call Log:
+    - Timeout 30000ms exceeded while waiting on the predicate
+
+      121 |     // With the camera as Start leaves it, the kiosk lucka is about 4.6 m to the player's left.
+      122 |     await page.keyboard.down('KeyA');
+    > 123 |     await expect.poll(async () => page.locator('#prompt').textContent(), { intervals: [50] }).toBe('EHandla i kiosken');
+          |                                                                                               ^
+      124 |     await page.keyboard.up('KeyA');
+      125 |
+      126 |     await page.keyboard.press('KeyE');
+        at /workspace/work/micra-k11/tests/e2e/smoke.spec.js:123:95
+
+    Error Context: test-results/smoke-game-index-html-cats-c390e-ls-cat-treats-from-its-menu/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/smoke-game-index-html-cats-c390e-ls-cat-treats-from-its-menu/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/smoke-game-index-html-cats-c390e-ls-cat-treats-from-its-menu/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    tests/e2e/micra.spec.js:2:1 › Micra choice loads four GLB wheels, can be entered and driven ────
+    tests/e2e/smoke.spec.js:29:3 › game (index.html) › loads with no console errors and a WebGL canvas
+    tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in
+    tests/e2e/smoke.spec.js:114:3 › game (index.html) › cats are around, and the kiosk sells cat treats from its menu
+  2 passed (8.8m)

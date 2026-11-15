@@ -6,6 +6,7 @@ import { VEHICLE_ASSETS } from '../src/vehicles/vehicle-assets.mjs';
 // Structural guardrails, not exact mesh counts: Round 2 batches details into
 // fewer primitives while preserving geometry, materials and wheel rigs.
 const expected = {
+  micra: { wheelbase: 2.36, minMeshes: 15 },
   volvo: { wheelbase: 2.65, minMeshes: 20 },
   saab: { wheelbase: 2.517, minMeshes: 35 },
   xc70: { wheelbase: 2.763, minMeshes: 50 },

@@ -69,3 +69,12 @@ Geometry passing is a requirement, not an appearance approval.
 - Actual Saab GLB, visual approval, and game integration: **not done**.
 
 This intentionally avoids installing placeholder geometry into the game.
+
+## Micra K11 three-door
+
+The [1995 Micra experiment](../../experiments/micra1995/README.md) uses the same
+closed-body authoring, inset panes, wells, source fit checks, exporter and strict
+GLB validator with Micra-specific rounded sections. `?vehicle=micra` selects the
+installed GLB in an existing Torget slot on its review branch. It reuses the
+existing FWD archetype; no new vehicle-dynamics calibration is claimed. The new
+`reimport_check.py` runs the existing body/wheel gate on the actual exported GLB.
