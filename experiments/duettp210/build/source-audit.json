@@ -4,14 +4,14 @@
     "nonmanifold_edges": 0,
     "inconsistent_edges": 0,
     "degenerate_faces": 0,
-    "signed_volume_m3": 5.287790214507446,
+    "signed_volume_m3": 4.932937899098142,
     "connected_components": 1,
     "self_intersection_candidates": 0,
     "sample_pairs": [],
-    "triangles": 4984
+    "triangles": 6078
   },
   "meshes": 25,
-  "triangles": 12276,
+  "triangles": 14782,
   "materials": [
     "Duett configurable body paint",
     "Duett smoky glazing",
@@ -30,37 +30,70 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0022381302773848695,
+      "signed_volume_m3": 0.0026541954601548667,
       "connected_components": 3,
-      "self_intersection_candidates": 0,
-      "sample_pairs": [],
-      "triangles": 348
+      "self_intersection_candidates": 9,
+      "sample_pairs": [
+        [
+          52,
+          491
+        ],
+        [
+          54,
+          384
+        ],
+        [
+          55,
+          307
+        ],
+        [
+          55,
+          421
+        ],
+        [
+          117,
+          491
+        ],
+        [
+          121,
+          382
+        ],
+        [
+          121,
+          496
+        ],
+        [
+          125,
+          384
+        ]
+      ],
+      "triangles": 524
     },
     "glass_rear": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.004925930116786625,
+      "signed_volume_m3": 0.0015604925045847053,
       "connected_components": 1,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
       "triangles": 76
     },
-    "trim_bed_floor": {
+    "trim_darker": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.02228100621670536,
-      "connected_components": 1,
+      "signed_volume_m3": 0.020896470368437444,
+      "connected_components": 3,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 76
+      "triangles": 292
     },
     "grille_backing": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.01816225610951766,
+      "signed_volume_m3": 0.0037145180212763613,
       "connected_components": 1,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -70,44 +103,11 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0021789253632468423,
-      "connected_components": 19,
-      "self_intersection_candidates": 29,
-      "sample_pairs": [
-        [
-          6,
-          160
-        ],
-        [
-          23,
-          805
-        ],
-        [
-          31,
-          182
-        ],
-        [
-          31,
-          808
-        ],
-        [
-          54,
-          834
-        ],
-        [
-          63,
-          179
-        ],
-        [
-          63,
-          212
-        ],
-        [
-          72,
-          226
-        ]
-      ],
-      "triangles": 1668
+      "signed_volume_m3": 0.006335931116503646,
+      "connected_components": 12,
+      "self_intersection_candidates": 0,
+      "sample_pairs": [],
+      "triangles": 1732
     },
     "bumper_front": {
       "nonmanifold_edges": 0,
@@ -123,7 +123,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.00560310898449299,
+      "signed_volume_m3": 0.0056031092926769124,
       "connected_components": 1,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -133,37 +133,37 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.011201838271035958,
-      "connected_components": 3,
+      "signed_volume_m3": 0.01823042109318705,
+      "connected_components": 6,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 292
+      "triangles": 488
     },
     "trim_restrained": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.006020823616882798,
-      "connected_components": 4,
+      "signed_volume_m3": 0.003619199058011724,
+      "connected_components": 8,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 400
+      "triangles": 1096
     },
     "lamp_headlamp": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0029228006586246406,
+      "signed_volume_m3": 0.0009140035007265531,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 248
+      "triangles": 312
     },
     "lamp_indicator": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.00029390070453450684,
+      "signed_volume_m3": 0.00029390187239208875,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -173,7 +173,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.002138286398180497,
+      "signed_volume_m3": 0.0010991208879625397,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -226,7 +226,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0009271837763546901,
+      "signed_volume_m3": 0.0005289055647570446,
       "connected_components": 1,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -236,7 +236,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0008287962244994418,
+      "signed_volume_m3": 0.0005459976212978401,
       "connected_components": 1,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -246,7 +246,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.00046882309765159286,
+      "signed_volume_m3": 0.00029137372574212654,
       "connected_components": 1,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -335,8 +335,8 @@
   },
   "glass_body_surface_intersection_candidates": 0,
   "glass_signed_backing_clearance_m": {
-    "minimum": 0.0023850991565268487,
-    "maximum": 0.004998131653286556,
+    "minimum": 0.002458635630318895,
+    "maximum": 0.004997083800807079,
     "nonpositive_samples": 0
   },
   "wheels": {
@@ -390,9 +390,9 @@
     }
   },
   "overall_xyz_m": [
-    1.659999966621399,
+    1.6799999475479126,
     4.365000009536743,
-    1.7000000774860382
+    1.7150000631809235
   ],
   "overhangs_m": {
     "front": 1.0575000047683716,
@@ -402,57 +402,57 @@
   "body_paint_material_count": 1,
   "wheel_fixtures_own_hub": true,
   "all_fixed_fixtures_follow_body": true,
-  "lamp_tops_z_m": 1.0320000648498535,
+  "lamp_tops_z_m": 1.090999960899353,
   "bed": {
-    "floor_z_m": 0.76,
-    "depth_m": 0.32000000000000006,
-    "interior_length_m": 1.5299999999999998,
+    "floor_z_m": 0.75,
+    "depth_m": 0.29000000000000004,
+    "interior_length_m": 1.3099999999999998,
     "interior_width_m": 1.14,
     "vertical_ray_probes": [
       {
-        "x": -0.4,
-        "y": -1.85,
-        "first_hit_z_m": 0.7599999904632568
+        "x": -0.39899999999999997,
+        "y": -1.9,
+        "first_hit_z_m": 0.75
       },
       {
-        "x": -0.4,
-        "y": -1.25,
-        "first_hit_z_m": 0.7599999904632568
+        "x": -0.39899999999999997,
+        "y": -1.395,
+        "first_hit_z_m": 0.75
       },
       {
-        "x": -0.4,
-        "y": -0.7,
-        "first_hit_z_m": 0.7599999904632568
-      },
-      {
-        "x": 0,
-        "y": -1.85,
-        "first_hit_z_m": 0.7599999904632568
+        "x": -0.39899999999999997,
+        "y": -0.89,
+        "first_hit_z_m": 0.75
       },
       {
         "x": 0,
-        "y": -1.25,
-        "first_hit_z_m": 0.7599997520446777
+        "y": -1.9,
+        "first_hit_z_m": 0.7500002384185791
       },
       {
         "x": 0,
-        "y": -0.7,
-        "first_hit_z_m": 0.7600002288818359
+        "y": -1.395,
+        "first_hit_z_m": 0.75
       },
       {
-        "x": 0.4,
-        "y": -1.85,
-        "first_hit_z_m": 0.7599999904632568
+        "x": 0,
+        "y": -0.89,
+        "first_hit_z_m": 0.75
       },
       {
-        "x": 0.4,
-        "y": -1.25,
-        "first_hit_z_m": 0.7599999904632568
+        "x": 0.39899999999999997,
+        "y": -1.9,
+        "first_hit_z_m": 0.7500002384185791
       },
       {
-        "x": 0.4,
-        "y": -0.7,
-        "first_hit_z_m": 0.7599999904632568
+        "x": 0.39899999999999997,
+        "y": -1.395,
+        "first_hit_z_m": 0.75
+      },
+      {
+        "x": 0.39899999999999997,
+        "y": -0.89,
+        "first_hit_z_m": 0.75
       }
     ],
     "upward_open": true

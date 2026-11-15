@@ -35,3 +35,7 @@ Photographs were downloaded only for inspection outside the repository and are l
 | Cab rear / cowl longitudinal positions | approx -480 / +600 mm | Estimated from primary conversion |
 
 Total length alone was not used to approve the shape. Exact orthographic Blender side was compared manually against the two perspective Hova photographs: wheel centres, hood/cowl, cab height/length, screen slope, cut rear wall, rear axle and bed boundaries. Perspective prevents defensible millimetre silhouette errors or a valid full-mask IoU. No automated photographic silhouette score is claimed.
+
+## Major refinement
+
+Same Hova conversion remains primary. See refinement/README.md for the before-model observations and geometric changes. Updated model measurements: maximum height 1715 mm, width including running boards 1680 mm, bed interior length 1310 mm and depth 290 mm. These remain estimates; the verified wheelbase stays 2600 mm.

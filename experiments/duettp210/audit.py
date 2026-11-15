@@ -50,8 +50,8 @@ report['all_fixed_fixtures_follow_body']=all(o.parent==body or o.parent and o.pa
 report['lamp_tops_z_m']=max((bpy.data.objects['lamp_headlamp'].matrix_world@v.co).z for v in bpy.data.objects['lamp_headlamp'].data.vertices)
 bm,bt=tree(body)
 probes=[]
-for x in [-.40,0,.40]:
- for y in [-1.85,-1.25,-.70]:
+for x in [-.7*P['bed_inner_half_width'],0,.7*P['bed_inner_half_width']]:
+ for y in [P['bed_rear']+.15,(P['bed_rear']+P['bed_front'])/2,P['bed_front']-.15]:
   hit=bt.ray_cast(Vector((x,y,3)),Vector((0,0,-1)))[0]
   probes.append({'x':x,'y':y,'first_hit_z_m':None if hit is None else hit.z})
 bm.free()
