@@ -7,8 +7,8 @@ GEOMETRY CHECK: 0 errors, 0 warnings
     glass_envelope: dims (1.376, 2.331, 0.445) verts 568 faces 1112 islands 6
     bumper_rear: dims (1.585, 0.341, 0.180) verts 188 faces 372 islands 1
     bumper_front: dims (1.585, 0.341, 0.180) verts 188 faces 372 islands 1
-    lamp_headlights: dims (1.350, 0.086, 0.174) verts 532 faces 1056 islands 2
-    lamp_indicators: dims (1.396, 0.175, 0.150) verts 196 faces 384 islands 2
+    lamp_headlights: dims (1.350, 0.046, 0.174) verts 532 faces 1056 islands 2
+    lamp_indicators: dims (1.396, 0.055, 0.150) verts 196 faces 384 islands 2
     lamp_taillights_red: dims (1.410, 0.098, 0.260) verts 392 faces 768 islands 4
     lamp_taillights_registration: dims (1.410, 0.051, 0.060) verts 196 faces 384 islands 2
     lamp_taillights_amber: dims (1.410, 0.095, 0.060) verts 196 faces 384 islands 2

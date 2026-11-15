@@ -137,8 +137,8 @@ def lens(name,outline,mat,front=True):
 
 for sign in [-1,1]:
  outline=[(.335,.595),(.337,.720),(.363,.752),(.570,.750),(.665,.720),(.675,.605),(.648,.578),(.365,.578)]
- lens('lamp_headlights',[(sign*x,z-.035) for x,z in outline],head)
- lens('lamp_indicator',[(sign*x,z-.035) for x,z in [(.648,.587),(.697,.602),(.698,.716),(.67,.737)]],amber)
+ lens('lamp_headlights',[(sign*x,z+.020) for x,z in outline],head)
+ lens('lamp_indicator',[(sign*x,z+.020) for x,z in [(.648,.587),(.697,.602),(.698,.716),(.67,.737)]],amber)
  for z0,z1,m in [(.53,.62,red),(.62,.68,plate),(.68,.79,red),(.79,.85,amber)]:
   lens('lamp_tail',[(sign*x,z) for x,z in [(.58,z0),(.70,z0+.01),(.705,z1-.01),(.59,z1)]],m,False)
  T.slab('trim_handle',(.028,.11,.027),(sign*.785,-.32,.73),rubber)

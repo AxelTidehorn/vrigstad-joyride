@@ -1,7 +1,7 @@
 {
   "vehicle": "1995 European Nissan Micra K11 three-door, pre-facelift",
-  "base_commit": "9060015f15f6ae27ce96ef5e3c299e6c0e53b1fd",
-  "branch": "experiment/micra-k11-refinement",
+  "base_commit": "5ad10ae2e19e9b6d1f23df29bccdb4ba4c5dc8ba",
+  "branch": "experiment/micra-k11-compact-nose",
   "checks": {
     "geometry": {
       "ok": true,
@@ -23,7 +23,7 @@
         "nonmanifold_edges": 0,
         "inconsistent_edges": 0,
         "degenerate_faces": 0,
-        "signed_volume_m3": 4.751725362341599,
+        "signed_volume_m3": 4.843772833635686,
         "connected_components": 1,
         "self_intersection_candidates": 0,
         "sample_pairs": [],
@@ -77,7 +77,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.00508010259963679,
+          "signed_volume_m3": 0.005080102438783787,
           "connected_components": 2,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -87,7 +87,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.00047071802855469237,
+          "signed_volume_m3": 0.0004707180075339986,
           "connected_components": 2,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -127,41 +127,41 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0011179780563111553,
+          "signed_volume_m3": 0.0011179783214282854,
           "connected_components": 214,
-          "self_intersection_candidates": 4603,
+          "self_intersection_candidates": 4648,
           "sample_pairs": [
             [
-              1,
-              42
+              0,
+              278
             ],
             [
-              1,
-              2121
+              0,
+              2096
             ],
             [
-              1,
-              2124
+              0,
+              2097
             ],
             [
-              2,
-              274
+              4,
+              279
             ],
             [
-              2,
-              1774
+              5,
+              2101
             ],
             [
-              2,
-              2122
+              5,
+              2103
             ],
             [
-              3,
-              274
+              5,
+              2104
             ],
             [
-              3,
-              275
+              6,
+              262
             ]
           ],
           "triangles": 4280
@@ -376,7 +376,7 @@
       "body_paint_material_count": 1,
       "wheel_fixtures_own_hub": true,
       "all_fixed_fixtures_follow_body": true,
-      "lamp_tops_z_m": 0.7170000076293945,
+      "lamp_tops_z_m": 0.7720000147819519,
       "ok": true
     },
     "pose": {
@@ -397,45 +397,50 @@
       "mesh_objects": 24,
       "materials": 9,
       "file_bytes": 342408,
-      "import_seconds": 0.16142331199989712,
+      "import_seconds": 0.17671459499979392,
       "checks": "Reimported actual GLB and ran unchanged Blender body/wheel gate. This is not a browser FPS benchmark."
     }
   },
   "tests": {
     "current_micra_driving": {
       "passed": true,
-      "log": "build/refinement-window-play-tests.txt"
+      "scope": "current asset",
+      "log": "build/nose-play-tests.txt"
     },
     "refinement_browser": {
       "passed": true,
+      "scope": "historical prior refinement",
       "log": "build/refinement-browser-tests.txt"
     },
     "glb_integration": {
       "passed": true,
+      "scope": "current asset",
       "log": "build/integration-tests.txt"
     },
     "driving_regression": {
       "passed": true,
+      "scope": "historical prior refinement",
       "log": "build/driving-tests.txt"
     },
     "validator_unit": {
       "passed": true,
+      "scope": "historical prior refinement",
       "log": "build/validator-tests.txt"
     }
   },
   "files_sha256": {
-    "experiments/micra1995/model.py": "9b139d5c49baca2ba0ebfad5e9b19b3a64ed984ce85ba368e2a95bba5802fefb",
-    "experiments/micra1995/parameters.json": "65f91cabf55fc70d6554d8c8eac8363a0ebdcf9d95ce81f4b49a9a55e6af79fd",
-    "experiments/micra1995/build/model.blend": "45d804799a79eaf8fff9e2d5401acc0856ebe5bc1de55d2d3a730f8554c45b08",
-    "media/vehicles/micra-k11.glb": "de229c9f68ecf01b24b1beaec20f89ca4a8c6c96cc5f81c49b83c276a667303b"
+    "experiments/micra1995/model.py": "9cfc8cb36a6e974daab2d8c0383eff74e3b34cb5feccf6427b6c687116795305",
+    "experiments/micra1995/parameters.json": "bee7fa8a4e3c03856dfcb216c50d2c3ecf5572a310de4585f0a51cf3a6c368ea",
+    "experiments/micra1995/build/model.blend": "41715d27672e53bfffb70dd44c8defaee263d67556c9289729fa5ed765a2d95c",
+    "media/vehicles/micra-k11.glb": "035774e095bc9dc2ccaee2cb4d109a27bcd85d36fe7d5fe2d24e0ca102314281"
   },
-  "reference_accuracy": "Wheel-registered manual upper trace, perspective estimates; no full silhouette IoU",
+  "reference_accuracy": "Current hood reviewed manually against near-side pre-facelift three-door photograph; perspective prevents exact orthographic error measurement. Old trace metrics below are historical only.",
   "browser_retry": {
     "initial_run": "build/refinement-browser-tests.txt",
     "isolated_retry": "build/refinement-retry-tests.txt",
     "reason": "Existing default-game driving smoke exceeded 120 s total under software WebGL; rerun isolated with 240 s runner timeout, assertions unchanged"
   },
-  "pane_shape": {
+  "historical_unchanged_glass_shape": {
     "baseline_commit": "9060015f15f6ae27ce96ef5e3c299e6c0e53b1fd",
     "baseline_blend_sha256": "9c15513a9d33d7aca8560d3308e3c53da85b1018f8badca1ed0bb22269e8cd2f",
     "before": {
@@ -667,7 +672,7 @@
     "mesh_names_preserved": true,
     "ok": true
   },
-  "upper_profile": {
+  "historical_upper_profile_not_current_hood_evidence": {
     "reference": {
       "source_url": "https://www.nissan-autoparts.nl/c-4276469/nissan-micra-k11-augustus-1992-november-2002/",
       "image_url": "https://cdn.myonlinestore.eu/9494fdab-6be1-11e9-a722-44a8421b9960/slideshow/en_US_857992_full.jpg",
@@ -830,28 +835,28 @@
   },
   "render_provenance": {
     "side": {
-      "before_sha256": "7854eb5ac2f3ab3227a57e35f8f44504ae0f7c8f80eda6b9e5eb8f5745e81975",
-      "after_sha256": "1fae7a3a30ef1ec7fd46fd04a0e4101056fc91343304ed3bec0680c37f841a27"
+      "before_sha256": "1fae7a3a30ef1ec7fd46fd04a0e4101056fc91343304ed3bec0680c37f841a27",
+      "after_sha256": "ab4fb35786b909d17e6bd86cdff475c13776858cc781f446787af3b505941f87"
     },
     "front": {
-      "before_sha256": "131840e63ba9c6951cd13cba288df78745ab35a6ba88bb81c7bf34535a791b23",
-      "after_sha256": "aeef2537bf0658c231fdd1088eb4574ce32784ad43f24c3ea711c2e4dfc7d3cd"
+      "before_sha256": "aeef2537bf0658c231fdd1088eb4574ce32784ad43f24c3ea711c2e4dfc7d3cd",
+      "after_sha256": "1021b675a08ae3e9db2e27666c817850135a31a89adcfc88681af4a886123196"
     },
     "rear": {
-      "before_sha256": "32c2e480cce488b1ae2fbc8a05f3260ab262a52f8a978426b7739e18838830ab",
-      "after_sha256": "2214b3a5b04a8bf1c66a8f8d987b8d0256c8ef353c20dec92421cf2c44c6586b"
+      "before_sha256": "2214b3a5b04a8bf1c66a8f8d987b8d0256c8ef353c20dec92421cf2c44c6586b",
+      "after_sha256": "effb207b7784b3367f0128740fb88a5f836df83de38c6d4915b4c4f70f61f078"
     },
     "front_three_quarter": {
-      "before_sha256": "9438cc6886c4246501b15c03297139d37a32883ba2f6e48bf0fd979aa346e897",
-      "after_sha256": "235a855c5f6197eb7b740028c1c2e474a08d8cebabe5e05c6ae9bf4c38adbc9d"
+      "before_sha256": "235a855c5f6197eb7b740028c1c2e474a08d8cebabe5e05c6ae9bf4c38adbc9d",
+      "after_sha256": "f2435fc08fe40c5cfafd4b6f81444cc37281b09fa816d61f702dd8bf43c8a338"
     },
     "rear_three_quarter": {
-      "before_sha256": "e773dce4fcacf27e952563512acc935a17e1fae998ba5e4a401cf4e4d2030f70",
-      "after_sha256": "3c0781153eb3df37d0008e98d3e16e01379c9cd1be337a55da1173fc8b688baf"
+      "before_sha256": "3c0781153eb3df37d0008e98d3e16e01379c9cd1be337a55da1173fc8b688baf",
+      "after_sha256": "da6e9ab47ea977449293efc3d1ab51d82aa37e6cda9713464fe4af91f8d9ebfa"
     },
     "high_three_quarter": {
-      "before_sha256": "80cb9fd66e130db52cf4d13e544dd2bf7d5b323b8b07991d04e08cf509bf04f5",
-      "after_sha256": "e74507dd8e86f28f51691d1919670ea1aa967012f052af1b3bd4337c3c446a3e"
+      "before_sha256": "e74507dd8e86f28f51691d1919670ea1aa967012f052af1b3bd4337c3c446a3e",
+      "after_sha256": "f2b98f1f832ed4bee26e5d0e67edc6f44e8d6bcac2fc128b02fbd5d886bd9d9e"
     }
   },
   "human_visual_approval": "pending",

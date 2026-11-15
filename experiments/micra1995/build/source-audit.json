@@ -4,7 +4,7 @@
     "nonmanifold_edges": 0,
     "inconsistent_edges": 0,
     "degenerate_faces": 0,
-    "signed_volume_m3": 4.751725362341599,
+    "signed_volume_m3": 4.843772833635686,
     "connected_components": 1,
     "self_intersection_candidates": 0,
     "sample_pairs": [],
@@ -58,7 +58,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.00508010259963679,
+      "signed_volume_m3": 0.005080102438783787,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -68,7 +68,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.00047071802855469237,
+      "signed_volume_m3": 0.0004707180075339986,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -108,41 +108,41 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0011179780563111553,
+      "signed_volume_m3": 0.0011179783214282854,
       "connected_components": 214,
-      "self_intersection_candidates": 4603,
+      "self_intersection_candidates": 4648,
       "sample_pairs": [
         [
-          1,
-          42
+          0,
+          278
         ],
         [
-          1,
-          2121
+          0,
+          2096
         ],
         [
-          1,
-          2124
+          0,
+          2097
         ],
         [
-          2,
-          274
+          4,
+          279
         ],
         [
-          2,
-          1774
+          5,
+          2101
         ],
         [
-          2,
-          2122
+          5,
+          2103
         ],
         [
-          3,
-          274
+          5,
+          2104
         ],
         [
-          3,
-          275
+          6,
+          262
         ]
       ],
       "triangles": 4280
@@ -357,6 +357,6 @@
   "body_paint_material_count": 1,
   "wheel_fixtures_own_hub": true,
   "all_fixed_fixtures_follow_body": true,
-  "lamp_tops_z_m": 0.7170000076293945,
+  "lamp_tops_z_m": 0.7720000147819519,
   "ok": true
 }

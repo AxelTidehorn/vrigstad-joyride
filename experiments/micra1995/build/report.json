@@ -10,7 +10,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 4.751725362,
+      "volume": 4.843772834,
       "scale": [
         1.0,
         1.0,
@@ -102,7 +102,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.005080103,
+      "volume": 0.005080102,
       "scale": [
         1.0,
         1.0,
@@ -110,7 +110,7 @@
       ],
       "dimensions": [
         1.35,
-        0.0858,
+        0.046,
         0.174
       ],
       "islands": 2
@@ -133,7 +133,7 @@
       ],
       "dimensions": [
         1.396,
-        0.1748,
+        0.0547,
         0.15
       ],
       "islands": 2
@@ -217,7 +217,7 @@
       "degenerate_faces": 0,
       "ngons": 0,
       "closed": true,
-      "volume": 0.001117978,
+      "volume": 0.001117979,
       "scale": [
         1.0,
         1.0,
@@ -703,7 +703,7 @@
     {
       "a": "body",
       "b": "trim_window_seals",
-      "depth": 0.001414802041836083,
+      "depth": 0.0014147809706628323,
       "expected": false
     },
     {
@@ -799,37 +799,37 @@
     {
       "a": "glass_envelope[island 0]",
       "b": "trim_window_seals",
-      "depth": 0.0009463083697482944,
+      "depth": 0.0009464767063036561,
       "expected": false
     },
     {
       "a": "glass_envelope[island 1]",
       "b": "trim_window_seals",
-      "depth": 0.0009540719911456108,
+      "depth": 0.0009541305480524898,
       "expected": false
     },
     {
       "a": "glass_envelope[island 2]",
       "b": "trim_window_seals",
-      "depth": 0.0009539590682834387,
+      "depth": 0.0009540761238895357,
       "expected": false
     },
     {
       "a": "glass_envelope[island 3]",
       "b": "trim_window_seals",
-      "depth": 0.0009674580651335418,
+      "depth": 0.0009673876920714974,
       "expected": false
     },
     {
       "a": "glass_envelope[island 4]",
       "b": "trim_window_seals",
-      "depth": 0.0009675161563791335,
+      "depth": 0.0009675165638327599,
       "expected": false
     },
     {
       "a": "glass_envelope[island 5]",
       "b": "trim_window_seals",
-      "depth": 0.0005748053663410246,
+      "depth": 0.0005746911047026515,
       "expected": false
     },
     {
@@ -847,13 +847,13 @@
     {
       "a": "lamp_headlights[island 0]",
       "b": "lamp_indicators[island 0]",
-      "depth": 0.0019502830691635609,
+      "depth": 1.1920928955078125e-07,
       "expected": false
     },
     {
       "a": "lamp_headlights[island 1]",
       "b": "lamp_indicators[island 1]",
-      "depth": 0.0019502830691635609,
+      "depth": 1.1920928955078125e-07,
       "expected": false
     },
     {
