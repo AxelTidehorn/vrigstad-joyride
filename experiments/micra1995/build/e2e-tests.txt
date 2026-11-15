@@ -80,7 +80,7 @@ Running 6 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  2) tests/e2e/smoke.spec.js:29:3 › game (index.html) › loads with no console errors and a WebGL canvas 
+  2) tests/e2e/smoke.spec.js:29:3 › game (index.html) › loads with no console errors and a WebGL canvas
 
     Error: browserContext.close: ENOENT: no such file or directory, open '/workspace/work/micra-k11/test-results/.playwright-artifacts-1/traces/2c14808d47b386fba9eb-69d59160128b6b3411d6.trace'
 
@@ -88,7 +88,7 @@ Running 6 tests using 1 worker
 
     Error Context: test-results/smoke-game-index-html-load-e7a79-e-errors-and-a-WebGL-canvas/error-context.md
 
-  3) tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in 
+  3) tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in
 
     Error: expect(received).toBeGreaterThan(expected)
 
@@ -113,7 +113,7 @@ Running 6 tests using 1 worker
 
     Error: ENOENT: no such file or directory, open '/workspace/work/micra-k11/test-results/.playwright-artifacts-2/619720a050c30419d39f4f85afa802df.zip'
 
-  4) tests/e2e/smoke.spec.js:114:3 › game (index.html) › cats are around, and the kiosk sells cat treats from its menu 
+  4) tests/e2e/smoke.spec.js:114:3 › game (index.html) › cats are around, and the kiosk sells cat treats from its menu
 
     Error: expect(received).toBe(expected) // Object.is equality
 
@@ -144,7 +144,7 @@ Running 6 tests using 1 worker
 
   4 failed
     tests/e2e/micra.spec.js:2:1 › Micra choice loads four GLB wheels, can be entered and driven ────
-    tests/e2e/smoke.spec.js:29:3 › game (index.html) › loads with no console errors and a WebGL canvas 
-    tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in 
-    tests/e2e/smoke.spec.js:114:3 › game (index.html) › cats are around, and the kiosk sells cat treats from its menu 
+    tests/e2e/smoke.spec.js:29:3 › game (index.html) › loads with no console errors and a WebGL canvas
+    tests/e2e/smoke.spec.js:66:3 › game (index.html) › W moves the player, and E next to a parked showcase car gets you in
+    tests/e2e/smoke.spec.js:114:3 › game (index.html) › cats are around, and the kiosk sells cat treats from its menu
   2 passed (8.8m)

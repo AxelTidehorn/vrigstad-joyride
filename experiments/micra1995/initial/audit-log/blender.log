@@ -12,4 +12,3 @@ Traceback (most recent call last):
     report['wheel_fixtures_own_hub']=all(bpy.data.objects['trim_rim_'+tag].parent==bpy.data.objects['wheel_'+tag] and bpy.data.objects['trim_rim_whitewall_'+tag].parent==bpy.data.objects['wheel_'+tag] for tag in ['fl','fr','rl','rr'])
                                                                                                                       ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
 KeyError: 'bpy_prop_collection[key]: key "trim_rim_whitewall_fl" not found'
-
