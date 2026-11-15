@@ -1,29 +1,29 @@
-09:58:47 | INFO: Data are loaded, start creating Blender stuff
-09:58:47 | INFO: Blender create Mesh node body
-09:58:47 | INFO: Blender create Mesh node bumper_front
-09:58:47 | INFO: Blender create Mesh node bumper_rear
-09:58:47 | INFO: Blender create Mesh node glass_envelope
-09:58:47 | INFO: Blender create Mesh node grille_lower
-09:58:47 | INFO: Blender create Mesh node grille_slot
-09:58:47 | INFO: Blender create Mesh node lamp_headlights
-09:58:47 | INFO: Blender create Mesh node lamp_indicator
-09:58:47 | INFO: Blender create Mesh node lamp_tail.003
-09:58:47 | INFO: Blender create Mesh node lamp_tail
-09:58:47 | INFO: Blender create Mesh node lamp_tail.001
-09:58:47 | INFO: Blender create Mesh node mirror_housing
-09:58:47 | INFO: Blender create Mesh node mirror_stalk
-09:58:47 | INFO: Blender create Mesh node plate_registration
-09:58:47 | INFO: Blender create Mesh node trim_handle
-09:58:47 | INFO: Blender create Mesh node trim_glass_seal
-09:58:47 | INFO: Blender create Mesh node wheel_fl
-09:58:47 | INFO: Blender create Mesh node trim_rim_fl
-09:58:47 | INFO: Blender create Mesh node wheel_fr
-09:58:47 | INFO: Blender create Mesh node trim_rim_fr
-09:58:47 | INFO: Blender create Mesh node wheel_rl
-09:58:47 | INFO: Blender create Mesh node trim_rim_rl
-09:58:47 | INFO: Blender create Mesh node wheel_rr
-09:58:47 | INFO: Blender create Mesh node trim_rim_rr
-09:58:47 | INFO: glTF import finished in 0.03s
+10:29:21 | INFO: Data are loaded, start creating Blender stuff
+10:29:21 | INFO: Blender create Mesh node body
+10:29:21 | INFO: Blender create Mesh node bumper_front
+10:29:21 | INFO: Blender create Mesh node bumper_rear
+10:29:21 | INFO: Blender create Mesh node glass_envelope
+10:29:21 | INFO: Blender create Mesh node grille_lower
+10:29:21 | INFO: Blender create Mesh node grille_slot
+10:29:21 | INFO: Blender create Mesh node lamp_headlights
+10:29:21 | INFO: Blender create Mesh node lamp_indicator
+10:29:21 | INFO: Blender create Mesh node lamp_tail.003
+10:29:21 | INFO: Blender create Mesh node lamp_tail
+10:29:21 | INFO: Blender create Mesh node lamp_tail.001
+10:29:21 | INFO: Blender create Mesh node mirror_housing
+10:29:21 | INFO: Blender create Mesh node mirror_stalk
+10:29:21 | INFO: Blender create Mesh node plate_registration
+10:29:21 | INFO: Blender create Mesh node trim_handle
+10:29:21 | INFO: Blender create Mesh node trim_glass_seal
+10:29:21 | INFO: Blender create Mesh node wheel_fl
+10:29:21 | INFO: Blender create Mesh node trim_rim_fl
+10:29:21 | INFO: Blender create Mesh node wheel_fr
+10:29:21 | INFO: Blender create Mesh node trim_rim_fr
+10:29:21 | INFO: Blender create Mesh node wheel_rl
+10:29:21 | INFO: Blender create Mesh node trim_rim_rl
+10:29:21 | INFO: Blender create Mesh node wheel_rr
+10:29:21 | INFO: Blender create Mesh node trim_rim_rr
+10:29:21 | INFO: glTF import finished in 0.04s
 {"ok": true, "actual_glb": "micra-k11.glb", "body_mounted_meshes": 15, "body_motion_carries_fixtures": true, "wheel_geometry_independent_of_body_bob": true, "steering_carries_rim_and_spokes": true, "wheel_spin_carries_rim_and_spokes": true, "wheel_hub_position_preserved": true, "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.", "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"}
 Blender 4.3.2
 
