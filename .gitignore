@@ -7,4 +7,8 @@ node_modules/
 test-results/
 playwright-report/
 dist/
+<<<<<<< HEAD
+=======
+
+>>>>>>> repair/daylight
 .work/

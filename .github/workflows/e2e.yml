@@ -22,6 +22,10 @@ jobs:
       - run: npm ci
       # The built pages are committed: fail if they are not what src/ and data/ build to.
       - run: npm run check
+<<<<<<< HEAD
+=======
+      - run: npm run test:lighting
+>>>>>>> repair/daylight
       - run: npm run data && npm run build && git diff --exit-code -- index.html map.html data/vrigstad.json
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
