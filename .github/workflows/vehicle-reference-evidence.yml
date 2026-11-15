@@ -1,0 +1,31 @@
+name: Vehicle reference evidence
+on:
+  pull_request:
+    paths:
+      - 'experiments/**/model.py'
+      - 'experiments/**/parameters.json'
+      - 'experiments/**/spec.json'
+      - 'experiments/**/build/*.glb'
+      - 'media/vehicles/*.glb'
+      - 'experiments/**/reference-evidence.json'
+      - 'experiments/**/refinement/**'
+      - 'tools/vehicle_pipeline/reference_gate.py'
+      - '.github/workflows/vehicle-reference-evidence.yml'
+
+jobs:
+  reference-evidence:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require reference comparisons for changed vehicle models
+        run: >
+          python tools/vehicle_pipeline/reference_gate.py
+          --base-ref ${{ github.event.pull_request.base.sha }}
+          --head-ref ${{ github.event.pull_request.head.sha }}
