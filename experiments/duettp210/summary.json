@@ -1,217 +1,12 @@
 {
   "vehicle": "Volvo Duett P210 EPA pickup",
-  "baseline": "f6aaa2d",
-  "branch": "experiment/duett-p210-shape-refinement",
+  "baseline": "afe08ea",
+  "branch": "experiment/duett-p210-final-volumes",
   "mesh_comparison": {
     "materials_unchanged": true,
-    "baseline_commit": "f6aaa2d",
-    "baseline_blend_sha256": "d93ef1193c5b701122b2f618bf901f30072b62f67ede2f619364042ac07d2920",
+    "baseline_commit": "afe08ea",
+    "baseline_blend_sha256": "5a1da43f3a002911a11720ae566c916d8ba7ff6b5a6aafa8cc21f48184cba353",
     "before": {
-      "body_bounds_m": {
-        "min": [
-          -0.83,
-          -2.1,
-          0.23
-        ],
-        "max": [
-          0.83,
-          2.06,
-          1.7
-        ]
-      },
-      "hood_centre_samples": [
-        {
-          "y_m": 0.78,
-          "height_m": 1.2549999952316284
-        },
-        {
-          "y_m": 1.0,
-          "height_m": 1.25
-        },
-        {
-          "y_m": 1.3,
-          "height_m": 1.2350001335144043
-        },
-        {
-          "y_m": 1.6,
-          "height_m": 1.2000001668930054
-        },
-        {
-          "y_m": 1.83,
-          "height_m": 1.1400001049041748
-        },
-        {
-          "y_m": 2.0,
-          "height_m": 1.0399999618530273
-        }
-      ],
-      "body_triangles": 4984,
-      "parameters": {
-        "wheelbase": 2.6,
-        "front_axle_y": 1.1,
-        "track": 1.3,
-        "tire_radius": 0.335,
-        "tire_width": 0.17,
-        "bed_front": -0.52,
-        "bed_rear": -2.05,
-        "bed_floor": 0.76,
-        "bed_top": 1.08,
-        "bed_inner_half_width": 0.57,
-        "profile": [
-          [
-            -2.1,
-            1.07
-          ],
-          [
-            -2.03,
-            1.08
-          ],
-          [
-            -0.56,
-            1.08
-          ],
-          [
-            -0.5,
-            1.1
-          ],
-          [
-            -0.48,
-            1.52
-          ],
-          [
-            -0.43,
-            1.63
-          ],
-          [
-            -0.32,
-            1.69
-          ],
-          [
-            -0.12,
-            1.7
-          ],
-          [
-            0.12,
-            1.69
-          ],
-          [
-            0.27,
-            1.68
-          ],
-          [
-            0.38,
-            1.59
-          ],
-          [
-            0.6,
-            1.26
-          ],
-          [
-            0.78,
-            1.255
-          ],
-          [
-            1.0,
-            1.25
-          ],
-          [
-            1.3,
-            1.235
-          ],
-          [
-            1.6,
-            1.2
-          ],
-          [
-            1.83,
-            1.14
-          ],
-          [
-            2.0,
-            1.04
-          ],
-          [
-            2.06,
-            0.9
-          ]
-        ],
-        "fender_profile": [
-          [
-            -2.1,
-            0.79
-          ],
-          [
-            -1.95,
-            0.93
-          ],
-          [
-            -1.7,
-            1.07
-          ],
-          [
-            -1.5,
-            1.105
-          ],
-          [
-            -1.3,
-            1.07
-          ],
-          [
-            -1.0,
-            0.94
-          ],
-          [
-            -0.6,
-            0.82
-          ],
-          [
-            0.0,
-            0.8
-          ],
-          [
-            0.45,
-            0.88
-          ],
-          [
-            0.75,
-            1.025
-          ],
-          [
-            1.1,
-            1.095
-          ],
-          [
-            1.4,
-            1.08
-          ],
-          [
-            1.7,
-            1.03
-          ],
-          [
-            1.9,
-            0.95
-          ],
-          [
-            2.06,
-            0.78
-          ]
-        ],
-        "side_window": [
-          -0.32,
-          0.3
-        ],
-        "windshield": [
-          0.3,
-          0.55
-        ],
-        "rear_window_y": -0.48,
-        "grille_width": 1.05,
-        "grille_height": 0.26,
-        "roof_crown_drop": 0.045
-      }
-    },
-    "after": {
       "body_bounds_m": {
         "min": [
           -0.83,
@@ -436,6 +231,223 @@
         "roof_crown_drop": 0.045
       }
     },
+    "after": {
+      "body_bounds_m": {
+        "min": [
+          -0.83,
+          -2.2,
+          0.23
+        ],
+        "max": [
+          0.83,
+          1.72,
+          1.75
+        ]
+      },
+      "hood_centre_samples": [
+        {
+          "y_m": 0.78,
+          "height_m": 1.153499960899353
+        },
+        {
+          "y_m": 1.0,
+          "height_m": 1.1319999694824219
+        },
+        {
+          "y_m": 1.3,
+          "height_m": 1.0750001668930054
+        },
+        {
+          "y_m": 1.6,
+          "height_m": 1.0314286947250366
+        },
+        {
+          "y_m": 1.83,
+          "height_m": null
+        },
+        {
+          "y_m": 2.0,
+          "height_m": null
+        }
+      ],
+      "body_triangles": 5684,
+      "parameters": {
+        "wheelbase": 2.6,
+        "front_axle_y": 1.1,
+        "track": 1.3,
+        "tire_radius": 0.335,
+        "tire_width": 0.17,
+        "bed_front": -0.89,
+        "bed_rear": -2.15,
+        "bed_floor": 0.75,
+        "bed_top": 1.08,
+        "bed_inner_half_width": 0.715,
+        "profile": [
+          [
+            -2.2,
+            1.08
+          ],
+          [
+            -2.1,
+            1.08
+          ],
+          [
+            -0.91,
+            1.08
+          ],
+          [
+            -0.86,
+            1.09
+          ],
+          [
+            -0.84,
+            1.46
+          ],
+          [
+            -0.78,
+            1.62
+          ],
+          [
+            -0.66,
+            1.71
+          ],
+          [
+            -0.47,
+            1.75
+          ],
+          [
+            -0.23,
+            1.75
+          ],
+          [
+            -0.06,
+            1.71
+          ],
+          [
+            0.03,
+            1.64
+          ],
+          [
+            0.2,
+            1.46
+          ],
+          [
+            0.4,
+            1.22
+          ],
+          [
+            0.5,
+            1.155
+          ],
+          [
+            0.65,
+            1.16
+          ],
+          [
+            0.85,
+            1.15
+          ],
+          [
+            1.1,
+            1.12
+          ],
+          [
+            1.3,
+            1.075
+          ],
+          [
+            1.48,
+            1.07
+          ],
+          [
+            1.62,
+            1.025
+          ],
+          [
+            1.72,
+            0.94
+          ]
+        ],
+        "fender_profile": [
+          [
+            -2.2,
+            1.0
+          ],
+          [
+            -2.05,
+            1.02
+          ],
+          [
+            -1.75,
+            1.045
+          ],
+          [
+            -1.5,
+            1.055
+          ],
+          [
+            -1.2,
+            1.045
+          ],
+          [
+            -0.86,
+            1.02
+          ],
+          [
+            -0.3,
+            0.77
+          ],
+          [
+            0.5,
+            0.78
+          ],
+          [
+            0.72,
+            0.845
+          ],
+          [
+            0.95,
+            0.91
+          ],
+          [
+            1.1,
+            0.94
+          ],
+          [
+            1.28,
+            0.945
+          ],
+          [
+            1.45,
+            0.945
+          ],
+          [
+            1.62,
+            0.925
+          ],
+          [
+            1.72,
+            0.895
+          ]
+        ],
+        "side_window": [
+          -0.65,
+          0.03
+        ],
+        "windshield": [
+          0.15,
+          0.4
+        ],
+        "rear_window_y": -0.85,
+        "grille_width": 0.88,
+        "grille_height": 0.25,
+        "roof_crown_drop": 0.045,
+        "cab_back": -0.86,
+        "cab_front": 0.5,
+        "nose_end": 1.72,
+        "rear_end": -2.2
+      }
+    },
     "protected_wheels": {
       "wheel_rr": {
         "geometry_identical": true,
@@ -480,14 +492,14 @@
         "nonmanifold_edges": 0,
         "inconsistent_edges": 0,
         "degenerate_faces": 0,
-        "signed_volume_m3": 4.932937899098142,
+        "signed_volume_m3": 4.0423094696526345,
         "connected_components": 1,
         "self_intersection_candidates": 0,
         "sample_pairs": [],
-        "triangles": 6078
+        "triangles": 5684
       },
       "meshes": 25,
-      "triangles": 14782,
+      "triangles": 14288,
       "materials": [
         "Duett configurable body paint",
         "Duett smoky glazing",
@@ -506,50 +518,26 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0026541954601548667,
+          "signed_volume_m3": 0.0020131619183116245,
           "connected_components": 3,
-          "self_intersection_candidates": 9,
+          "self_intersection_candidates": 2,
           "sample_pairs": [
             [
-              52,
-              491
+              188,
+              435
             ],
             [
-              54,
-              384
-            ],
-            [
-              55,
-              307
-            ],
-            [
-              55,
-              421
-            ],
-            [
-              117,
-              491
-            ],
-            [
-              121,
-              382
-            ],
-            [
-              121,
-              496
-            ],
-            [
-              125,
-              384
+              189,
+              325
             ]
           ],
-          "triangles": 524
+          "triangles": 448
         },
         "glass_rear": {
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0015604925045847053,
+          "signed_volume_m3": 0.0014961040974105356,
           "connected_components": 1,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -559,7 +547,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.020896470368437444,
+          "signed_volume_m3": 0.02505408513815674,
           "connected_components": 3,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -569,7 +557,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0037145180212763613,
+          "signed_volume_m3": 0.0032262257751436707,
           "connected_components": 1,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -579,7 +567,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.006335931116503646,
+          "signed_volume_m3": 0.005917065543677865,
           "connected_components": 12,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -589,7 +577,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.00819922307693024,
+          "signed_volume_m3": 0.008281109658248915,
           "connected_components": 1,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -599,7 +587,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0056031092926769124,
+          "signed_volume_m3": 0.0056031080647973,
           "connected_components": 1,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -609,27 +597,27 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.01823042109318705,
+          "signed_volume_m3": 0.018085291514824336,
           "connected_components": 6,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
-          "triangles": 488
+          "triangles": 312
         },
         "trim_restrained": {
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.003619199058011724,
-          "connected_components": 8,
+          "signed_volume_m3": 0.004225177143750467,
+          "connected_components": 10,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
-          "triangles": 1096
+          "triangles": 1248
         },
         "lamp_headlamp": {
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0009140035007265531,
+          "signed_volume_m3": 0.0009140009545176471,
           "connected_components": 2,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -639,7 +627,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.00029390187239208875,
+          "signed_volume_m3": 0.00029390069319659685,
           "connected_components": 2,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -649,7 +637,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0010991208879625397,
+          "signed_volume_m3": 0.0009631147612801092,
           "connected_components": 2,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -659,7 +647,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.002149757517913704,
+          "signed_volume_m3": 0.002149755530593678,
           "connected_components": 6,
           "self_intersection_candidates": 74,
           "sample_pairs": [
@@ -680,6 +668,10 @@
               194
             ],
             [
+              22,
+              65
+            ],
+            [
               28,
               65
             ],
@@ -690,10 +682,6 @@
             [
               33,
               170
-            ],
-            [
-              43,
-              170
             ]
           ],
           "triangles": 456
@@ -702,7 +690,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0005289055647570446,
+          "signed_volume_m3": 0.0005289008619100355,
           "connected_components": 1,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -712,7 +700,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0005459976212978401,
+          "signed_volume_m3": 0.0005459976212978076,
           "connected_components": 1,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -722,7 +710,7 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.00029137372574212654,
+          "signed_volume_m3": 0.00029137868782872775,
           "connected_components": 1,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
@@ -811,8 +799,8 @@
       },
       "glass_body_surface_intersection_candidates": 0,
       "glass_signed_backing_clearance_m": {
-        "minimum": 0.002458635630318895,
-        "maximum": 0.004997083800807079,
+        "minimum": 0.002370116373640485,
+        "maximum": 0.004999633414385425,
         "nonpositive_samples": 0
       },
       "wheels": {
@@ -867,68 +855,68 @@
       },
       "overall_xyz_m": [
         1.6799999475479126,
-        4.365000009536743,
-        1.7150000631809235
+        4.099999904632568,
+        1.7500000298023224
       ],
       "overhangs_m": {
-        "front": 1.0575000047683716,
-        "rear": 0.7074999809265137
+        "front": 0.6924999952316284,
+        "rear": 0.807499885559082
       },
       "axle_distance_m": 2.600000023841858,
       "body_paint_material_count": 1,
       "wheel_fixtures_own_hub": true,
       "all_fixed_fixtures_follow_body": true,
-      "lamp_tops_z_m": 1.090999960899353,
+      "lamp_tops_z_m": 0.8809999823570251,
       "bed": {
         "floor_z_m": 0.75,
-        "depth_m": 0.29000000000000004,
-        "interior_length_m": 1.3099999999999998,
-        "interior_width_m": 1.14,
+        "depth_m": 0.33000000000000007,
+        "interior_length_m": 1.2599999999999998,
+        "interior_width_m": 1.43,
         "vertical_ray_probes": [
           {
-            "x": -0.39899999999999997,
-            "y": -1.9,
+            "x": -0.5005,
+            "y": -2.0,
+            "first_hit_z_m": 0.7499997615814209
+          },
+          {
+            "x": -0.5005,
+            "y": -1.52,
             "first_hit_z_m": 0.75
           },
           {
-            "x": -0.39899999999999997,
-            "y": -1.395,
-            "first_hit_z_m": 0.75
+            "x": -0.5005,
+            "y": -1.04,
+            "first_hit_z_m": 0.7499997615814209
           },
           {
-            "x": -0.39899999999999997,
-            "y": -0.89,
+            "x": 0,
+            "y": -2.0,
+            "first_hit_z_m": 0.7499997615814209
+          },
+          {
+            "x": 0,
+            "y": -1.52,
             "first_hit_z_m": 0.75
           },
           {
             "x": 0,
-            "y": -1.9,
-            "first_hit_z_m": 0.7500002384185791
-          },
-          {
-            "x": 0,
-            "y": -1.395,
+            "y": -1.04,
             "first_hit_z_m": 0.75
           },
           {
-            "x": 0,
-            "y": -0.89,
+            "x": 0.5005,
+            "y": -2.0,
             "first_hit_z_m": 0.75
           },
           {
-            "x": 0.39899999999999997,
-            "y": -1.9,
-            "first_hit_z_m": 0.7500002384185791
+            "x": 0.5005,
+            "y": -1.52,
+            "first_hit_z_m": 0.7499997615814209
           },
           {
-            "x": 0.39899999999999997,
-            "y": -1.395,
-            "first_hit_z_m": 0.75
-          },
-          {
-            "x": 0.39899999999999997,
-            "y": -0.89,
-            "first_hit_z_m": 0.75
+            "x": 0.5005,
+            "y": -1.04,
+            "first_hit_z_m": 0.7499997615814209
           }
         ],
         "upward_open": true
@@ -941,11 +929,11 @@
       "errors": [],
       "warnings": [],
       "meshes": 25,
-      "triangles": 14782,
+      "triangles": 14288,
       "dimensions_m": {
         "width": 1.66,
-        "height": 1.715,
-        "length": 4.365
+        "height": 1.75,
+        "length": 4.1
       },
       "wheelbase_m": 2.6
     },
@@ -966,12 +954,12 @@
       "blender_version": "4.3.2",
       "mesh_objects": 25,
       "materials": 11,
-      "file_bytes": 279416,
-      "import_seconds": 0.16190890400139324,
+      "file_bytes": 270612,
+      "import_seconds": 0.16723023300073692,
       "checks": "Reimported actual GLB and ran unchanged Blender body/wheel gate. This is not a browser FPS benchmark."
     },
     "protected-files": {
-      "baseline": "f6aaa2d",
+      "baseline": "afe08ea",
       "files": {
         "media/vehicles/micra-k11.glb": {
           "unchanged": true,
@@ -1021,8 +1009,8 @@
       "loader": "Unchanged vendored Three r128 GLTFLoader used by the Vehicle Lab page",
       "bounds_m": {
         "width": 1.6799999475479126,
-        "height": 1.7150000631809235,
-        "length": 4.365000009536743
+        "height": 1.7500000298023224,
+        "length": 4.099999904632568
       },
       "four_named_hubs": true,
       "independent_paint": true,
@@ -1037,20 +1025,20 @@
   },
   "tests": {
     "duett_browser": "1 passed",
-    "historical_default_game_map_smoke": "5 passed on baseline; game source unchanged",
+    "historical_default_game_map_smoke": "5 passed during initial integration; not rerun this pass, game source unchanged",
     "historical_validator_unit": "5 passed; validator unchanged",
     "vehicle_integration": "passed",
-    "driving_regression": "passed"
+    "driving_regression": "previous pass reused; physics inputs unchanged"
   },
   "blender_modeler_commit": "c8f245982108e2627972768d4311cbe172b58137",
-  "reference_comparison": "Manual visual comparison to same Hova EPA front/rear perspective photographs. No exact orthographic photo or automated IoU. See references.md.",
+  "reference_comparison": "Manual visual comparison to original P210 near-side photo and one orange TELE conversion in two views. No exact orthographic photo or automated IoU. See references.md.",
   "visual_review": "All seven actual final Blender views inspected; user approval pending",
   "physical_ipad_tested": false,
-  "performance": "No hardware FPS benchmark; GLB 14,782 triangles, 25 meshes and 11 simple materials",
+  "performance": "No hardware FPS benchmark; GLB 14,288 triangles, 25 meshes and 11 simple materials",
   "files_sha256": {
-    "experiments/duettp210/model.py": "1c3705ad9785989ebe62aca95789a1b2d779bf2bfad62141f71aee35feb236e7",
-    "experiments/duettp210/parameters.json": "1f987d9a17ff420797a21cd65e35a67be30d52a19942b9d1da2c49972087c9e5",
-    "experiments/duettp210/build/model.blend": "5a1da43f3a002911a11720ae566c916d8ba7ff6b5a6aafa8cc21f48184cba353",
-    "media/vehicles/duett-p210-epa.glb": "2278cd3ee8cbe65b174acf2a8b8c6c361c793238cf12eda6deb5cacbc945c46e"
+    "experiments/duettp210/model.py": "47ace2384e4c6842e96b114d3f99f275089c3a76e42fd440abf054aa05ffb618",
+    "experiments/duettp210/parameters.json": "16fe2df1983899debf7cb67719b4b0fa0788dda38b9adc37a5948345b228d129",
+    "experiments/duettp210/build/model.blend": "9427afd7dd9ca2645445c4a8f919142dbf4e1a42ffe07d5a3396a7b3115f8f8d",
+    "media/vehicles/duett-p210-epa.glb": "df31a12fc635affef58bcbc6332efec3846eee8fead40cecca24a8302ff0ee7e"
   }
 }

@@ -1,0 +1,153 @@
+{
+  "source_page": "https://www.bilwebauctions.se/juliauktion-3-2026/volvo-p210-duett-b18-55071",
+  "source_image": "https://d1d5up1bxajdjs.cloudfront.net/1800x1199/object/wO9p1GCtazD8KE4bT5rUhWI0PBjuxLXm.jpg",
+  "source_variant": "auction-described 1966 P210 estate; original front/cab only, rear is not EPA reference",
+  "image_size_px": [
+    1800,
+    1199
+  ],
+  "manual_wheel_centres_px": {
+    "front": [
+      1424,
+      853
+    ],
+    "rear": [
+      546,
+      869
+    ]
+  },
+  "verified_wheelbase_m": 2.6,
+  "normalisation": "wheel-centre rigid rotation and one uniform wheelbase scale; no silhouette fitting",
+  "scale_px_per_m": 337.74837452908844,
+  "assumed_tyre_centre_height_m": 0.335,
+  "points": [
+    {
+      "label": "roof_front_cab",
+      "manual_pixel": [
+        960,
+        420
+      ],
+      "estimated_vehicle_y_m": -0.25021708120445063,
+      "estimated_height_m": 1.6418376689057759
+    },
+    {
+      "label": "door_glass_top",
+      "manual_pixel": [
+        960,
+        480
+      ],
+      "estimated_vehicle_y_m": -0.25345384755038003,
+      "estimated_height_m": 1.4642201156729
+    },
+    {
+      "label": "door_glass_bottom",
+      "manual_pixel": [
+        960,
+        595
+      ],
+      "estimated_vehicle_y_m": -0.2596576497134113,
+      "estimated_height_m": 1.1237864719765542
+    },
+    {
+      "label": "windshield_top",
+      "manual_pixel": [
+        1060,
+        480
+      ],
+      "estimated_vehicle_y_m": 0.042575407837746715,
+      "estimated_height_m": 1.458825505096351
+    },
+    {
+      "label": "windshield_base",
+      "manual_pixel": [
+        1160,
+        584
+      ],
+      "estimated_vehicle_y_m": 0.33299426822626244,
+      "estimated_height_m": 1.1455604689161503
+    },
+    {
+      "label": "cowl",
+      "manual_pixel": [
+        1228,
+        590
+      ],
+      "estimated_vehicle_y_m": 0.5339704852555957,
+      "estimated_height_m": 1.1241303784008094
+    },
+    {
+      "label": "hood_rear",
+      "manual_pixel": [
+        1280,
+        595
+      ],
+      "estimated_vehicle_y_m": 0.6876359675285941,
+      "estimated_height_m": 1.1065237181315974
+    },
+    {
+      "label": "hood_middle",
+      "manual_pixel": [
+        1380,
+        607
+      ],
+      "estimated_vehicle_y_m": 0.9830178696475349,
+      "estimated_height_m": 1.0656055969084732
+    },
+    {
+      "label": "hood_front",
+      "manual_pixel": [
+        1480,
+        626
+      ],
+      "estimated_vehicle_y_m": 1.2780221490261172,
+      "estimated_height_m": 1.0039654278081802
+    },
+    {
+      "label": "hood_tip",
+      "manual_pixel": [
+        1530,
+        653
+      ],
+      "estimated_vehicle_y_m": 1.4245802318645124,
+      "estimated_height_m": 0.9213402235651114
+    },
+    {
+      "label": "front_wing_crown",
+      "manual_pixel": [
+        1430,
+        673
+      ],
+      "estimated_vehicle_y_m": 1.127472054361076,
+      "estimated_height_m": 0.8675289830640351
+    },
+    {
+      "label": "front_body_end",
+      "manual_pixel": [
+        1600,
+        730
+      ],
+      "estimated_vehicle_y_m": 1.6276468604922585,
+      "estimated_height_m": 0.6896214695126697
+    },
+    {
+      "label": "front_bumper_end",
+      "manual_pixel": [
+        1616,
+        833
+      ],
+      "estimated_vehicle_y_m": 1.6694550924605132,
+      "estimated_height_m": 0.3838481987706513
+    }
+  ],
+  "quality": "near-side photograph with mild perspective, not an orthographic factory drawing",
+  "uncertainty": "Manual points about \u00b110\u201315 px; perspective and suspension/tire differences add unquantified systematic error. Estimated metres are diagnostic only, not verified surface dimensions.",
+  "conversion_primary": [
+    "https://commons.wikimedia.org/wiki/File:Duett_a-traktor_1.jpg",
+    "https://commons.wikimedia.org/wiki/File:Duett_a-traktor_2.jpg"
+  ],
+  "findings": [
+    "Previous front overhang and crown were excessive relative to axle registration.",
+    "Previous tall side glass left too little rounded P210 roof cap.",
+    "The original rear opening has a flattened crown in a largely planar quarter panel, not an independent tall round mudguard."
+  ]
+}

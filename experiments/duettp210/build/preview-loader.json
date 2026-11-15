@@ -3,8 +3,8 @@
   "loader": "Unchanged vendored Three r128 GLTFLoader used by the Vehicle Lab page",
   "bounds_m": {
     "width": 1.6799999475479126,
-    "height": 1.7150000631809235,
-    "length": 4.365000009536743
+    "height": 1.7500000298023224,
+    "length": 4.099999904632568
   },
   "four_named_hubs": true,
   "independent_paint": true,

@@ -11,7 +11,7 @@ const asset=await new Promise((resolve,reject)=>new context.THREE.GLTFLoader().p
 const scene=asset.scene;scene.updateMatrixWorld(true);
 for(const name of ['body','wheel_fl','wheel_fr','wheel_rl','wheel_rr'])assert.ok(scene.getObjectByName(name),name);
 const box=new context.THREE.Box3().setFromObject(scene),size=box.getSize(new context.THREE.Vector3());
-assert.ok(Math.abs(size.y-1.715)<.002);assert.ok(Math.abs(size.z-4.365)<.002);
+assert.ok(Math.abs(size.y-1.750)<.002);assert.ok(Math.abs(size.z-4.100)<.002);
 const snapshot=[];scene.traverse(o=>{if(o.isMesh&&o.name!=='body')snapshot.push([o,o.material.color.getHex()]);});
 applyBodyPaint(scene,'#719a95');for(const [node,colour] of snapshot)assert.equal(node.material.color.getHex(),colour);
 const report={ok:true,loader:'Unchanged vendored Three r128 GLTFLoader used by the Vehicle Lab page',bounds_m:{width:size.x,height:size.y,length:size.z},four_named_hubs:true,independent_paint:true,browser_webgl_tested:false,physical_ipad_tested:false,scope:'Actual GLB parsed by the preview loader in Node; no claim that the interactive page was browser-rendered.'};

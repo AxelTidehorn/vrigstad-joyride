@@ -1,30 +1,30 @@
-11:20:46 | INFO: Data are loaded, start creating Blender stuff
-11:20:46 | INFO: Blender create Mesh node body
-11:20:46 | INFO: Blender create Mesh node bumper_front
-11:20:46 | INFO: Blender create Mesh node bumper_rear
-11:20:46 | INFO: Blender create Mesh node glass_envelope
-11:20:46 | INFO: Blender create Mesh node glass_rear
-11:20:46 | INFO: Blender create Mesh node grille_backing
-11:20:46 | INFO: Blender create Mesh node grille_surround
-11:20:46 | INFO: Blender create Mesh node lamp_headlights
-11:20:46 | INFO: Blender create Mesh node lamp_front_indicator
-11:20:46 | INFO: Blender create Mesh node lamp_tail
-11:20:46 | INFO: Blender create Mesh node mirror_mount
-11:20:46 | INFO: Blender create Mesh node plate_registration
-11:20:46 | INFO: Blender create Mesh node trim_rear_window_frame
-11:20:46 | INFO: Blender create Mesh node trim_bed_floor
-11:20:46 | INFO: Blender create Mesh node trim_lgf_border
-11:20:46 | INFO: Blender create Mesh node trim_lgf_orange
-11:20:46 | INFO: Blender create Mesh node trim_head_bezel
-11:20:46 | INFO: Blender create Mesh node wheel_fl
-11:20:46 | INFO: Blender create Mesh node trim_rim_fl
-11:20:46 | INFO: Blender create Mesh node wheel_fr
-11:20:46 | INFO: Blender create Mesh node trim_rim_fr
-11:20:46 | INFO: Blender create Mesh node wheel_rl
-11:20:46 | INFO: Blender create Mesh node trim_rim_rl
-11:20:46 | INFO: Blender create Mesh node wheel_rr
-11:20:46 | INFO: Blender create Mesh node trim_rim_rr
-11:20:46 | INFO: glTF import finished in 0.04s
+14:25:21 | INFO: Data are loaded, start creating Blender stuff
+14:25:21 | INFO: Blender create Mesh node body
+14:25:21 | INFO: Blender create Mesh node bumper_front
+14:25:21 | INFO: Blender create Mesh node bumper_rear
+14:25:21 | INFO: Blender create Mesh node glass_envelope
+14:25:21 | INFO: Blender create Mesh node glass_rear
+14:25:21 | INFO: Blender create Mesh node grille_backing
+14:25:21 | INFO: Blender create Mesh node grille_surround
+14:25:21 | INFO: Blender create Mesh node lamp_headlights
+14:25:21 | INFO: Blender create Mesh node lamp_front_indicator
+14:25:21 | INFO: Blender create Mesh node lamp_tail
+14:25:21 | INFO: Blender create Mesh node mirror_mount
+14:25:21 | INFO: Blender create Mesh node plate_registration
+14:25:21 | INFO: Blender create Mesh node trim_rear_window_frame
+14:25:21 | INFO: Blender create Mesh node trim_bed_floor
+14:25:21 | INFO: Blender create Mesh node trim_lgf_border
+14:25:21 | INFO: Blender create Mesh node trim_lgf_orange
+14:25:21 | INFO: Blender create Mesh node trim_head_bezel
+14:25:21 | INFO: Blender create Mesh node wheel_fl
+14:25:21 | INFO: Blender create Mesh node trim_rim_fl
+14:25:21 | INFO: Blender create Mesh node wheel_fr
+14:25:21 | INFO: Blender create Mesh node trim_rim_fr
+14:25:21 | INFO: Blender create Mesh node wheel_rl
+14:25:21 | INFO: Blender create Mesh node trim_rim_rl
+14:25:21 | INFO: Blender create Mesh node wheel_rr
+14:25:21 | INFO: Blender create Mesh node trim_rim_rr
+14:25:21 | INFO: glTF import finished in 0.03s
 {"ok": true, "actual_glb": "duett-p210-epa.glb", "body_mounted_meshes": 16, "body_motion_carries_fixtures": true, "wheel_geometry_independent_of_body_bob": true, "steering_carries_rim_and_spokes": true, "wheel_spin_carries_rim_and_spokes": true, "wheel_hub_position_preserved": true, "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.", "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"}
 Blender 4.3.2
 

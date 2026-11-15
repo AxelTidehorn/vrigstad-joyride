@@ -4,11 +4,11 @@
   "errors": [],
   "warnings": [],
   "meshes": 25,
-  "triangles": 14782,
+  "triangles": 14288,
   "dimensions_m": {
     "width": 1.66,
-    "height": 1.715,
-    "length": 4.365
+    "height": 1.75,
+    "length": 4.1
   },
   "wheelbase_m": 2.6
 }
