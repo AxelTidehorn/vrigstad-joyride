@@ -1,0 +1,14 @@
+
+> test:driving
+> node tests/driving-v4.mjs
+
+Volvo 0–100: 16.01 s 25s gear 4
+volvo 0–100: 11.60 s; reference 11.6 s
+saab 0–100: 8.70 s; reference 8.7 s
+saab95Estate 0–100: 8.80 s; reference 8.8 s
+Braking 79.2→1.8 km/h (m): {
+  asphaltStop: 28.879412073720033,
+  gravelStop: 41.39181208535352,
+  grassStop: 60.81300544265167
+}
+Driving V4: automatic gearboxes, calibrated launches, drift and terrain checks passed.

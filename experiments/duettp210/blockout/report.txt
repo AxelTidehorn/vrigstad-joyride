@@ -1,0 +1,21 @@
+GEOMETRY CHECK: 4 errors, 0 warnings
+  overall size (m): (1.660, 4.160, 1.700)  parts: 15  contact tol: 0.0048
+  [ERROR] FLOATING: [body, glass_envelope[island 0], glass_envelope[island 1], glass_envelope[island 2], glass_rear, trim_bed_floor, trim_rear_window_frame] is not connected to the main body. Closest gap 0.0200 m between body (center (0.000, -0.020, 0.965)) and wheel_fl.
+  [ERROR] FLOATING: [wheel_fr, trim_rim_fr] is not connected to the main body. Closest gap 0.9200 m between wheel_fr (center (0.597, 1.100, 0.335)) and wheel_fl.
+  [ERROR] FLOATING: [wheel_rl, trim_rim_rl] is not connected to the main body. Closest gap 1.9300 m between wheel_rl (center (-0.597, -1.500, 0.335)) and wheel_fl.
+  [ERROR] FLOATING: [wheel_rr, trim_rim_rr] is not connected to the main body. Closest gap 2.2726 m between wheel_rr (center (0.597, -1.500, 0.335)) and wheel_fl.
+  [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-trim_bed_floor flush; body-trim_rear_window_frame embedded 0.020 m; glass_rear-trim_rear_window_frame flush; wheel_fl-trim_rim_fl flush; wheel_fr-trim_rim_fr flush; wheel_rl-trim_rim_rl flush; wheel_rr-trim_rim_rr flush
+  objects:
+    body: dims (1.660, 4.160, 1.470) verts 2340 faces 4676 islands 1
+    glass_envelope: dims (1.427, 0.905, 0.508) verts 194 faces 376 islands 3
+    glass_rear: dims (0.935, 0.018, 0.295) verts 80 faces 156 islands 1
+    trim_bed_floor: dims (1.100, 1.450, 0.014) verts 96 faces 188 islands 1
+    trim_rear_window_frame: dims (1.010, 0.030, 0.370) verts 80 faces 156 islands 1
+    wheel_fl: dims (0.275, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_fl: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+    wheel_fr: dims (0.275, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_fr: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+    wheel_rl: dims (0.275, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_rl: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+    wheel_rr: dims (0.275, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_rr: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1

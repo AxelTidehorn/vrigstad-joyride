@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "model": "duett",
+  "errors": [],
+  "warnings": [],
+  "meshes": 25,
+  "triangles": 12276,
+  "dimensions_m": {
+    "width": 1.66,
+    "height": 1.7,
+    "length": 4.365
+  },
+  "wheelbase_m": 2.6
+}

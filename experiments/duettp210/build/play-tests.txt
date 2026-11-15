@@ -1,0 +1,15 @@
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:58:33] "GET /index.html HTTP/1.1" 200 -
+
+Running 1 test using 1 worker
+
+(node:9923) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:58:34] "GET /index.html?vehicle=duett HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:58:42] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:58:42] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:58:42] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:58:42] "GET /media/vehicles/duett-p210-epa.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:58:42] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✓  1 tests/e2e/duett.spec.js:2:1 › Duett choice loads four GLB wheels, can be entered and driven (59.7s)
+
+  1 passed (1.3m)

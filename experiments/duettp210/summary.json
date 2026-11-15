@@ -1,0 +1,559 @@
+{
+  "vehicle": "Volvo Duett P210 EPA pickup",
+  "baseline": "5c84a17",
+  "branch": "experiment/duett-p210-epa",
+  "checks": {
+    "source-audit": {
+      "source": "build/model.blend",
+      "body": {
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "signed_volume_m3": 5.287790214507446,
+        "connected_components": 1,
+        "self_intersection_candidates": 0,
+        "sample_pairs": [],
+        "triangles": 4984
+      },
+      "meshes": 25,
+      "triangles": 12276,
+      "materials": [
+        "Duett configurable body paint",
+        "Duett smoky glazing",
+        "LGF fluorescent orange",
+        "aged charcoal rubber",
+        "darker bed floor",
+        "headlamp ivory",
+        "indicator amber",
+        "ivory steel wheels",
+        "registration ivory",
+        "restrained satin chrome",
+        "tail red"
+      ],
+      "components": {
+        "glass_envelope": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0022381302773848695,
+          "connected_components": 3,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 348
+        },
+        "glass_rear": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.004925930116786625,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 76
+        },
+        "trim_bed_floor": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.02228100621670536,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 76
+        },
+        "grille_backing": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.01816225610951766,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 76
+        },
+        "grille_restrained": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0021789253632468423,
+          "connected_components": 19,
+          "self_intersection_candidates": 29,
+          "sample_pairs": [
+            [
+              6,
+              160
+            ],
+            [
+              23,
+              805
+            ],
+            [
+              31,
+              182
+            ],
+            [
+              31,
+              808
+            ],
+            [
+              54,
+              834
+            ],
+            [
+              63,
+              179
+            ],
+            [
+              63,
+              212
+            ],
+            [
+              72,
+              226
+            ]
+          ],
+          "triangles": 1668
+        },
+        "bumper_front": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.00819922307693024,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 292
+        },
+        "bumper_rear": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.00560310898449299,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 180
+        },
+        "trim_aged": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.011201838271035958,
+          "connected_components": 3,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 292
+        },
+        "trim_restrained": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.006020823616882798,
+          "connected_components": 4,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 400
+        },
+        "lamp_headlamp": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0029228006586246406,
+          "connected_components": 2,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 248
+        },
+        "lamp_indicator": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.00029390070453450684,
+          "connected_components": 2,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 120
+        },
+        "lamp_tail": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.002138286398180497,
+          "connected_components": 2,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 152
+        },
+        "mirror_restrained": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.002149757517913704,
+          "connected_components": 6,
+          "self_intersection_candidates": 74,
+          "sample_pairs": [
+            [
+              6,
+              33
+            ],
+            [
+              6,
+              43
+            ],
+            [
+              6,
+              187
+            ],
+            [
+              6,
+              194
+            ],
+            [
+              28,
+              65
+            ],
+            [
+              33,
+              61
+            ],
+            [
+              33,
+              170
+            ],
+            [
+              43,
+              170
+            ]
+          ],
+          "triangles": 456
+        },
+        "plate_registration": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0009271837763546901,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 76
+        },
+        "trim_lgf_border": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0008287962244994418,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 8
+        },
+        "trim_lgf_orange": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.00046882309765159286,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 8
+        },
+        "wheel_fl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.05855137399998403,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 512
+        },
+        "trim_rim_fl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0023785393970767424,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 192
+        },
+        "wheel_fr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.05855137397219692,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 512
+        },
+        "trim_rim_fr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0023785393948128103,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 192
+        },
+        "wheel_rl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.058551372976156486,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 512
+        },
+        "trim_rim_rl": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.002378539470149407,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 192
+        },
+        "wheel_rr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.05855137297615648,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 512
+        },
+        "trim_rim_rr": {
+          "nonmanifold_edges": 0,
+          "inconsistent_edges": 0,
+          "degenerate_faces": 0,
+          "signed_volume_m3": 0.0023785394701494036,
+          "connected_components": 1,
+          "self_intersection_candidates": 0,
+          "sample_pairs": [],
+          "triangles": 192
+        }
+      },
+      "glass_body_surface_intersection_candidates": 0,
+      "glass_signed_backing_clearance_m": {
+        "minimum": 0.0023850991565268487,
+        "maximum": 0.004998131653286556,
+        "nonpositive_samples": 0
+      },
+      "wheels": {
+        "wheel_fl": {
+          "hub_world_m": [
+            -0.6499999761581421,
+            1.100000023841858,
+            0.33500000834465027
+          ],
+          "parent": null,
+          "tire_body_intersection_candidates": 0,
+          "fixtures": [
+            "trim_rim_fl"
+          ]
+        },
+        "wheel_fr": {
+          "hub_world_m": [
+            0.6499999761581421,
+            1.100000023841858,
+            0.33500000834465027
+          ],
+          "parent": null,
+          "tire_body_intersection_candidates": 0,
+          "fixtures": [
+            "trim_rim_fr"
+          ]
+        },
+        "wheel_rl": {
+          "hub_world_m": [
+            -0.6499999761581421,
+            -1.5,
+            0.33500000834465027
+          ],
+          "parent": null,
+          "tire_body_intersection_candidates": 0,
+          "fixtures": [
+            "trim_rim_rl"
+          ]
+        },
+        "wheel_rr": {
+          "hub_world_m": [
+            0.6499999761581421,
+            -1.5,
+            0.33500000834465027
+          ],
+          "parent": null,
+          "tire_body_intersection_candidates": 0,
+          "fixtures": [
+            "trim_rim_rr"
+          ]
+        }
+      },
+      "overall_xyz_m": [
+        1.659999966621399,
+        4.365000009536743,
+        1.7000000774860382
+      ],
+      "overhangs_m": {
+        "front": 1.0575000047683716,
+        "rear": 0.7074999809265137
+      },
+      "axle_distance_m": 2.600000023841858,
+      "body_paint_material_count": 1,
+      "wheel_fixtures_own_hub": true,
+      "all_fixed_fixtures_follow_body": true,
+      "lamp_tops_z_m": 1.0320000648498535,
+      "bed": {
+        "floor_z_m": 0.76,
+        "depth_m": 0.32000000000000006,
+        "interior_length_m": 1.5299999999999998,
+        "interior_width_m": 1.14,
+        "vertical_ray_probes": [
+          {
+            "x": -0.4,
+            "y": -1.85,
+            "first_hit_z_m": 0.7599999904632568
+          },
+          {
+            "x": -0.4,
+            "y": -1.25,
+            "first_hit_z_m": 0.7599999904632568
+          },
+          {
+            "x": -0.4,
+            "y": -0.7,
+            "first_hit_z_m": 0.7599999904632568
+          },
+          {
+            "x": 0,
+            "y": -1.85,
+            "first_hit_z_m": 0.7599999904632568
+          },
+          {
+            "x": 0,
+            "y": -1.25,
+            "first_hit_z_m": 0.7599997520446777
+          },
+          {
+            "x": 0,
+            "y": -0.7,
+            "first_hit_z_m": 0.7600002288818359
+          },
+          {
+            "x": 0.4,
+            "y": -1.85,
+            "first_hit_z_m": 0.7599999904632568
+          },
+          {
+            "x": 0.4,
+            "y": -1.25,
+            "first_hit_z_m": 0.7599999904632568
+          },
+          {
+            "x": 0.4,
+            "y": -0.7,
+            "first_hit_z_m": 0.7599999904632568
+          }
+        ],
+        "upward_open": true
+      },
+      "ok": true
+    },
+    "geometry": {
+      "ok": true,
+      "model": "duett",
+      "errors": [],
+      "warnings": [],
+      "meshes": 25,
+      "triangles": 12276,
+      "dimensions_m": {
+        "width": 1.66,
+        "height": 1.7,
+        "length": 4.365
+      },
+      "wheelbase_m": 2.6
+    },
+    "pose": {
+      "ok": true,
+      "actual_glb": "duett-p210-epa.glb",
+      "body_mounted_meshes": 16,
+      "body_motion_carries_fixtures": true,
+      "wheel_geometry_independent_of_body_bob": true,
+      "steering_carries_rim_and_spokes": true,
+      "wheel_spin_carries_rim_and_spokes": true,
+      "wheel_hub_position_preserved": true,
+      "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.",
+      "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"
+    },
+    "reimport": {
+      "ok": true,
+      "blender_version": "4.3.2",
+      "mesh_objects": 25,
+      "materials": 11,
+      "file_bytes": 233264,
+      "import_seconds": 0.5232643380004447,
+      "checks": "Reimported actual GLB and ran unchanged Blender body/wheel gate. This is not a browser FPS benchmark."
+    },
+    "protected-files": {
+      "baseline": "5c84a17",
+      "files": {
+        "media/vehicles/micra-k11.glb": {
+          "unchanged": true,
+          "sha256": "768f70827446e6adb6aea665e52205ee3683f930ca2fbbc8b48eb39752d45b8a"
+        },
+        "media/vehicles/volvo240.glb": {
+          "unchanged": true,
+          "sha256": "3f1ce4cc1d0f787451340abb28cd0037599bd0204946e23cc21320db883d0c58"
+        },
+        "media/vehicles/xc70-police.glb": {
+          "unchanged": true,
+          "sha256": "28f35453d4e1797b8ae79cb514a75226dc3542f36348ce200612efb052f52913"
+        },
+        "media/vehicles/xc70-civilian.glb": {
+          "unchanged": true,
+          "sha256": "e1e27434bf113dfb5e70dc13778c92fbf216c56aa509a028874c039509b5940c"
+        },
+        "media/vehicles/saab900-t16.glb": {
+          "unchanged": true,
+          "sha256": "15d155084df404338281478cc11422141c7e8b092a26ab08d6e13cde46b71894"
+        },
+        "src/physics/body-motion.mjs": {
+          "unchanged": true,
+          "sha256": "bedfb732e154936c0b4bace35f82bd593a3271724feabf759e22b560573f9cce"
+        },
+        "src/physics/driving-v4.mjs": {
+          "unchanged": true,
+          "sha256": "914b4e81f412200f0cef14dad278db1eee44e36ab242488624c74dba6826be9a"
+        }
+      },
+      "ok": true
+    }
+  },
+  "modeler": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "tests": {
+    "duett_browser": "1 passed",
+    "default_game_map_smoke": "5 passed",
+    "validator_unit": "5 passed",
+    "vehicle_integration": "passed",
+    "driving_regression": "passed"
+  },
+  "blender_modeler_commit": "c8f245982108e2627972768d4311cbe172b58137",
+  "reference_comparison": "Manual visual comparison to same Hova EPA front/rear perspective photographs. No exact orthographic photo or automated IoU. See references.md.",
+  "visual_review": "All seven actual final Blender views inspected; user approval pending",
+  "physical_ipad_tested": false,
+  "performance": "No hardware FPS benchmark; GLB 12,276 triangles, 25 meshes and 11 simple materials",
+  "files_sha256": {
+    "experiments/duettp210/model.py": "d267485fd91053bba5b792f11ce999cacc4fefcd6f3619b94e49df88a8a51a71",
+    "experiments/duettp210/parameters.json": "c70355d4e4265fe5c7e854882aea29d47e30802840fa674a786012bae25973e4",
+    "experiments/duettp210/build/model.blend": "d93ef1193c5b701122b2f618bf901f30072b62f67ede2f619364042ac07d2920",
+    "media/vehicles/duett-p210-epa.glb": "d8eb47c3d2e217da5d029e816e3184039f5b5b1e866648fdc6c8ecba971e7d1e"
+  }
+}

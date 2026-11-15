@@ -1,0 +1,399 @@
+{
+  "objects": {
+    "body": {
+      "verts": 2340,
+      "faces": 4676,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 5.291343391,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.66,
+        4.16,
+        1.47
+      ],
+      "islands": 1
+    },
+    "glass_envelope": {
+      "verts": 194,
+      "faces": 376,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002408298,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.4265,
+        0.9055,
+        0.5079
+      ],
+      "islands": 3
+    },
+    "glass_rear": {
+      "verts": 80,
+      "faces": 156,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.004865003,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.935,
+        0.018,
+        0.295
+      ],
+      "islands": 1
+    },
+    "trim_bed_floor": {
+      "verts": 96,
+      "faces": 188,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.022238066,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.1,
+        1.45,
+        0.014
+      ],
+      "islands": 1
+    },
+    "trim_rear_window_frame": {
+      "verts": 80,
+      "faces": 156,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.010899496,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.01,
+        0.03,
+        0.37
+      ],
+      "islands": 1
+    },
+    "wheel_fl": {
+      "verts": 258,
+      "faces": 512,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.058101885,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.275,
+        0.67,
+        0.67
+      ],
+      "islands": 1
+    },
+    "trim_rim_fl": {
+      "verts": 98,
+      "faces": 192,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002378539,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.027,
+        0.43,
+        0.43
+      ],
+      "islands": 1
+    },
+    "wheel_fr": {
+      "verts": 258,
+      "faces": 512,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.058101885,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.275,
+        0.67,
+        0.67
+      ],
+      "islands": 1
+    },
+    "trim_rim_fr": {
+      "verts": 98,
+      "faces": 192,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002378539,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.027,
+        0.43,
+        0.43
+      ],
+      "islands": 1
+    },
+    "wheel_rl": {
+      "verts": 258,
+      "faces": 512,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.058101885,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.275,
+        0.67,
+        0.67
+      ],
+      "islands": 1
+    },
+    "trim_rim_rl": {
+      "verts": 98,
+      "faces": 192,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002378539,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.027,
+        0.43,
+        0.43
+      ],
+      "islands": 1
+    },
+    "wheel_rr": {
+      "verts": 258,
+      "faces": 512,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.058101885,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.275,
+        0.67,
+        0.67
+      ],
+      "islands": 1
+    },
+    "trim_rim_rr": {
+      "verts": 98,
+      "faces": 192,
+      "open_boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_verts": 0,
+      "loose_edges": 0,
+      "degenerate_faces": 0,
+      "ngons": 0,
+      "closed": true,
+      "volume": 0.002378539,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.027,
+        0.43,
+        0.43
+      ],
+      "islands": 1
+    }
+  },
+  "errors": [
+    "FLOATING: [body, glass_envelope[island 0], glass_envelope[island 1], glass_envelope[island 2], glass_rear, trim_bed_floor, trim_rear_window_frame] is not connected to the main body. Closest gap 0.0200 m between body (center (0.000, -0.020, 0.965)) and wheel_fl.",
+    "FLOATING: [wheel_fr, trim_rim_fr] is not connected to the main body. Closest gap 0.9200 m between wheel_fr (center (0.597, 1.100, 0.335)) and wheel_fl.",
+    "FLOATING: [wheel_rl, trim_rim_rl] is not connected to the main body. Closest gap 1.9300 m between wheel_rl (center (-0.597, -1.500, 0.335)) and wheel_fl.",
+    "FLOATING: [wheel_rr, trim_rim_rr] is not connected to the main body. Closest gap 2.2726 m between wheel_rr (center (0.597, -1.500, 0.335)) and wheel_fl."
+  ],
+  "warnings": [],
+  "info": [
+    "Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-trim_bed_floor flush; body-trim_rear_window_frame embedded 0.020 m; glass_rear-trim_rear_window_frame flush; wheel_fl-trim_rim_fl flush; wheel_fr-trim_rim_fr flush; wheel_rl-trim_rim_rl flush; wheel_rr-trim_rim_rr flush"
+  ],
+  "units": "m",
+  "overall": {
+    "min": [
+      -0.8299999833106995,
+      -2.0999999046325684,
+      -2.9802322387695312e-08
+    ],
+    "max": [
+      0.8299999833106995,
+      2.059999942779541,
+      1.7000000476837158
+    ],
+    "size": [
+      1.659999966621399,
+      4.159999847412109,
+      1.7000000476837158
+    ],
+    "contact_tolerance": 0.004790740996248555,
+    "parts": 15
+  },
+  "contacts": [
+    {
+      "a": "body",
+      "b": "glass_envelope[island 0]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 1]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "glass_envelope[island 2]",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_bed_floor",
+      "depth": 0.0,
+      "expected": false
+    },
+    {
+      "a": "body",
+      "b": "trim_rear_window_frame",
+      "depth": 0.02005939371883869,
+      "expected": false
+    },
+    {
+      "a": "glass_rear",
+      "b": "trim_rear_window_frame",
+      "depth": 0.0059999823570251465,
+      "expected": false
+    },
+    {
+      "a": "wheel_fl",
+      "b": "trim_rim_fl",
+      "depth": 1.4901161193847656e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_fr",
+      "b": "trim_rim_fr",
+      "depth": 2.9802322387695312e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_rl",
+      "b": "trim_rim_rl",
+      "depth": 1.4901161193847656e-08,
+      "expected": false
+    },
+    {
+      "a": "wheel_rr",
+      "b": "trim_rim_rr",
+      "depth": 1.4901161193847656e-08,
+      "expected": false
+    }
+  ],
+  "summary": {
+    "errors": 4,
+    "warnings": 0
+  }
+}

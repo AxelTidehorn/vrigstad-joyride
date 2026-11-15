@@ -86,3 +86,12 @@ projection, wheel anchors and measured body control curves. Micra's separate
 `compare_profile.py` reports perspective estimates in source pixels, not an IoU
 or factory millimetre certificate. Backlight shape and frozen wheel geometry
 are checked independently of rendering; see the experiment's current report.
+
+## Duett P210 EPA pickup experiment
+
+`experiments/duettp210` uses the same Modeler / strict exporter / validator flow
+with unique P210 sections, a short converted cab and an actual open-bed cavity.
+See its README and references.md for reproducible commands, the verified
+2.600 m wheelbase, conversion estimates and visual limitations. The separate
+`duett` registration borrows existing EPA handling; it does not tune physics
+or replace the legacy EPA. `?vehicle=duett` selects its review showcase slot.

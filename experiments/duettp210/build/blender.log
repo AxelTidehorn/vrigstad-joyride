@@ -1,0 +1,43 @@
+CUT START open bed cavity 4296
+CUT END open bed cavity 3952
+CUT START closed full-depth wheel well 3952
+CUT END closed full-depth wheel well 3910
+CUT START closed full-depth wheel well 3910
+CUT END closed full-depth wheel well 3868
+CUT START closed full-depth wheel well 3868
+CUT END closed full-depth wheel well 3825
+CUT START closed full-depth wheel well 3825
+CUT END closed full-depth wheel well 3782
+GEOMETRY CHECK: 0 errors, 0 warnings
+  overall size (m): (1.660, 4.365, 1.700)  parts: 58  contact tol: 0.0050
+  [INFO] Contacts: body-glass_envelope[island 0] flush; body-glass_envelope[island 1] flush; body-glass_envelope[island 2] flush; body-glass_rear flush; body-trim_bed_floor flush; body-grille_backing embedded 0.033 m; body-grille_restrained[island 0] flush; body-grille_restrained[island 2] flush; body-grille_restrained[island 3] flush; body-grille_restrained[island 5] flush; body-grille_restrained[island 6] flush; body-grille_restrained[island 7] flush; body-grille_restrained[island 8] flush; body-grille_restrained[island 9] flush; body-grille_restrained[island 10] flush; body-grille_restrained[island 11] flush; body-grille_restrained[island 13] flush; body-grille_restrained[island 14] flush; body-grille_restrained[island 15] flush; body-grille_restrained[island 16] flush; body-grille_restrained[island 17] flush; body-grille_restrained[island 18] flush; body-bumper_front embedded 0.017 m; body-bumper_rear embedded 0.021 m; body-trim_aged[island 0] embedded 0.021 m; body-trim_aged[island 1] embedded 0.048 m; body-trim_aged[island 2] embedded 0.048 m; body-trim_restrained[island 0] embedded 0.083 m; body-trim_restrained[island 1] embedded 0.083 m; body-trim_restrained[island 2] embedded 0.015 m; body-trim_restrained[island 3] embedded 0.015 m; body-lamp_headlamp[island 0] embedded 0.033 m; body-lamp_headlamp[island 1] embedded 0.033 m; body-lamp_indicator[island 0] embedded 0.052 m; body-lamp_indicator[island 1] embedded 0.052 m; body-lamp_tail[island 0] embedded 0.053 m; body-lamp_tail[island 1] embedded 0.053 m; body-mirror_restrained[island 0] embedded 0.067 m; body-mirror_restrained[island 3] embedded 0.067 m; body-plate_registration embedded 0.010 m; body-trim_lgf_border flush; body-wheel_fl embedded 0.020 m; body-wheel_fr embedded 0.020 m; body-wheel_rl embedded 0.020 m; body-wheel_rr embedded 0.020 m; glass_envelope[island 0]-mirror_restrained[island 3] flush; glass_envelope[island 1]-mirror_restrained[island 0] flush; glass_rear-trim_aged[island 0] flush; grille_backing-grille_restrained[island 0] flush; grille_backing-grille_restrained[island 1] flush; grille_backing-grille_restrained[island 2] embedded 0.014 m; grille_backing-grille_restrained[island 3] flush; grille_backing-grille_restrained[island 4] flush; grille_backing-grille_restrained[island 5] embedded 0.014 m; grille_backing-grille_restrained[island 6] flush; grille_backing-grille_restrained[island 7] embedded 0.022 m; grille_backing-grille_restrained[island 8] embedded 0.017 m; grille_backing-grille_restrained[island 9] embedded 0.013 m; grille_backing-grille_restrained[island 10] flush; grille_backing-grille_restrained[island 11] flush; grille_backing-grille_restrained[island 12] flush; grille_backing-grille_restrained[island 13] flush; grille_backing-grille_restrained[island 14] flush; grille_backing-grille_restrained[island 15] embedded 0.013 m; grille_backing-grille_restrained[island 16] embedded 0.017 m; grille_backing-grille_restrained[island 17] embedded 0.022 m; grille_backing-grille_restrained[island 18] flush; grille_restrained[island 0]-grille_restrained[island 3] flush; grille_restrained[island 0]-grille_restrained[island 6] flush; grille_restrained[island 0]-grille_restrained[island 7] flush; grille_restrained[island 0]-grille_restrained[island 8] flush; grille_restrained[island 0]-grille_restrained[island 9] flush; grille_restrained[island 0]-grille_restrained[island 10] flush; grille_restrained[island 0]-grille_restrained[island 11] flush; grille_restrained[island 0]-grille_restrained[island 12] flush; grille_restrained[island 1]-grille_restrained[island 4] flush; grille_restrained[island 1]-grille_restrained[island 6] flush; grille_restrained[island 1]-grille_restrained[island 7] flush; grille_restrained[island 1]-grille_restrained[island 8] flush; grille_restrained[island 1]-grille_restrained[island 9] flush; grille_restrained[island 1]-grille_restrained[island 10] flush; grille_restrained[island 1]-grille_restrained[island 11] flush; grille_restrained[island 1]-grille_restrained[island 12] flush; grille_restrained[island 3]-grille_restrained[island 12] flush; grille_restrained[island 3]-grille_restrained[island 13] flush; grille_restrained[island 3]-grille_restrained[island 14] flush; grille_restrained[island 3]-grille_restrained[island 15] flush; grille_restrained[island 3]-grille_restrained[island 16] flush; grille_restrained[island 3]-grille_restrained[island 17] flush; grille_restrained[island 3]-grille_restrained[island 18] flush; grille_restrained[island 4]-grille_restrained[island 12] flush; grille_restrained[island 4]-grille_restrained[island 13] flush; grille_restrained[island 4]-grille_restrained[island 14] flush; grille_restrained[island 4]-grille_restrained[island 15] flush; grille_restrained[island 4]-grille_restrained[island 16] flush; grille_restrained[island 4]-grille_restrained[island 17] flush; grille_restrained[island 4]-grille_restrained[island 18] flush; trim_restrained[island 0]-lamp_headlamp[island 0] embedded 0.015 m; trim_restrained[island 1]-lamp_headlamp[island 1] embedded 0.015 m; mirror_restrained[island 0]-mirror_restrained[island 1] flush; mirror_restrained[island 1]-mirror_restrained[island 2] embedded 0.015 m; mirror_restrained[island 3]-mirror_restrained[island 4] flush; mirror_restrained[island 4]-mirror_restrained[island 5] embedded 0.015 m; trim_lgf_border-trim_lgf_orange flush; wheel_fl-trim_rim_fl flush; wheel_fr-trim_rim_fr flush; wheel_rl-trim_rim_rl flush; wheel_rr-trim_rim_rr flush
+  objects:
+    body: dims (1.660, 4.160, 1.470) verts 2494 faces 4984 islands 1
+    glass_envelope: dims (1.425, 0.828, 0.534) verts 180 faces 348 islands 3
+    glass_rear: dims (0.935, 0.018, 0.295) verts 40 faces 76 islands 1
+    trim_bed_floor: dims (1.100, 1.450, 0.014) verts 40 faces 76 islands 1
+    grille_backing: dims (1.060, 0.065, 0.270) verts 40 faces 76 islands 1
+    grille_restrained: dims (1.055, 0.064, 0.272) verts 872 faces 1668 islands 19
+    bumper_front: dims (1.615, 0.249, 0.090) verts 148 faces 292 islands 1
+    bumper_rear: dims (1.512, 0.129, 0.070) verts 92 faces 180 islands 1
+    trim_aged: dims (1.010, 1.164, 0.370) verts 152 faces 292 islands 3
+    trim_restrained: dims (1.595, 2.263, 0.238) verts 208 faces 400 islands 4
+    lamp_headlamp: dims (1.514, 0.045, 0.204) verts 128 faces 248 islands 2
+    lamp_indicator: dims (1.460, 0.030, 0.080) verts 64 faces 120 islands 2
+    lamp_tail: dims (1.590, 0.055, 0.170) verts 80 faces 152 islands 2
+    mirror_restrained: dims (1.645, 0.130, 0.287) verts 240 faces 456 islands 6
+    plate_registration: dims (0.310, 0.030, 0.100) verts 40 faces 76 islands 1
+    trim_lgf_border: dims (0.370, 0.014, 0.320) verts 6 faces 8 islands 1
+    trim_lgf_orange: dims (0.285, 0.014, 0.235) verts 6 faces 8 islands 1
+    wheel_fl: dims (0.315, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_fl: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+    wheel_fr: dims (0.315, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_fr: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+    wheel_rl: dims (0.315, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_rl: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+    wheel_rr: dims (0.315, 0.670, 0.670) verts 258 faces 512 islands 1
+    trim_rim_rr: dims (0.027, 0.430, 0.430) verts 98 faces 192 islands 1
+Info: Saved "model.blend"
+Blender 4.3.2
+
+Blender quit
