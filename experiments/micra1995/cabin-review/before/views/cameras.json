@@ -1,0 +1,53 @@
+{
+  "views": [
+    [
+      "side",
+      90,
+      0,
+      true
+    ],
+    [
+      "front",
+      180,
+      0,
+      true
+    ],
+    [
+      "rear",
+      0,
+      0,
+      true
+    ],
+    [
+      "front_three_quarter",
+      135,
+      18,
+      false
+    ],
+    [
+      "rear_three_quarter",
+      35,
+      18,
+      false
+    ],
+    [
+      "high_three_quarter",
+      135,
+      38,
+      true
+    ]
+  ],
+  "focus": [
+    [
+      -1,
+      -2.05,
+      0
+    ],
+    [
+      1,
+      2.05,
+      1.53
+    ]
+  ],
+  "renderer": "Cycles16"
+}

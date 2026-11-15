@@ -1,0 +1,15 @@
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:46:03] "GET /index.html HTTP/1.1" 200 -
+
+Running 1 test using 1 worker
+
+(node:8776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:46:05] "GET /index.html?vehicle=micra HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:46:14] "GET /media/vehicles/volvo240.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:46:14] "GET /media/vehicles/xc70-civilian.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:46:14] "GET /media/vehicles/saab900-t16.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:46:15] "GET /media/vehicles/micra-k11.glb HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [15/Nov/2026 10:46:15] "GET /media/vehicles/xc70-police.glb HTTP/1.1" 200 -
+  ✓  1 tests/e2e/micra.spec.js:2:1 › Micra choice loads four GLB wheels, can be entered and driven (48.2s)
+
+  1 passed (1.1m)

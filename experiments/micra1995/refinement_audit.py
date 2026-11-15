@@ -23,7 +23,7 @@ def pane_report(o):
   angles=[math.degrees(math.acos(float(np.clip(np.dot(f.normal,n),-1,1)))) for f in broad]
   front_xyz=np.array([tuple(v.co) for f in broad for v in f.verts]);dist=(front_xyz-front_xyz.mean(axis=0))@n
   signature=[tuple(sorted(tuple(round(x,6) for x in v.co) for v in f.verts)) for f in fs]
-  panes.append({'centre_m':c.tolist(),'vertices':len(pane),'triangles':len(fs),'visible_face_max_angle_from_PCA_deg':max(angles),'visible_sheet_PCA_max_residual_mm':float(np.max(abs(dist))*1000),'visible_sheet_PCA_rms_mm':float(np.sqrt(np.mean(dist*dist))*1000),'duplicate_faces':len(signature)-len(set(signature))})
+  panes.append({'centre_m':c.tolist(),'bounds_xyz_m':{'min':xyz.min(axis=0).tolist(),'max':xyz.max(axis=0).tolist()},'vertices':len(pane),'triangles':len(fs),'visible_face_max_angle_from_PCA_deg':max(angles),'visible_sheet_PCA_max_residual_mm':float(np.max(abs(dist))*1000),'visible_sheet_PCA_rms_mm':float(np.sqrt(np.mean(dist*dist))*1000),'duplicate_faces':len(signature)-len(set(signature))})
  bm.free()
  rear=[p for p in panes if abs(p['centre_m'][0])<.1 and p['centre_m'][1]<-.9]
  assert len(panes)==6 and len(rear)==1
@@ -34,7 +34,7 @@ with bpy.data.libraries.load(str(baseline),link=False) as (src,dst):names=tuple(
 old={n:o for n,o in zip(names,dst.objects) if o and o.type=='MESH'}
 def cloud(o):return sorted(tuple(round(x,6) for x in world(o)@v.co) for v in o.data.vertices)
 wheels={n:{'unchanged':cloud(o)==cloud(current[n]),'origin_delta_m':float((world(o).translation-world(current[n]).translation).length)} for n,o in old.items() if n.startswith(('wheel_','trim_rim_'))}
-report={'baseline_commit':'9060015f15f6ae27ce96ef5e3c299e6c0e53b1fd','baseline_blend_sha256':hashlib.sha256(baseline.read_bytes()).hexdigest(),'before':pane_report(old['glass_envelope']),'after':pane_report(current['glass_envelope']),'protected_wheels':wheels,'units':'actual mesh metres/mm/degrees; not errors against photographs'}
+report={'baseline_commit':sys.argv[3] if len(sys.argv)>3 else '9060015f15f6ae27ce96ef5e3c299e6c0e53b1fd','baseline_blend_sha256':hashlib.sha256(baseline.read_bytes()).hexdigest(),'before':pane_report(old['glass_envelope']),'after':pane_report(current['glass_envelope']),'protected_wheels':wheels,'units':'actual mesh metres/mm/degrees; not errors against photographs'}
 def materials(objects):
  result={}
  for o in objects.values():
@@ -42,7 +42,8 @@ def materials(objects):
    bs=m.node_tree.nodes.get('Principled BSDF')
    result[re.sub(r'\.\d{3}$','',m.name)]={'colour':list(bs.inputs['Base Color'].default_value),'roughness':float(bs.inputs['Roughness'].default_value),'metallic':float(bs.inputs['Metallic'].default_value)}
  return result
+report['protected_front_parts']={n:cloud(o)==cloud(current[n]) for n,o in old.items() if n.startswith(('lamp_head','lamp_indicator','grille','bumper_front','plate_registration'))}
 report['materials_unchanged']=materials(old)==materials(current)
 report['mesh_names_preserved']=old.keys()==current.keys()
-report['ok']=all(x['unchanged'] and x['origin_delta_m']<1e-6 for x in wheels.values()) and report['after']['rear']['duplicate_faces']==0 and report['materials_unchanged'] and report['mesh_names_preserved']
+report['ok']=all(report['protected_front_parts'].values()) and all(x['unchanged'] and x['origin_delta_m']<1e-6 for x in wheels.values()) and report['after']['rear']['duplicate_faces']==0 and report['materials_unchanged'] and report['mesh_names_preserved']
 out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report));assert report['ok']

@@ -35,3 +35,6 @@ comparison reports estimated source-photo pixels, not verified millimetres.
 Manual trace uncertainty is approximately ±6 pixels and wheel anchors ±4 pixels.
 The apparent photographic overhangs differ from nominal measurements; that
 perspective bias is not used to move the hubs. Photograph linked, not redistributed.
+
+## Roof/window pass
+See `cabin-review/README.md` for observations against the same early three-door reference, measured mesh changes, and remaining corner-radius limitations. No new orthographic source or verified reference radius was obtained.
