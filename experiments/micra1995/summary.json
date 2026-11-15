@@ -1,7 +1,7 @@
 {
   "vehicle": "1995 European Nissan Micra K11 three-door, pre-facelift",
-  "base_commit": "5ad10ae2e19e9b6d1f23df29bccdb4ba4c5dc8ba",
-  "branch": "experiment/micra-k11-compact-nose",
+  "base_commit": "ee321f829aca8d8fb867c7aeee40af7837dfecdd",
+  "branch": "experiment/micra-k11-roof-windows",
   "checks": {
     "geometry": {
       "ok": true,
@@ -9,7 +9,7 @@
       "errors": [],
       "warnings": [],
       "meshes": 24,
-      "triangles": 17316,
+      "triangles": 18716,
       "dimensions_m": {
         "width": 1.585,
         "height": 1.43,
@@ -23,14 +23,14 @@
         "nonmanifold_edges": 0,
         "inconsistent_edges": 0,
         "degenerate_faces": 0,
-        "signed_volume_m3": 4.843772833635686,
+        "signed_volume_m3": 4.862643410078167,
         "connected_components": 1,
         "self_intersection_candidates": 0,
         "sample_pairs": [],
-        "triangles": 5056
+        "triangles": 5592
       },
       "meshes": 24,
-      "triangles": 17316,
+      "triangles": 18716,
       "materials": [
         "Micra configurable body paint",
         "amber indicators",
@@ -47,11 +47,11 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.005548652597401685,
+          "signed_volume_m3": 0.005499516251882462,
           "connected_components": 6,
           "self_intersection_candidates": 0,
           "sample_pairs": [],
-          "triangles": 1112
+          "triangles": 1256
         },
         "bumper_rear": {
           "nonmanifold_edges": 0,
@@ -127,44 +127,44 @@
           "nonmanifold_edges": 0,
           "inconsistent_edges": 0,
           "degenerate_faces": 0,
-          "signed_volume_m3": 0.0011179783214282854,
-          "connected_components": 214,
-          "self_intersection_candidates": 4648,
+          "signed_volume_m3": 0.0011137319133906756,
+          "connected_components": 250,
+          "self_intersection_candidates": 5818,
           "sample_pairs": [
             [
               0,
-              278
+              2612
             ],
             [
               0,
-              2096
+              2620
             ],
             [
-              0,
-              2097
+              1,
+              2613
+            ],
+            [
+              2,
+              2022
+            ],
+            [
+              2,
+              2614
+            ],
+            [
+              2,
+              2618
             ],
             [
               4,
-              279
+              15
             ],
             [
-              5,
-              2101
-            ],
-            [
-              5,
-              2103
-            ],
-            [
-              5,
-              2104
-            ],
-            [
-              6,
-              262
+              4,
+              2021
             ]
           ],
-          "triangles": 4280
+          "triangles": 5000
         },
         "trim_handles": {
           "nonmanifold_edges": 0,
@@ -309,8 +309,8 @@
       },
       "glass_body_surface_intersection_candidates": 0,
       "glass_signed_backing_clearance_m": {
-        "minimum": 0.002075525262625888,
-        "maximum": 0.004999509662407397,
+        "minimum": 0.0020592543078237213,
+        "maximum": 0.004999508851681189,
         "nonpositive_samples": 0
       },
       "wheels": {
@@ -396,8 +396,8 @@
       "blender_version": "4.3.2",
       "mesh_objects": 24,
       "materials": 9,
-      "file_bytes": 342408,
-      "import_seconds": 0.17671459499979392,
+      "file_bytes": 369336,
+      "import_seconds": 0.27760985200075083,
       "checks": "Reimported actual GLB and ran unchanged Blender body/wheel gate. This is not a browser FPS benchmark."
     }
   },
@@ -405,7 +405,7 @@
     "current_micra_driving": {
       "passed": true,
       "scope": "current asset",
-      "log": "build/nose-play-tests.txt"
+      "log": "build/cabin-play-tests.txt"
     },
     "refinement_browser": {
       "passed": true,
@@ -429,18 +429,18 @@
     }
   },
   "files_sha256": {
-    "experiments/micra1995/model.py": "9cfc8cb36a6e974daab2d8c0383eff74e3b34cb5feccf6427b6c687116795305",
-    "experiments/micra1995/parameters.json": "bee7fa8a4e3c03856dfcb216c50d2c3ecf5572a310de4585f0a51cf3a6c368ea",
-    "experiments/micra1995/build/model.blend": "41715d27672e53bfffb70dd44c8defaee263d67556c9289729fa5ed765a2d95c",
-    "media/vehicles/micra-k11.glb": "035774e095bc9dc2ccaee2cb4d109a27bcd85d36fe7d5fe2d24e0ca102314281"
+    "experiments/micra1995/model.py": "2793eb581cddbec9de7c5dcc89d9bae6d5532975c29a7460b9e5803c81b4c7b1",
+    "experiments/micra1995/parameters.json": "45a4a6b5c0092ca1839aba849505ee00df4d25c035b8b3b39da9d8ebd7537a17",
+    "experiments/micra1995/build/model.blend": "35d141f1eeffac1c9598dffdeb5053dc9f2bd8d57961d885609e43430b5309ce",
+    "media/vehicles/micra-k11.glb": "768f70827446e6adb6aea665e52205ee3683f930ca2fbbc8b48eb39752d45b8a"
   },
-  "reference_accuracy": "Current hood reviewed manually against near-side pre-facelift three-door photograph; perspective prevents exact orthographic error measurement. Old trace metrics below are historical only.",
+  "reference_accuracy": "Current cabin reviewed manually against near-side pre-facelift three-door photograph; perspective prevents exact orthographic error measurement. Old trace metrics below are historical only.",
   "browser_retry": {
     "initial_run": "build/refinement-browser-tests.txt",
     "isolated_retry": "build/refinement-retry-tests.txt",
     "reason": "Existing default-game driving smoke exceeded 120 s total under software WebGL; rerun isolated with 240 s runner timeout, assertions unchanged"
   },
-  "historical_unchanged_glass_shape": {
+  "historical_glass_shape": {
     "baseline_commit": "9060015f15f6ae27ce96ef5e3c299e6c0e53b1fd",
     "baseline_blend_sha256": "9c15513a9d33d7aca8560d3308e3c53da85b1018f8badca1ed0bb22269e8cd2f",
     "before": {
@@ -672,6 +672,414 @@
     "mesh_names_preserved": true,
     "ok": true
   },
+  "current_cabin_measurements": {
+    "baseline_commit": "ee321f829aca8d8fb867c7aeee40af7837dfecdd",
+    "baseline_blend_sha256": "41715d27672e53bfffb70dd44c8defaee263d67556c9289729fa5ed765a2d95c",
+    "before": {
+      "panes": [
+        {
+          "centre_m": [
+            0.6468100354075432,
+            -0.9728079192340374,
+            1.1262021258473396
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              0.60955810546875,
+              -1.3782495260238647,
+              0.9217596650123596
+            ],
+            "max": [
+              0.6879200339317322,
+              -0.5639864802360535,
+              1.3492954969406128
+            ]
+          },
+          "vertices": 80,
+          "triangles": 156,
+          "visible_face_max_angle_from_PCA_deg": 2.997199396123562,
+          "visible_sheet_PCA_max_residual_mm": 2.5790661177044343,
+          "visible_sheet_PCA_rms_mm": 1.2106245564569058,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            -3.3553410736494904e-10,
+            0.3751113823290621,
+            1.1165262658274575
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              -0.6353362798690796,
+              0.05680067464709282,
+              0.9202609062194824
+            ],
+            "max": [
+              0.6353362798690796,
+              0.6646945476531982,
+              1.3514978885650635
+            ]
+          },
+          "vertices": 178,
+          "triangles": 352,
+          "visible_face_max_angle_from_PCA_deg": 72.41275188630705,
+          "visible_sheet_PCA_max_residual_mm": 32.19046297252921,
+          "visible_sheet_PCA_rms_mm": 16.49935962660931,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            -3.4206983210674046e-09,
+            -1.471345986499161,
+            1.146640774167952
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              -0.6125990152359009,
+              -1.6666641235351562,
+              0.9103228449821472
+            ],
+            "max": [
+              0.6125990152359009,
+              -1.3041971921920776,
+              1.3550949096679688
+            ]
+          },
+          "vertices": 122,
+          "triangles": 240,
+          "visible_face_max_angle_from_PCA_deg": 19.767182197316806,
+          "visible_sheet_PCA_max_residual_mm": 30.28128744067428,
+          "visible_sheet_PCA_rms_mm": 16.12453342031458,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            -0.6468100361526012,
+            -0.9728079192340374,
+            1.1262021340429782
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              -0.6879200339317322,
+              -1.3782495260238647,
+              0.9217596650123596
+            ],
+            "max": [
+              -0.60955810546875,
+              -0.5639864802360535,
+              1.3492954969406128
+            ]
+          },
+          "vertices": 80,
+          "triangles": 156,
+          "visible_face_max_angle_from_PCA_deg": 2.9971752437939276,
+          "visible_sheet_PCA_max_residual_mm": 2.579062400324926,
+          "visible_sheet_PCA_rms_mm": 1.2106213258019203,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            0.6529411132688876,
+            -0.05380075616779289,
+            1.104006956020991
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              0.6096667647361755,
+              -0.4060211479663849,
+              0.9211017489433289
+            ],
+            "max": [
+              0.6879909634590149,
+              0.591168999671936,
+              1.3431912660598755
+            ]
+          },
+          "vertices": 54,
+          "triangles": 104,
+          "visible_face_max_angle_from_PCA_deg": 5.942974247408709,
+          "visible_sheet_PCA_max_residual_mm": 6.6784468685521094,
+          "visible_sheet_PCA_rms_mm": 2.1924152587737997,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            -0.6529410922968829,
+            -0.053800765606057316,
+            1.1040069538134116
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              -0.6879908442497253,
+              -0.4060211479663849,
+              0.9211017489433289
+            ],
+            "max": [
+              -0.6096667647361755,
+              0.5911689400672913,
+              1.3431912660598755
+            ]
+          },
+          "vertices": 54,
+          "triangles": 104,
+          "visible_face_max_angle_from_PCA_deg": 5.942970514576345,
+          "visible_sheet_PCA_max_residual_mm": 6.678425602910377,
+          "visible_sheet_PCA_rms_mm": 2.19240651230988,
+          "duplicate_faces": 0
+        }
+      ],
+      "rear": {
+        "centre_m": [
+          -3.4206983210674046e-09,
+          -1.471345986499161,
+          1.146640774167952
+        ],
+        "bounds_xyz_m": {
+          "min": [
+            -0.6125990152359009,
+            -1.6666641235351562,
+            0.9103228449821472
+          ],
+          "max": [
+            0.6125990152359009,
+            -1.3041971921920776,
+            1.3550949096679688
+          ]
+        },
+        "vertices": 122,
+        "triangles": 240,
+        "visible_face_max_angle_from_PCA_deg": 19.767182197316806,
+        "visible_sheet_PCA_max_residual_mm": 30.28128744067428,
+        "visible_sheet_PCA_rms_mm": 16.12453342031458,
+        "duplicate_faces": 0
+      }
+    },
+    "after": {
+      "panes": [
+        {
+          "centre_m": [
+            0.6483348925476489,
+            -0.9551060873529186,
+            1.1288018932809
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              0.6096076965332031,
+              -1.3779112100601196,
+              0.93863445520401
+            ],
+            "max": [
+              0.6878568530082703,
+              -0.5640044212341309,
+              1.3497782945632935
+            ]
+          },
+          "vertices": 92,
+          "triangles": 180,
+          "visible_face_max_angle_from_PCA_deg": 4.157377835330161,
+          "visible_sheet_PCA_max_residual_mm": 3.646617589657536,
+          "visible_sheet_PCA_rms_mm": 1.5392178090263942,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            -1.528100395361336e-09,
+            0.37378476898080293,
+            1.1182127604165029
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              -0.6353527307510376,
+              0.05628788843750954,
+              0.9202185273170471
+            ],
+            "max": [
+              0.6353527307510376,
+              0.6647159457206726,
+              1.3613053560256958
+            ]
+          },
+          "vertices": 194,
+          "triangles": 384,
+          "visible_face_max_angle_from_PCA_deg": 71.9778050691302,
+          "visible_sheet_PCA_max_residual_mm": 31.82411250632073,
+          "visible_sheet_PCA_rms_mm": 16.38731606230214,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            1.833340469180856e-09,
+            -1.4832008499365585,
+            1.132475718168112
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              -0.6125990152359009,
+              -1.6666784286499023,
+              0.9103115200996399
+            ],
+            "max": [
+              0.6125990152359009,
+              -1.3042070865631104,
+              1.3550835847854614
+            ]
+          },
+          "vertices": 130,
+          "triangles": 256,
+          "visible_face_max_angle_from_PCA_deg": 19.854800751692895,
+          "visible_sheet_PCA_max_residual_mm": 30.059394228012405,
+          "visible_sheet_PCA_rms_mm": 15.93342734908652,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            -0.6483348957870317,
+            -0.9551060394100521,
+            1.1288018744924795
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              -0.6878568530082703,
+              -1.3779112100601196,
+              0.93863445520401
+            ],
+            "max": [
+              -0.6096076965332031,
+              -0.5640044212341309,
+              1.3497782945632935
+            ]
+          },
+          "vertices": 92,
+          "triangles": 180,
+          "visible_face_max_angle_from_PCA_deg": 4.160588785589013,
+          "visible_sheet_PCA_max_residual_mm": 3.6469036401825528,
+          "visible_sheet_PCA_rms_mm": 1.539715489120895,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            0.654437681942275,
+            -0.05666968628594821,
+            1.1102485837358418
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              0.6097352504730225,
+              -0.4059993326663971,
+              0.9385788440704346
+            ],
+            "max": [
+              0.6879681944847107,
+              0.5905165672302246,
+              1.3486084938049316
+            ]
+          },
+          "vertices": 66,
+          "triangles": 128,
+          "visible_face_max_angle_from_PCA_deg": 6.49457287487942,
+          "visible_sheet_PCA_max_residual_mm": 6.745699282901266,
+          "visible_sheet_PCA_rms_mm": 2.0929727102738727,
+          "duplicate_faces": 0
+        },
+        {
+          "centre_m": [
+            -0.6544376810391744,
+            -0.056669657855915524,
+            1.1102485701893314
+          ],
+          "bounds_xyz_m": {
+            "min": [
+              -0.6879681944847107,
+              -0.4059993028640747,
+              0.9385787844657898
+            ],
+            "max": [
+              -0.6097352504730225,
+              0.5905166268348694,
+              1.3486084938049316
+            ]
+          },
+          "vertices": 66,
+          "triangles": 128,
+          "visible_face_max_angle_from_PCA_deg": 6.494596040020577,
+          "visible_sheet_PCA_max_residual_mm": 6.745248445835787,
+          "visible_sheet_PCA_rms_mm": 2.0930629743732263,
+          "duplicate_faces": 0
+        }
+      ],
+      "rear": {
+        "centre_m": [
+          1.833340469180856e-09,
+          -1.4832008499365585,
+          1.132475718168112
+        ],
+        "bounds_xyz_m": {
+          "min": [
+            -0.6125990152359009,
+            -1.6666784286499023,
+            0.9103115200996399
+          ],
+          "max": [
+            0.6125990152359009,
+            -1.3042070865631104,
+            1.3550835847854614
+          ]
+        },
+        "vertices": 130,
+        "triangles": 256,
+        "visible_face_max_angle_from_PCA_deg": 19.854800751692895,
+        "visible_sheet_PCA_max_residual_mm": 30.059394228012405,
+        "visible_sheet_PCA_rms_mm": 15.93342734908652,
+        "duplicate_faces": 0
+      }
+    },
+    "protected_wheels": {
+      "wheel_rr": {
+        "unchanged": true,
+        "origin_delta_m": 0.0
+      },
+      "wheel_rl": {
+        "unchanged": true,
+        "origin_delta_m": 0.0
+      },
+      "wheel_fr": {
+        "unchanged": true,
+        "origin_delta_m": 0.0
+      },
+      "wheel_fl": {
+        "unchanged": true,
+        "origin_delta_m": 0.0
+      },
+      "trim_rim_rr": {
+        "unchanged": true,
+        "origin_delta_m": 0.0
+      },
+      "trim_rim_rl": {
+        "unchanged": true,
+        "origin_delta_m": 0.0
+      },
+      "trim_rim_fr": {
+        "unchanged": true,
+        "origin_delta_m": 0.0
+      },
+      "trim_rim_fl": {
+        "unchanged": true,
+        "origin_delta_m": 0.0
+      }
+    },
+    "units": "actual mesh metres/mm/degrees; not errors against photographs",
+    "protected_front_parts": {
+      "plate_registration": true,
+      "lamp_indicators": true,
+      "lamp_headlights": true,
+      "grille_slots": true,
+      "grille_lower": true,
+      "bumper_front": true
+    },
+    "materials_unchanged": true,
+    "mesh_names_preserved": true,
+    "ok": true
+  },
   "historical_upper_profile_not_current_hood_evidence": {
     "reference": {
       "source_url": "https://www.nissan-autoparts.nl/c-4276469/nissan-micra-k11-augustus-1992-november-2002/",
@@ -835,28 +1243,28 @@
   },
   "render_provenance": {
     "side": {
-      "before_sha256": "1fae7a3a30ef1ec7fd46fd04a0e4101056fc91343304ed3bec0680c37f841a27",
-      "after_sha256": "ab4fb35786b909d17e6bd86cdff475c13776858cc781f446787af3b505941f87"
+      "before_sha256": "ab4fb35786b909d17e6bd86cdff475c13776858cc781f446787af3b505941f87",
+      "after_sha256": "f7b470f4ce63ef2961dd173e109551feabbeb6f8c03fc04179baeaf04566309f"
     },
     "front": {
-      "before_sha256": "aeef2537bf0658c231fdd1088eb4574ce32784ad43f24c3ea711c2e4dfc7d3cd",
-      "after_sha256": "1021b675a08ae3e9db2e27666c817850135a31a89adcfc88681af4a886123196"
+      "before_sha256": "1021b675a08ae3e9db2e27666c817850135a31a89adcfc88681af4a886123196",
+      "after_sha256": "b5a1f1794f1f4928241fde2c276a2d7e972c37daa4f1fc219222fc42fee71735"
     },
     "rear": {
-      "before_sha256": "2214b3a5b04a8bf1c66a8f8d987b8d0256c8ef353c20dec92421cf2c44c6586b",
-      "after_sha256": "effb207b7784b3367f0128740fb88a5f836df83de38c6d4915b4c4f70f61f078"
+      "before_sha256": "effb207b7784b3367f0128740fb88a5f836df83de38c6d4915b4c4f70f61f078",
+      "after_sha256": "f561f9fda93b90e0865589dc5cfea5c7cb56ecf97114f4499afff6cf53f74c03"
     },
     "front_three_quarter": {
-      "before_sha256": "235a855c5f6197eb7b740028c1c2e474a08d8cebabe5e05c6ae9bf4c38adbc9d",
-      "after_sha256": "f2435fc08fe40c5cfafd4b6f81444cc37281b09fa816d61f702dd8bf43c8a338"
+      "before_sha256": "f2435fc08fe40c5cfafd4b6f81444cc37281b09fa816d61f702dd8bf43c8a338",
+      "after_sha256": "5dbed8ac6a047aed0351664656fa7dd96e804d7c5bb24e076923f0db5b6c1561"
     },
     "rear_three_quarter": {
-      "before_sha256": "3c0781153eb3df37d0008e98d3e16e01379c9cd1be337a55da1173fc8b688baf",
-      "after_sha256": "da6e9ab47ea977449293efc3d1ab51d82aa37e6cda9713464fe4af91f8d9ebfa"
+      "before_sha256": "da6e9ab47ea977449293efc3d1ab51d82aa37e6cda9713464fe4af91f8d9ebfa",
+      "after_sha256": "c947b466d0adefb05b649d321fe176667cbdb339bac05049e5066602be5d1b29"
     },
     "high_three_quarter": {
-      "before_sha256": "e74507dd8e86f28f51691d1919670ea1aa967012f052af1b3bd4337c3c446a3e",
-      "after_sha256": "f2b98f1f832ed4bee26e5d0e67edc6f44e8d6bcac2fc128b02fbd5d886bd9d9e"
+      "before_sha256": "f2b98f1f832ed4bee26e5d0e67edc6f44e8d6bcac2fc128b02fbd5d886bd9d9e",
+      "after_sha256": "0f2635eafa19cd5afbaffe75cda6dda81195912a5b5998b08517109150112ae1"
     }
   },
   "human_visual_approval": "pending",

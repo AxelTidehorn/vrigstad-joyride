@@ -22,6 +22,8 @@ verts=[];faces=[];zones=[]
 for y in ys:
  top=T.interp(y,P['roof']);w=T.interp(y,P['half_width']);cabin=max(0,min(1,(top-.95)/.40));rw=.83*w*(1-cabin)+P['roof_half_width']*cabin
  belt=min(.880,top-.045);shoulder=min(.85,belt-.05)
+ # Raise the aperture sill locally without moving the external shoulder.
+ if -1.30<=y<=.05:belt=min(belt+P['side_window_sill_raise'],top-.045)
  half=[(0,.17),(.65*w,.17),(.86*w,.20),(.96*w,.30),(w,.53),(.997*w,shoulder-.10),(.98*w,shoulder-.025),(.955*w,shoulder),(.93*w,belt),(.88*w,belt+.06*(top-belt)),(rw,top-min(.065,(top-belt)*.5)),(.86*rw,top-.025),(.48*rw,top-.005),(0,top)]
  if y>1.4:
   t=min(1,(y-1.4)/.3)
@@ -48,7 +50,7 @@ for f,z in zip(body.data.polygons,zones):f.material_index=z
 bm=bmesh.new();bm.from_mesh(body.data)
 for zone in [1,2,3,4]:
  fs=[f for f in bm.faces if f.material_index==zone]
- res=bmesh.ops.inset_region(bm,faces=fs,thickness=.014,depth=-.012,use_even_offset=True,use_boundary=True)
+ res=bmesh.ops.inset_region(bm,faces=fs,thickness=P['side_window_inset'] if zone in (1,2) else .014,depth=-.012,use_even_offset=True,use_boundary=True)
  for f in res['faces']:f.material_index=0
 # Round aperture corners in the existing solid frame. These new steel faces
 # trim the opening itself; no overlapping rounded glass or cosmetic frame.
@@ -59,7 +61,11 @@ for v in bm.verts:
  if fs and len(es)==2:
   a,b=[(e.other_vert(v).co-v.co).normalized() for e in es]
   if a.angle(b)<math.radians(140):corner_verts.append(v)
-if corner_verts:bmesh.ops.bevel(bm,geom=corner_verts,offset=.025,segments=3,affect='VERTICES',clamp_overlap=True,material=0)
+# Solve the shared rear roof/backlight junction in one smaller fillet;
+# the remaining side corners have room for a wider, segmented steel radius.
+rear_junction=[v for v in corner_verts if v.co.y<-1.2 and v.co.z>1.2]
+for corners,radius,segments in [(rear_junction,.025,3),([v for v in corner_verts if v not in rear_junction],P['side_window_corner_radius'],5)]:
+ if corners:bmesh.ops.bevel(bm,geom=corners,offset=radius,segments=segments,affect='VERTICES',clamp_overlap=True,material=0)
 bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(body.data);bm.free()
 gv=[];gf=[]
 for f in body.data.polygons:

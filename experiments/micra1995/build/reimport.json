@@ -3,7 +3,7 @@
   "blender_version": "4.3.2",
   "mesh_objects": 24,
   "materials": 9,
-  "file_bytes": 342408,
-  "import_seconds": 0.17671459499979392,
+  "file_bytes": 369336,
+  "import_seconds": 0.27760985200075083,
   "checks": "Reimported actual GLB and ran unchanged Blender body/wheel gate. This is not a browser FPS benchmark."
 }

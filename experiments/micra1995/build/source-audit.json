@@ -4,14 +4,14 @@
     "nonmanifold_edges": 0,
     "inconsistent_edges": 0,
     "degenerate_faces": 0,
-    "signed_volume_m3": 4.843772833635686,
+    "signed_volume_m3": 4.862643410078167,
     "connected_components": 1,
     "self_intersection_candidates": 0,
     "sample_pairs": [],
-    "triangles": 5056
+    "triangles": 5592
   },
   "meshes": 24,
-  "triangles": 17316,
+  "triangles": 18716,
   "materials": [
     "Micra configurable body paint",
     "amber indicators",
@@ -28,11 +28,11 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.005548652597401685,
+      "signed_volume_m3": 0.005499516251882462,
       "connected_components": 6,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 1112
+      "triangles": 1256
     },
     "bumper_rear": {
       "nonmanifold_edges": 0,
@@ -108,44 +108,44 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0011179783214282854,
-      "connected_components": 214,
-      "self_intersection_candidates": 4648,
+      "signed_volume_m3": 0.0011137319133906756,
+      "connected_components": 250,
+      "self_intersection_candidates": 5818,
       "sample_pairs": [
         [
           0,
-          278
+          2612
         ],
         [
           0,
-          2096
+          2620
         ],
         [
-          0,
-          2097
+          1,
+          2613
+        ],
+        [
+          2,
+          2022
+        ],
+        [
+          2,
+          2614
+        ],
+        [
+          2,
+          2618
         ],
         [
           4,
-          279
+          15
         ],
         [
-          5,
-          2101
-        ],
-        [
-          5,
-          2103
-        ],
-        [
-          5,
-          2104
-        ],
-        [
-          6,
-          262
+          4,
+          2021
         ]
       ],
-      "triangles": 4280
+      "triangles": 5000
     },
     "trim_handles": {
       "nonmanifold_edges": 0,
@@ -290,8 +290,8 @@
   },
   "glass_body_surface_intersection_candidates": 0,
   "glass_signed_backing_clearance_m": {
-    "minimum": 0.002075525262625888,
-    "maximum": 0.004999509662407397,
+    "minimum": 0.0020592543078237213,
+    "maximum": 0.004999508851681189,
     "nonpositive_samples": 0
   },
   "wheels": {
