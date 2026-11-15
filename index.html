@@ -129,6 +129,7 @@ body { background: var(--sky); color: var(--ink); font-family: var(--body); font
         <dt>Lie low</dt><dd>Go inside a safehouse (green house on the minimap) for a minute</dd>
         <dt>Back to Torget</dt><dd>R</dd>
       </dl>
+      <p><a id="duett-review" href="?vehicle=duett">Choose Volvo Duett EPA for the Torget lineup</a></p>
       <p><a id="micra-review" href="?vehicle=micra">Choose Nissan Micra K11 for the Torget lineup</a></p>
       <button type="button" id="go">Start</button>
       <p class="fine">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors. Elevation: Mapzen terrain tiles.</p>
@@ -2761,6 +2762,7 @@ const VEHICLE_ASSETS = (() => {
  * the Vite/Three r187 application later.
  */
 const VEHICLE_ASSETS = Object.freeze({
+  duett: { url: 'media/vehicles/duett-p210-epa.glb', radius: 0.335 },
   micra: { url: 'media/vehicles/micra-k11.glb', radius: 0.276 },
   volvo: { url: 'media/vehicles/volvo240.glb', radius: 0.35 },
   saab: { url: 'media/vehicles/saab900-t16.glb', radius: 0.35 },
@@ -2935,6 +2937,8 @@ const TYPES = {
 };
 // Temporary compatible handling/fallback, not measured Micra performance.
 TYPES.micra = {...TYPES.saab, name:'Nissan Micra K11 (1995)', cols:['#78b8a4','#559f9a','#a4b8b0','#d1cfc0']};
+// Temporary EPA handling reused unchanged; not measured P210 dynamics.
+TYPES.duett = {...TYPES.epa, name:'Volvo Duett P210 EPA', cols:['#8eaaa1','#719a95','#a8b8ad','#a89878']};
 // Oliver #116: bevelled legacy shapes and round wheels for EPA, police,
 // and generic tractor. The fork's detailed Volvo / Saab / New Holland / JD
 // models are more specific and are retained unchanged.
@@ -3408,7 +3412,7 @@ function updateTraffic(c, dt, T) {
 }
 // V4 — shared arcade tire dynamics and automatic powertrains for player/police.
 // Civilian path-following traffic intentionally keeps its existing movement model.
-const DRIVE_CLASS = {micra:'fwd',volvo:'rwd',epa:'rwd',saab:'fwd',saab95Estate:'fwd',xc70:'awd',polis:'awd',
+const DRIVE_CLASS = {duett:'rwd',micra:'fwd',volvo:'rwd',epa:'rwd',saab:'fwd',saab95Estate:'fwd',xc70:'awd',polis:'awd',
                      traktor:'awd',newHolland:'awd',johnDeere:'awd'};
 const DRIVE_MODE = new URLSearchParams(location.search).get('drivetrain')==='v3'?'v3':'v4';
 function drive(c, thr, steer, brake, dt, handbrake=false) {
@@ -3673,10 +3677,11 @@ collide(player, 0.6); scene.add(player.mesh);
   }
   if(!chosen){console.warn('No clear four-car showcase row found by Torget');return;}
   // A selected review car takes the nearest existing slot, so it is easy to reach.
-  if(new URLSearchParams(location.search).get('vehicle')==='micra'){
+  const reviewVehicle=new URLSearchParams(location.search).get('vehicle');
+  if(['micra','duett'].includes(reviewVehicle)){
     let nearest=0;
     chosen.slots.forEach((p,i)=>{const q=chosen.slots[nearest];if(Math.hypot(p.x-player.x,p.z-player.z)<Math.hypot(q.x-player.x,q.z-player.z))nearest=i;});
-    lineup[nearest]='micra';
+    lineup[nearest]=reviewVehicle;
   }
   // Remove only parked overlaps; never delete active traffic or police.
   for(const c of [...cars])if(c.mode==='parked'&&chosen.slots.some(o=>Math.hypot(c.x-o.x,c.z-o.z)<5.7))removeCar(c);

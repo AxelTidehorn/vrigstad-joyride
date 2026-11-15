@@ -5,6 +5,7 @@
  * the Vite/Three r187 application later.
  */
 export const VEHICLE_ASSETS = Object.freeze({
+  duett: { url: 'media/vehicles/duett-p210-epa.glb', radius: 0.335 },
   micra: { url: 'media/vehicles/micra-k11.glb', radius: 0.276 },
   volvo: { url: 'media/vehicles/volvo240.glb', radius: 0.35 },
   saab: { url: 'media/vehicles/saab900-t16.glb', radius: 0.35 },

@@ -1,0 +1,31 @@
+10:58:00 | INFO: Data are loaded, start creating Blender stuff
+10:58:00 | INFO: Blender create Mesh node body
+10:58:01 | INFO: Blender create Mesh node bumper_front
+10:58:01 | INFO: Blender create Mesh node bumper_rear
+10:58:01 | INFO: Blender create Mesh node glass_envelope
+10:58:01 | INFO: Blender create Mesh node glass_rear
+10:58:01 | INFO: Blender create Mesh node grille_backing
+10:58:01 | INFO: Blender create Mesh node grille_surround
+10:58:01 | INFO: Blender create Mesh node lamp_headlights
+10:58:01 | INFO: Blender create Mesh node lamp_front_indicator
+10:58:01 | INFO: Blender create Mesh node lamp_tail
+10:58:01 | INFO: Blender create Mesh node mirror_mount
+10:58:01 | INFO: Blender create Mesh node plate_registration
+10:58:01 | INFO: Blender create Mesh node trim_rear_window_frame
+10:58:01 | INFO: Blender create Mesh node trim_bed_floor
+10:58:01 | INFO: Blender create Mesh node trim_lgf_border
+10:58:01 | INFO: Blender create Mesh node trim_lgf_orange
+10:58:01 | INFO: Blender create Mesh node trim_head_bezel
+10:58:01 | INFO: Blender create Mesh node wheel_fl
+10:58:01 | INFO: Blender create Mesh node trim_rim_fl
+10:58:01 | INFO: Blender create Mesh node wheel_fr
+10:58:01 | INFO: Blender create Mesh node trim_rim_fr
+10:58:01 | INFO: Blender create Mesh node wheel_rl
+10:58:01 | INFO: Blender create Mesh node trim_rim_rl
+10:58:01 | INFO: Blender create Mesh node wheel_rr
+10:58:01 | INFO: Blender create Mesh node trim_rim_rr
+10:58:01 | INFO: glTF import finished in 0.07s
+{"ok": true, "actual_glb": "duett-p210-epa.glb", "body_mounted_meshes": 16, "body_motion_carries_fixtures": true, "wheel_geometry_independent_of_body_bob": true, "steering_carries_rim_and_spokes": true, "wheel_spin_carries_rim_and_spokes": true, "wheel_hub_position_preserved": true, "scope": "Transient Blender pose test on actual exported hierarchy. No animation tracks, steering logic or game physics added; no in-game driving claim.", "probe_method": "Fixed vertex chosen at maximum distance from wheel X axis before posing; centre poles cannot produce false spin failures"}
+Blender 4.3.2
+
+Blender quit
