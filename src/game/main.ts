@@ -2,6 +2,7 @@
 // Moved as-is from the single-file prototype (#44); it gets types as it is split into modules.
 import * as THREE from 'three';
 import D from '../../data/vrigstad.json';
+import { createPhotographicGrain } from './render/photographic-grain';
 import { createSceneFinish } from './render/scene-finish';
 import { LEGACY_LIGHT } from '../world/three-legacy';
 
@@ -49,6 +50,9 @@ scene.background = new THREE.Color(HORIZON);
 scene.fog = new THREE.FogExp2(HORIZON, FOG_PER_M);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
 const sceneFinish = createSceneFinish(renderer, scene, camera);
+const grain = createPhotographicGrain();
+grain.setPixelRatio(renderer.getPixelRatio());
+sceneFinish.add(grain.effect);
 scene.add(new THREE.HemisphereLight(0xffffff, col(0x9aa58a), 0.62 * LEGACY_LIGHT));
 const sun = new THREE.DirectionalLight(col(0xfff4dd), 0.95 * LEGACY_LIGHT);
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
@@ -942,5 +946,5 @@ $('go').addEventListener('click', () => { started = true; $('intro').hidden = tr
 resize(); requestAnimationFrame(frame);
 
 // ---------- test hook: read-only state for the smoke tests (tests/e2e), so they do not have to read pixels ----------
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, rendering: sceneFinish.state() }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, rendering: sceneFinish.state(), grain: grain.state() }; } };
 })();

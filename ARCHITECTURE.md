@@ -111,3 +111,7 @@ Metres; origin 57.3555° N, 14.4756° E; x east, z south, y up; the world spans 
 | `labels` | Named places: `t` text, `x`, `z`, `k` kind |
 
 Class codes are defined in `tools/process.py`. Move them into a shared typed module once the code is TypeScript.
+
+### Optional scene finish
+
+`?grain=subtle` (0.62), `strong` (1.5), or a positive strength up to 2 enables scene-only photographic grain. Missing, empty, invalid and nonpositive values resolve to off. It defaults off pending mobile measurements. Grain uses CSS-pixel-sized noise at every DPR. `scene-finish.ts` preserves the native canvas render, then shares one framebuffer copy and fullscreen draw among enabled effects, ordered by effect priority (colour before grain). With all effects off it only calls the original scene render. The read-only test hook reports completed frames, copies and draws; DOM HUD and minimap are outside the pipeline.
