@@ -16,3 +16,22 @@ wheel opening radii, hub tracks 1360/1345 mm, tyres Ø552 × 155 mm and 13-inch 
 cover proportions. They are plausible stock proportions, not calibrated factory
 surface data. Roof, nose, hatch and aperture shape were refined visually. Paint is
 period-inspired turquoise green, not a measured Nissan paint chip.
+
+## Comprehensive refinement: improved side source
+
+[Near-side early K11 three-door at Nissan Autoparts](https://www.nissan-autoparts.nl/c-4276469/nissan-micra-k11-augustus-1992-november-2002/),
+[original red-car photograph](https://cdn.myonlinestore.eu/9494fdab-6be1-11e9-a722-44a8421b9960/slideshow/en_US_857992_full.jpg).
+Downloaded and visually inspected. It shows the correct long three-door door,
+rear quarter aperture, raked A-pillar and simple two-box mass. Registration year
+is not independently verified; use the shared early shell, not trim-specific
+claims. This is much closer to a side view than the original research photos,
+but remains perspective and is not a manufacturer orthographic drawing.
+
+The manually traced upper profile and wheel centres are in
+`refinement/profile-reference.json`. Exact Blender side projections use the
+existing `silhouette_render.py`; only wheel centres define uniform registration.
+No anisotropic image scaling, overlap fitting or whole-mask IoU is used. The
+comparison reports estimated source-photo pixels, not verified millimetres.
+Manual trace uncertainty is approximately ±6 pixels and wheel anchors ±4 pixels.
+The apparent photographic overhangs differ from nominal measurements; that
+perspective bias is not used to move the hubs. Photograph linked, not redistributed.

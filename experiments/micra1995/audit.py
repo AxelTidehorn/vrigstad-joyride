@@ -41,6 +41,8 @@ for n in ['wheel_fl','wheel_fr','wheel_rl','wheel_rr']:
 bm.free();gm.free()
 coords=[o.matrix_world@v.co for o in objects for v in o.data.vertices]
 report['overall_xyz_m']=[max(p[i] for p in coords)-min(p[i] for p in coords) for i in range(3)]
+front=bpy.data.objects['wheel_fl'].location.y;rear=bpy.data.objects['wheel_rl'].location.y
+report['overhangs_m']={'front':max(p.y for p in coords)-front,'rear':rear-min(p.y for p in coords)}
 report['axle_distance_m']=bpy.data.objects['wheel_fl'].location.y-bpy.data.objects['wheel_rl'].location.y
 report['body_paint_material_count']=len(body.data.materials)
 report['wheel_fixtures_own_hub']=all(bpy.data.objects['trim_rim_'+tag].parent==bpy.data.objects['wheel_'+tag] for tag in ['fl','fr','rl','rr'])

@@ -1,0 +1,232 @@
+{
+  "baseline_commit": "9060015f15f6ae27ce96ef5e3c299e6c0e53b1fd",
+  "baseline_blend_sha256": "9c15513a9d33d7aca8560d3308e3c53da85b1018f8badca1ed0bb22269e8cd2f",
+  "before": {
+    "panes": [
+      {
+        "centre_m": [
+          -1.2626407855772672e-13,
+          0.5840739104896784,
+          1.1034360730222292
+        ],
+        "vertices": 112,
+        "triangles": 220,
+        "visible_face_max_angle_from_PCA_deg": 23.917172083044875,
+        "visible_sheet_PCA_max_residual_mm": 42.094605183452174,
+        "visible_sheet_PCA_rms_mm": 15.819419452773912,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          -3.8935080556460177e-10,
+          -1.4945746234485082,
+          1.2271790252877521
+        ],
+        "vertices": 154,
+        "triangles": 304,
+        "visible_face_max_angle_from_PCA_deg": 41.872049428197826,
+        "visible_sheet_PCA_max_residual_mm": 106.57948915174906,
+        "visible_sheet_PCA_rms_mm": 40.801459559490894,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          0.6460268460214138,
+          -1.0481500861545403,
+          1.1551237826546032
+        ],
+        "vertices": 48,
+        "triangles": 92,
+        "visible_face_max_angle_from_PCA_deg": 3.8168771188541855,
+        "visible_sheet_PCA_max_residual_mm": 4.740777260269131,
+        "visible_sheet_PCA_rms_mm": 1.5782643703037178,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          -0.6460268460214138,
+          -1.0481500861545403,
+          1.1551237801710765
+        ],
+        "vertices": 48,
+        "triangles": 92,
+        "visible_face_max_angle_from_PCA_deg": 3.8168770371786587,
+        "visible_sheet_PCA_max_residual_mm": 4.740776580562458,
+        "visible_sheet_PCA_rms_mm": 1.5782637999705902,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          0.6509853960438208,
+          0.030248802978617692,
+          1.1260461549867282
+        ],
+        "vertices": 88,
+        "triangles": 172,
+        "visible_face_max_angle_from_PCA_deg": 71.9325217935369,
+        "visible_sheet_PCA_max_residual_mm": 22.22948867542784,
+        "visible_sheet_PCA_rms_mm": 7.1977406197681875,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          -0.6509853973984718,
+          0.030248804007483573,
+          1.1260461549867282
+        ],
+        "vertices": 88,
+        "triangles": 172,
+        "visible_face_max_angle_from_PCA_deg": 71.93252146779696,
+        "visible_sheet_PCA_max_residual_mm": 22.229486391399654,
+        "visible_sheet_PCA_rms_mm": 7.1977401264568615,
+        "duplicate_faces": 0
+      }
+    ],
+    "rear": {
+      "centre_m": [
+        -3.8935080556460177e-10,
+        -1.4945746234485082,
+        1.2271790252877521
+      ],
+      "vertices": 154,
+      "triangles": 304,
+      "visible_face_max_angle_from_PCA_deg": 41.872049428197826,
+      "visible_sheet_PCA_max_residual_mm": 106.57948915174906,
+      "visible_sheet_PCA_rms_mm": 40.801459559490894,
+      "duplicate_faces": 0
+    }
+  },
+  "after": {
+    "panes": [
+      {
+        "centre_m": [
+          -3.4206983329687452e-09,
+          -1.471345986499161,
+          1.146640774167952
+        ],
+        "vertices": 122,
+        "triangles": 240,
+        "visible_face_max_angle_from_PCA_deg": 19.767182197316767,
+        "visible_sheet_PCA_max_residual_mm": 30.28128744067425,
+        "visible_sheet_PCA_rms_mm": 16.124533420314584,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          0.6468100354075432,
+          -0.9728079192340374,
+          1.1262021258473396
+        ],
+        "vertices": 80,
+        "triangles": 156,
+        "visible_face_max_angle_from_PCA_deg": 2.997199396123684,
+        "visible_sheet_PCA_max_residual_mm": 2.5790661177044205,
+        "visible_sheet_PCA_rms_mm": 1.2106245564569038,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          -0.6468100361526012,
+          -0.9728079192340374,
+          1.1262021340429782
+        ],
+        "vertices": 80,
+        "triangles": 156,
+        "visible_face_max_angle_from_PCA_deg": 2.9971752437939276,
+        "visible_sheet_PCA_max_residual_mm": 2.57906240032494,
+        "visible_sheet_PCA_rms_mm": 1.2106213258019194,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          0.6529411132688876,
+          -0.05380075616779289,
+          1.104006956020991
+        ],
+        "vertices": 54,
+        "triangles": 104,
+        "visible_face_max_angle_from_PCA_deg": 5.942974247408647,
+        "visible_sheet_PCA_max_residual_mm": 6.678446868552047,
+        "visible_sheet_PCA_rms_mm": 2.1924152587737957,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          -0.6529410922968829,
+          -0.053800765606057316,
+          1.1040069538134116
+        ],
+        "vertices": 54,
+        "triangles": 104,
+        "visible_face_max_angle_from_PCA_deg": 5.942970514576406,
+        "visible_sheet_PCA_max_residual_mm": 6.6784256029104245,
+        "visible_sheet_PCA_rms_mm": 2.1924065123098835,
+        "duplicate_faces": 0
+      },
+      {
+        "centre_m": [
+          -3.355341064293678e-10,
+          0.3751113823290621,
+          1.1165262658274575
+        ],
+        "vertices": 178,
+        "triangles": 352,
+        "visible_face_max_angle_from_PCA_deg": 72.41275188630705,
+        "visible_sheet_PCA_max_residual_mm": 32.1904629725292,
+        "visible_sheet_PCA_rms_mm": 16.49935962660931,
+        "duplicate_faces": 0
+      }
+    ],
+    "rear": {
+      "centre_m": [
+        -3.4206983329687452e-09,
+        -1.471345986499161,
+        1.146640774167952
+      ],
+      "vertices": 122,
+      "triangles": 240,
+      "visible_face_max_angle_from_PCA_deg": 19.767182197316767,
+      "visible_sheet_PCA_max_residual_mm": 30.28128744067425,
+      "visible_sheet_PCA_rms_mm": 16.124533420314584,
+      "duplicate_faces": 0
+    }
+  },
+  "protected_wheels": {
+    "wheel_rr": {
+      "unchanged": true,
+      "origin_delta_m": 0.0
+    },
+    "wheel_rl": {
+      "unchanged": true,
+      "origin_delta_m": 0.0
+    },
+    "wheel_fr": {
+      "unchanged": true,
+      "origin_delta_m": 0.0
+    },
+    "wheel_fl": {
+      "unchanged": true,
+      "origin_delta_m": 0.0
+    },
+    "trim_rim_rr": {
+      "unchanged": true,
+      "origin_delta_m": 0.0
+    },
+    "trim_rim_rl": {
+      "unchanged": true,
+      "origin_delta_m": 0.0
+    },
+    "trim_rim_fr": {
+      "unchanged": true,
+      "origin_delta_m": 0.0
+    },
+    "trim_rim_fl": {
+      "unchanged": true,
+      "origin_delta_m": 0.0
+    }
+  },
+  "units": "actual mesh metres/mm/degrees; not errors against photographs",
+  "materials_unchanged": true,
+  "mesh_names_preserved": true,
+  "ok": true
+}

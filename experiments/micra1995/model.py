@@ -14,27 +14,33 @@ for name in ['BODY','GLASS','PLASTIC_RUBBER','LIGHTS','DETAILS','WHEELS']:
 paint=T.material('Micra configurable body paint',(.22,.49,.40));glass=T.material('smoky blue grey glass',(.075,.12,.14));rubber=T.material('weatherstrip rubber',(.025,.031,.032));tire=T.material('tire charcoal',(.022,.025,.026));rim=T.material('original grey wheel covers',(.39,.42,.41));head=T.material('headlamp ivory',(.65,.72,.69));red=T.material('red tail lenses',(.46,.028,.022));amber=T.material('amber indicators',(.80,.32,.045));plate=T.material('registration ivory',(.70,.72,.65))
 for m in [paint,glass,head,red,amber]:m.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value=.65
 # Shape-specific sections: rounded hatch, high arched cabin, short drooping nose.
-anchors=sorted(set([p[0] for p in P['roof'] if -1.78<=p[0]<=1.78]+[-1.78,1.78,-1.75,-1.60,-1.40,-1.28,-1.18,-.72,-.61,.38,.67,.79]))
+anchors=sorted(set([p[0] for p in P['roof'] if -1.78<=p[0]<=1.78]+[-1.78,1.78]+sum([P[k] for k in ['side_window_front','side_window_rear','windshield_range','backlight_range']],[])))
 # An inset must have room on both sides of its boundary: near-duplicate
 # stations create folded reveals even when the raw loft is manifold.
 ys=sorted(anchors+[round(-1.78+i*3.56/56,7) for i in range(1,56) if min(abs((-1.78+i*3.56/56)-a) for a in anchors)>.028])
 verts=[];faces=[];zones=[]
 for y in ys:
  top=T.interp(y,P['roof']);w=T.interp(y,P['half_width']);cabin=max(0,min(1,(top-.95)/.40));rw=.83*w*(1-cabin)+P['roof_half_width']*cabin
- belt=min(.945,top-.045);shoulder=min(.85,belt-.05)
+ belt=min(.880,top-.045);shoulder=min(.85,belt-.05)
  half=[(0,.17),(.65*w,.17),(.86*w,.20),(.96*w,.30),(w,.53),(.997*w,shoulder-.10),(.98*w,shoulder-.025),(.955*w,shoulder),(.93*w,belt),(.88*w,belt+.06*(top-belt)),(rw,top-min(.065,(top-belt)*.5)),(.86*rw,top-.025),(.48*rw,top-.005),(0,top)]
+ if y>1.4:
+  t=min(1,(y-1.4)/.3)
+  half[10]=(.94*w,half[10][1]*(1-t)+(top-.018)*t)
+  half[11]=(.82*w,half[11][1]*(1-t)+(top-.008)*t)
  ring=half+[(-x,z) for x,z in half[-2:0:-1]]
- for x,z in ring:verts.append((x,y,z))
+ for j,(x,z) in enumerate(ring):
+  belt_y=T.interp(y,P['window_belt_shear']) if j in (8,9,len(ring)-9,len(ring)-8) else y
+  verts.append((x,belt_y,z))
 N=len(ring)
 for i in range(len(ys)-1):
  mid=(ys[i]+ys[i+1])/2
  for j in range(N):
   faces.append((i*N+j,i*N+(j+1)%N,(i+1)*N+(j+1)%N,(i+1)*N+j))
   side=j in (9,N-10);zone=0
-  if side and -.61<mid<.67:zone=1
-  if side and -1.40<mid<-.72:zone=2
-  if .38<mid<.79 and 10<=j<=N-11:zone=3
-  if -1.75<mid<-1.18 and 10<=j<=N-11:zone=4
+  if side and P['side_window_front'][0]<mid<P['side_window_front'][1]:zone=1
+  if side and P['side_window_rear'][0]<mid<P['side_window_rear'][1]:zone=2
+  if P['windshield_range'][0]<mid<P['windshield_range'][1] and 10<=j<=N-11:zone=3
+  if P['backlight_range'][0]<mid<P['backlight_range'][1] and 10<=j<=N-11:zone=4
   zones.append(zone)
 faces.extend([tuple(range(N-1,-1,-1)),tuple((len(ys)-1)*N+j for j in range(N))]);zones.extend([0,0])
 body=T.group(mk.mesh_from_data('body',verts,faces),'BODY',paint)
@@ -44,6 +50,16 @@ for zone in [1,2,3,4]:
  fs=[f for f in bm.faces if f.material_index==zone]
  res=bmesh.ops.inset_region(bm,faces=fs,thickness=.014,depth=-.012,use_even_offset=True,use_boundary=True)
  for f in res['faces']:f.material_index=0
+# Round aperture corners in the existing solid frame. These new steel faces
+# trim the opening itself; no overlapping rounded glass or cosmetic frame.
+corner_verts=[]
+for v in bm.verts:
+ fs=[f for f in v.link_faces if f.material_index]
+ es=[e for e in v.link_edges if any(f.material_index for f in e.link_faces) and any(not f.material_index for f in e.link_faces)]
+ if fs and len(es)==2:
+  a,b=[(e.other_vert(v).co-v.co).normalized() for e in es]
+  if a.angle(b)<math.radians(140):corner_verts.append(v)
+if corner_verts:bmesh.ops.bevel(bm,geom=corner_verts,offset=.025,segments=3,affect='VERTICES',clamp_overlap=True,material=0)
 bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(body.data);bm.free()
 gv=[];gf=[]
 for f in body.data.polygons:
@@ -82,11 +98,24 @@ for axle,y,track in [('f',P['front_axle_y'],P['front_track']),('r',P['front_axle
    bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o;bpy.ops.object.transform_apply(location=False,rotation=True,scale=True)
    for v in o.data.vertices:v.co.x-=hub
    o.location.x=hub
+# A small real radius at the outside of each existing well cut. Leave hub
+# centres, opening radius and inner tyre clearance unchanged.
+bm=bmesh.new();bm.from_mesh(body.data)
+arch_edges=[]
+for e in bm.edges:
+ if all(abs(v.co.x)>.72 and v.co.z>.205 for v in e.verts):
+  for yc in [P['front_axle_y'],P['front_axle_y']-P['wheelbase']]:
+   if all(abs(math.hypot(v.co.y-yc,v.co.z-.276)-.315)<.001 for v in e.verts):arch_edges.append(e);break
+if arch_edges:bmesh.ops.bevel(bm,geom=arch_edges,offset=.004,segments=2,affect='EDGES',clamp_overlap=True)
+bmesh.ops.triangulate(bm,faces=list(bm.faces));bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(body.data);bm.free()
 # Closed wraparound mouldings with restrained radii, following plan corners.
 for sign in [-1,1]:
  path=[(-.755,sign*1.51),(-.73,sign*1.69),(-.60,sign*1.78),(-.3,sign*1.8025),(0,sign*1.8075),(.3,sign*1.8025),(.60,sign*1.78),(.73,sign*1.69),(.755,sign*1.51)]
  T.band('bumper_front' if sign>0 else 'bumper_rear',path,.43,.18,.08,rubber,'PLASTIC_RUBBER')
 # Pre-facelift lamp outline: curved trapezoid, not round discs or facelift grille.
+# Actual pre-facelift grille apertures; backings seat against the cavity walls.
+for x in [-.15,.15]:
+ for z in [.630,.679]:cut(body,mk.box('_grille_cut',(.24,.20,.032),location=(x,1.80,z)),'recessed grille slot')
 from mathutils.bvhtree import BVHTree
 bm=bmesh.new();bm.from_mesh(body.data);skin=BVHTree.FromBMesh(bm);bm.free()
 def lens(name,outline,mat,front=True):
@@ -107,19 +136,20 @@ def lens(name,outline,mat,front=True):
  return T.group(mk.mesh_from_data(name,vv,faces),'LIGHTS',mat)
 
 for sign in [-1,1]:
- outline=[(.285,.595),(.305,.744),(.345,.782),(.565,.772),(.670,.735),(.675,.605),(.625,.575),(.34,.575)]
- lens('lamp_headlights',[(sign*x,z) for x,z in outline],head)
- lens('lamp_indicator',[(sign*x,z) for x,z in [(.64,.59),(.685,.61),(.69,.73),(.66,.74)]],amber)
+ outline=[(.335,.595),(.337,.720),(.363,.752),(.570,.750),(.665,.720),(.675,.605),(.648,.578),(.365,.578)]
+ lens('lamp_headlights',[(sign*x,z-.035) for x,z in outline],head)
+ lens('lamp_indicator',[(sign*x,z-.035) for x,z in [(.648,.587),(.697,.602),(.698,.716),(.67,.737)]],amber)
  for z0,z1,m in [(.53,.62,red),(.62,.68,plate),(.68,.79,red),(.79,.85,amber)]:
   lens('lamp_tail',[(sign*x,z) for x,z in [(.58,z0),(.70,z0+.01),(.705,z1-.01),(.59,z1)]],m,False)
- T.slab('trim_handle',(.028,.11,.027),(sign*.785,-.51,.84),rubber)
+ T.slab('trim_handle',(.028,.11,.027),(sign*.785,-.32,.73),rubber)
  # Mirror on short anchored stalk.
- rod('mirror_stalk',(sign*.72,.57,.97),(sign*.83,.58,.98),.018,rubber)
- T.slab('mirror_housing',(.13,.15,.09),(sign*.83,.58,1.015),rubber)
+ rod('mirror_stalk',(sign*.67,.70,.89),(sign*.83,.70,.94),.018,rubber)
+ T.slab('mirror_housing',(.13,.15,.09),(sign*.83,.70,.975),rubber)
  # Controlled short door pressing; a genuine groove in the steel.
- if sign>0:S.press_line(body,1,-.66,.005,.002,lambda p:abs(p.x)>.73 and .29<p.z<.91)
+ if sign>0:S.press_line(body,1,-.48,.005,.002,lambda p:abs(p.x)>.73 and .29<p.z<.91)
 T.slab('grille_lower',(.65,.07,.085),(0,1.815,.43),rubber)
-for x in [-.13,.13]:T.slab('grille_slot',(.20,.085,.032),(x,1.805,.67),rubber)
+for x in [-.15,.15]:
+ for z in [.630,.679]:T.slab('grille_slot',(.235,.024,.028),(x,1.708,z),rubber)
 for y in [-1.81,1.81]:T.slab('plate_registration',(.29,.070,.075),(0,y,.54 if y>0 else .64),plate)
 # Batch by shared material while preserving the one-body / four-hub contract.
 for m in [red,plate,amber]:S.merge_static([o for o in list(bpy.context.scene.objects) if o.type=='MESH' and o.name.startswith('lamp_tail') and o.data.materials[0]==m],'lamp_taillights_'+m.name.split()[0])
@@ -131,6 +161,16 @@ for o in [o for o in bpy.context.scene.objects if o.type=='MESH']:
  for f in o.data.polygons:f.use_smooth=True
  while o.data.uv_layers:o.data.uv_layers.remove(o.data.uv_layers[0])
  # Shared vertex normals prevent hard-edge glTF splits opening raw topology.
- o.data.normals_split_custom_set_from_vertices(normals)
+ if o==glazing:
+  adj=[[] for _ in o.data.vertices]
+  for f in o.data.polygons:
+   for vi in f.vertices:adj[vi].append(f)
+  smooth=[]
+  for vi,fs in enumerate(adj):
+   broad=[f for f in fs if f.area>.00004]
+   n=sum((f.normal*f.area for f in broad),Vector())
+   smooth.append(tuple(n.normalized()) if n.length>1e-8 else normals[vi])
+  o.data.normals_split_custom_set_from_vertices(smooth)
+ else:o.data.normals_split_custom_set_from_vertices(normals)
 bpy.context.view_layer.update();S.attach_wheel_fixtures();S.attach_body_fixtures()
 body['authoritative_source']='experiments/micra1995/model.py + parameters.json';body['parameters']=json.dumps(P);bpy.context.scene.unit_settings.system='METRIC'

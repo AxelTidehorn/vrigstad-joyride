@@ -5,6 +5,6 @@ test_hole_in_body_rejected (test_vehicle_validate.VehicleValidatorTests.test_hol
 test_missing_wheel_rejected (test_vehicle_validate.VehicleValidatorTests.test_missing_wheel_rejected) ... ok
 
 ----------------------------------------------------------------------
-Ran 5 tests in 0.035s
+Ran 5 tests in 0.039s
 
 OK

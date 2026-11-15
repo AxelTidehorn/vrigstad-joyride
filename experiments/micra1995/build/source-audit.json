@@ -4,14 +4,14 @@
     "nonmanifold_edges": 0,
     "inconsistent_edges": 0,
     "degenerate_faces": 0,
-    "signed_volume_m3": 5.07169818722038,
+    "signed_volume_m3": 4.751725362341599,
     "connected_components": 1,
     "self_intersection_candidates": 0,
     "sample_pairs": [],
-    "triangles": 4276
+    "triangles": 5056
   },
   "meshes": 24,
-  "triangles": 15988,
+  "triangles": 17316,
   "materials": [
     "Micra configurable body paint",
     "amber indicators",
@@ -28,11 +28,11 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.005603865843067509,
+      "signed_volume_m3": 0.005548652597401685,
       "connected_components": 6,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 1052
+      "triangles": 1112
     },
     "bumper_rear": {
       "nonmanifold_edges": 0,
@@ -58,7 +58,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0066026115472898345,
+      "signed_volume_m3": 0.00508010259963679,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -68,7 +68,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0004599998439350816,
+      "signed_volume_m3": 0.00047071802855469237,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -78,7 +78,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0019458004188177935,
+      "signed_volume_m3": 0.0019458004188178002,
       "connected_components": 4,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -88,7 +88,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0005405002317229928,
+      "signed_volume_m3": 0.0005405002317229896,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -98,7 +98,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0005404997701842631,
+      "signed_volume_m3": 0.0005404997701842656,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -108,50 +108,50 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0011328282790382508,
-      "connected_components": 194,
-      "self_intersection_candidates": 3902,
+      "signed_volume_m3": 0.0011179780563111553,
+      "connected_components": 214,
+      "self_intersection_candidates": 4603,
       "sample_pairs": [
         [
-          4,
-          178
+          1,
+          42
         ],
         [
-          4,
-          179
+          1,
+          2121
         ],
         [
-          11,
-          100
+          1,
+          2124
         ],
         [
-          12,
-          18
+          2,
+          274
         ],
         [
-          12,
-          23
+          2,
+          1774
         ],
         [
-          15,
-          100
+          2,
+          2122
         ],
         [
-          15,
-          1699
+          3,
+          274
         ],
         [
-          16,
-          1564
+          3,
+          275
         ]
       ],
-      "triangles": 3880
+      "triangles": 4280
     },
     "trim_handles": {
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.00014875397537413663,
+      "signed_volume_m3": 0.00014875397537414013,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -161,7 +161,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.00018671510840880434,
+      "signed_volume_m3": 0.00028221544416850546,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -171,7 +171,7 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.0034207386035769983,
+      "signed_volume_m3": 0.003420738603576991,
       "connected_components": 2,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
@@ -191,11 +191,11 @@
       "nonmanifold_edges": 0,
       "inconsistent_edges": 0,
       "degenerate_faces": 0,
-      "signed_volume_m3": 0.001038857679580802,
-      "connected_components": 2,
+      "signed_volume_m3": 0.0005811377266811981,
+      "connected_components": 4,
       "self_intersection_candidates": 0,
       "sample_pairs": [],
-      "triangles": 88
+      "triangles": 176
     },
     "plate_registration": {
       "nonmanifold_edges": 0,
@@ -290,8 +290,8 @@
   },
   "glass_body_surface_intersection_candidates": 0,
   "glass_signed_backing_clearance_m": {
-    "minimum": 0.0011591687086820457,
-    "maximum": 0.004990504588815583,
+    "minimum": 0.002075525262625888,
+    "maximum": 0.004999509662407397,
     "nonpositive_samples": 0
   },
   "wheels": {
@@ -349,10 +349,14 @@
     3.697499990463257,
     1.429999977350235
   ],
+  "overhangs_m": {
+    "front": 0.7174999713897705,
+    "rear": 0.6200000047683716
+  },
   "axle_distance_m": 2.3600000143051147,
   "body_paint_material_count": 1,
   "wheel_fixtures_own_hub": true,
   "all_fixed_fixtures_follow_body": true,
-  "lamp_tops_z_m": 0.7820000052452087,
+  "lamp_tops_z_m": 0.7170000076293945,
   "ok": true
 }
