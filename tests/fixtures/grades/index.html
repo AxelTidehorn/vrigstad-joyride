@@ -1,0 +1,13 @@
+<!doctype html><html><body><canvas id="gl"></canvas><script type="module">
+import * as THREE from 'three';
+import { createSceneFinish } from '../../../src/game/render/scene-finish';
+import { createPhotographicGrades } from '../../../src/game/render/photographic-grades';
+const renderer = new THREE.WebGLRenderer({canvas: document.querySelector('canvas')});
+renderer.setSize(640,360);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x668944);
+const camera = new THREE.PerspectiveCamera();
+const finish = createSceneFinish(renderer,scene,camera);
+const grades = createPhotographicGrades(''); finish.add(grades.effect);
+window.harness = { finish, grades, renderer };
+function frame(){finish.render();requestAnimationFrame(frame);} frame();
+</script></body></html>

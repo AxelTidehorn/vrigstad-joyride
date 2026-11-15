@@ -115,3 +115,7 @@ Class codes are defined in `tools/process.py`. Move them into a shared typed mod
 ### Optional scene finish
 
 `?grain=subtle` (0.62), `strong` (1.5), or a positive strength up to 2 enables scene-only photographic grain. Missing, empty, invalid and nonpositive values resolve to off. It defaults off pending mobile measurements. Grain uses CSS-pixel-sized noise at every DPR. `scene-finish.ts` preserves the native canvas render, then shares one framebuffer copy and fullscreen draw among enabled effects, ordered by effect priority (colour before grain). With all effects off it only calls the original scene render. The read-only test hook reports completed frames, copies and draws; DOM HUD and minimap are outside the pipeline.
+
+### Photographic colour profiles
+
+`?film=chrome|negative|gold|portra` selects an optional display-space grade after native ACES/sRGB output. Missing, off and unknown values bypass grading; names are case insensitive. The read-only hook distinguishes the raw requested setting from the active preset and exposes the production parameters. Review fixtures use the same controller and setter as the game. `scene-finish.ts` is the shared base with #151: colour priority 10 precedes grain priority 20 within a single copy and fullscreen draw. Both PRs contain the identical shared infrastructure commit, and neither needs the other effect to be enabled. Retuning for managed colour (#150) is a separate review.
