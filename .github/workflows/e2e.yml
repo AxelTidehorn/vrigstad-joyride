@@ -1,6 +1,7 @@
 name: e2e
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches: [main]
@@ -21,6 +22,8 @@ jobs:
           cache: npm
       - run: npm ci
       # The built pages are committed: fail if they are not what src/ and data/ build to.
+      - run: npm run check
+      - run: npm run test:lighting
       - run: npm run data && npm run build && git diff --exit-code -- index.html map.html data/vrigstad.json
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
