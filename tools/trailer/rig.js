@@ -1,6 +1,5 @@
 // Capture rig: drives a hooked copy of the built game in headless Chrome on a virtual clock,
 // so every frame is rendered deterministically at 30 fps regardless of how fast the machine is.
-const puppeteer = require('puppeteer-core');
 const path = require('path');
 const fs = require('fs');
 
@@ -13,7 +12,7 @@ const CHROME = process.env.CHROME || '/Applications/Google Chrome.app/Contents/M
 async function buildCaptureCopy() {
   const { build } = await import('vite');
   const boot = 'resize(); requestAnimationFrame(frame);', render = 'renderer.render(scene, camera);\n}';
-  const hook = `window.__G = { THREE, player, cars, police, keys, joy, R, D, hAt, camera, scene, action, addStar, toast, respawn, places, nearestRoad, TYPES, addCar, removeCar, clearWanted, sun, SUN_DIR, renderer, placeCar, nodes, nodeKey, driveable,
+  const hook = `window.__G = { THREE, player, cars, police, keys, joy, R, D, hAt, camera, scene, action, addStar, toast, respawn, places, nearestRoad, TYPES, addCar, removeCar, setCarAppearance, clearWanted, sun, SUN_DIR, renderer, placeCar, nodes, nodeKey, driveable,
   get inCar() { return inCar; }, get pcar() { return pcar; }, get stars() { return stars; }, get camYaw() { return camYaw; }, set camYaw(v) { camYaw = v; }, set camPitch(v) { camPitch = v; },
   set hideT(v) { hideT = v; }, get hideT() { return hideT; }, set lookOff(v) { lookOff = v; lookIdle = 0; } };\n`;
   const hooks = { name: 'capture-hooks', enforce: 'pre', transform(src, id) {
@@ -27,6 +26,7 @@ async function buildCaptureCopy() {
 }
 
 async function open({ width = 1280, height = 720, scale = 1.5 } = {}) {
+  const puppeteer = require('puppeteer-core');
   const file = await buildCaptureCopy();
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new',
     args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--hide-scrollbars', `--window-size=${width},${height}`] });
@@ -48,4 +48,4 @@ async function open({ width = 1280, height = 720, scale = 1.5 } = {}) {
   return { browser, page };
 }
 
-module.exports = { open, WORK, ROOT };
+module.exports = { open, buildCaptureCopy, WORK, ROOT };
