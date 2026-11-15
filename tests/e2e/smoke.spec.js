@@ -32,6 +32,8 @@ test.describe('game (index.html)', () => {
     await expect(page.locator('#intro')).toBeVisible();
     await expectWebGL(page);
     expect(await state(page)).toMatchObject({ started: false, inCar: false });
+    await expect.poll(async () => (await state(page)).loadedVehicles).toBeGreaterThan(0);
+    await expect.poll(async () => (await state(page)).visibleVehicles).toBeGreaterThan(0);
     await page.screenshot({ path: testInfo.outputPath('game-intro.png') });
     expect(errors).toEqual([]);
   });
