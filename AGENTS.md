@@ -78,6 +78,11 @@ GitHub issues are the backlog: every bug, idea and piece of work is one issue.
 - On a conflict in `index.html` or `map.html`, never merge the built files by hand: resolve `src/` only, then rerun `python3 tools/build.py`.
 - Say how you tested in the PR, and be honest about what wasn't tested ("not played by hand on a phone").
 
+
+## Vehicle modelling: reference evidence is mandatory
+
+For any new or reshaped named car, do not call a model reference-verified based on its dimensions or preview gallery alone. Follow [the vehicle reference verification gate](docs/vehicle-reference-verification.md). Supply source-linked side and front comparisons against the actual Blender silhouette, measurable landmarks, method and uncertainty, and a machine-readable evidence manifest. A perspective photograph must never be described as an exact orthographic blueprint. Review all comparisons with a human; CI checks evidence integrity, not likeness. If evidence is missing, state **reference review incomplete**, do not claim visual approval, and do not skip the check on subsequent iterations. Preserve original-shell proportions separately from estimated EPA conversion dimensions.
+
 ## Code style
 
 - **Match the surrounding code.** Same naming, comment density and idiom as the file you're in.
