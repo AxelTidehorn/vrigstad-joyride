@@ -8,6 +8,7 @@ for (const [requested, preset] of [['off','off'],['unknown','off'],['Chrome','ch
     await expect.poll(() => page.evaluate(() => window.__joyride?.state().rendering.frames)).toBeGreaterThan(3);
     const s = await page.evaluate(() => window.__joyride.state());
     expect(s.film).toMatchObject({ setting: requested, preset, enabled: preset !== 'off' });
+    if (preset === 'negative') expect(s.film.parameters.foliageReach).toBe(1);
     if (preset === 'off') expect(s.rendering.copies).toBe(0);
     else { expect(s.rendering.copies).toBeGreaterThan(2); expect(s.rendering.passes).toBe(s.rendering.copies); }
     expect(await page.evaluate(() => document.querySelector('#gl').getContext('webgl2').getError())).toBe(0);
@@ -18,8 +19,8 @@ for (const [requested, preset] of [['off','off'],['unknown','off'],['Chrome','ch
 test('production profile setter applies every uniform and bypasses off', async ({ page }) => {
   await buildFixture('grades');
   const errors = watchErrors(page);
-    await page.setViewportSize({ width: 640, height: 360 });
-  await page.goto('/.work/grades/index.html');
+  await page.setViewportSize({ width: 640, height: 360 });
+  await page.goto('/__test-fixtures/grades/index.html');
   await page.waitForFunction(() => window.harness);
   for (const preset of ['negative', 'chrome', 'gold', 'portra']) {
     const result = await page.evaluate(preset => {

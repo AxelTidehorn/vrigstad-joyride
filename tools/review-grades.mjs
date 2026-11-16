@@ -8,7 +8,9 @@ import { pathToFileURL } from 'node:url';
 const output = resolve('.work/grades-review');
 const hook = { name: 'grade-review', enforce: 'pre', transform(src, id) {
   if (!id.endsWith('/src/game/main.ts')) return;
-  return src.replace('resize(); requestAnimationFrame(frame);', `
+  const marker = 'resize(); requestAnimationFrame(frame);';
+  if (!src.includes(marker)) throw new Error('The review hook no longer matches src/game/main.ts');
+  return src.replace(marker, `
 window.__review = { grades, sceneFinish, sun, scene, dome, renderer, SUN_DIR };
 resize(); requestAnimationFrame(frame);`);
 } };
@@ -30,6 +32,7 @@ try {
   await page.locator('#go').click();
   const parameters = {};
   for (const environment of ['day', 'sunset', 'night']) {
+    parameters[environment] = {};
     await page.evaluate(environment => {
       const { sun, scene, dome, renderer, SUN_DIR } = window.__review;
       const hemi = scene.children.find(n => n.isHemisphereLight);
@@ -48,7 +51,7 @@ try {
       renderer.toneMappingExposure = setup.exposure;
     }, environment);
     for (const preset of ['off', 'chrome', 'negative', 'gold', 'portra']) {
-      parameters[preset] = await page.evaluate(preset => {
+      parameters[environment][preset] = await page.evaluate(preset => {
         window.__review.grades.set(preset); window.__reviewStep();
         const gl = window.__review.renderer.getContext();
         if (gl.getError() !== gl.NO_ERROR) throw new Error('WebGL error');

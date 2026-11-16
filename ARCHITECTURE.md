@@ -16,7 +16,7 @@ Vite (tools/build.mjs) ── imports it ──► index.html  (from src/index.h
 - Each page is one HTML file (CSS and DOM) and one big script, moved as-is into `main.ts` with `// @ts-nocheck`. Each builds to a single self-contained file (#44).
 - three.js is imported from npm (`three`, `three/addons/...`) and bundled into each page (#47). Both pages keep the colour and light maths of r128, which the look was tuned with: `ColorManagement` is off and light intensities are scaled by π (`LEGACY_LIGHT`), both in `src/world/three-legacy.ts`, which both pages import. Moving to managed colour and retuning is #150.
 - The game keeps all state in module-level variables (`cars`, `player`, `stars`, `inCar`, ...) and runs one `requestAnimationFrame` loop that mixes input, simulation, rendering and HUD updates.
-- The map and the game each have their own copy of the terrain, buildings and trees code.
+- `src/world/` (#48) holds the world's data and queries, with no three.js: the data's types and class codes, the height lookup and the seeded random stream, which both pages use, and the roads, water and building footprints with their spatial queries (`nearestRoad`, `groundAt`, `inWater`, `collide`), which only the game uses so far. The terrain, building and tree meshes are still built by each page.
 
 This was the right shape for a prototype. It stops scaling once several people add features at the same time, which is happening now.
 
@@ -27,7 +27,8 @@ pipeline (Python, unchanged) ──► data/vrigstad.json (imported, so it's inl
                                         │
 src/
   world/      shared: heightfield, terrain, roads, buildings, water, trees,
-              ground texture, spatial queries (nearestRoad, inWater, collide)
+              spatial queries (nearestRoad, inWater, collide); each page
+              paints its own ground texture, in its own style
   game/
     sim/      pure TS game state + rules: player, vehicles, traffic, police,
               wanted level, pedestrians. step(state, input, dt). No three.js, no DOM.
@@ -110,8 +111,8 @@ Metres; origin 57.3555° N, 14.4756° E; x east, z south, y up; the world spans 
 | `l` | Land use: `k` class, `p` polygon |
 | `labels` | Named places: `t` text, `x`, `z`, `k` kind |
 
-Class codes are defined in `tools/process.py`. Move them into a shared typed module once the code is TypeScript.
+Class codes are assigned in `tools/process.py`; `src/world/data.ts` types the file and names them (`RoadClass`, `LandUse`, `BuildingKind`, `WaterwayKind`). Change both together.
 
 ### Photographic colour profiles
 
-`?film=chrome|negative|gold|portra` selects an optional display-space grade after native ACES/sRGB output. Missing, off and unknown values bypass grading; names are case insensitive. The read-only hook distinguishes the raw requested setting from the active preset and exposes the production parameters. Review fixtures use the same controller and setter as the game. `scene-finish.ts` copies the frame once and runs the grade as one fullscreen draw, only while a profile is active. Retuning for managed colour (#150) is a separate review.
+`?film=chrome|negative|gold|portra` applies an optional display-space colour grade after the native ACES/sRGB scene render. Missing, `off`, and unknown values bypass the effect; preset names are case insensitive. The read-only test hook exposes the raw setting, active preset, and a snapshot of the production parameters. The controller is also used by review fixtures. `scene-finish.ts` uses one framebuffer copy and fullscreen draw only when grading is enabled. A manual `node tools/review-grades.mjs` generates matched staged-lighting captures into ignored `.work/grades-review/`; final visual approval still requires human review. Managed-colour retuning (#150) is separate.

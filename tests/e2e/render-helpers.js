@@ -15,5 +15,5 @@ export async function buildFixture(name) {
   const { viteSingleFile } = await import('vite-plugin-singlefile');
   const { resolve } = await import('node:path');
   await build({ configFile: false, root: resolve(`tests/fixtures/${name}`), logLevel: 'warn',
-    plugins: [viteSingleFile()], build: { outDir: resolve(`.work/${name}`) } });
+    plugins: [viteSingleFile()], build: { outDir: resolve(`dist/__test-fixtures/${name}`), emptyOutDir: false } });
 }

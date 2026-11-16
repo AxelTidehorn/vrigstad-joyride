@@ -2,7 +2,15 @@
 // Moved as-is from the single-file prototype (#44); it gets types as it is split into modules.
 import * as THREE from 'three';
 import D from '../../data/vrigstad.json';
+import { BUILDING_CELL_M as BC, BuildingIndex } from '../world/buildings';
+import { ROAD_WIDTH_M as ROAD_W } from '../world/data';
+import { Heightfield } from '../world/heightfield';
+import { clamp } from '../world/math';
+import { pointInPolygon as inPoly, polygonArea as polyArea, segmentDistance as segDist } from '../world/polygon';
+import { makeRnd } from '../world/random';
+import { nodeKey, ROAD_CELL_M as RC, RoadNetwork, roadLiftM as roadLift } from '../world/roads';
 import { LEGACY_LIGHT } from '../world/three-legacy';
+import { Water } from '../world/water';
 import { createPhotographicGrades } from './render/photographic-grades';
 import { createSceneFinish } from './render/scene-finish';
 
@@ -11,24 +19,16 @@ import { createSceneFinish } from './render/scene-finish';
 const $ = id => document.getElementById(id);
 const S = D.size, HALF = S / 2, N = D.n, E = D.elev;
 const minE = Math.min.apply(null, E);
-const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
 const wrap = a => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a; };
-// seeded streams (mulberry32): rnd() drives the world and gameplay; side systems get their own stream so they don't shift its rolls
-const makeRnd = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
-  t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+// seeded streams: rnd() drives the world and gameplay; side systems get their own stream so they don't shift its rolls
 const rnd = makeRnd(57355);
 const pick = a => a[Math.floor(rnd() * a.length)];
 
 // ---------- terrain height (matches the mesh triangles exactly) ----------
-function hAt(x, z) {
-  const u = clamp((x + HALF) / S * (N - 1), 0, N - 1.0001), v = clamp((z + HALF) / S * (N - 1), 0, N - 1.0001);
-  const i = Math.floor(u), j = Math.floor(v), fu = u - i, fv = v - j, k = j * N + i;
-  const a = E[k], b = E[k + 1], d = E[k + N], c = E[k + N + 1];
-  const h = fu + fv <= 1 ? a + (b - a) * fu + (d - a) * fv : c + (d - c) * (1 - fu) + (b - c) * (1 - fv);
-  return (h - minE) / 10;
-}
+// the world's queries are bound once, so the code below calls them as plain functions
+const heightfield = new Heightfield(D), hAt = heightfield.heightAt.bind(heightfield);
 const _n = new THREE.Vector3();
-function normalAt(x, z) { return _n.set(hAt(x - 1.5, z) - hAt(x + 1.5, z), 3, hAt(x, z - 1.5) - hAt(x, z + 1.5)).normalize(); }
+const normalAt = (x, z) => heightfield.normalAt(x, z, _n);
 
 // ---------- renderer ----------
 const canvas = $('gl');
@@ -82,10 +82,7 @@ const tex2d = document.createElement('canvas'); tex2d.width = tex2d.height = CW;
 const ctx = tex2d.getContext('2d');
 const P = v => (v + HALF) * K;
 function trace(p, close) { ctx.moveTo(P(p[0]), P(p[1])); for (let i = 2; i < p.length; i += 2) ctx.lineTo(P(p[i]), P(p[i + 1])); if (close) ctx.closePath(); }
-const ROAD_W = [9, 7.5, 5.5, 3.5, 2.6, 1.5];
-const roadLift = c => 0.25 - c * 0.03;   // m above the terrain each road class is drawn at; groundAt() puts people and cars on top of it
 const HOUSE_MIN_M2 = 40, HOUSE_MAX_M2 = 1500;   // footprints in this range count as homes and shops
-const polyArea = p => { let a = 0; for (let i = 0, j = p.length - 2; i < p.length; j = i, i += 2) a += p[j] * p[i + 1] - p[i] * p[j + 1]; return Math.abs(a / 2); };
 (function paint() {
   const land = ['#a6c083', '#d9cf8b', '#b9b4a8', '#8fc072', '#93b77d', '#6f9a5e', '#7cc163'];
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
@@ -145,7 +142,8 @@ texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); texture.colorSpac
 })();
 
 // ---------- roads: crisp ribbons on the terrain + lookup grid + junction graph ----------
-const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p.push([r.p[i], r.p[i + 1]]); return { p, c: r.c, n: r.n }; });
+const roads = new RoadNetwork(D, heightfield), { lines: R, grid: roadGrid, junctions: nodes, driveable } = roads;
+const nearestRoad = roads.nearestRoad.bind(roads), groundAt = roads.groundAt.bind(roads);
 (function () {
   const bufs = [[], [], [], [], [], [], []], uvs = [[], [], [], [], [], [], []];
   function ribbon(out, uo, pts, w, lift) {   // uv: one 4 m tile of speckle across and along the road
@@ -178,45 +176,9 @@ const R = D.r.map(r => { const p = []; for (let i = 0; i < r.p.length; i += 2) p
       polygonOffsetFactor: -2, polygonOffsetUnits: -4 * (i === 6 ? 8 : 6 - i) }));
     m.receiveShadow = true; m.renderOrder = i === 6 ? 8 : 6 - i; scene.add(m); });
 })();
-const RC = 50, roadGrid = new Map();
-R.forEach((r, ri) => { for (let i = 1; i < r.p.length; i++) { const a = r.p[i - 1], b = r.p[i];
-  const x0 = Math.floor((Math.min(a[0], b[0]) - 14) / RC), x1 = Math.floor((Math.max(a[0], b[0]) + 14) / RC);
-  const z0 = Math.floor((Math.min(a[1], b[1]) - 14) / RC), z1 = Math.floor((Math.max(a[1], b[1]) + 14) / RC);
-  for (let x = x0; x <= x1; x++) for (let z = z0; z <= z1; z++) { const k = x + ',' + z; let l = roadGrid.get(k); if (!l) roadGrid.set(k, l = []); l.push(a[0], a[1], b[0], b[1], ri); } } });
-function segDist(x, z, ax, az, bx, bz) { const dx = bx - ax, dz = bz - az, L = dx * dx + dz * dz;
-  const t = L ? clamp(((x - ax) * dx + (z - az) * dz) / L, 0, 1) : 0; return Math.hypot(x - ax - dx * t, z - az - dz * t); }
-const near = { d: 1e9, ri: -1 };
-function nearestRoad(x, z) {
-  near.d = 1e9; near.ri = -1;
-  const l = roadGrid.get(Math.floor(x / RC) + ',' + Math.floor(z / RC));
-  if (l) for (let i = 0; i < l.length; i += 5) { const d = segDist(x, z, l[i], l[i + 1], l[i + 2], l[i + 3]) - ROAD_W[R[l[i + 4]].c] / 2; if (d < near.d) { near.d = d; near.ri = l[i + 4]; } }
-  return near;                                   // d = distance to the road's edge (negative when on it)
-}
-// terrain plus the highest road ribbon at (x, z), eased out over the metre past its edge so nothing snaps at the kerb
-function groundAt(x, z) { let lift = 0;
-  const l = roadGrid.get(Math.floor(x / RC) + ',' + Math.floor(z / RC));
-  if (l) for (let i = 0; i < l.length; i += 5) { const c = R[l[i + 4]].c, d = segDist(x, z, l[i], l[i + 1], l[i + 2], l[i + 3]) - ROAD_W[c] / 2;
-    if (d < 1) lift = Math.max(lift, roadLift(c) * Math.min(1, 1 - d)); }
-  return hAt(x, z) + lift;
-}
-const nodeKey = p => Math.round(p[0] * 2) + ',' + Math.round(p[1] * 2), nodes = new Map(), driveable = [];
-R.forEach((r, ri) => { if (r.c > 2 || r.p.length < 2) return; driveable.push(ri);
-  r.p.forEach((p, vi) => { const k = nodeKey(p); let l = nodes.get(k); if (!l) nodes.set(k, l = []); l.push(ri, vi); }); });
 
 // ---------- water ----------
-const lakes = D.w.map(rings => { let x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9;
-  for (const r of rings) for (let i = 0; i < r.length; i += 2) { x0 = Math.min(x0, r[i]); x1 = Math.max(x1, r[i]); z0 = Math.min(z0, r[i + 1]); z1 = Math.max(z1, r[i + 1]); }
-  return { rings, x0, x1, z0, z1 }; });
-function inPoly(p, x, z) { let c = false;
-  for (let i = 0, j = p.length - 2; i < p.length; j = i, i += 2)
-    if ((p[i + 1] > z) !== (p[j + 1] > z) && x < (p[j] - p[i]) * (z - p[i + 1]) / (p[j + 1] - p[i + 1]) + p[i]) c = !c;
-  return c; }
-function inWater(x, z) {
-  if (nearestRoad(x, z).d < 1) return false;     // bridges
-  for (const l of lakes) if (x >= l.x0 && x <= l.x1 && z >= l.z0 && z <= l.z1) { let c = false; for (const r of l.rings) if (inPoly(r, x, z)) c = !c; if (c) return true; }
-  for (const w of D.ww) if (w.k === 0) for (let i = 2; i < w.p.length; i += 2) if (segDist(x, z, w.p[i - 2], w.p[i - 1], w.p[i], w.p[i + 1]) < 2.6) return true;
-  return false;
-}
+const water = new Water(D, roads), inWater = water.inWater.bind(water);
 
 // ---------- buildings (painted in Swedish house colours) + collision grid ----------
 // walls and roof halves of an outline; a pitched roof (g = ridge over the bounding rectangle) is cut to the outline, which gets a corner wherever it crosses the ridge
@@ -228,7 +190,8 @@ function roofParts(contour, g, top) {
     if (oa * od < 0) { ring.push(new THREE.Vector2(a.x + (d.x - a.x) * t, a.y + (d.y - a.y) * t)); o.push(0); } });
   return { ring, yAt, sides: [1, -1].map(s => ring.filter((v, i) => s * o[i] >= 0)).filter(h => h.length > 2) };
 }
-const BC = 40, bGrid = new Map(), bPolys = [];
+const buildings = new BuildingIndex(D), { footprints: bPolys, grid: bGrid } = buildings;
+const addFootprint = buildings.addFootprint.bind(buildings), collide = buildings.collide.bind(buildings);
 // house details: windows (a texture on a skin just outside the walls), white corner boards and eave boards, a dark plinth, and a chimney on gabled roofs
 const WIN_W = 2.6, STOREY = 2.8;   // window spacing and storey height (m)
 const winTex = (function () {
@@ -250,11 +213,10 @@ const winTex = (function () {
     for (let i = 0; i < 4; i++) { const a = P[i], d = P[(i + 1) % 4]; quad(pos, a[0], a[1], d[0], d[1], y0, y1, y0, y1); }
     pos.push(x - h, y1, z - h, x + h, y1, z + h, x + h, y1, z - h, x - h, y1, z - h, x - h, y1, z + h, x + h, y1, z + h);
     for (let i = 0; i < 30; i++) cols.push(k.r, k.g, k.b); };
-  D.b.forEach((b, bi) => {
-    const n = b.p.length / 2, contour = []; let lo = 1e9, hi = -1e9, x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9, area = 0;
+  D.b.forEach(b => {
+    const n = b.p.length / 2, contour = []; let lo = 1e9, hi = -1e9, area = 0;
     for (let i = 0; i < n; i++) { const x = b.p[i * 2], z = b.p[i * 2 + 1], h = hAt(x, z), j = (i + 1) % n;
-      contour.push(new THREE.Vector2(x, z)); lo = Math.min(lo, h); hi = Math.max(hi, h);
-      x0 = Math.min(x0, x); x1 = Math.max(x1, x); z0 = Math.min(z0, z); z1 = Math.max(z1, z); area += x * b.p[j * 2 + 1] - b.p[j * 2] * z; }
+      contour.push(new THREE.Vector2(x, z)); lo = Math.min(lo, h); hi = Math.max(hi, h); area += x * b.p[j * 2 + 1] - b.p[j * 2] * z; }
     const wind = Math.sign(area); area = Math.abs(area) / 2;   // wind: +1 or -1 with the outline's winding, to find the outside of each wall
     c.set(b.k === 2 ? '#9c3a2c' : b.k ? '#efece3' : area > 450 ? pick(big) : pick(house)).convertSRGBToLinear();
     c2.set(b.k === 2 ? '#a8573f' : b.k ? '#3f4447' : rnd() < 0.35 ? '#4d4a48' : '#a8573f').convertSRGBToLinear();
@@ -285,9 +247,6 @@ const winTex = (function () {
       if (b.g) { const [ax, az, bx, bz, w] = b.g, cx = ax + (bx - ax) * 0.3, cz = az + (bz - az) * 0.3, ry = yAt({ x: cx, y: cz });
         if (inPoly(b.p, cx, cz)) box(cx, cz, ry - 0.6, ry + 0.9, 0.6, hAt(cx, cz) * 7 % 1 < 0.5 ? col('#8a3b2d') : col('#d8d2c4')); }
     }
-    bPolys.push({ p: b.p, x0, x1, z0, z1 });
-    for (let x = Math.floor(x0 / BC); x <= Math.floor(x1 / BC); x++) for (let z = Math.floor(z0 / BC); z <= Math.floor(z1 / BC); z++) {
-      const k = x + ',' + z; let l = bGrid.get(k); if (!l) bGrid.set(k, l = []); l.push(bi); }
   });
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('color', new THREE.Float32BufferAttribute(cols, 3)); g.computeVertexNormals();
@@ -301,23 +260,6 @@ const winTex = (function () {
     new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 })]);
   skin.receiveShadow = true; scene.add(skin);
 })();
-// push a circle out of any building it overlaps; returns true on contact
-function collide(o, r) {
-  let hit = false;
-  for (let gx = Math.floor((o.x - r) / BC); gx <= Math.floor((o.x + r) / BC); gx++) for (let gz = Math.floor((o.z - r) / BC); gz <= Math.floor((o.z + r) / BC); gz++) {
-    const l = bGrid.get(gx + ',' + gz); if (!l) continue;
-    for (const bi of l) { const b = bPolys[bi]; if (o.x < b.x0 - r || o.x > b.x1 + r || o.z < b.z0 - r || o.z > b.z1 + r) continue;
-      const p = b.p; let best = 1e9, qx = 0, qz = 0;
-      for (let i = 0, j = p.length - 2; i < p.length; j = i, i += 2) { const dx = p[i] - p[j], dz = p[i + 1] - p[j + 1], L = dx * dx + dz * dz;
-        const t = L ? clamp(((o.x - p[j]) * dx + (o.z - p[j + 1]) * dz) / L, 0, 1) : 0, cx = p[j] + dx * t, cz = p[j + 1] + dz * t, d = Math.hypot(o.x - cx, o.z - cz);
-        if (d < best) { best = d; qx = cx; qz = cz; } }
-      const inside = inPoly(p, o.x, o.z);
-      if (!inside && best >= r) continue;
-      let nx = o.x - qx, nz = o.z - qz; const L = Math.hypot(nx, nz) || 1; nx /= L; nz /= L;
-      if (inside) { nx = -nx; nz = -nz; }
-      o.x = qx + nx * r; o.z = qz + nz * r; hit = true; } }
-  return hit;
-}
 
 // ---------- trees: spruces and birches, each with its own shade, size and lean ----------
 (function () {
@@ -445,11 +387,12 @@ function placeCar(c) {
   _f.set(Math.sin(c.h), 0, -Math.cos(c.h)); _f.addScaledVector(n, -_f.dot(n)).normalize(); _r.crossVectors(_f, n);
   _m.makeBasis(_r, n, _f.negate()); c.mesh.quaternion.setFromRotationMatrix(_m);
   c.mesh.position.set(c.x, groundAt(c.x, c.z) - (c.wet ? 0.55 : 0), c.z);
+  if (c.slip) c.mesh.rotateZ(c.slip * DRIFT_ROLL);           // lean out of the slide
 }
 function addCar(type, x, z, h, mode) {
   const T = TYPES[type], mesh = new THREE.Mesh(carGeo(type, pick(T.cols)), carMat); mesh.castShadow = true; blob(mesh, 2.8, 5.8);
   if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); mesh.add(bar); }
-  const c = { type, T, mesh, x, z, h, v: 0, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
+  const c = { type, T, mesh, x, z, h, vh: h, v: 0, slip: 0, drift: 0, charge: 0, yr: 0, spin: 0, loose: 0, flickDir: 0, flickT: 9, boost: 0, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
   scene.add(mesh); cars.push(c); placeCar(c); return c;
 }
 function removeCar(c) { scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
@@ -505,26 +448,93 @@ function updateTraffic(c, dt, T) {
   c.h = c.first ? Math.atan2(dx, -dz) : c.h + wrap(Math.atan2(dx, -dz) - c.h) * Math.min(1, dt * 5); c.first = false;
   placeCar(c);
 }
-// shared driving model for the player and the police
-function drive(c, thr, steer, brake, dt) {
+// Drifting (player only): brake plus steering at speed breaks the rear loose. The car keeps sliding along its line of
+// travel (c.vh) while the nose (c.h) swings into the turn. Holding a slide charges a mini-turbo, fired when the brake is let go.
+const DRIFT_MIN_V = 7.5, DRIFT_KEEP_V = 4;     // m/s to start a drift, and below which it fizzles out
+const GRIP = 12, DRIFT_GRIP = 1.6;             // 1/s: how fast the line of travel swings round to where the nose points
+const DRIFT_YAW = 1.7, DRIFT_MAX_SLIP = 1.0;   // yaw rate multiplier in a drift; rad, the most the nose can point off the line (no spin-outs)
+const DRIFT_DRAG = 2.5, DRIFT_THR = 0.35;      // m/s² lost to sideways scrub; share of normal acceleration the throttle still gives
+const DRIFT_ROLL = 0.08;                       // rad of body lean per rad of slip
+const RECOVER_S = 0.9, SPIN_DECAY = 2.5;       // s for grip to come back after a drift; 1/s fade of the yaw the nose carries out of it (counter-steer to catch it)
+const FLICK_LOOSE = 0.5, FLICK_S = 0.6;        // s of looseness each quick left-right reversal adds (up to RECOVER_S); s apart that still counts as quick
+const FLICK_SPIN = 1.5;                        // rad/s the rear's swing adds to the new direction at full looseness, on top of the steering
+const CATCH = 0.8;                             // share of the grip that swings the nose back to the path, not the path to the nose, at full opposite lock
+const TURBO_AT = [1, 2.2], TURBO_S = [0.7, 1.3];   // s of sliding for a blue / an orange spark; how long each boost lasts (s)
+const TURBO_ACC = 14, TURBO_TOP = 1.2;         // m/s² of boost; top speed multiplier while boosting
+// shared driving model for the player and the police; only the player passes canDrift
+function drive(c, thr, steer, brake, dt, canDrift) {
   const road = nearestRoad(c.x, c.z).d < 0.6; c.wet = inWater(c.x, c.z);
-  if (brake) c.v -= Math.sign(c.v) * Math.min(Math.abs(c.v), 26 * dt);
+  if (c.drift) { if (!brake || c.v < DRIFT_KEEP_V || c.wet) { const t = c.charge > TURBO_AT[1] ? 1 : c.charge > TURBO_AT[0] ? 0 : -1;
+      if (!brake && t >= 0) c.boost = TURBO_S[t]; c.drift = 0; c.loose = RECOVER_S; c.spin = c.yr; } }
+  else if (canDrift && brake && c.v > DRIFT_MIN_V && Math.abs(steer) > 0.3 && !c.wet) { c.drift = Math.sign(steer); c.charge = 0; }
+  if (canDrift) { c.flickT += dt; if (Math.abs(steer) > 0.5) { const d = Math.sign(steer);   // throwing the weight left-right-left breaks the rear loose a little more each time
+      if (d !== c.flickDir && c.flickT < FLICK_S && c.v > DRIFT_MIN_V && !c.drift && !c.wet) { c.loose = Math.min(RECOVER_S, c.loose + FLICK_LOOSE); c.spin = d * (Math.abs(c.yr) + FLICK_SPIN * c.loose / RECOVER_S); }
+      c.flickDir = d; c.flickT = 0; } }
+  if (c.drift) { c.v += ((thr > 0 ? c.T.acc * DRIFT_THR * thr : 0) - DRIFT_DRAG) * dt; if (Math.abs(c.slip) > 0.25) c.charge += dt; }
+  else if (brake) c.v -= Math.sign(c.v) * Math.min(Math.abs(c.v), 26 * dt);
+  else if (c.loose > 0 && Math.abs(c.slip) > 0.1 && c.v > DRIFT_KEEP_V) c.v += ((thr > 0 ? c.T.acc * DRIFT_THR * thr : 0) - DRIFT_DRAG) * dt;   // still scrubbing sideways, or tapping Space would beat holding it
   else if (thr > 0) c.v += (c.v < 0 ? 20 : c.T.acc * (1 - 0.6 * Math.max(0, c.v) / c.T.max)) * thr * dt;
   else if (thr < 0) c.v += (c.v > 0.5 ? 20 : c.T.acc * 0.6) * thr * dt;
   else c.v -= Math.sign(c.v) * Math.min(Math.abs(c.v), (road ? 2 : 5) * dt);
-  const max = c.wet ? 2.5 : c.T.max * (road ? 1 : c.T.off);
+  if (c.boost > 0) { c.boost -= dt; if (c.wet) c.boost = 0; }   // water puts the turbo out
+  const max = (c.wet ? 2.5 : c.T.max * (road ? 1 : c.T.off)) * (c.boost > 0 ? TURBO_TOP : 1);
+  if (c.boost > 0 && c.v < max) c.v = Math.min(max, c.v + TURBO_ACC * dt);   // only up to the limit, so it never cancels the overspeed braking below
   if (c.v > max) c.v = Math.max(max, c.v - 14 * dt);
   if (c.v < -7) c.v = -7;
-  c.h = wrap(c.h + c.v / 2.7 * Math.tan(steer * 0.6 / (1 + Math.abs(c.v) / 11)) * dt);
-  c.x += Math.sin(c.h) * c.v * dt; c.z -= Math.cos(c.h) * c.v * dt;
+  const s = c.drift ? c.drift * (0.6 + 0.4 * steer * c.drift) : steer;   // in a drift the nose always swings the drift's way; steering tightens or widens it
+  c.yr = c.v / 2.7 * Math.tan(s * 0.6 / (1 + Math.abs(c.v) / 11)) * (c.drift ? DRIFT_YAW : 1);   // rad/s
+  if (c.loose > 0) { c.loose -= dt; c.spin *= Math.exp(-SPIN_DECAY * dt); } else c.spin = 0;
+  c.h = wrap(c.h + (c.yr * c.spin > 0 ? (Math.abs(c.yr) > Math.abs(c.spin) ? c.yr : c.spin) : c.yr + c.spin) * dt);   // steering into the slide doesn't stack on the carried yaw; counter-steer cancels it
+  const grip = c.drift ? DRIFT_GRIP : c.loose > 0 ? DRIFT_GRIP + (GRIP - DRIFT_GRIP) * (1 - c.loose / RECOVER_S) ** 2 : GRIP;   // rear grip comes back slowly, so the slide carries on
+  if (canDrift) { const fix = wrap(c.h - c.vh) * Math.min(1, grip * dt), k = c.loose > 0 ? CATCH * Math.max(0, -steer * Math.sign(c.slip)) : 0;
+    c.h = wrap(c.h - fix * k); c.vh = wrap(c.vh + fix * (1 - k));   // counter-steer catches the slide: the car straightens along its line instead of carving on
+    c.slip = clamp(wrap(c.h - c.vh), -DRIFT_MAX_SLIP, DRIFT_MAX_SLIP); c.vh = wrap(c.h - c.slip); }
+  else { c.vh = c.h; c.slip = 0; }
+  c.x += Math.sin(c.vh) * c.v * dt; c.z -= Math.cos(c.vh) * c.v * dt;
   c.x = clamp(c.x, -HALF + 4, HALF - 4); c.z = clamp(c.z, -HALF + 4, HALF - 4);
-  if (collide(c, 1.5)) c.v *= Math.pow(0.02, dt);
+  if (collide(c, 1.5)) { c.v *= Math.pow(0.02, dt); c.drift = c.loose = c.boost = 0; }     // a wall ends the slide, and the turbo with it (charged or firing)
   for (const o of cars) { if (o === c) continue; const dx = c.x - o.x, dz = c.z - o.z, d = Math.hypot(dx, dz);
     if (d < 2.7 && d > 0.01) { const push = 2.7 - d; c.x += dx / d * push; c.z += dz / d * push;
       if (Math.abs(c.v) > 6 && c === pcar && o.mode === 'police' && ramCool <= 0) { ramCool = 6; addStar('Ramming a police car. That will not help.'); }
       if (o.mode === 'parked' || o.mode === 'idle') { o.x -= dx / d * push * 0.4; o.z -= dz / d * push * 0.4; placeCar(o); }
       c.v *= Math.pow(0.05, dt); } }
   placeCar(c);
+}
+
+// ---------- drift effects: sparks at the rear wheels (white, then blue and orange as the turbo charges), a flame while boosting, skid marks ----------
+const SKID_N = 600, SKID_STEP_M = 0.6, SPARK_COLS = [col(0xfff2c0), col(0x4aa8ff), col(0xff8a1f)];
+const fxRnd = makeRnd(4242);                   // own stream: the flicker rolls every frame
+const sparkMat = new THREE.MeshBasicMaterial({ color: SPARK_COLS[0].clone() }), sparkGeo = new THREE.OctahedronGeometry(0.22);
+const sparks = [0, 1].map(() => { const m = new THREE.Mesh(sparkGeo, sparkMat); m.visible = false; scene.add(m); return m; });
+const flame = new THREE.Mesh(new THREE.ConeGeometry(0.22, 1, 8).rotateX(Math.PI / 2).translate(0, 0, 0.5), new THREE.MeshBasicMaterial({ color: col(0xffb347) }));
+flame.visible = false; scene.add(flame);
+const skids = new THREE.InstancedMesh(new THREE.PlaneGeometry(0.24, 1).rotateX(-Math.PI / 2).translate(0, 0, 0.5),
+  new THREE.MeshBasicMaterial({ color: 0x111111, transparent: true, opacity: 0.4, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }), SKID_N);
+skids.count = 0; skids.frustumCulled = false; scene.add(skids);
+const skidLast = [null, null], _sp = new THREE.Vector3(), _sq = new THREE.Quaternion(), _ss = new THREE.Vector3(), _up = new THREE.Vector3(0, 1, 0);
+let skidI = 0;
+function laySkid(w, x, z) {
+  const l = skidLast[w]; if (!l) { skidLast[w] = { x, z }; return; }
+  const dx = x - l.x, dz = z - l.z, L = Math.hypot(dx, dz); if (L < SKID_STEP_M) return;
+  _sp.set(l.x, groundAt(l.x, l.z) + 0.02, l.z); _sq.setFromAxisAngle(_up, Math.atan2(dx, dz)); _ss.set(1, 1, L);
+  skids.setMatrixAt(skidI, _m.compose(_sp, _sq, _ss)); skidI = (skidI + 1) % SKID_N; skids.count = Math.min(SKID_N, skids.count + 1);   // a ring: the oldest mark goes first
+  skids.instanceMatrix.needsUpdate = true; l.x = x; l.z = z;
+}
+function updateDriftFx(c) {
+  const on = !!c && !c.wet && (c.drift !== 0 || Math.abs(c.slip) > 0.3), back = c ? (c.type === 'traktor' ? 1.5 : PROFILES[c.type].wz[1]) : 0;
+  const fx = c ? Math.sin(c.h) : 0, fz = c ? -Math.cos(c.h) : 0;
+  for (let w = 0; w < 2; w++) {
+    if (!on) { sparks[w].visible = false; skidLast[w] = null; continue; }
+    const side = w ? 0.8 : -0.8, x = c.x - fx * back - fz * side, z = c.z - fz * back + fx * side;
+    laySkid(w, x, z);
+    const sx = x - fx * 0.45, sz = z - fz * 0.45;                 // just behind the tyre, which would hide it
+    const tier = c.charge > TURBO_AT[1] ? 2 : c.charge > TURBO_AT[0] ? 1 : 0, sp = sparks[w];
+    sp.visible = c.drift !== 0; sp.position.set(sx, groundAt(sx, sz) + 0.18, sz); sp.scale.setScalar((0.6 + tier * 0.35) * (0.6 + fxRnd() * 0.8));
+    sp.rotation.set(fxRnd() * 3, fxRnd() * 3, 0); if (!w) sparkMat.color.copy(SPARK_COLS[tier]);
+  }
+  flame.visible = !!c && c.boost > 0;
+  if (flame.visible) { const x = c.x - fx * (back + 0.95), z = c.z - fz * (back + 0.95);
+    flame.position.set(x, groundAt(x, z) + 0.45, z); flame.rotation.set(0, -c.h, 0); flame.scale.set(1, 1, 0.7 + fxRnd() * 0.8); }   // the cone's tip is local +Z, which -h turns to the car's rear
 }
 
 // ---------- pedestrians: walk the streets and footpaths, now and then stop for a while ----------
@@ -716,8 +726,7 @@ function addPlace(kind, name, x, z, color) {
   const m = new THREE.Mesh(boxGeo([[3, 2.3, 2.2, 0, 1.15, 0, W], [3.5, 0.18, 3, 0, 2.39, 0.25, RED], [1.9, 0.9, 0.06, 0, 1.55, 1.1, GLASS], [2.2, 0.1, 0.5, 0, 1.05, 1.3, '#7a4a3c'],
     [2.4, 0.5, 0.1, 0, 2.75, 1.2, '#f2c230'], [0.5, 2.3, 0.04, -1.25, 1.15, 1.1, RED], [0.5, 2.3, 0.04, 1.25, 1.15, 1.1, RED]]), paintMat);
   m.position.set(x, y, z); m.castShadow = true; scene.add(m);
-  const bi = bPolys.length, k = Math.floor(x / BC) + ',' + Math.floor(z / BC); let l = bGrid.get(k); if (!l) bGrid.set(k, l = []);
-  bPolys.push({ p: [x - 1.5, z - 1.1, x + 1.5, z - 1.1, x + 1.5, z + 1.1, x - 1.5, z + 1.1], x0: x - 1.5, x1: x + 1.5, z0: z - 1.1, z1: z + 1.1 }); l.push(bi);
+  addFootprint([x - 1.5, z - 1.1, x + 1.5, z - 1.1, x + 1.5, z + 1.1, x - 1.5, z + 1.1]);
   addPlace('kiosk', 'Kiosken', x, z + 2.3, 0xf2c230);
 })();
 // one lucka, several things to buy: E opens a small menu (1 / 2 / Esc, or tap), walking away closes it
@@ -831,7 +840,7 @@ function action() {
   if (inCar) {
     if (Math.abs(pcar.v) > 3) { toast('Slow down before you get out.', 2); return; }
     player.x = pcar.x - Math.cos(pcar.h) * 2; player.z = pcar.z - Math.sin(pcar.h) * 2; player.h = pcar.h; collide(player, 0.5);
-    pcar.mode = 'idle'; pcar.v = 0; pcar = null; inCar = false; player.mesh.visible = true; camYaw = wrap(camYaw + lookOff); lookOff = 0; return;
+    pcar.mode = 'idle'; pcar.v = pcar.slip = pcar.drift = pcar.boost = 0; placeCar(pcar); pcar = null; inCar = false; player.mesh.visible = true; camYaw = wrap(camYaw + lookOff); lookOff = 0; return;
   }
   const c = nearestCar(); if (!c) return;
   if (c.mode === 'ai') {
@@ -844,7 +853,7 @@ function action() {
     else toast(c.type === 'epa' ? 'EPA-traktor: legally limited to 30 km/h. Good luck outrunning anyone.' : 'You took the ' + c.T.name + '. Nobody noticed.');
   }
   if (!c.owned) { c.owned = true; stolen++; $('count').textContent = 'Cars stolen: ' + stolen; }
-  c.mode = 'player'; pcar = c; inCar = true; player.mesh.visible = false; lookOff = 0; camYaw = c.h;
+  c.mode = 'player'; c.vh = c.h; c.slip = c.drift = c.boost = c.loose = 0; pcar = c; inCar = true; player.mesh.visible = false; lookOff = 0; camYaw = c.h;
 }
 function addStar(msg) { if (stars < 3) stars++; evade = 0; drawStars(); if (msg) toast(msg); }
 function spawnPolice() {
@@ -854,7 +863,7 @@ function spawnPolice() {
   const c = addCar('polis', spot[0], spot[1], Math.atan2(T.x - spot[0], -(T.z - spot[1])), 'police'); police.push(c);
 }
 function clearWanted() { stars = 0; evade = 0; bustT = 0; for (const p of police) removeCar(p); police.length = 0; drawStars(); $('stars').classList.remove('evading'); }
-function respawn() { leaveHouse(); if (inCar) { pcar.mode = 'idle'; pcar.v = 0; pcar = null; inCar = false; player.mesh.visible = true; }
+function respawn() { leaveHouse(); if (inCar) { pcar.mode = 'idle'; pcar.v = pcar.slip = pcar.drift = pcar.boost = 0; placeCar(pcar); pcar = null; inCar = false; player.mesh.visible = true; }
   player.x = HOME.x; player.z = HOME.z; collide(player, 0.6); }
 function busted() { clearWanted(); respawn(); bigT = 3; $('big').hidden = false; }
 function updatePolice(c, dt, T, tv) {
@@ -881,7 +890,7 @@ function frame(now) {
   if (trissT > 0) { trissT -= dt; if (trissT <= 0) trissResult(); }
   for (const p of places) p.gem.rotation.y += dt * 1.6;
 
-  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = Math.abs(pcar.v); }
+  if (inCar) { drive(pcar, my, mx, !!keys.brake, dt, true); player.x = pcar.x; player.z = pcar.z; player.h = pcar.h; player.speed = Math.abs(pcar.v); }
   else {
     const mag = Math.min(1, Math.hypot(mx, my)), wet = inWater(player.x, player.z);
     if (mag > 0.08 && bigT <= 0 && !inside) {
@@ -895,6 +904,7 @@ function frame(now) {
     const sw = Math.sin(player.phase) * 0.75; player.mesh.legs[0].rotation.x = sw; player.mesh.legs[1].rotation.x = -sw;
     player.mesh.position.set(player.x, groundAt(player.x, player.z) - (wet ? 0.95 : 0), player.z); player.mesh.rotation.y = -player.h;
   }
+  updateDriftFx(inCar ? pcar : null);
   const T = inCar ? pcar : player;
   for (const c of cars) if (c.mode === 'ai') updateTraffic(c, dt, T);
   updateNpcs(T, dt);
@@ -915,7 +925,7 @@ function frame(now) {
   let dist, ty = groundAt(T.x, T.z);
   if (!started) { camYaw = wrap(camYaw + dt * 0.07); dist = 46; camPitch = 0.42; }
   else if (inCar) { lookIdle += dt; if (lookIdle > 1.2 && dragId === null) lookOff *= Math.pow(0.02, dt);
-    camYaw += wrap(pcar.h + lookOff - camYaw) * Math.min(1, dt * 4.5); dist = 10 + Math.abs(pcar.v) * 0.09; }
+    camYaw += wrap(pcar.h - pcar.slip * 0.6 + lookOff - camYaw) * Math.min(1, dt * 4.5); dist = 10 + Math.abs(pcar.v) * 0.09; }
   else dist = inside ? 15 : 6.2;
   const cp = Math.cos(camPitch), cx = T.x - Math.sin(camYaw) * dist * cp, cz = T.z + Math.cos(camYaw) * dist * cp;
   camera.position.set(cx, Math.max(ty + 1.5 + dist * Math.sin(camPitch), hAt(cx, cz) + 0.8), cz);
@@ -945,5 +955,5 @@ $('go').addEventListener('click', () => { started = true; $('intro').hidden = tr
 resize(); requestAnimationFrame(frame);
 
 // ---------- test hook: read-only state for the smoke tests (tests/e2e), so they do not have to read pixels ----------
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, rendering: sceneFinish.state(), film: grades.state() }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, speed: pcar ? pcar.v : 0, drift: pcar ? pcar.drift : 0, boost: pcar ? pcar.boost : 0, charge: pcar ? pcar.charge : 0, loose: pcar ? pcar.loose : 0, flickDir: pcar ? pcar.flickDir : 0, stars, cats: cats.length, treats, rendering: sceneFinish.state(), film: grades.state() }; } };
 })();
