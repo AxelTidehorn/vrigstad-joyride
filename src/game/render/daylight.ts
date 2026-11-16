@@ -25,21 +25,7 @@ export function createDaylightController({
 	col,
 }: DaylightContext) {
 	const params = new URLSearchParams(location.search);
-	let enabled = params.get("lighting") !== "off";
-	const initialEnabled = enabled,
-		original = {
-			sun: sun.intensity,
-			hemi: hemi.intensity,
-			exposure: renderer.toneMappingExposure,
-			sunColor: sun.color.clone(),
-			hemiColor: hemi.color.clone(),
-			fog: scene.fog.color.clone(),
-			background: scene.background.clone(),
-			direction: SUN_DIR.clone(),
-			top: dome.material.uniforms.top.value.clone(),
-			hor: dome.material.uniforms.hor.value.clone(),
-			sunC: dome.material.uniforms.sunC.value.clone(),
-		};
+	const enabled = params.get("lighting") !== "off";
 	const initial = {
 		hour:
 			params.has("time") && Number.isFinite(Number(params.get("time")))
@@ -52,11 +38,9 @@ export function createDaylightController({
 	let hour = clock.getHour(),
 		date = clock.getDate(),
 		cycle = initial.cycle,
-		glare = 1,
 		elapsed = 0,
 		occlusion = 1;
-	let cloudOverride: number | null = null;
-  const state = daylightState(hour, cloudOverride, date, clock.getOffset());
+  const state = daylightState(hour, null, date, clock.getOffset());
 	const speed = Math.max(
 		0.01,
 		Math.min(5, Number(params.get("daySpeed")) || 1),
@@ -79,7 +63,7 @@ export function createDaylightController({
 			hour = clock.getHour();
 			date = clock.getDate();
 		}
-		if (cycle || dt === 0) daylightState(hour, cloudOverride, date, clock.getOffset(), state);
+		if (cycle) daylightState(hour, null, date, clock.getOffset(), state);
 		vector.set(state.dx, state.dy, state.dz);
 		SUN_DIR.copy(vector);
 		sun.position.copy(sun.target.position).addScaledVector(vector, 400);
@@ -117,93 +101,26 @@ export function createDaylightController({
 		u.skyBrightness.value = state.skyBrightness * (1 - state.cover * 0.1);
 		u.coverage.value = state.cover;
 		u.cloudTime.value = elapsed * 0.0025;
-		u.glare.value = glare;
+		u.glare.value = 1;
 		u.warm.value = state.warm;
 		scene.fog.color.copy(u.hor.value).multiplyScalar(u.skyBrightness.value);
 		scene.background.copy(scene.fog.color);
 	}
+	// Only expose operations used by the game. The deferred Visual Lab has its own PR.
 	return {
-		get enabled() {
-			return enabled;
-		},
 		update,
-		getHour: () => hour,
-		getDate: () => date,
-		getCycle: () => cycle,
-    getCoverage: () => enabled ? state.cover : 0,
-    getGlare: () => glare,
-    getSolarElevation: () => state.altitude * 180 / Math.PI,
-		setHour(v: number) {
-			enabled = true;
-			clock.set(date, v);
-			hour = clock.getHour();
-			date = clock.getDate();
-			cycle = false;
-			update(0);
-		},
-		setDate(v: string) {
-			enabled = true;
-			clock.set(v, hour);
-			date = clock.getDate();
-			hour = clock.getHour();
-			update(0);
-		},
-		setCycle(v: boolean) {
-			enabled = true;
-			cycle = v;
-      update(0);
-		},
-		setCoverage(v: number | null) {
-      enabled = true;
-			cloudOverride = v === null ? null : Math.max(0, Math.min(1, v));
-			update(0);
-		},
-		setGlare(v: number) {
-      enabled = true;
-			glare = Math.max(0, Math.min(3, v));
-			update(0);
-		},
-		reset() {
-			enabled = initialEnabled;
-			clock.set(initial.date, initial.hour);
-			hour = clock.getHour();
-			date = clock.getDate();
-			cycle = initial.cycle;
-			cloudOverride = null;
-			glare = 1;
-			daylightState(hour, cloudOverride, date, clock.getOffset(), state);
-      if (enabled) update(0);
-			else {
-				SUN_DIR.copy(original.direction);
-				sun.position.copy(sun.target.position).addScaledVector(SUN_DIR, 400);
-				sun.intensity = original.sun;
-        sun.visible = true; sun.castShadow = true;
-				sun.color.copy(original.sunColor);
-				hemi.intensity = original.hemi;
-				hemi.color.copy(original.hemiColor);
-				renderer.toneMappingExposure = original.exposure;
-				scene.fog.color.copy(original.fog);
-				scene.background.copy(original.background);
-				const u = dome.material.uniforms;
-				u.top.value.copy(original.top);
-				u.hor.value.copy(original.hor);
-				u.sunC.value.copy(original.sunC);
-				u.daylight.value = 0;
-			}
-		},
 		state: () => ({
 			enabled,
 			hour,
 			date,
 			cycle,
-      coverage: enabled ? state.cover : 0,
-      glare: enabled ? glare : 1,
-      sunStrength: sun.intensity,
-      sunVisible: sun.visible,
-      sunCastShadow: sun.castShadow,
-      sunDirectionY: SUN_DIR.y,
-      exposure: renderer.toneMappingExposure,
-      elevation: state.altitude * 180 / Math.PI,
+			coverage: enabled ? state.cover : 0,
+			sunStrength: sun.intensity,
+			sunVisible: sun.visible,
+			sunCastShadow: sun.castShadow,
+			sunDirectionY: SUN_DIR.y,
+			exposure: renderer.toneMappingExposure,
+			elevation: state.altitude * 180 / Math.PI,
 		}),
 	};
 }
