@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { noise2, smoothstep } from "./lighting-math.ts";
+import { noise2, smoothstep } from "./lighting-math";
 import { LEGACY_LIGHT } from "../../world/three-legacy";
 import {
 	createSolarClock,

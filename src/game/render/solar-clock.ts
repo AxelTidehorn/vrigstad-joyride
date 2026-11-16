@@ -1,4 +1,4 @@
-import { hash, smoothstep } from "./lighting-math.ts";
+import { hash, smoothstep } from "./lighting-math";
 // Approximate NOAA solar position for Vrigstad; azimuth clockwise from north.
 // World axes are X east, Z south, Y up; solar angles use radians.
 export const VRIGSTAD = { latitude: 57.3555, longitude: 14.4756 };
