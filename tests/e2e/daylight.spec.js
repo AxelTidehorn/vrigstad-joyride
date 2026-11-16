@@ -11,6 +11,8 @@ async function openScene(page, query) {
 async function captureScene(page, info, name) {
   await page.locator('#go').click();
   await expect(page.locator('#intro')).toBeHidden();
+  // Hide the HUD only in the screenshot, so reviewers can inspect lighting without overlays.
+  await page.locator('#ui').evaluate(element => { element.style.visibility = 'hidden'; });
   await page.screenshot({ path: info.outputPath(name), animations: 'disabled' });
 }
 
