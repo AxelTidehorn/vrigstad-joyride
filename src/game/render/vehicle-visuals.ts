@@ -55,8 +55,10 @@ export function createVehicleVisuals(coarse: boolean) {
       const v = records.get(car); if (!v) return;
       const dx = car.x-v.x, dz = car.z-v.z, distance = Math.hypot(dx,dz);
       let dh = car.h-v.heading; dh = Math.atan2(Math.sin(dh),Math.cos(dh));
-      const steering = distance > 0.001 && distance < 20 ? Math.max(-0.6,Math.min(0.6,Math.atan(v.definition.wheelbase*dh/distance))) : 0;
-      if (distance < 20) v.travel += dx*Math.sin(car.h)-dz*Math.cos(car.h);
+      const advance = dx*Math.sin(car.h)-dz*Math.cos(car.h);
+      // Body yaw is -heading for a -Z-forward model; signed travel also handles reversing.
+      const steering = Math.abs(advance) > 0.001 && distance < 20 ? -Math.max(-0.6,Math.min(0.6,Math.atan(v.definition.wheelbase*dh/advance))) : 0;
+      if (distance < 20) v.travel += advance;
       for (const w of v.wheels) { w.pivot.rotation.y = w.front ? steering : 0; w.spin.rotation.x = -v.travel/v.definition.radius; }
       v.x=car.x; v.z=car.z; v.heading=car.h;
     },
