@@ -11,10 +11,10 @@ for(const id of ids)test(`${id} loads, renders, can be entered and drives`,async
  await page.keyboard.down('KeyD');await expect.poll(async()=>(await state()).near,{intervals:[50]}).not.toBeNull();await page.keyboard.up('KeyD');
  await page.keyboard.press('KeyE');await expect.poll(async()=>(await state()).inCar).toBe(true);
  const before=await state();await page.keyboard.down('KeyW');await page.keyboard.down('KeyD');
+ await expect.poll(async()=>(await state()).vehicle.wheels.slice(0,2).some(w=>Math.abs(w.steer)>0.001)).toBe(true);
  await expect.poll(async()=>{const s=await state();return Math.hypot(s.x-before.x,s.z-before.z);}).toBeGreaterThan(2);
  await page.keyboard.up('KeyW');await page.keyboard.up('KeyD');
  const after=await state();expect(after.vehicle.wheels.some(w=>Math.abs(w.spin)>0.1)).toBe(true);
- expect(after.vehicle.wheels.slice(0,2).some(w=>Math.abs(w.steer)>0.001)).toBe(true);
  expect(after.vehicle.wheels.slice(2).every(w=>w.steer===0)).toBe(true);
  expect(await page.evaluate(()=>document.querySelector('#gl').getContext('webgl2').getError())).toBe(0);
  await page.screenshot({path:info.outputPath(id+'.png')});expect(errors).toEqual([]);
