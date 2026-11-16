@@ -112,3 +112,11 @@ Metres; origin 57.3555° N, 14.4756° E; x east, z south, y up; the world spans 
 | `labels` | Named places: `t` text, `x`, `z`, `k` kind |
 
 Class codes are assigned in `tools/process.py`; `src/world/data.ts` types the file and names them (`RoadClass`, `LandUse`, `BuildingKind`, `WaterwayKind`). Change both together.
+
+### Geographic daylight
+
+Issue #99: `src/game/render/solar-clock.ts` computes Vrigstad's sun elevation, azimuth and seasonally varying day length from local Stockholm civil time (including DST). `daylight.ts` maps the solar position to directional sunlight, hemisphere and sky colours, cloud cover, sunset glow and exposure; the existing Three.js ACES/sRGB rendering remains in place. Direct sunlight and its shadow pass are disabled once the sun is below the horizon. The clock and daylight state reuse objects in the render loop.
+
+To keep the game playable without headlights, the default is **fixed 15:30 daylight on 2026-08-15**, with the accelerated cycle **off**. For review, use `?time=20.5&date=2026-08-15` (evening), `?time=13&date=2026-12-21` (winter), or `?cycle=on&daySpeed=1` (1 in-game hour per 30 seconds). `?lighting=off` preserves the original ungraded daytime scene. `window.__joyride.state().daylight` exposes read-only solar and lighting status for tests.
+
+Streetlights, vehicle headlights and the Visual Lab editor are deliberately **separate follow-ups**. This PR adds no lamp meshes or dynamic point lights, no global gameplay input interception, and no new postprocessing pass. Winter and nighttime settings are for scene review, not a claim that unlit nighttime driving is complete.
