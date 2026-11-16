@@ -124,13 +124,6 @@ export function weatherCoverage(
 		),
 	);
 }
-export function nextSolarDate(date: string) {
-	const d = new Date(
-		Date.parse(validSolarDate(date) + "T00:00:00Z") + 86400000,
-	);
-	return d.toISOString().slice(0, 10);
-}
-
 export interface DaylightState extends SolarPosition {
   hour: number; daytime: number; warm: number; cover: number; shade: number;
   strength: number; exposure: number; skyBrightness: number; twilight: number;
@@ -166,7 +159,7 @@ export function daylightState(
   out.twilight = twilight;
   return out;
 }
-// One absolute simulation clock shared with future seasons/events (#114).
+// Absolute UTC-based solar clock presented in Stockholm civil time.
 // Input is Stockholm civil time. A repeated autumn hour chooses the first
 // occurrence; a nonexistent spring hour normalizes forward. Advancing thereafter
 // uses UTC instants, so solar direction is continuous through DST transitions.
