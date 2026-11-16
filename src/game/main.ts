@@ -1,10 +1,10 @@
 // @ts-nocheck
 // Moved as-is from the single-file prototype (#44); it gets types as it is split into modules.
 import * as THREE from 'three';
-import { createPhotographicGrades } from './render/photographic-grades';
 import D from '../../data/vrigstad.json';
-import { createSceneFinish } from './render/scene-finish';
 import { LEGACY_LIGHT } from '../world/three-legacy';
+import { createPhotographicGrades } from './render/photographic-grades';
+import { createSceneFinish } from './render/scene-finish';
 
 (function () {
 'use strict';
