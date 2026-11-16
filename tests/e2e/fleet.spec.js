@@ -55,3 +55,13 @@ test('production and development asset paths serve real GLBs',async({page})=>{
  const {createServer}=await import('vite');const server=await createServer({server:{port:0,host:'127.0.0.1'}});await server.listen();
  try{await page.goto(server.resolvedUrls.local[0]+'?vehicle=micra-k11');await expect.poll(()=>page.evaluate(()=>window.__joyride?.state().vehicle?.status)).toBe('loaded');}finally{await server.close();}
 });
+test('the GLB police variant follows the existing pursuit AI and flashes beacons',async({page})=>{
+ const {build}=await import('vite');const {resolve}=await import('node:path');
+ await build({logLevel:'warn',plugins:[{name:'police-test',enforce:'pre',transform(src,id){if(id.endsWith('/src/game/main.ts'))return src.replace('resize(); requestAnimationFrame(frame);','window.__policeTest = {addCar,addStar,police,player};\nresize(); requestAnimationFrame(frame);');}}],build:{outDir:resolve('.work/police'),rollupOptions:{input:resolve('src/index.html')}}});
+ const errors=watchErrors(page);await page.setViewportSize({width:640,height:360});await page.goto('/.work/police/index.html');await page.locator('#go').click();
+ const start=await page.evaluate(()=>{const G=window.__policeTest;const p=G.addCar('polis',G.player.x+30,G.player.z+10,0,'police','xc70-police');G.police.push(p);G.addStar();return {x:p.x,z:p.z};});
+ await expect.poll(()=>page.evaluate(()=>!!window.__policeTest.police[0].mesh.getObjectByName('body'))).toBe(true);
+ await expect.poll(()=>page.evaluate(start=>{const p=window.__policeTest.police[0];return Math.hypot(p.x-start.x,p.z-start.z);},start)).toBeGreaterThan(1);
+ await expect.poll(()=>page.evaluate(()=>{let lit=false;window.__policeTest.police[0].mesh.traverse(n=>{if(/^lamp_(blue_module|police_grille)/.test(n.name)&&n.material?.emissiveIntensity>0)lit=true;});return lit;})).toBe(true);
+ expect(errors).toEqual([]);
+});
