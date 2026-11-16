@@ -2,7 +2,10 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {Box3,Vector3} from 'three';
-const {VEHICLES:registry}=await import('../src/game/render/vehicle-registry.ts');
+// Compile the production TS registry with existing tooling: Node 20 is still supported.
+const {build}=await import('vite');
+await build({configFile:false,publicDir:false,logLevel:'error',build:{outDir:'.work/asset-test',lib:{entry:'src/game/render/vehicle-registry.ts',formats:['es'],fileName:()=> 'registry.mjs'}}});
+const {VEHICLES:registry}=await import('../.work/asset-test/registry.mjs');
 const loader=new GLTFLoader();
 for(const spec of registry){
  const b=readFileSync('src/public/'+spec.url);
