@@ -1,7 +1,7 @@
 // @ts-nocheck
 // Moved as-is from the single-file prototype (#44); it gets types as it is split into modules.
 import * as THREE from 'three';
-import { vehicleDefinition } from './render/vehicle-registry';
+import { DEFAULT_VEHICLES, vehicleDefinition } from './render/vehicle-registry';
 import { createVehicleVisuals } from './render/vehicle-visuals';
 import D from '../../data/vrigstad.json';
 import { LEGACY_LIGHT } from '../world/three-legacy';
@@ -447,12 +447,12 @@ function placeCar(c) {
   c.mesh.position.set(c.x, groundAt(c.x, c.z) - (c.wet ? 0.55 : 0), c.z);
   vehicleVisuals.sync(c);
 }
-function addCar(type, x, z, h, mode, assetId = null) {
-  const T = TYPES[type], fallback = new THREE.Mesh(carGeo(type, pick(T.cols)), carMat), mesh = assetId ? new THREE.Group() : fallback;
+function addCar(type, x, z, h, mode, assetId = DEFAULT_VEHICLES[type]) {
+  const T = TYPES[type], color = pick(T.cols), fallback = new THREE.Mesh(carGeo(type, color), carMat), mesh = assetId ? new THREE.Group() : fallback;
   fallback.castShadow = true; if (assetId) mesh.add(fallback); blob(mesh, 2.8, 5.8);
   if (type === 'polis') { const bar = new THREE.Mesh(barGeo, barMat); bar.position.set(0, 1.62, 0.2); fallback.add(bar); }
   const c = { type, T, mesh, x, z, h, v: 0, mode, wet: false, owned: false, blocked: 0, ghost: 0, stuck: 0, rev: 0, revSteer: 1 };
-  scene.add(mesh); cars.push(c); placeCar(c); if (assetId) { c.visualName = vehicleDefinition(assetId).name; vehicleVisuals.attach(c, assetId, fallback); } return c;
+  scene.add(mesh); cars.push(c); placeCar(c); if (assetId) { c.visualName = vehicleDefinition(assetId).name; vehicleVisuals.attach(c, assetId, fallback, color); } return c;
 }
 function removeCar(c) { vehicleVisuals.dispose(c); scene.remove(c.mesh); const i = cars.indexOf(c); if (i >= 0) cars.splice(i, 1); }
 const civType = () => { const r = rnd(); return r < 0.45 ? 'volvo' : r < 0.75 ? 'saab' : r < 0.9 ? 'epa' : 'traktor'; };
@@ -839,11 +839,11 @@ function action() {
   if (c.mode === 'ai') {
     const p = personParts(pick(['#b5463a', '#3f6b8a', '#5c7a4a', '#7a5a8a']), '#3a3a3a');
     p.position.set(c.x - Math.cos(c.h) * 2.2, 0, c.z - Math.sin(c.h) * 2.2); p.position.y = groundAt(p.position.x, p.position.z); p.ttl = 14; scene.add(p); peds.push(p);
-    toast(pick(['”Hörru! Det där är min bil!”', '”Men va fan gör du?!”', '”Polisen! Han tar min ' + c.T.name + '!”']) + ' The driver calls the police.');
+    toast(pick(['”Hörru! Det där är min bil!”', '”Men va fan gör du?!”', '”Polisen! Han tar min ' + (c.visualName || c.T.name) + '!”']) + ' The driver calls the police.');
     addStar(); spawnTraffic(player);
   } else if (!c.owned) {
-    if (police.length || rnd() < 0.35) addStar('A neighbour saw you take the ' + c.T.name + ' and called the police.');
-    else toast(c.type === 'epa' ? 'EPA-traktor: legally limited to 30 km/h. Good luck outrunning anyone.' : 'You took the ' + c.T.name + '. Nobody noticed.');
+    if (police.length || rnd() < 0.35) addStar('A neighbour saw you take the ' + (c.visualName || c.T.name) + ' and called the police.');
+    else toast(c.type === 'epa' ? 'EPA-traktor: legally limited to 30 km/h. Good luck outrunning anyone.' : 'You took the ' + (c.visualName || c.T.name) + '. Nobody noticed.');
   }
   if (!c.owned) { c.owned = true; stolen++; $('count').textContent = 'Cars stolen: ' + stolen; }
   c.mode = 'player'; pcar = c; inCar = true; player.mesh.visible = false; lookOff = 0; camYaw = c.h;
@@ -948,5 +948,5 @@ $('go').addEventListener('click', () => { started = true; $('intro').hidden = tr
 resize(); requestAnimationFrame(frame);
 
 // ---------- test hook: read-only state for the smoke tests (tests/e2e), so they do not have to read pixels ----------
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, vehicle: displayCar ? vehicleVisuals.state(displayCar) : null }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, stars, cats: cats.length, treats, vehicle: displayCar ? vehicleVisuals.state(displayCar) : null, traffic: cars.filter(c => c.mode === 'ai').map(c => ({ type: c.type, vehicle: vehicleVisuals.state(c) })) }; } };
 })();

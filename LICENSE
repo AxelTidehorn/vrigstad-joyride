@@ -51,7 +51,8 @@ Volvo 240, Saab 900 Classic T16, civilian and police XC70 P2, Chevrolet Impala
 1970 hardtop, Nissan Micra K11 and Volvo Duett P210 EPA pickup:
 Copyright (c) 2026 Axel Tidehorn. Licensed under Creative Commons Attribution
 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/
-Source: https://github.com/AxelTidehorn/vrigstad-joyride/tree/ff6a0f187add7bd9b7ba052f28bd0d67e534c33a/experiments
+Sources: docs/vehicle-fleet.md and media/vehicles/NOTICE.txt record the
+immutable source revisions and editable masters for each model.
 The GLBs are original authored geometry; no reference photographs or external
 3D meshes are embedded. The police markings are original stylized artwork.
 No endorsement by Volvo, Saab or the Swedish Police is implied.

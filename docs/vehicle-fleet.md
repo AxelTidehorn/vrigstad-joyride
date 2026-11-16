@@ -2,33 +2,40 @@
 
 Select the parked Torget car with `?vehicle=volvo240`, `saab900`, `xc70`,
 `xc70-police`, `impala1970`, `micra-k11` or `duett-epa`. Start and use the
-normal movement/E controls. The HUD uses the model name. No query keeps every
-existing archetype and the original traffic distribution. Unknown IDs retain
-the original procedural car. Models do not define dynamics: mappings reuse
+normal movement/E controls. The HUD uses the model name. Without a query,
+parked cars and traffic use Volvo 240, Saab 900, Duett EPA
+and police XC70 visuals by archetype. The tractor stays procedural. Unknown IDs
+use the default Volvo 240 at Torget. Civilian XC70, Impala and Micra remain explicit
+URL choices; the original traffic distribution is unchanged.
+Models do not define dynamics: mappings reuse
 Volvo/Saab/passenger-car, police and EPA simulation. They are not calibrated
 real-world handling specifications. No experimental drivetrain is included.
 
 ## Registry and lifecycle
 
 `src/game/render/vehicle-registry.ts` declares stable IDs, names, paths, archetypes,
-wheel radius/base, node mappings, units/axes and source revisions. Register a new
-model there and provide its GLB under `src/public/media/vehicles`. The registry is also the single authoritative source/provenance register.
+wheel radius/base and default archetype mappings. Register a new model there and
+provide its GLB under `src/public/media/vehicles`. All exports use metres, +Y up,
+-Z forward and the shared body/wheel node names. Immutable provenance lives below.
 `test:vehicles` checks all real files through Three's GLTFLoader and validates
 wheel locations and plausible bounds.
 
 `createVehicleVisuals` owns rendering state independently from simulation. Call
-`attach(car,id,fallback)` after adding a car, `sync(car)` after positioning it,
+`attach(car,id,fallback,color)` after adding a car, `sync(car)` after positioning it,
 `update(focus,dt)` once per frame and `dispose(car)` on removal. `addCar` accepts
-an optional sixth asset-ID argument; existing spawn code does not select assets.
+an optional sixth asset-ID argument overriding the default archetype mapping.
 No new input or vehicle physics rules are introduced.
 
 Loading is lazy inside the 120 m/8 desktop or 3 coarse-device detail budget.
 Templates and geometry/materials are cached and shared; instance transforms are
-cloned. Authored paint is preserved on load. `paint(car,color)` clones only that
+cloned. Civilian bodies receive the same single seeded colour choice as their
+procedural fallback after asynchronous loading; police livery is preserved.
+`paint(car,color)` clones only that
 instance's civilian body materials; police livery is protected. Owned material
 clones are disposed with the visual; shared cached resources live for the page.
 Failures are reported as `failed`, retain the procedural fallback and never
-pretend the detailed asset loaded. Removed cars ignore pending asynchronous work.
+pretend the detailed asset loaded. Failed instances do not occupy detail slots.
+Removed cars ignore pending asynchronous work.
 
 Wheel travel derives from rendered movement, using -Z forward and metre units;
 front steering derives from heading/distance and verified wheelbase. Teleports
@@ -51,9 +58,9 @@ Immutable sources in `https://github.com/AxelTidehorn/vrigstad-joyride/tree/<SHA
 | Volvo 240 | ff6a0f187add7bd9b7ba052f28bd0d67e534c33a | experiments/volvo240/refinement/model.blend | experiments/volvo240/model.py, refine_forms.py, round2.py |
 | Saab 900 | same Round 2 revision | experiments/saab900/build/model.blend | experiments/saab900/model.py, round2.py |
 | Both XC70s | same Round 2 revision | experiments/xc70p2/build/model.blend | experiments/xc70p2/model.py, round2.py, variants.py |
-| Impala | 46fa31e (full SHA in vehicle-registry.ts) | experiments/impala1970/build/model.blend | experiments/impala1970/model.py |
-| Micra | 5c84a17 (full SHA in vehicle-registry.ts) | experiments/micra1995/build/model.blend | experiments/micra1995/model.py |
-| Duett | 2be04e6 (full SHA in vehicle-registry.ts) | experiments/duettp210/build/model.blend | experiments/duettp210/model.py |
+| Impala | 46fa31e9094ab6e1e30f2b542de83383f85fb7c7 | experiments/impala1970/build/model.blend | experiments/impala1970/model.py |
+| Micra | 5c84a173f3bbd8206f067ec18594cecdaf5476b5 | experiments/micra1995/build/model.blend | experiments/micra1995/model.py |
+| Duett | 2be04e605ad20f9ffc5dbe097a493bd6a3991e6f | experiments/duettp210/build/model.blend | experiments/duettp210/model.py |
 
 Download the pinned source tree; do not regenerate from an earlier blockout.
 The source experiment READMEs document external Blender Modeler helpers and
@@ -81,10 +88,14 @@ including external assets before dropping this compatibility copy. #167 remains 
 Run `npm run check`, `npm run test:vehicles`, `npm run build`, `npm run test:e2e`.
 The production build, actual asset parsing, gameplay/fallback and WebGL checks
 are automated; images are review artifacts, never pixel-diff tests.
-The current upstream preview workflow explicitly excludes fork PRs; a maintainer
-must opt into hosting a trusted build if a public playable preview is wanted.
+The upstream preview workflow requires a branch in the upstream repository.
+Source parsing and visual-controller regressions run in Node; E2E keeps game
+load/enter/drive coverage and failed-asset fallback, without patching game source.
 
 ## Visual verification limits
+
+Visible model attribution and `media/vehicles/NOTICE.txt` accompany both the root
+compatibility build and the production/preview assets.
 
 Geometric parsing is not reference approval. Round 2 retains the existing Saab
 silhouette comparison against an uncertain brochure proxy (recorded IoU ~0.9154),

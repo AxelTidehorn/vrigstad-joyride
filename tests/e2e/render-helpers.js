@@ -10,10 +10,3 @@ export function watchErrors(page) {
   page.on('pageerror', e => errors.push(String(e)));
   return errors;
 }
-export async function buildFixture(name) {
-  const { build } = await import('vite');
-  const { viteSingleFile } = await import('vite-plugin-singlefile');
-  const { resolve } = await import('node:path');
-  await build({ configFile: false, root: resolve(`tests/fixtures/${name}`), logLevel: 'warn',
-    plugins: [viteSingleFile()], build: { outDir: resolve(`.work/${name}`) } });
-}

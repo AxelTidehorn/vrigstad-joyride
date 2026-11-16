@@ -13,7 +13,7 @@
     "check": "tsc --noEmit",
     "data": "python3 tools/process.py data/raw data/vrigstad.json",
     "test:e2e": "playwright test",
-    "test:vehicles": "node tests/vehicle-assets.mjs"
+    "test:vehicles": "node tests/vehicle-assets.mjs && node tests/vehicle-visuals.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.0",

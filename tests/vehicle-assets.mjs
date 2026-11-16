@@ -5,14 +5,14 @@ import {Box3,Vector3} from 'three';
 // Compile the production TS registry with existing tooling: Node 20 is still supported.
 const {build}=await import('vite');
 await build({configFile:false,publicDir:false,logLevel:'error',build:{outDir:'.work/asset-test',lib:{entry:'src/game/render/vehicle-registry.ts',formats:['es'],fileName:()=> 'registry.mjs'}}});
-const {VEHICLES:registry}=await import('../.work/asset-test/registry.mjs');
+const {VEHICLES:registry,BODY_NODE,WHEEL_NODES,DEFAULT_VEHICLES}=await import('../.work/asset-test/registry.mjs');
 const loader=new GLTFLoader();
 for(const spec of registry){
  const b=readFileSync('src/public/'+spec.url);
  const gltf=await loader.parseAsync(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength),'');
  const root=gltf.scene;root.updateMatrixWorld(true);
- assert.ok(root.getObjectByName(spec.body));
- for(const name of spec.wheels)assert.ok(root.getObjectByName(name));
+ assert.ok(root.getObjectByName(BODY_NODE));
+ for(const name of WHEEL_NODES)assert.ok(root.getObjectByName(name));
  root.traverse(n=>{for(const x of n.matrixWorld.elements)assert.ok(Number.isFinite(x));});
  const fl=root.getObjectByName('wheel_fl').getWorldPosition(new Vector3()),rl=root.getObjectByName('wheel_rl').getWorldPosition(new Vector3());
  assert.ok(fl.z<rl.z,'front must face -Z');assert.ok(fl.x<0,'left must be -X');assert.ok(Math.abs(rl.z-fl.z-spec.wheelbase)<.002);
@@ -20,3 +20,5 @@ for(const spec of registry){
  console.log(spec.id,'parsed by GLTFLoader; dimensions m',size.toArray().map(v=>v.toFixed(3)).join(' x '));
 }
 assert.equal(registry.length,7);
+
+for(const [archetype,id] of Object.entries(DEFAULT_VEHICLES)) assert.equal(registry.find(v=>v.id===id)?.archetype,archetype);

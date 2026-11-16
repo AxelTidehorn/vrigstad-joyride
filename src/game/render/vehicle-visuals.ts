@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { vehicleDefinition, type VehicleId } from './vehicle-registry';
+import { BODY_NODE, WHEEL_NODES, vehicleDefinition, type VehicleId } from './vehicle-registry';
 type Car = { mesh: THREE.Object3D; x: number; z: number; h: number };
 type Definition = NonNullable<ReturnType<typeof vehicleDefinition>>;
 type Wheel = { pivot: THREE.Group; spin: THREE.Group; front: boolean };
-type View = { car: Car; definition: Definition; fallback: THREE.Mesh; status: 'idle'|'loading'|'loaded'|'failed'; root?: THREE.Group; wheels: Wheel[]; materials: Set<THREE.Material>; beacons: THREE.MeshStandardMaterial[]; selected: boolean; removed: boolean; x: number; z: number; heading: number; travel: number; distance: number };
+type View = { car: Car; definition: Definition; fallback: THREE.Mesh; status: 'idle'|'loading'|'loaded'|'failed'; root?: THREE.Group; wheels: Wheel[]; materials: Set<THREE.Material>; beacons: THREE.MeshStandardMaterial[]; selected: boolean; removed: boolean; x: number; z: number; heading: number; travel: number; distance: number; color?: string };
 const DETAIL_RANGE_M = 120, REFRESH_SECONDS = 0.35;
 // Rendering owns resource lifetime; no simulation or gameplay rules are mutated.
 export function createVehicleVisuals(coarse: boolean) {
@@ -22,13 +22,13 @@ export function createVehicleVisuals(coarse: boolean) {
       if (v.removed) return;
       const root = template.clone(true);
       root.updateMatrixWorld(true);
-      const nodes = v.definition.wheels.map(name => root.getObjectByName(name));
-      if (nodes.some(n => !n) || !root.getObjectByName(v.definition.body)) throw new Error('Missing body/wheel nodes');
+      const nodes = WHEEL_NODES.map(name => root.getObjectByName(name));
+      if (nodes.some(n => !n) || !root.getObjectByName(BODY_NODE)) throw new Error('Missing body/wheel nodes');
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i]!, pivot = new THREE.Group(), spin = new THREE.Group();
-        node.getWorldPosition(pivot.position);
-        const rotation = node.getWorldQuaternion(new THREE.Quaternion());
-        node.removeFromParent(); node.position.set(0,0,0); node.quaternion.copy(rotation);
+        root.attach(node); // preserve the supported parent transforms, including scale
+        pivot.position.copy(node.position);
+        node.removeFromParent(); node.position.set(0,0,0);
         spin.add(node); pivot.add(spin); root.add(pivot);
         v.wheels.push({ pivot, spin, front: i < 2 });
       }
@@ -41,14 +41,23 @@ export function createVehicleVisuals(coarse: boolean) {
           v.beacons.push(node.material);
         }
       });
-      v.root = root; v.car.mesh.add(root); v.status = 'loaded'; show(v);
+      v.root = root; v.car.mesh.add(root); v.status = 'loaded'; if (v.color) paint(v.car, v.color); show(v);
     }).catch(error => { if (!v.removed) { v.status = 'failed'; console.warn('Vehicle asset failed:', v.definition.id, error); } });
   }
   function show(v: View) { const visible = v.selected && v.status === 'loaded'; v.fallback.visible = !visible; if (v.root) v.root.visible = visible; }
+  function paint(car: Car, color: string) {
+    const v=records.get(car); if(!v || v.definition.police) return;
+    v.color=color; if(!v.root) return;
+    const body=v.root.getObjectByName(BODY_NODE);
+    body?.traverse(node=>{ if(!(node instanceof THREE.Mesh) || (node !== body && !node.name.startsWith(BODY_NODE + '_'))) return;
+      const recolor=(material:THREE.MeshStandardMaterial)=>{ const m=v.materials.has(material)?material:material.clone(); m.color.set(color).convertSRGBToLinear(); v.materials.add(m); return m; };
+      node.material=Array.isArray(node.material)?node.material.map(recolor):recolor(node.material);
+    });
+  }
   return {
-    attach(car: Car, id: VehicleId, fallback: THREE.Mesh) {
+    attach(car: Car, id: VehicleId, fallback: THREE.Mesh, color?: string) {
       const definition = vehicleDefinition(id)!;
-      const v: View = { car, definition, fallback, status: 'idle', wheels: [], materials: new Set(), beacons: [], selected: false, removed: false, x: car.x, z: car.z, heading: car.h, travel: 0, distance: 0 };
+      const v: View = { car, definition, fallback, status: 'idle', wheels: [], materials: new Set(), beacons: [], selected: false, removed: false, x: car.x, z: car.z, heading: car.h, travel: 0, distance: 0, color };
       views.push(v); records.set(car,v);
     },
     sync(car: Car) {
@@ -69,18 +78,11 @@ export function createVehicleVisuals(coarse: boolean) {
         for (const v of views) v.distance=Math.hypot(v.car.x-focus.x,v.car.z-focus.z);
         views.sort((a,b)=>a.distance-b.distance);
         let count=0;
-        for (const v of views) { v.selected=v.distance<DETAIL_RANGE_M && count++<(coarse?3:8); if(v.selected) load(v); show(v); }
+        for (const v of views) { v.selected=v.status!=='failed' && v.distance<DETAIL_RANGE_M && count++<(coarse?3:8); if(v.selected) load(v); show(v); }
       }
       for (const v of views) for (const beacon of v.beacons) beacon.emissiveIntensity = v.selected && Math.floor(time/0.22)%2 ? 1.8 : 0;
     },
-    paint(car: Car, color: string) {
-      const v=records.get(car); if(!v?.root || v.definition.police) return;
-      const body=v.root.getObjectByName(v.definition.body);
-      body?.traverse(node=>{ if(!(node instanceof THREE.Mesh) || (node !== body && !node.name.startsWith(v.definition.body + '_'))) return;
-        const recolor=(material:THREE.MeshStandardMaterial)=>{ const m=v.materials.has(material)?material:material.clone(); m.color.set(color).convertSRGBToLinear(); v.materials.add(m); return m; };
-        node.material=Array.isArray(node.material)?node.material.map(recolor):recolor(node.material);
-      });
-    },
+    paint,
     state(car: Car) { const v=records.get(car); return v ? { id:v.definition.id,status:v.status,detailed:!!v.root?.visible,wheels:v.wheels.map(w=>({steer:w.pivot.rotation.y,spin:w.spin.rotation.x})),fallback:v.fallback.visible } : null; },
     dispose(car: Car) { const v=records.get(car); if(!v)return; v.removed=true; v.root?.removeFromParent(); for(const m of v.materials)m.dispose(); views.splice(views.indexOf(v),1); records.delete(car); },
   };
