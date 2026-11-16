@@ -34,6 +34,7 @@ test('shared templates, independent paint and disposal use actual GLB instances'
   const {assets,cars,THREE}=window.harness;
   const [a,b]=cars.map(c=>c.mesh.getObjectByName('body'));
   const shared=a.geometry===b.geometry;
+  const glass=cars[0].mesh.getObjectByName('glass_envelope'), glassMaterial=glass.material;
   const original=b.material.color.clone();
   cars[0].x+=0.1;cars[0].z-=1;cars[0].h+=0.1;assets.sync(cars[0]);
   const front=cars[0].mesh.getObjectByName('wheel_fl').parent.parent;
@@ -42,11 +43,12 @@ test('shared templates, independent paint and disposal use actual GLB instances'
   cars[0].x-=0.1;cars[0].z+=1;cars[0].h-=0.1;assets.sync(cars[0]);
   const reverseSteering=new THREE.Vector3(0,0,-1).applyQuaternion(front.quaternion).x>0;assets.paint(cars[0],'#27406b');
   const independent=a.material!==b.material&&b.material.color.equals(original);
+  const protectedGlass=glass.material===glassMaterial;
   const linear=a.material.color.equals(new THREE.Color('#27406b').convertSRGBToLinear());
   let disposed=false;a.material.addEventListener('dispose',()=>disposed=true);assets.dispose(cars[0]);
-  return {shared,independent,linear,disposed,correctSteering,reverseSteering,removed:assets.state(cars[0])===null};
+  return {shared,independent,linear,disposed,protectedGlass,correctSteering,reverseSteering,removed:assets.state(cars[0])===null};
  });
- expect(result).toEqual({shared:true,independent:true,linear:true,disposed:true,correctSteering:true,reverseSteering:true,removed:true});expect(requests).toBe(1);
+ expect(result).toEqual({shared:true,independent:true,linear:true,disposed:true,protectedGlass:true,correctSteering:true,reverseSteering:true,removed:true});expect(requests).toBe(1);
 });
 test('production and development asset paths serve real GLBs',async({page})=>{
  for(const name of ['volvo240','saab900-t16','xc70-civilian','xc70-police','impala1970','micra-k11','duett-p210-epa']){

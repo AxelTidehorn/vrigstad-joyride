@@ -76,7 +76,7 @@ export function createVehicleVisuals(coarse: boolean) {
     paint(car: Car, color: string) {
       const v=records.get(car); if(!v?.root || v.definition.police) return;
       const body=v.root.getObjectByName(v.definition.body);
-      body?.traverse(node=>{ if(!(node instanceof THREE.Mesh)) return;
+      body?.traverse(node=>{ if(!(node instanceof THREE.Mesh) || (node !== body && !node.name.startsWith(v.definition.body + '_'))) return;
         const recolor=(material:THREE.MeshStandardMaterial)=>{ const m=v.materials.has(material)?material:material.clone(); m.color.set(color).convertSRGBToLinear(); v.materials.add(m); return m; };
         node.material=Array.isArray(node.material)?node.material.map(recolor):recolor(node.material);
       });
