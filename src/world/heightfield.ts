@@ -27,9 +27,10 @@ export class Heightfield {
   readonly minElevationM: number;
   /** highest sample above sea level (m), not exaggerated */
   readonly maxElevationM: number;
+  /** samples along each side of the grid */
+  readonly samples: number;
   private readonly size: number;
   private readonly half: number;
-  private readonly samples: number;
   private readonly elev: number[];
   private readonly minDm: number;
   private readonly exaggeration: number;
@@ -74,6 +75,21 @@ export class Heightfield {
     }
     const h = fu + fv <= 1 ? a + (b - a) * fu + (d - a) * fv : c + (d - c) * (1 - fu) + (b - c) * (1 - fv);
     return ((h - this.minDm) / 10) * this.exaggeration;
+  }
+
+  /**
+   * Height of the elevation sample in column `i` (from the west) and row `j` (from the north): the value `heightAt`
+   * interpolates from there, worked out the same way, so a mesh built on the samples matches the lookup.
+   */
+  sampleHeight(i: number, j: number) {
+    const h = this.elev[j * this.samples + i];
+    if (this.interpolation === 'bilinear') return (h / 10 - this.minElevationM) * this.exaggeration;
+    return ((h - this.minDm) / 10) * this.exaggeration;
+  }
+
+  /** x of the samples in column `i`, or z of those in row `i` (m); the grid's edges are at ±half its size */
+  sampleCoord(i: number) {
+    return -this.half + (this.size * i) / (this.samples - 1);
   }
 
   /** The terrain's up vector at (x, z), written into `out`. Normalised as three's Vector3.normalize does. */
