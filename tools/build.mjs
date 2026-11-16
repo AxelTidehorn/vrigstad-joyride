@@ -1,7 +1,7 @@
 // Builds the game (index.html) and the map (map.html) into dist/, one page at a time:
 // vite-plugin-singlefile cannot inline a build with several pages.
 // Then copies both to the repo root, which GitHub Pages serves until #45 deploys dist/ from CI.
-import { copyFileSync } from 'node:fs';
+import { copyFileSync, cpSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { build } from 'vite';
 
@@ -12,3 +12,6 @@ for (const [i, page] of pages.entries()) {
 }
 // Copy only after both builds succeed, so a failed build never leaves one new page and one old.
 for (const page of pages) copyFileSync(`dist/${page}`, page);
+
+// Compatibility copy for the committed root pages and smoke server until #167.
+cpSync('src/public/media/vehicles', 'media/vehicles', { recursive: true });

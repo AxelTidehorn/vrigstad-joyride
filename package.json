@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "check": "tsc --noEmit",
     "data": "python3 tools/process.py data/raw data/vrigstad.json",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:vehicles": "node tests/vehicle-assets.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.0",
