@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 
 test('Classic Negative renders after the scene and off bypasses the grade', async ({ page }, info) => {
   const errors = [];
+  page.on('console', message => {
+    if (message.type() === 'error' && !message.text().startsWith('Failed to load resource')) errors.push(message.text());
+  });
   page.on('pageerror', error => errors.push(String(error)));
   await page.setViewportSize({ width: 640, height: 360 });
   for (const profile of ['negative', 'off', 'unknown']) {
