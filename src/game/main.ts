@@ -12,7 +12,6 @@ import { TerrainMesh } from '../world/mesh/terrain';
 import { pointInPolygon as inPoly, polygonArea as polyArea, segmentDistance as segDist } from '../world/polygon';
 import { makeRnd } from '../world/random';
 import { nodeKey, ROAD_CELL_M as RC, RoadNetwork } from '../world/roads';
-import { LEGACY_LIGHT } from '../world/three-legacy';
 import { treeSpots } from '../world/trees';
 import { Water } from '../world/water';
 
@@ -40,23 +39,23 @@ const coarse = matchMedia('(pointer: coarse)').matches;
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, coarse ? 1.5 : 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
-// filmic tone mapping on an sRGB pipeline: colours below are written in sRGB and converted to linear with col()
+// filmic tone mapping on an sRGB pipeline: colours below are written in sRGB and converted to linear with new THREE.Color()
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1;
-const col = c => new THREE.Color(c).convertSRGBToLinear();
 // three applies fog after the output colour space conversion, so the fog, clear and sky colours stay in sRGB
 const HORIZON = 0xd6e4e6, FOG_PER_M = 0.0007;   // FogExp2 density: about 40% haze at 1 km
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(HORIZON);
-scene.fog = new THREE.FogExp2(HORIZON, FOG_PER_M);
+// Fog and the custom sky share a palette authored directly in the working space.
+scene.background = new THREE.Color().setHex(HORIZON, THREE.LinearSRGBColorSpace);
+scene.fog = new THREE.FogExp2(new THREE.Color().setHex(HORIZON, THREE.LinearSRGBColorSpace), FOG_PER_M);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
-scene.add(new THREE.HemisphereLight(0xffffff, col(0x9aa58a), 0.62 * LEGACY_LIGHT));
-const sun = new THREE.DirectionalLight(col(0xfff4dd), 0.95 * LEGACY_LIGHT);
+scene.add(new THREE.HemisphereLight(0xffffff, new THREE.Color(0x9aa58a), 1.9477874452256718));
+const sun = new THREE.DirectionalLight(new THREE.Color(0xfff4dd), 2.9845130209103035);
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
 // sky: a gradient dome that follows the camera and fades into the fog at the horizon
 const dome = new THREE.Mesh(new THREE.SphereGeometry(3000, 32, 16), new THREE.ShaderMaterial({
   side: THREE.BackSide, depthWrite: false, fog: false,
-  uniforms: { top: { value: new THREE.Color(0x5f97c9) }, hor: { value: new THREE.Color(HORIZON) }, sunC: { value: new THREE.Color(0xfff1d0) }, sunDir: { value: SUN_DIR } },
+  uniforms: { top: { value: new THREE.Color().setHex(0x5f97c9, THREE.LinearSRGBColorSpace) }, hor: { value: new THREE.Color().setHex(HORIZON, THREE.LinearSRGBColorSpace) }, sunC: { value: new THREE.Color().setHex(0xfff1d0, THREE.LinearSRGBColorSpace) }, sunDir: { value: SUN_DIR } },
   vertexShader: 'varying vec3 vDir; void main() { vDir = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
   fragmentShader: `uniform vec3 top, hor, sunC, sunDir; varying vec3 vDir;
     void main() { vec3 d = normalize(vDir); vec3 c = mix(hor, top, pow(max(d.y, 0.0), 0.55)); float s = max(dot(d, sunDir), 0.0);
@@ -118,8 +117,8 @@ texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); texture.colorSpac
 // ---------- terrain ----------
 const SKIRT_DEPTH_M = 1.5;   // the skirt round the edge, and the far ground plane, sit this far below height 0
 const terrain = new TerrainMesh(heightfield, { skirtDepthM: SKIRT_DEPTH_M, material: new THREE.MeshLambertMaterial({ map: texture }),
-  skirtMaterial: new THREE.MeshLambertMaterial({ color: col(0x6f8a58), side: THREE.DoubleSide }) });
-const far = new THREE.Mesh(new THREE.PlaneGeometry(14000, 14000), new THREE.MeshLambertMaterial({ color: col(0x6f9a5e) }));
+  skirtMaterial: new THREE.MeshLambertMaterial({ color: new THREE.Color(0x6f8a58), side: THREE.DoubleSide }) });
+const far = new THREE.Mesh(new THREE.PlaneGeometry(14000, 14000), new THREE.MeshLambertMaterial({ color: new THREE.Color(0x6f9a5e) }));
 far.rotation.x = -Math.PI / 2; far.position.y = -SKIRT_DEPTH_M;
 scene.add(terrain.surface, far, terrain.skirt);
 
@@ -157,7 +156,7 @@ const winTex = (function () {
 })();
 (function () {
   const c = new THREE.Color(), c2 = new THREE.Color(), c3 = new THREE.Color(), paint = { wall: c, wallFoot: c3, roof: c2 };
-  const wp = [], wu = [], tp = [], tc = [], WHITE = col('#f1efe8'), PLINTH = col('#5b5d5b');
+  const wp = [], wu = [], tp = [], tc = [], WHITE = new THREE.Color('#f1efe8'), PLINTH = new THREE.Color('#5b5d5b');
   const house = ['#9c3a2c', '#9c3a2c', '#a8452f', '#e8e2d2', '#e8e2d2', '#d9b65a', '#cfc8b8', '#8d9a8f'], big = ['#c9c5bb', '#b8b3a6', '#d6d0c0', '#a7aeb0'];
   // a vertical quad from (x1, z1) to (x2, z2), bottom and top heights at each end
   const quad = (out, x1, z1, x2, z2, b1, t1, b2, t2) => out.push(x1, b1, z1, x2, b2, z2, x2, t2, z2, x1, b1, z1, x2, t2, z2, x1, t1, z1);
@@ -168,8 +167,8 @@ const winTex = (function () {
     for (let i = 0; i < pos.length; i += 3) emit(pos[i], pos[i + 1], pos[i + 2], k); };
   // the colours roll rnd() once or twice per house, in data order, before any tree spot
   const colours = ({ building: b, area }) => {
-    c.set(b.k === 2 ? '#9c3a2c' : b.k ? '#efece3' : area > 450 ? pick(big) : pick(house)).convertSRGBToLinear();
-    c2.set(b.k === 2 ? '#a8573f' : b.k ? '#3f4447' : rnd() < 0.35 ? '#4d4a48' : '#a8573f').convertSRGBToLinear();
+    c.set(b.k === 2 ? '#9c3a2c' : b.k ? '#efece3' : area > 450 ? pick(big) : pick(house));
+    c2.set(b.k === 2 ? '#a8573f' : b.k ? '#3f4447' : rnd() < 0.35 ? '#4d4a48' : '#a8573f');
     c3.copy(c).multiplyScalar(0.62);   // walls darken towards the ground
     return paint;
   };
@@ -191,7 +190,7 @@ const winTex = (function () {
       }
     }
     if (b.g) { const [ax, az, bx, bz] = b.g, cx = ax + (bx - ax) * 0.3, cz = az + (bz - az) * 0.3, ry = yAt({ x: cx, z: cz });   // chimney, in the shell's own mesh
-      if (inPoly(b.p, cx, cz)) box(emit, cx, cz, ry - 0.6, ry + 0.9, 0.6, hAt(cx, cz) * 7 % 1 < 0.5 ? col('#8a3b2d') : col('#d8d2c4')); }
+      if (inPoly(b.p, cx, cz)) box(emit, cx, cz, ry - 0.6, ry + 0.9, 0.6, hAt(cx, cz) * 7 % 1 < 0.5 ? new THREE.Color('#8a3b2d') : new THREE.Color('#d8d2c4')); }
   };
   scene.add(new PaintedBuildingShells(D, heightfield, { material: new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide }), colours, extra: details }).mesh);
   // window skin first, trim after: one mesh, two materials
@@ -224,8 +223,8 @@ const TREE_M2_PER_TRY = 110, TREE_ROAD_CLEARANCE_M = 2.5;   // one try at a tree
   const TREE_CELL_M = 400, cellOf = v => Math.floor((v + HALF) / TREE_CELL_M);
   KINDS.forEach((kd, ki) => {
     const cells = new Map(); for (let i = 0; i < N; i++) if (kind(i) === ki) { const k = cellOf(spots[i * 3]) + ',' + cellOf(spots[i * 3 + 1]); let l = cells.get(k); if (!l) cells.set(k, l = []); l.push(i); }
-    const crownMat = new THREE.MeshLambertMaterial({ color: 0xffffff }), trunkMat = new THREE.MeshLambertMaterial({ color: col(kd.bark), side: THREE.DoubleSide });
-    const lo = col(kd.leaf[0]), hiC = col(kd.leaf[1]);
+    const crownMat = new THREE.MeshLambertMaterial({ color: 0xffffff }), trunkMat = new THREE.MeshLambertMaterial({ color: new THREE.Color(kd.bark), side: THREE.DoubleSide });
+    const lo = new THREE.Color(kd.leaf[0]), hiC = new THREE.Color(kd.leaf[1]);
     for (const idx of cells.values()) {
       const crown = new THREE.InstancedMesh(kd.crown, crownMat, idx.length), trunk = new THREE.InstancedMesh(kd.trunk, trunkMat, idx.length);
       idx.forEach((i, j) => { const x = spots[i * 3], z = spots[i * 3 + 1], sc = spots[i * 3 + 2];
@@ -245,7 +244,7 @@ const TREE_M2_PER_TRY = 110, TREE_ROAD_CLEARANCE_M = 2.5;   // one try at a tree
 function mergeGeo(parts) {
   const pos = [], nor = [], cs = [], c = new THREE.Color();
   for (const [g0, hex] of parts) { const g = g0.index ? g0.toNonIndexed() : g0, a = g.attributes.position.array, n = g.attributes.normal.array;
-    if (hex) c.set(hex).convertSRGBToLinear();
+    if (hex) c.set(hex);
     for (let i = 0; i < a.length; i += 3) { pos.push(a[i], a[i + 1], a[i + 2]); nor.push(n[i], n[i + 1], n[i + 2]); if (hex) cs.push(c.r, c.g, c.b); } }
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
@@ -260,7 +259,7 @@ function extrude(pts, width, bevel) {
   return g.rotateY(-Math.PI / 2).translate(depth / 2, 0, 0);
 }
 const paintMat = new THREE.MeshLambertMaterial({ vertexColors: true });
-const carMat = new THREE.MeshPhongMaterial({ vertexColors: true, shininess: 60, specular: col(0x555555) });   // glossy paint and glass
+const carMat = new THREE.MeshPhongMaterial({ vertexColors: true, shininess: 60, specular: new THREE.Color(0x555555) });   // glossy paint and glass
 const GLASS = '#26323a', TYRE = '#1c1c1c';
 const lamps = z => [[0.34, 0.16, 0.06, -0.6, 0.72, -z, '#fff6c8'], [0.34, 0.16, 0.06, 0.6, 0.72, -z, '#fff6c8'], [0.34, 0.16, 0.06, -0.6, 0.72, z, '#c8261c'], [0.34, 0.16, 0.06, 0.6, 0.72, z, '#c8261c']];
 const TYPES = {
@@ -306,7 +305,7 @@ function softCar(t, c) {
 }
 const geoCache = {};
 const carGeo = (t, c) => geoCache[t + c] || (geoCache[t + c] = softCar(t, c));
-const BAR_BLUE = col(0x2f6bff), BAR_RED = col(0xff3b30);
+const BAR_BLUE = new THREE.Color(0x2f6bff), BAR_RED = new THREE.Color(0xff3b30);
 const barMat = new THREE.MeshBasicMaterial({ color: BAR_BLUE.clone() }), barGeo = new THREE.BoxGeometry(1.1, 0.16, 0.3);
 function personParts(shirt, pants, hair, arms) {     // arms: separate meshes that swing from the shoulder (two more draw calls, so only the player has them)
   hair = hair || '#5a4632';
@@ -444,11 +443,11 @@ function drive(c, thr, steer, brake, dt, canDrift) {
 }
 
 // ---------- drift effects: sparks at the rear wheels (white, then blue and orange as the turbo charges), a flame while boosting, skid marks ----------
-const SKID_N = 600, SKID_STEP_M = 0.6, SPARK_COLS = [col(0xfff2c0), col(0x4aa8ff), col(0xff8a1f)];
+const SKID_N = 600, SKID_STEP_M = 0.6, SPARK_COLS = [new THREE.Color(0xfff2c0), new THREE.Color(0x4aa8ff), new THREE.Color(0xff8a1f)];
 const fxRnd = makeRnd(4242);                   // own stream: the flicker rolls every frame
 const sparkMat = new THREE.MeshBasicMaterial({ color: SPARK_COLS[0].clone() }), sparkGeo = new THREE.OctahedronGeometry(0.22);
 const sparks = [0, 1].map(() => { const m = new THREE.Mesh(sparkGeo, sparkMat); m.visible = false; scene.add(m); return m; });
-const flame = new THREE.Mesh(new THREE.ConeGeometry(0.22, 1, 8).rotateX(Math.PI / 2).translate(0, 0, 0.5), new THREE.MeshBasicMaterial({ color: col(0xffb347) }));
+const flame = new THREE.Mesh(new THREE.ConeGeometry(0.22, 1, 8).rotateX(Math.PI / 2).translate(0, 0, 0.5), new THREE.MeshBasicMaterial({ color: new THREE.Color(0xffb347) }));
 flame.visible = false; scene.add(flame);
 const skids = new THREE.InstancedMesh(new THREE.PlaneGeometry(0.24, 1).rotateX(-Math.PI / 2).translate(0, 0, 0.5),
   new THREE.MeshBasicMaterial({ color: 0x111111, transparent: true, opacity: 0.4, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }), SKID_N);
@@ -645,7 +644,7 @@ const places = [];
 const ringGeo = new THREE.RingGeometry(0.95, 1.25, 28); ringGeo.rotateX(-Math.PI / 2);
 const gemGeo = new THREE.OctahedronGeometry(0.42);
 function addPlace(kind, name, x, z, color) {
-  const mat = new THREE.MeshBasicMaterial({ color: col(color), transparent: true, opacity: 0.8, side: THREE.DoubleSide, depthWrite: false });
+  const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(color), transparent: true, opacity: 0.8, side: THREE.DoubleSide, depthWrite: false });
   const y = hAt(x, z), ring = new THREE.Mesh(ringGeo, mat), gem = new THREE.Mesh(gemGeo, mat);
   ring.position.set(x, y + 0.4, z); gem.position.set(x, y + 3.6, z); scene.add(ring, gem);
   const p = { kind, name, x, z, gem }; places.push(p); return p;

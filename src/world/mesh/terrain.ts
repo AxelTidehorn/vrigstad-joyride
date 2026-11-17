@@ -1,4 +1,3 @@
-import '../three-legacy';
 import * as THREE from 'three';
 import type { Heightfield } from '../heightfield';
 

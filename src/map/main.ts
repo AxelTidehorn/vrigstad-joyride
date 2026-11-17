@@ -8,7 +8,6 @@ import { Heightfield } from '../world/heightfield';
 import { BuildingShellsByMaterial } from '../world/mesh/building-shells';
 import { TerrainMesh } from '../world/mesh/terrain';
 import { makeRnd } from '../world/random';
-import { LEGACY_LIGHT } from '../world/three-legacy';
 import { treeSpots } from '../world/trees';
 
 (function () {
@@ -39,7 +38,7 @@ let renderer;
 try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); }
 catch (err) { document.getElementById('fail').hidden = false; document.getElementById('ui').hidden = true; return; }
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-renderer.outputColorSpace = THREE.LinearSRGBColorSpace;   // as in r128: the map's look was tuned without sRGB output encoding
+renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.shadowMap.autoUpdate = false;
@@ -57,8 +56,8 @@ function setView(top) {
   controls.update(); requestRender();
 }
 
-scene.add(new THREE.AmbientLight(0xffffff, 0.64 * LEGACY_LIGHT));
-const sun = new THREE.DirectionalLight(0xffffff, 0.56 * LEGACY_LIGHT);
+scene.add(new THREE.AmbientLight(0xffffff, 2.0106192982974678));
+const sun = new THREE.DirectionalLight(0xffffff, 1.7592918860102844);
 sun.position.set(-1500, 1700, 1100);
 sun.castShadow = true;
 sun.shadow.mapSize.set(4096, 4096);
@@ -72,6 +71,7 @@ const K = CW / S;
 const tex2d = document.createElement('canvas'); tex2d.width = tex2d.height = CW;
 const ctx = tex2d.getContext('2d');
 const texture = new THREE.CanvasTexture(tex2d);
+texture.colorSpace = THREE.SRGBColorSpace;
 texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 const P = v => (v + HALF) * K;
 function trace(p, close) {

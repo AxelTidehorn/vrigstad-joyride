@@ -1,4 +1,3 @@
-import '../three-legacy';
 import * as THREE from 'three';
 import { ROAD_WIDTH_M, type RoadClass } from '../data';
 import type { Heightfield } from '../heightfield';
@@ -88,7 +87,7 @@ export class RoadRibbons {
       // minor roads are drawn first and pushed furthest back, so a junction shows the bigger road on top
       const order = i === CENTRE_LINE ? 8 : 6 - i;
       const material = new THREE.MeshLambertMaterial({
-        color: new THREE.Color(i < CENTRE_LINE ? roadColours[i as RoadClass] : centreLineColour).convertSRGBToLinear(),
+        color: new THREE.Color(i < CENTRE_LINE ? roadColours[i as RoadClass] : centreLineColour),
         map: i < CENTRE_LINE ? asphalt : null,
         side: THREE.DoubleSide,
         polygonOffset: true,
