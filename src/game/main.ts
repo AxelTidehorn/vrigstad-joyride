@@ -15,6 +15,9 @@ import { nodeKey, ROAD_CELL_M as RC, RoadNetwork } from '../world/roads';
 import { treeSpots } from '../world/trees';
 import { Water } from '../world/water';
 
+import { createPhotographicGrades } from './render/photographic-grades';
+import { createSceneFinish } from './render/scene-finish';
+
 (function () {
 'use strict';
 const $ = id => document.getElementById(id);
@@ -49,6 +52,8 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color().setHex(HORIZON, THREE.LinearSRGBColorSpace);
 scene.fog = new THREE.FogExp2(new THREE.Color().setHex(HORIZON, THREE.LinearSRGBColorSpace), FOG_PER_M);
 const camera = new THREE.PerspectiveCamera(58, 1, 0.8, 4200);
+const grades = createPhotographicGrades();
+const sceneFinish = createSceneFinish(renderer, scene, camera, grades);
 scene.add(new THREE.HemisphereLight(0xffffff, new THREE.Color(0x9aa58a), 1.9477874452256718));
 const sun = new THREE.DirectionalLight(new THREE.Color(0xfff4dd), 2.9845130209103035);
 const SUN_DIR = new THREE.Vector3(-0.55, 0.75, 0.37).normalize();
@@ -836,7 +841,7 @@ function updatePolice(c, dt, T, tv) {
 
 // ---------- main loop ----------
 function resize() { const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
-  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); sceneFinish.resize(); }
 addEventListener('resize', resize); if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas);
 let last = performance.now();
 function frame(now) {
@@ -914,7 +919,7 @@ function frame(now) {
     const bl = inCar ? 'Brake' : 'Jump'; if ($('p-brake').textContent !== bl) $('p-brake').textContent = bl;
     $('speed').hidden = !inCar; if (inCar) { $('kmh').textContent = Math.round(Math.abs(pcar.v) * 3.6); $('carname').textContent = pcar.T.name; } }
   drawMini(T);
-  renderer.render(scene, camera);
+  sceneFinish.render();
 }
 $('go').addEventListener('click', e => { started = true; $('intro').hidden = true; camYaw = 0.6; camPitch = 0.34; canvas.focus();
   if (e.pointerType ? e.pointerType === 'mouse' : !coarse) lockMouse();   // by how Start was pressed: a tap on a touchscreen laptop shouldn't lock
@@ -922,5 +927,5 @@ $('go').addEventListener('click', e => { started = true; $('intro').hidden = tru
 resize(); requestAnimationFrame(frame);
 
 // ---------- test hook: read-only state for the smoke tests (tests/e2e), so they do not have to read pixels ----------
-window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, y: player.y, yaw: camYaw, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, speed: pcar ? pcar.v : 0, drift: pcar ? pcar.drift : 0, boost: pcar ? pcar.boost : 0, charge: pcar ? pcar.charge : 0, loose: pcar ? pcar.loose : 0, flickDir: pcar ? pcar.flickDir : 0, stars, cats: cats.length, treats }; } };
+window.__joyride = { state: () => { const n = nearestCar(); return { started, x: player.x, z: player.z, y: player.y, yaw: camYaw, inCar, car: pcar ? pcar.type : null, near: n ? n.mode : null, speed: pcar ? pcar.v : 0, drift: pcar ? pcar.drift : 0, boost: pcar ? pcar.boost : 0, charge: pcar ? pcar.charge : 0, loose: pcar ? pcar.loose : 0, flickDir: pcar ? pcar.flickDir : 0, stars, cats: cats.length, treats, rendering: sceneFinish.state(), film: grades.state() }; } };
 })();
