@@ -23,6 +23,12 @@ describe('RoadRibbons', () => {
     expect((centreLine.material as THREE.MeshLambertMaterial).map).toBeNull();
   });
 
+  it('decodes the sRGB road tint exactly once', () => {
+    const colour = (ribbons.meshes[0].material as THREE.MeshLambertMaterial).color;
+    expect(colour.r).toBeCloseTo(new THREE.Color(ROAD_COLOURS[RoadClass.PRIMARY]).r, 7);
+    expect(THREE.ColorManagement.enabled).toBe(true);
+  });
+
   it('lifts the road its class height over the terrain', () => {
     const pos = ribbons.meshes[0].geometry.getAttribute('position');
     for (let i = 0; i < pos.count; i++) expect(pos.getY(i)).toBeCloseTo(TERRAIN_M + roadLiftM(RoadClass.PRIMARY), 5);

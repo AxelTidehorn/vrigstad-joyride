@@ -1,4 +1,3 @@
-import '../three-legacy';
 import * as THREE from 'three';
 import { type BuildingShape, forEachBuilding } from '../buildings';
 import type { Building, WorldData } from '../data';
