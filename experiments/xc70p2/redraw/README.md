@@ -26,5 +26,5 @@ python experiments/xc70p2/simplify.py /tmp/xc/simp.blend /tmp/xc/model.blend 1.5
 ```
 
 `model.blend` here is the simplified master; `xc70-civilian.glb` and `xc70-police.glb` are its pipeline exports
-(about 23,000 triangles before the game's merge and compression). `review.png` shows both variants.
+(about 23,000 triangles; the glass is one `glass_envelope`). `review.png` shows both variants.
 Known limits: flat lamp lenses; the hood keeps a faint unevenness near its front edge.

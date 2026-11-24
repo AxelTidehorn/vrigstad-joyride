@@ -1007,6 +1007,11 @@ if __name__ == '__main__':
     wheels()
     side_parts(body, black)
     rear_parts(body, glass, black, bpy.data.materials['tail lamp red'], bpy.data.materials['indicator amber'])
+    # all the glass one object, as the other cars' glass_envelope: one draw call instead of eight
+    panes = [o for o in bpy.data.objects if o.name.startswith('glass_')]
+    with bpy.context.temp_override(active_object=panes[0], selected_editable_objects=panes):
+        bpy.ops.object.join()
+    panes[0].name = panes[0].data.name = 'glass_envelope'
     for o in bpy.data.objects:
         if o.name in keep and o.parent is None:   # the rims and spokes stay on their wheels
             mw = o.matrix_world.copy()
