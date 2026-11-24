@@ -15,7 +15,7 @@ def apply(name):
  if colors is None:colors=body.data.color_attributes.new(name='VariantPaint',type='BYTE_COLOR',domain='POINT')
  for v in body.data.vertices:
   x,y,z=v.co
-  panel=abs(x)>=.6999 and ((y>=.8399 and .64<=z<=1.16) or (y<=-1.20 and .64<=z<=1.09))
+  panel=abs(x)>=.6999 and v.normal.z<.45 and ((y>=.8399 and .64<=z<=1.16) or (y<=-1.20 and .64<=z<=1.09))   # the sides only: not over the hood's edge
   colors.data[v.index].color_srgb=(31/255,85/255,149/255,1) if name=='police' and panel else ((229/255,231/255,227/255,1) if name=='police' else (1,1,1,1))
  body.data.materials[0]=police if name=='police' else civil
  for col in ['POLICE','POLICE_DECALS']:

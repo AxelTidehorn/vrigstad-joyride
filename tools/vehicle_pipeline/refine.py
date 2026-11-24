@@ -99,6 +99,44 @@ def face_grid(sign, x0, x1, z0, z1, face, corner_y, wrap=0.0, n=(8, 4), far=2.6)
     return grid
 
 
+def profile(tree, sign, face, x0, z, corner):
+    """The surface at height z from x0 on the front (face 1) or rear (face -1) round the corner to the side, traced by
+    rays along the car and then a fan from `corner` ((x, distance from the middle along the car), inside the corner):
+    (points, normals, arc lengths)."""
+    cx, cy = corner
+    rays = [((sign * (x0 + (cx - x0) * i / 20), face * 2.6, z), (0, -face, 0)) for i in range(20)]
+    for a in range(3, 91, 3):
+        d = Vector((sign * math.sin(math.radians(a)), face * math.cos(math.radians(a)), 0))
+        rays.append((tuple(Vector((sign * cx, face * cy, z)) + d), tuple(-d)))
+    pts, nrms, arc = [], [], []
+    for start, ray in rays:
+        hit, nrm = tree.ray_cast(Vector(start), Vector(ray))[:2]
+        if hit is None or (pts and (hit - pts[-1]).length < 0.002):   # a repeat would fold the lens
+            continue
+        arc.append(arc[-1] + (hit - pts[-1]).length if pts else 0.0)
+        pts.append(hit)
+        nrms.append(nrm if nrm.dot(Vector(ray)) < 0 else -nrm)
+    return pts, nrms, arc
+
+
+def lamp_grid(tree, sign, face, x0, z0, z1, length, corner, n=(16, 1)):
+    """Rays onto a lamp unit from x0 on the face, `length` metres round the surface: each row's columns evenly
+    spaced along its own profile, each cast along that point's normal, so the lens can't fold at the corner."""
+    grid = []
+    for j in range(n[1] + 1):
+        z = z0 + (z1 - z0) * j / n[1]
+        pts, nrms, arc = profile(tree, sign, face, x0, z, corner)
+        row = []
+        for i in range(n[0] + 1):
+            s = length * i / n[0]
+            k = max(1, next((k for k in range(1, len(arc)) if arc[k] >= s), len(arc) - 1))
+            t = 0.0 if arc[k] == arc[k - 1] else min(1.0, (s - arc[k - 1]) / (arc[k] - arc[k - 1]))
+            p, nrm = pts[k - 1].lerp(pts[k], t), nrms[k - 1].lerp(nrms[k], t).normalized()
+            row.append((tuple(p + nrm * 0.05), tuple(-nrm)))
+        grid.append(row)
+    return grid
+
+
 def mirrors(names, size, at):
     """Rebuilds each mirror housing as a box tapering towards its outer end, square to the car: `size` is (out from
     the door, along the car, tall), `at` is (inner face x, centre y, centre z), mirrored to each housing's side."""
@@ -207,10 +245,11 @@ def offset(poly, d):
     return out
 
 
-def cast(tree, loop, to3, proud, sink=LENS_SINK, floor=None, deep=DEEP_M):
+def cast(tree, loop, to3, proud, sink=LENS_SINK, floor=None, deep=DEEP_M, reach=0.6):
     """Each loop point placed on the surface: onto `tree` along its ray, or onto its fallback plane. With `floor` (the
     shell alone), the front is pushed out until it clears the shell by half of `proud`, so the body never shows
-    through glass laid over a bulge."""
+    through glass laid over a bulge. `reach`: how far out along a plane's normal its floor ray starts; from far out, a
+    steeply leaning side glass's ray lands on the roof instead of the door under it."""
     front, back = [], []
     for p in loop:
         placed = to3(p)
@@ -238,7 +277,7 @@ def cast(tree, loop, to3, proud, sink=LENS_SINK, floor=None, deep=DEEP_M):
         for i, p in enumerate(loop):
             placed = to3(p)
             if placed[0] == 'plane':   # pushed out along the plane's normal where the shell bulges past it
-                start, ray = placed[1] + placed[2] * 0.6, -placed[2]
+                start, ray = placed[1] + placed[2] * reach, -placed[2]   # see `reach`
             else:
                 start, ray = Vector(placed[0]), Vector(placed[1]).normalized()
             under = floor.ray_cast(start, ray)[0]
@@ -273,12 +312,13 @@ def solid(name, mesh_verts, faces, mat, collection):
 
 
 def ring(name, tree, outer, inner, to3, proud, mat, collection, floor=None, outer_proud=None, outer_to3=None,
-         deep=DEEP_M):
+         deep=DEEP_M, reach=0.6):
     """A closed band between two loops of the same length: a seal or a bezel. With `outer_proud`, its outer edge
     stands lower than its inner one, a bead sloping down to the paint; with `outer_to3`, that edge is placed its own
     way (on the shell, round glass laid on a plane)."""
-    of, ob = cast(tree, outer, outer_to3 or to3, proud if outer_proud is None else outer_proud, floor=floor, deep=deep)
-    inf, inb = cast(tree, inner, to3, proud, floor=floor, deep=deep)
+    of, ob = cast(tree, outer, outer_to3 or to3, proud if outer_proud is None else outer_proud, floor=floor, deep=deep,
+                  reach=reach)
+    inf, inb = cast(tree, inner, to3, proud, floor=floor, deep=deep, reach=reach)
     n = len(outer)
     verts = of + inf + ob + inb
     O, I, OB, IB = 0, n, 2 * n, 3 * n
@@ -290,7 +330,7 @@ def ring(name, tree, outer, inner, to3, proud, mat, collection, floor=None, oute
     return solid(name, verts, faces, mat, collection)
 
 
-def disc(name, tree, loop, to3, proud, mat, collection, rings=4, floor=None, deep=DEEP_M, normal=None):
+def disc(name, tree, loop, to3, proud, mat, collection, rings=4, floor=None, deep=DEEP_M, normal=None, reach=0.6):
     """A closed plate over a convex loop (glass or a lens), cast onto the shell in concentric rings down to its
     centre, so a curved panel stays on the surface instead of sinking under it along the chord."""
     n = len(loop)
@@ -299,7 +339,7 @@ def disc(name, tree, loop, to3, proud, mat, collection, rings=4, floor=None, dee
     loops = [[(cx + (p[0] - cx) * (1 - k / rings), cy + (p[1] - cy) * (1 - k / rings)) for p in loop] for k in range(rings)]
     front, back = [], []
     for lp in loops + [[(cx, cy)]]:
-        f, b = cast(tree, lp, to3, proud, floor=floor, deep=deep)
+        f, b = cast(tree, lp, to3, proud, floor=floor, deep=deep, reach=reach)
         front += f
         back += b
     m = len(front)
@@ -458,8 +498,12 @@ class Glazing:
     seal_proud: float = 0.019
     glass_proud: float = 0.014          # glass stands this far off the shell, 5 mm behind its seal
     screen_radius: float = 0.06         # windscreen and backlight corners
+    backlight_radius: float | None = None   # the backlight's own corner radius, if not screen_radius
     screen_width: float = 1.0           # of the round-2 screen's span
-    screen_height: float = 1.0          # of the round-2 screen's height, top edge kept
+    screen_height: float = 1.0          # of the round-2 screen's height, about the edge `screen_keep` names
+    screen_keep: str = 'top'            # 'top' or 'bottom'
+    screen_taper: float = 0.0           # narrower towards the top by this fraction
+    backlight_taper: float = 0.0
     screen_glass_proud: float = 0.009
     screen_seal_proud: float = 0.013
     screen_seal_edge: float = 0.003     # the screen seal's outer edge: it slopes down to the paint
@@ -470,7 +514,8 @@ class Glazing:
     backlight_rings: int | None = None  # rings for the backlight, if not screen_rings
     screen_rings: int = 2               # concentric rings the screen and backlight are cast in: more for a curved screen
     backlight_width: float = 1.0        # of the round-2 backlight, about its centre
-    backlight_height: float = 1.0       # of the round-2 backlight, bottom edge kept
+    backlight_height: float = 1.0       # of the round-2 backlight, about the edge `backlight_keep` names
+    backlight_keep: str = 'bottom'      # 'bottom' or 'top'
     side_top_radius: float = 0.075      # rounded upper corners of the side glass
     side_low_radius: float = 0.015
     quarter_radius: float | None = None  # the rearmost side window's lower rear corner, swept round
@@ -478,6 +523,8 @@ class Glazing:
     side_seal_proud: float = 0.009
     side_seal_edge: float = 0.003       # a side seal's outer edge, on the shell
     side_facing_deg: float = 35         # side glass only over shell facing within this of the side
+    side_pillars: bool = True          # black pillars between the side windows (a body-coloured B-pillar: False)
+    side_floor_reach: float = 0.6       # cast()'s `reach` for the side glass: less for a cabin that leans in steeply
     side_min_x: float = 0.6             # an envelope island further out than this is a side window
     side_outlines: list | None = None   # drawn side windows, front to back, each a convex (y, z) outline: replace round 2's
     side_wrap: list | None = None       # a (y, z) outline of the screen's wrap seen from the side, cast onto the shell
@@ -539,13 +586,18 @@ def glazing(tree, g: Glazing):
         if centre.y > 0:
             name = 'screen'
             # screen_height above 1 reaches the bottom edge further down towards the cowl, the top edge kept
-            top = max(q[1] for q in raw) if v.z > 0 else min(q[1] for q in raw)
-            small = [(q[0] * g.screen_width, top + (q[1] - top) * g.screen_height) for q in raw]
+            keep = (min if g.screen_keep == 'bottom' else max)(q[1] * v.z for q in raw) / v.z   # the edge kept
+            small = [(q[0] * g.screen_width, keep + (q[1] - keep) * g.screen_height) for q in raw]
         else:
             name = 'backlight'
-            bottom = min(q[1] for q in raw) if v.z > 0 else max(q[1] for q in raw)
-            small = [(q[0] * g.backlight_width, bottom + (q[1] - bottom) * g.backlight_height) for q in raw]
-        small = fillet(small, lambda c: g.screen_radius)
+            keep = (max if g.backlight_keep == 'top' else min)(q[1] * v.z for q in raw) / v.z   # the edge kept
+            small = [(q[0] * g.backlight_width, keep + (q[1] - keep) * g.backlight_height) for q in raw]
+        taper = g.screen_taper if name == 'screen' else g.backlight_taper
+        if taper:   # narrower towards the top: x scaled down by up to `taper` at the top edge
+            hs = [q[1] * v.z for q in small]
+            lo, hi = min(hs), max(hs)
+            small = [(q[0] * (1 - taper * (q[1] * v.z - lo) / (hi - lo)), q[1]) for q in small]
+        small = fillet(small, lambda c: g.backlight_radius if name == 'backlight' and g.backlight_radius else g.screen_radius)
         if g.screen_step:
             small = resample(small, g.screen_step)
         if name == 'screen' and g.screen_wrap:
@@ -597,14 +649,14 @@ def glazing(tree, g: Glazing):
                 poly = fillet(poly, lambda c, t=ztop: g.side_top_radius if c[1] > t - 0.05 else g.side_low_radius)
             k = len(made)
             made.append(disc(f'glass_side_{sign}_{k}', tree, offset(poly, -0.002), to3, g.side_glass_proud, glass_mat, coll,
-                             rings=1, floor=shell))   # flat: one ring is enough
+                             rings=1, floor=shell, reach=g.side_floor_reach))   # flat: one ring is enough
             # the seal slopes from the glass down onto the shell, which falls away from the glass's plane at its edges
             made.append(ring(f'trim_seal_side_{sign}_{k}', tree, offset(poly, g.seal_out), offset(poly, -g.seal_overlap), to3,
-                             g.side_seal_proud, rubber, coll, floor=shell, outer_proud=g.side_seal_edge,
+                             g.side_seal_proud, rubber, coll, floor=shell, outer_proud=g.side_seal_edge, reach=g.side_floor_reach,
                              outer_to3=lambda q, s=sign: ((s * 1.2, q[0], q[1]), (-s, 0, 0))))
             boxes.append((min(p.y for p in pts), max(p.y for p in pts), min(p.z for p in pts), max(p.z for p in pts)))
         # a black pillar fills the gap between the seals of each window and the next (the B-pillar, a quarter divider)
-        for k, ((f0, f1, fz0, fz1), (r0, r1, rz0, rz1)) in enumerate(zip(boxes, boxes[1:])):
+        for k, ((f0, f1, fz0, fz1), (r0, r1, rz0, rz1)) in enumerate(zip(boxes, boxes[1:]) if g.side_pillars else []):
             label = 'b_pillar' if k == 0 else f'divider_{k}'
             to3 = planes[k + 1]   # on the plane of the window behind it
             y0, y1 = r1 - 0.004, f0 + 0.004

@@ -12,7 +12,7 @@ from mathutils.bvhtree import BVHTree
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools/vehicle_pipeline'))
 import surface_refinement as S
-from refine import Glazing, face_grid, glazing, material, mirrors, plate, solid, take_envelope
+from refine import Glazing, face_grid, lamp_grid, glazing, material, mirrors, plate, solid, take_envelope
 
 REVISION = 'saab900-r3'
 
@@ -96,51 +96,15 @@ CLADDING_Z = (0.30, 0.47)          # the lower door panel, under the strip (m)
 CLADDING_STRIP_H = 0.012
 
 
-def profile(tree, sign, face, x0, z):
-    """The surface at height z from x0 on the face round the corner to the side: (points, normals, arc lengths)."""
-    cx, cy = CORNER_C
-    rays = [((sign * (x0 + (cx - x0) * i / 20), face * 2.6, z), (0, -face, 0)) for i in range(20)]
-    for a in range(3, 91, 3):
-        d = Vector((sign * math.sin(math.radians(a)), face * math.cos(math.radians(a)), 0))
-        rays.append((tuple(Vector((sign * cx, face * cy, z)) + d), tuple(-d)))
-    pts, nrms, arc = [], [], []
-    for start, ray in rays:
-        hit, nrm = tree.ray_cast(Vector(start), Vector(ray))[:2]
-        if hit is None or (pts and (hit - pts[-1]).length < 0.002):   # a repeat would fold the lens
-            continue
-        arc.append(arc[-1] + (hit - pts[-1]).length if pts else 0.0)
-        pts.append(hit)
-        nrms.append(nrm if nrm.dot(Vector(ray)) < 0 else -nrm)
-    return pts, nrms, arc
-
-
-def lamp_grid(tree, sign, face, x0, z0, z1, length, n=(16, 1)):
-    """Rays onto a lamp unit from x0 on the face, `length` metres round the surface: each row's columns evenly
-    spaced along its own profile, each cast along that point's normal, so the lens can't fold at the corner."""
-    grid = []
-    for j in range(n[1] + 1):
-        z = z0 + (z1 - z0) * j / n[1]
-        pts, nrms, arc = profile(tree, sign, face, x0, z)
-        row = []
-        for i in range(n[0] + 1):
-            s = length * i / n[0]
-            k = max(1, next((k for k in range(1, len(arc)) if arc[k] >= s), len(arc) - 1))
-            t = 0.0 if arc[k] == arc[k - 1] else min(1.0, (s - arc[k - 1]) / (arc[k] - arc[k - 1]))
-            p, nrm = pts[k - 1].lerp(pts[k], t), nrms[k - 1].lerp(nrms[k], t).normalized()
-            row.append((tuple(p + nrm * 0.05), tuple(-nrm)))
-        grid.append(row)
-    return grid
-
-
 def lamp_unit(tree, sign, face, box, lenses, rubber, coll):
     """A black bezel over the whole unit and the lenses inset on it. `box` is (x0, z0, z1, length round the surface);
     each lens is (name, x0, x1 or None to run round the corner to the unit's end, less the bezel, z0, z1, material)."""
     x0, z0, z1, length = box
-    made = [plate(f'lamp_bezel_{face}_{sign}', tree, lamp_grid(tree, sign, face, x0, z0, z1, length), rubber, coll,
+    made = [plate(f'lamp_bezel_{face}_{sign}', tree, lamp_grid(tree, sign, face, x0, z0, z1, length, CORNER_C), rubber, coll,
                   proud=BEZEL_PROUD, smooth=True)]
     for name, a0, a1, c0, c1, mat in lenses:
         grid = face_grid(sign, a0, a1, c0, c1, face, 0.0, n=(6, 2)) if a1 else \
-            lamp_grid(tree, sign, face, a0, c0, c1, length - (a0 - x0) - BEZEL_M)
+            lamp_grid(tree, sign, face, a0, c0, c1, length - (a0 - x0) - BEZEL_M, CORNER_C)
         made.append(plate(f'{name}_{sign}', tree, grid, mat, coll, proud=LENS_PROUD, smooth=True))
     return made
 
